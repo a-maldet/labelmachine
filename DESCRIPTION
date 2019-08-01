@@ -1,0 +1,23 @@
+Package: labelmachine 
+Title: R package for easy management of the variable labels of your data sets.
+Version: 0.0.1
+Authors@R:
+    c(person(given = "Adrian",
+             family = "Maldet",
+             role = c("aut", "cre"),
+             email = "adrian.maldet@statistik.gv.at"))
+Description: This R package makes it easy to manage all variable labels of your data sets, not only for one project, but in all of your project that use similar data structures. Keep the labels of your factor variables in yaml files and define multiple labelling themes. When plotting your data set, you may want to use a different label theme than when printing your data set as a table. With the labelmachine you will stay on top of things.
+Depends:
+    R (>= 3.3.0)
+License: GPL-3 + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
+Suggests:
+    rmarkdown,
+    hexSticker
+Remotes: github::R-2
+VignetteBuilder: knitr
+Roxygen: list(markdown = TRUE)
+URL: https://github.com/R-package/composerr
+BugReports: https://github.com/R-package/composerr/issues
