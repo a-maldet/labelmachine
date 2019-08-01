@@ -11,16 +11,5 @@ Depends:
     R (>= 3.3.0)
 Imports:
     composerr
-Remotes:
-    a-maldet/composerr
+Remotes: a-maldet/composerr
 License: GPL-3 + file LICENSE
-Encoding: UTF-8
-LazyData: true
-RoxygenNote: 6.1.1
-Suggests:
-    rmarkdown,
-    hexSticker
-VignetteBuilder: knitr
-Roxygen: list(markdown = TRUE)
-URL: https://github.com/R-package/composerr
-BugReports: https://github.com/R-package/composerr/issues
