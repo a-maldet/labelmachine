@@ -1,6 +1,6 @@
 Package: labelmachine 
 Title: R package for easy management of the variable labels of your data sets.
-Version: 0.0.1
+Version: 0.0.2
 Authors@R:
     c(person(given = "Adrian",
              family = "Maldet",
