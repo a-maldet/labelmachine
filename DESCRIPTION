@@ -9,7 +9,7 @@ Authors@R:
 Description: This R package makes it easy to manage all variable labels of your data sets, not only for one project, but in all of your project that use similar data structures. Keep the labels of your factor variables in yaml files and define multiple labelling themes. When plotting your data set, you may want to use a different label theme than when printing your data set as a table. With the labelmachine you will stay on top of things.
 Depends:
     R (>= 3.3.0)
+Remotes: a-maldet/composerr
 Imports:
     composerr
-Remotes: a-maldet/composerr
 License: GPL-3 + file LICENSE

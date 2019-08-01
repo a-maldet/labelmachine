@@ -50,23 +50,61 @@ setMethod("initialize", signature(.Object = "StyledCell"),
          err_handler("The element must be a named character vector")
       })
     })
-  }
   .Object@themes <- themes
   .Object
+  }
 )
 
 #' Read in a \code{yaml} file holding labels and themes
 #'
 #' @param yaml_path Path to yaml file holding the labels and themes
 read_label_file <- function(yaml_path) {
-  file_path <- file.path(getwd(), "../../wtbLabels/data/valueLabels.yaml")
-  xx <- initialize(yaml::read_yaml(file_path))
+  new("LabelMachine", themes = yaml_to_class(yaml::read_yaml(file_path)))
 }
 
 
 
 
-merge_label_machines
+#TODO: merge_label_machines
+
+#' Merge two value label structures (old fields will be overwritten by the new ones)
+#'
+#' @param value_labels_old The old value label structure (can be NULL)
+#' @param value_labels The new value label structure (overwrites fields in the old value structure)
+#' @return The merged value label structure
+mergeValueLabels <- function(value_labels_old, value_labels) {
+  if (is.null(value_labels_old))
+    return(value_labels)
+  # check if label definitions will be overwritten
+  overwritten_names <- lapply(
+      intersect(names(value_labels), names(value_labels_old)),
+      function(nam) {
+        overwritten <- intersect(names(value_labels[[nam]]), names(value_labels_old[[nam]]))
+        if (length(overwritten) == 0)
+          return(NULL)
+        paste0(nam, ":", overwritten)
+      }
+    ) %>%
+    unlist
+  if (length(overwritten_names) > 0)
+    paste(
+        "The following label definitions will be overwritten:",
+        paste0(overwritten_names, col = ", ")
+      ) %>%
+      warning
+  # overwrite old label definitions by new ones
+  lapply(
+      names(value_labels), 
+      function(var_name) 
+        lapply(
+          names(value_labels[[var_name]]), 
+          function(x)
+            value_labels_old[[var_name]][[x]] <<- value_labels[[var_name]][[x]]
+        )
+    )
+  value_labels_old
+}
+
 
 #' Create a labelling function
 #'
@@ -76,9 +114,8 @@ merge_label_machines
 #' is used.
 #' @return A function that applies the picked theme to variables.
 create_labelling_function <- function(lm, theme = NULL) {
-  fn <- function(df, var, col_new = NULL)
-    label(df, desi, var, col_new, theme)
-  fn
+  function(df, var, ...)
+    label_variable(lm, df, var, theme, ...)
 }
 
 label_variable <- function(lm, df, var, theme = default_theme_name, col = var, col_new = col, keep_ordering = FALSE) {
@@ -138,8 +175,7 @@ label_variable <- function(lm, df, var, theme = default_theme_name, col = var, c
       ) %>%
       err_handler
   # --- Relabel df[[col]] and save to df[[col_new]] ---
-  labelling_map <- data.frame(OLD_ = old_labels)
-  labelling_map[[col_new]] <- thm[[var]]
+  labelling_map <- data.frame(OLD_ = old_labels, NEW_ = thm[[var]])
   if (is.factor(df[[col]]) && keep_ordering) {
     # if the old order should be kept, then reorder the labelling map
     col_levels <- intersect(as.character(levels(df[[col]])), old_labels)
@@ -148,12 +184,17 @@ label_variable <- function(lm, df, var, theme = default_theme_name, col = var, c
       ]
   }
   # set new labels as factor
-  labelling_map[[col_new]] = factor(
-      labelling_map[[col_new]],
-      levels = unique(labelling_map[[col_new]])
+  labelling_map$NEW_ = factor(
+      labelling_map$NEW_,
+      levels = unique(labelling_map$NEW_)
     )
   df$OLD_ <- as.character(df[[col]])
   df <- merge(df, labelling_map, by = "OLD_")
   df$OLD_ <- NULL
+  df[[col_new]] <- df$NEW_
+  df$NEW_ <- NULL
   df
 }
+
+
+
