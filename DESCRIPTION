@@ -16,7 +16,7 @@ RoxygenNote: 6.1.1
 Suggests:
     rmarkdown,
     hexSticker
-Remotes: github::R-2
+Remotes: github::a-maldet/composerr
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
 URL: https://github.com/R-package/composerr
