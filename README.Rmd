@@ -2,50 +2,130 @@
 output: github_document
 ---
 
-# labelmachine
+# labellexicon
 
-`labelmachine` is an **R** package for labelling factor variables in **R** data
+`labellexicon` is an **R** package for labelling factor variables in **R** data
 frames. This is especially useful if you have encoded variables and want to 
-plot your data with meaningful labels. Therefore, the `labelmachine` relabels
-your variables and the label mappings are stored in **yaml files**, which makes
+plot your data with meaningful labels. Therefore, the `labellexicon` relabels
+your variables and the label mappings are stored in **yaml files**, so called
+**Lexicon** files. This makes
 it very easy to use the same label mapping in multiple projects that have
-similar data sets. Furthermore, you can have multiple **labelling themes** for
-each variable, in order to use different label mappings for the same variable:
-E.g. a mapping that yields abbreviations and a different theme that yields
-full length notations.
+similar data sets. 
 
-> With the labelmachine you will stay on top of things.
+Furthermore, `LabelLexicon` allows you to process your LabelLexicons in a 
+way that is very similar to [dplyr]. You can `select`, `mutate` and `rename`
+the entries of your LabelLexicon. You may also `merge` two or more LabelLexicas
+into a single LabelLexicon. 
 
 ## Installation
 
 ```{r, eval = FALSE}
 # Install development version from GitHub
-devtools::install_github('a-maldet/labelmachine', build_opts = NULL)
+devtools::install_github('a-maldet/labellexicon', build_opts = NULL)
 ```
 
 ## Usage
 
-### Concatenating error messages
+### Create a `LabelLexicon` from a list
 
-The functions `composerr` and `composerr_parent` allow the concatenation of
-a more detailed error message to an already existing error handler (wich 
-already has a rather basic information).
+You can simply create a LabelLexicon from a named list object, holding named character vectors.
+Each entry of the named list represents a variable of your data and each named
+character vector is a translation mapping for your variable. The names of the
+character vectors represent the old values of the variable and the values of
+the character vectors are the new labels that should be used.
+```{r}
+obj <- list(
+  supp = c(VC = "Ascorbic acid", OJ = "Orange juice"),
+  dose = c("0.5" = "Low", "1.0" = "Medium", "2.0" = "High")
+)
+```
+
+
+### Load `LabelLexicon` file (yaml)
+
+Structure of your Lexicon file `short_lex.yaml`
+```{yaml}
+supp:
+  VC: Ascorbic acid
+  OJ: Orange juice
+dose:
+  0.5: Low
+  1.0: Medium
+  2.0: High
+```
+
+```{r, include = FALSE}
+library(labellexicon)
+library(magrittr)
+lex <- "data/short_lex.yaml" %>%
+  read_lexicon_file
+```
 
 ```{r, eval = FALSE}
-### Example 1 ###
-### check if variable 'obj' exists and holds value TRUE ###
-obj <- FALSE
-# original error handler
-err_h <- composerr("Something is wrong with obj")
-if (!exists("obj"))
-  err_h("obj does not exist")
-# create more precise error handler (same scope)
-err_h2 <- composerr("obj has wrong value", err_h)
-if (!obj)
-  err_h2("Value is FALSE")
-# --- resulting message ---
-# "Something is wrong with obj: obj has wrong value: Value is FALSE"
+library(labellexicon)
+library(magrittr)
+lex <- "short_lex.yaml" %>%
+  read_lexicon_file
 ```
+
+The label mappings are now contained in the LabelLexicon object `lex`.
+
+```{r}
+lex
+```
+
+### Relabel your variables with a LabelLexicon
+
+Now, that we have loaded a LabelLexicon `lex`, we can use it in order 
+to translate a categorical variable of our data.frame 
+(not necessarily a factor variable) to a factor variable holding the labels
+that are defined in the LabelLexicon `lex`.
+
+```{r}
+ToothGrowth %>%
+  translate(lex, "supp") %>%
+  translate(lex, "dose")
+```
+The variables `supp` and `dose` are now factor variables holding the new labels.
+
+In case, your variable has a different name, than the entry in the LabelLexicon
+you can use the `col` argument. If the resulting labled variable should be
+stored under a differnt name, you may use the `col_new` argument.
+
+```{r}
+ToothGrowth %>%
+  translate(lex, "supp") %>%
+  translate(lex, "dose")
+```
+
+### Alter your LabelLexicon
+
+Sometimes it can be useful to alter your LabelLexicon. With `select` you may
+pick a subset of LabelLexicon entries.
+
+```{r}
+lex %>%
+  select(c("supp", "dose"))
+```
+
+With `mutate` you can set a new label translation (character vector) for a variable:
+
+```{r}
+lex %>%
+  mutate("supp", c(VC = "Ascorbic a.", OJ = "Orange j."))
+```
+
+With `rename` you can rename a LabelLexicon entry:
+
+```{r}
+lex %>%
+  rename(c("supp", "dose"), c("SUPP", "DOSE"))
+```
+
+### Merge two ore more LabelLexicas
+
+Sometimes you may want to merge two or more LabelLexicas into one LabelLexicon.
+This can be done with ``
 
 ### Overriding error handlers in nested environments
 The function `composerr_parent` looks up the existing error handler in the
@@ -77,3 +157,4 @@ sapply(names(obj), function(name) {
 [GPL-3]
   
 [GPL-3]: https://R-package.github.io/styledTables/LICENSE
+[dplyr]: https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html

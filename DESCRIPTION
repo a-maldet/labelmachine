@@ -1,4 +1,4 @@
-Package: labelmachine 
+Package: labellexicon 
 Title: R package for easy management of the variable labels of your data sets.
 Version: 0.0.2
 Authors@R:
@@ -6,10 +6,21 @@ Authors@R:
              family = "Maldet",
              role = c("aut", "cre"),
              email = "adrian.maldet@statistik.gv.at"))
-Description: This R package makes it easy to manage all variable labels of your data sets, not only for one project, but in all of your project that use similar data structures. Keep the labels of your factor variables in yaml files and define multiple labelling themes. When plotting your data set, you may want to use a different label theme than when printing your data set as a table. With the labelmachine you will stay on top of things.
+Description: This R package makes it easy to manage all variable labels of your data sets, not only for one project, but in all of your project that use similar data structures. Keep the labels of your factor variables in yaml files and define. When plotting your data set, you may want to use different labels than when printing your data set as a table. With the labellexicon you will stay on top of things.
+Encoding: UTF-8
 Depends:
     R (>= 3.3.0)
 Remotes: a-maldet/composerr
 Imports:
-    composerr
+    composerr,
+    yaml (>= 2.2.0)
 License: GPL-3 + file LICENSE
+RoxygenNote: 6.1.1
+Collate: 
+    'imports.R'
+    'label_lexicon.R'
+    'merge_lexica.R'
+    'utilities.R'
+    'read_yaml_file.R'
+    'translate.R'
+    'write_yaml_file.R'

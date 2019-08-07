@@ -1,0 +1,7 @@
+supp:
+  VC: Ascorbic acid
+  OJ: Orange juice
+dose:
+  0.5: Low
+  1.0: Medium
+  2.0: High
