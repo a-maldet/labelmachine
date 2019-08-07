@@ -6,7 +6,7 @@ Authors@R:
              family = "Maldet",
              role = c("aut", "cre"),
              email = "adrian.maldet@statistik.gv.at"))
-Description: This R package makes it easy to manage all variable labels of your data sets, not only for one project, but in all of your project that use similar data structures. Keep the labels of your factor variables in yaml files and define. When plotting your data set, you may want to use different labels than when printing your data set as a table. With the labellexicon you will stay on top of things.
+Description: labellexicon is an R package that helps you assigning new labels to data.frame variables. Furthermore, you can manage your label translations in yaml files. This makes it very easy using the same label translations in multiple projects that share similar data structure.
 Encoding: UTF-8
 Depends:
     R (>= 3.3.0)

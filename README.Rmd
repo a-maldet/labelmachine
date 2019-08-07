@@ -4,18 +4,31 @@ output: github_document
 
 # labellexicon
 
-`labellexicon` is an **R** package for labelling factor variables in **R** data
-frames. This is especially useful if you have encoded variables and want to 
-plot your data with meaningful labels. Therefore, the `labellexicon` relabels
-your variables and the label mappings are stored in **yaml files**, so called
-**Lexicon** files. This makes
-it very easy to use the same label mapping in multiple projects that have
-similar data sets. 
+`labellexicon` is an **R** package that helps you assigning new labels to 
+data.frame variables. Furthermore, you can manage your label translations
+in so called **LabelLexicon** files, which are **yaml** files, which hold
+the mappings (translations) of your variable labels.
+This makes it very easy using the same label translations in multiple
+projects that share similar data structure.
 
-Furthermore, `LabelLexicon` allows you to process your LabelLexicons in a 
-way that is very similar to [dplyr]. You can `select`, `mutate` and `rename`
-the entries of your LabelLexicon. You may also `merge` two or more LabelLexicas
-into a single LabelLexicon. 
+The most important functions are:
+
+- `read_lexicon_file`: Reads in a **yaml** file holding the label translations
+  for one or more variables.
+- `translate`: Use a LabelLexicon object in order to relabel one or more
+  variables of your data.frame. The variables may be of type `number`,
+  `character` or `factor`. In case of a factor variable, you have the possibility
+  to keep the original ordering by using the 
+  function argument `keep_ordering = TRUE`.
+- `new_lexicon`: Create a LabelLexicon object from a named list, holding the 
+  label translations for one or more variables.
+- `write_lexicon_file`: Write a LabelLexicon object to a **yaml** file.
+- `select`: Pick a subset of a LabelLexicon object.
+- `mutate`: Alter the translations of a variable in a LabelLexicon
+  object.
+- `rename`: Rename a variable in a LabelLexicon object.
+- `merge`: Merge two or more LabelLexicon objects into a single LabelLexicon 
+  object.
 
 ## Installation
 
@@ -26,34 +39,23 @@ devtools::install_github('a-maldet/labellexicon', build_opts = NULL)
 
 ## Usage
 
-### Create a `LabelLexicon` from a list
+### Load LabelLexicon file (yaml)
 
-You can simply create a LabelLexicon from a named list object, holding named character vectors.
-Each entry of the named list represents a variable of your data and each named
-character vector is a translation mapping for your variable. The names of the
-character vectors represent the old values of the variable and the values of
-the character vectors are the new labels that should be used.
-```{r}
-obj <- list(
-  supp = c(VC = "Ascorbic acid", OJ = "Orange juice"),
-  dose = c("0.5" = "Low", "1.0" = "Medium", "2.0" = "High")
-)
-```
-
-
-### Load `LabelLexicon` file (yaml)
-
-Structure of your Lexicon file `short_lex.yaml`
+Structure of your LabelLexicon file `short_lex.yaml`:
 ```{yaml}
 supp:
   VC: Ascorbic acid
   OJ: Orange juice
 dose:
-  0.5: Low
-  1.0: Medium
-  2.0: High
+  "0.5": Low
+  "1": Medium
+  "2": High
 ```
+The first level names are the variable names. The second level names represent
+the original values of the variables and the third level values are the labels
+that should be assigned to the values of the variables.
 
+Load your `LabelLexicon` file with `read_lexicon_file`:
 ```{r, include = FALSE}
 library(labellexicon)
 library(magrittr)
@@ -61,62 +63,70 @@ lex <- "data/short_lex.yaml" %>%
   read_lexicon_file
 ```
 
-```{r, eval = FALSE}
-library(labellexicon)
-library(magrittr)
-lex <- "short_lex.yaml" %>%
-  read_lexicon_file
-```
-
-The label mappings are now contained in the LabelLexicon object `lex`.
-
-```{r}
-lex
-```
-
 ### Relabel your variables with a LabelLexicon
 
-Now, that we have loaded a LabelLexicon `lex`, we can use it in order 
-to translate a categorical variable of our data.frame 
-(not necessarily a factor variable) to a factor variable holding the labels
+We can use the LabelLexicon object `lex` in order 
+to translate a categorical variable 
+(not necessarily a factor variable) in our data.frame
+to a factor variable with the labels
 that are defined in the LabelLexicon `lex`.
 
-```{r}
+Relable your data.frame variables with `translate`:
+```{r, eval = FALSE}
+# data.frame with original values 
+ToothGrowth %>% head
+
+# data.frame with new labels
 ToothGrowth %>%
   translate(lex, "supp") %>%
-  translate(lex, "dose")
+  translate(lex, "dose") %>%
+  head
 ```
-The variables `supp` and `dose` are now factor variables holding the new labels.
 
-In case, your variable has a different name, than the entry in the LabelLexicon
-you can use the `col` argument. If the resulting labled variable should be
-stored under a differnt name, you may use the `col_new` argument.
+Now, the columns `supp` and `dose` are factor variables, which hold the
+desired labels and have the same ordering as in the `LabelLexicon` file.
+If the original variable is a factor variable and you want to keep
+the original ordering, you can set the function argurment
+`r keep_ordering = TRUE`.
+
+### Create a LabelLexicon object manually
+
+Instead of reading in a yaml file you can also create a LabelLexicon manually
+from a named list object, holding named character vectors.
+Each entry of the named list represents a variable of your data.frames and
+each named character vector is a translation. 
+The names of the character vector entries represent the original values of
+the variable and
+the values of the character vector entries are the new labels that should be
+assigned.
 
 ```{r}
-ToothGrowth %>%
-  translate(lex, "supp") %>%
-  translate(lex, "dose")
+lex <- list(
+    supp = c(VC = "Ascorbic acid", OJ = "Orange juice"),
+    dose = c("0.5" = "Low", "1.0" = "Medium", "2.0" = "High")
+  ) %>%
+  new_lexicon
 ```
 
 ### Alter your LabelLexicon
 
-Sometimes it can be useful to alter your LabelLexicon. With `select` you may
-pick a subset of LabelLexicon entries.
+Sometimes it can be useful to alter your LabelLexicon object.
 
+With `select` you may
+pick a subset of LabelLexicon entries:
 ```{r}
 lex %>%
   select(c("supp", "dose"))
 ```
 
-With `mutate` you can set a new label translation (character vector) for a variable:
-
+With `mutate` you can set a new label translation (character vector)
+for a variable:
 ```{r}
 lex %>%
   mutate("supp", c(VC = "Ascorbic a.", OJ = "Orange j."))
 ```
 
 With `rename` you can rename a LabelLexicon entry:
-
 ```{r}
 lex %>%
   rename(c("supp", "dose"), c("SUPP", "DOSE"))
@@ -125,7 +135,7 @@ lex %>%
 ### Merge two ore more LabelLexicas
 
 Sometimes you may want to merge two or more LabelLexicas into one LabelLexicon.
-This can be done with ``
+This can be done with `merge_lexica`
 
 ### Overriding error handlers in nested environments
 The function `composerr_parent` looks up the existing error handler in the

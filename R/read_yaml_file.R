@@ -6,5 +6,5 @@
 #' @export
 #' @include utilities.R label_lexicon.R
 read_lexicon_file <- function(yaml_path) {
-  new_label_lexicon(yaml_to_lexicon(yaml::read_yaml(yaml_path)))
+  new_lexicon(yaml_to_lexicon(yaml::read_yaml(yaml_path)))
 }

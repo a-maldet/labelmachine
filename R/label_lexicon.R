@@ -10,7 +10,7 @@
 #' character vectors will be used as the ordering of the new labels.
 #' @rdname LabelLexicon-class
 #' @export
-new_label_lexicon <- function(translations = NULL) {
+new_lexicon <- function(translations = NULL) {
   if (is.null(translations) || (is.list(translations) && length(translations) == 0)) {
     translations <- list()
   } else {
@@ -94,7 +94,7 @@ select.LabelLexicon <- function(.data, translation) {
         "\nOnly the following translation names exist: ",
         paste0(names(.data), collapse = c(", "))
       ))
-  new_label_lexicon(.data[translation])
+  new_lexicon(.data[translation])
 }
 
 #' Rename multiple translations in a [LabelLexicon] object
