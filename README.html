@@ -25,30 +25,214 @@ body {
 
 <body>
 
-<h1 id="labelmachine">labelmachine</h1>
-<p><code>labelmachine</code> is an <strong>R</strong> package for labelling factor variables in <strong>R</strong> data frames. This is especially useful if you have encoded variables and want to plot your data with meaningful labels. Therefore, the <code>labelmachine</code> relabels your variables and the label mappings are stored in <strong>yaml files</strong>, which makes it very easy to use the same label mapping in multiple projects that have similar data sets. Furthermore, you can have multiple <strong>labelling themes</strong> for each variable, in order to use different label mappings for the same variable: E.g. a mapping that yields abbreviations and a different theme that yields full length notations.</p>
-<blockquote>
-<p>With the labelmachine you will stay on top of things.</p>
-</blockquote>
+<h1 id="labellexicon">labellexicon</h1>
+<p><code>labellexicon</code> is an <strong>R</strong> package for labelling factor variables in <strong>R</strong> data frames. This is especially useful if you have encoded variables and want to plot your data with meaningful labels. Therefore, the <code>labellexicon</code> relabels your variables and the label mappings are stored in <strong>yaml files</strong>, so called <strong>Lexicon</strong> files. This makes it very easy to use the same label mapping in multiple projects that have similar data sets.</p>
+<p>Furthermore, <code>LabelLexicon</code> allows you to process your LabelLexicons in a way that is very similar to <a href="https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html">dplyr</a>. You can <code>select</code>, <code>mutate</code> and <code>rename</code> the entries of your LabelLexicon. You may also <code>merge</code> two or more LabelLexicas into a single LabelLexicon.</p>
 <h2 id="installation">Installation</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Install development version from GitHub</span>
-devtools::<span class="kw">install_github</span>(<span class="st">'a-maldet/labelmachine'</span>, <span class="dt">build_opts =</span> <span class="ot">NULL</span>)</code></pre></div>
+devtools::<span class="kw">install_github</span>(<span class="st">'a-maldet/labellexicon'</span>, <span class="dt">build_opts =</span> <span class="ot">NULL</span>)</code></pre></div>
 <h2 id="usage">Usage</h2>
-<h3 id="concatenating-error-messages">Concatenating error messages</h3>
-<p>The functions <code>composerr</code> and <code>composerr_parent</code> allow the concatenation of a more detailed error message to an already existing error handler (wich already has a rather basic information).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### Example 1 ###
-### check if variable 'obj' exists and holds value TRUE ###
-obj &lt;-<span class="st"> </span><span class="ot">FALSE</span>
-<span class="co"># original error handler</span>
-err_h &lt;-<span class="st"> </span><span class="kw">composerr</span>(<span class="st">&quot;Something is wrong with obj&quot;</span>)
-if (!<span class="kw">exists</span>(<span class="st">&quot;obj&quot;</span>))
-  <span class="kw">err_h</span>(<span class="st">&quot;obj does not exist&quot;</span>)
-<span class="co"># create more precise error handler (same scope)</span>
-err_h2 &lt;-<span class="st"> </span><span class="kw">composerr</span>(<span class="st">&quot;obj has wrong value&quot;</span>, err_h)
-if (!obj)
-  <span class="kw">err_h2</span>(<span class="st">&quot;Value is FALSE&quot;</span>)
-<span class="co"># --- resulting message ---</span>
-<span class="co"># &quot;Something is wrong with obj: obj has wrong value: Value is FALSE&quot;</span></code></pre></div>
+<h3 id="create-a-labellexicon-from-a-list">Create a <code>LabelLexicon</code> from a list</h3>
+<p>You can simply create a LabelLexicon from a named list object, holding named character vectors. Each entry of the named list represents a variable of your data and each named character vector is a translation mapping for your variable. The names of the character vectors represent the old values of the variable and the values of the character vectors are the new labels that should be used.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">obj &lt;-<span class="st"> </span><span class="kw">list</span>(
+  <span class="dt">supp =</span> <span class="kw">c</span>(<span class="dt">VC =</span> <span class="st">&quot;Ascorbic acid&quot;</span>, <span class="dt">OJ =</span> <span class="st">&quot;Orange juice&quot;</span>),
+  <span class="dt">dose =</span> <span class="kw">c</span>(<span class="st">&quot;0.5&quot;</span> =<span class="st"> &quot;Low&quot;</span>, <span class="st">&quot;1.0&quot;</span> =<span class="st"> &quot;Medium&quot;</span>, <span class="st">&quot;2.0&quot;</span> =<span class="st"> &quot;High&quot;</span>)
+)</code></pre></div>
+<h3 id="load-labellexicon-file-yaml">Load <code>LabelLexicon</code> file (yaml)</h3>
+<p>Structure of your Lexicon file <code>short_lex.yaml</code></p>
+<div class="sourceCode"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span class="fu">supp:</span>
+  <span class="fu">VC:</span> Ascorbic acid
+  <span class="fu">OJ:</span> Orange juice
+<span class="fu">dose:</span>
+  <span class="fu">0.5:</span> Low
+  <span class="fu">1.0:</span> Medium
+  <span class="fu">2.0:</span> High</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(labellexicon)
+<span class="kw">library</span>(magrittr)
+lex &lt;-<span class="st"> &quot;short_lex.yaml&quot;</span> %&gt;%
+<span class="st">  </span>read_lexicon_file</code></pre></div>
+<p>The label mappings are now contained in the LabelLexicon object <code>lex</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lex</code></pre></div>
+<pre><code>## 
+## --- LabelLexicon ---
+## Variable 'supp':
+##              VC              OJ 
+## &quot;Ascorbic acid&quot;  &quot;Orange juice&quot; 
+## 
+## Variable 'dose':
+##      0.5        1        2 
+##    &quot;Low&quot; &quot;Medium&quot;   &quot;High&quot;</code></pre>
+<h3 id="relabel-your-variables-with-a-labellexicon">Relabel your variables with a LabelLexicon</h3>
+<p>Now, that we have loaded a LabelLexicon <code>lex</code>, we can use it in order to translate a categorical variable of our data.frame (not necessarily a factor variable) to a factor variable holding the labels that are defined in the LabelLexicon <code>lex</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ToothGrowth %&gt;%
+<span class="st">  </span><span class="kw">translate</span>(lex, <span class="st">&quot;supp&quot;</span>) %&gt;%
+<span class="st">  </span><span class="kw">translate</span>(lex, <span class="st">&quot;dose&quot;</span>)</code></pre></div>
+<pre><code>##     len          supp   dose
+## 1   4.2 Ascorbic acid    Low
+## 2  11.5 Ascorbic acid    Low
+## 3   7.3 Ascorbic acid    Low
+## 4   5.8 Ascorbic acid    Low
+## 5   6.4 Ascorbic acid    Low
+## 6  10.0 Ascorbic acid    Low
+## 7  11.2 Ascorbic acid    Low
+## 8  11.2 Ascorbic acid    Low
+## 9   5.2 Ascorbic acid    Low
+## 10  7.0 Ascorbic acid    Low
+## 11 16.5 Ascorbic acid Medium
+## 12 16.5 Ascorbic acid Medium
+## 13 15.2 Ascorbic acid Medium
+## 14 17.3 Ascorbic acid Medium
+## 15 22.5 Ascorbic acid Medium
+## 16 17.3 Ascorbic acid Medium
+## 17 13.6 Ascorbic acid Medium
+## 18 14.5 Ascorbic acid Medium
+## 19 18.8 Ascorbic acid Medium
+## 20 15.5 Ascorbic acid Medium
+## 21 23.6 Ascorbic acid   High
+## 22 18.5 Ascorbic acid   High
+## 23 33.9 Ascorbic acid   High
+## 24 25.5 Ascorbic acid   High
+## 25 26.4 Ascorbic acid   High
+## 26 32.5 Ascorbic acid   High
+## 27 26.7 Ascorbic acid   High
+## 28 21.5 Ascorbic acid   High
+## 29 23.3 Ascorbic acid   High
+## 30 29.5 Ascorbic acid   High
+## 31 15.2  Orange juice    Low
+## 32 21.5  Orange juice    Low
+## 33 17.6  Orange juice    Low
+## 34  9.7  Orange juice    Low
+## 35 14.5  Orange juice    Low
+## 36 10.0  Orange juice    Low
+## 37  8.2  Orange juice    Low
+## 38  9.4  Orange juice    Low
+## 39 16.5  Orange juice    Low
+## 40  9.7  Orange juice    Low
+## 41 19.7  Orange juice Medium
+## 42 23.3  Orange juice Medium
+## 43 23.6  Orange juice Medium
+## 44 26.4  Orange juice Medium
+## 45 20.0  Orange juice Medium
+## 46 25.2  Orange juice Medium
+## 47 25.8  Orange juice Medium
+## 48 21.2  Orange juice Medium
+## 49 14.5  Orange juice Medium
+## 50 27.3  Orange juice Medium
+## 51 25.5  Orange juice   High
+## 52 26.4  Orange juice   High
+## 53 22.4  Orange juice   High
+## 54 24.5  Orange juice   High
+## 55 24.8  Orange juice   High
+## 56 30.9  Orange juice   High
+## 57 26.4  Orange juice   High
+## 58 27.3  Orange juice   High
+## 59 29.4  Orange juice   High
+## 60 23.0  Orange juice   High</code></pre>
+<p>The variables <code>supp</code> and <code>dose</code> are now factor variables holding the new labels.</p>
+<p>In case, your variable has a different name, than the entry in the LabelLexicon you can use the <code>col</code> argument. If the resulting labled variable should be stored under a differnt name, you may use the <code>col_new</code> argument.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ToothGrowth %&gt;%
+<span class="st">  </span><span class="kw">translate</span>(lex, <span class="st">&quot;supp&quot;</span>) %&gt;%
+<span class="st">  </span><span class="kw">translate</span>(lex, <span class="st">&quot;dose&quot;</span>)</code></pre></div>
+<pre><code>##     len          supp   dose
+## 1   4.2 Ascorbic acid    Low
+## 2  11.5 Ascorbic acid    Low
+## 3   7.3 Ascorbic acid    Low
+## 4   5.8 Ascorbic acid    Low
+## 5   6.4 Ascorbic acid    Low
+## 6  10.0 Ascorbic acid    Low
+## 7  11.2 Ascorbic acid    Low
+## 8  11.2 Ascorbic acid    Low
+## 9   5.2 Ascorbic acid    Low
+## 10  7.0 Ascorbic acid    Low
+## 11 16.5 Ascorbic acid Medium
+## 12 16.5 Ascorbic acid Medium
+## 13 15.2 Ascorbic acid Medium
+## 14 17.3 Ascorbic acid Medium
+## 15 22.5 Ascorbic acid Medium
+## 16 17.3 Ascorbic acid Medium
+## 17 13.6 Ascorbic acid Medium
+## 18 14.5 Ascorbic acid Medium
+## 19 18.8 Ascorbic acid Medium
+## 20 15.5 Ascorbic acid Medium
+## 21 23.6 Ascorbic acid   High
+## 22 18.5 Ascorbic acid   High
+## 23 33.9 Ascorbic acid   High
+## 24 25.5 Ascorbic acid   High
+## 25 26.4 Ascorbic acid   High
+## 26 32.5 Ascorbic acid   High
+## 27 26.7 Ascorbic acid   High
+## 28 21.5 Ascorbic acid   High
+## 29 23.3 Ascorbic acid   High
+## 30 29.5 Ascorbic acid   High
+## 31 15.2  Orange juice    Low
+## 32 21.5  Orange juice    Low
+## 33 17.6  Orange juice    Low
+## 34  9.7  Orange juice    Low
+## 35 14.5  Orange juice    Low
+## 36 10.0  Orange juice    Low
+## 37  8.2  Orange juice    Low
+## 38  9.4  Orange juice    Low
+## 39 16.5  Orange juice    Low
+## 40  9.7  Orange juice    Low
+## 41 19.7  Orange juice Medium
+## 42 23.3  Orange juice Medium
+## 43 23.6  Orange juice Medium
+## 44 26.4  Orange juice Medium
+## 45 20.0  Orange juice Medium
+## 46 25.2  Orange juice Medium
+## 47 25.8  Orange juice Medium
+## 48 21.2  Orange juice Medium
+## 49 14.5  Orange juice Medium
+## 50 27.3  Orange juice Medium
+## 51 25.5  Orange juice   High
+## 52 26.4  Orange juice   High
+## 53 22.4  Orange juice   High
+## 54 24.5  Orange juice   High
+## 55 24.8  Orange juice   High
+## 56 30.9  Orange juice   High
+## 57 26.4  Orange juice   High
+## 58 27.3  Orange juice   High
+## 59 29.4  Orange juice   High
+## 60 23.0  Orange juice   High</code></pre>
+<h3 id="alter-your-labellexicon">Alter your LabelLexicon</h3>
+<p>Sometimes it can be useful to alter your LabelLexicon. With <code>select</code> you may pick a subset of LabelLexicon entries.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lex %&gt;%
+<span class="st">  </span><span class="kw">select</span>(<span class="kw">c</span>(<span class="st">&quot;supp&quot;</span>, <span class="st">&quot;dose&quot;</span>))</code></pre></div>
+<pre><code>## 
+## --- LabelLexicon ---
+## Variable 'supp':
+##              VC              OJ 
+## &quot;Ascorbic acid&quot;  &quot;Orange juice&quot; 
+## 
+## Variable 'dose':
+##      0.5        1        2 
+##    &quot;Low&quot; &quot;Medium&quot;   &quot;High&quot;</code></pre>
+<p>With <code>mutate</code> you can set a new label translation (character vector) for a variable:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lex %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>(<span class="st">&quot;supp&quot;</span>, <span class="kw">c</span>(<span class="dt">VC =</span> <span class="st">&quot;Ascorbic a.&quot;</span>, <span class="dt">OJ =</span> <span class="st">&quot;Orange j.&quot;</span>))</code></pre></div>
+<pre><code>## 
+## --- LabelLexicon ---
+## Variable 'supp':
+##            VC            OJ 
+## &quot;Ascorbic a.&quot;   &quot;Orange j.&quot; 
+## 
+## Variable 'dose':
+##      0.5        1        2 
+##    &quot;Low&quot; &quot;Medium&quot;   &quot;High&quot;</code></pre>
+<p>With <code>rename</code> you can rename a LabelLexicon entry:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lex %&gt;%
+<span class="st">  </span><span class="kw">rename</span>(<span class="kw">c</span>(<span class="st">&quot;supp&quot;</span>, <span class="st">&quot;dose&quot;</span>), <span class="kw">c</span>(<span class="st">&quot;SUPP&quot;</span>, <span class="st">&quot;DOSE&quot;</span>))</code></pre></div>
+<pre><code>## 
+## --- LabelLexicon ---
+## Variable 'SUPP':
+##              VC              OJ 
+## &quot;Ascorbic acid&quot;  &quot;Orange juice&quot; 
+## 
+## Variable 'DOSE':
+##      0.5        1        2 
+##    &quot;Low&quot; &quot;Medium&quot;   &quot;High&quot;</code></pre>
+<h3 id="merge-two-ore-more-labellexicas">Merge two ore more LabelLexicas</h3>
+<p>Sometimes you may want to merge two or more LabelLexicas into one LabelLexicon. This can be done with ``</p>
 <h3 id="overriding-error-handlers-in-nested-environments">Overriding error handlers in nested environments</h3>
 <p>The function <code>composerr_parent</code> looks up the existing error handler in the parent environment and not in the current environment. This can be useful in nested scoping situations (for example when checking if a nested list object has a valid structure) and if you want to store the nested error handler functions under the same name (overriding error handler functions).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### Example 2 ###
