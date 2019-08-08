@@ -94,7 +94,7 @@ desired labels and have the same ordering as in the dictionary `dict`.
 
 If the original variable is a factor variable and you want to keep
 the original ordering, you can use the function argurment
-`r keep_ordering = TRUE`.
+`keep_ordering = TRUE`.
 Furthermore, you can also apply your variable translations to columns with
 different column names than your translation names, by passing the column names
 into the argument `col`.
