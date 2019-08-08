@@ -168,7 +168,7 @@ dict2 &lt;-<span class="st"> </span><span class="kw">list</span>(
 ##           0           1 
 ##   &quot;Primary&quot; &quot;Secondary&quot;</code></pre>
 <p>The <code>merge</code> merges the arguments from left to right. Therefore, the variable translations of <code>dict1</code> are overwritten by the entries of <code>dict2</code>. In this example the resulting dictionary has contains the variable translations for <code>age</code> and <code>country</code> as defined in <code>dict1</code> and the variable translations for <code>school</code> and <code>gender</code> as defined in <code>dict2</code>. The variable translations for <code>gender</code> in <code>dict1</code> are overwritten by <code>dict2</code>.</p>
-<h3 id="save-your-dictionary-in-a-yaml-file">Save your dictionary in a yaml file</h3>
+<h3 id="save-your-dictionary-to-a-yaml-file">Save your dictionary to a yaml file</h3>
 <p>With <code>write_dictionary</code> you can save a dictionary object to a yaml file:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dict &lt;-<span class="st"> </span><span class="kw">list</span>(
     <span class="dt">gender =</span> <span class="kw">c</span>(<span class="dt">d =</span> <span class="st">&quot;diverse&quot;</span>, <span class="dt">f =</span> <span class="st">&quot;female&quot;</span>, <span class="dt">m =</span> <span class="st">&quot;male&quot;</span>),
