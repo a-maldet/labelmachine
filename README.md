@@ -203,6 +203,32 @@ merge(dict1, dict2)
 
 The `merge` merges the arguments from left to right. Therefore, the variable translations of `dict1` are overwritten by the entries of `dict2`. In this example the resulting dictionary has contains the variable translations for `age` and `country` as defined in `dict1` and the variable translations for `school` and `gender` as defined in `dict2`. The variable translations for `gender` in `dict1` are overwritten by `dict2`.
 
+### Save your dictionary in a yaml file
+
+With `write_dictionary` you can save a dictionary object to a yaml file:
+
+``` r
+dict <- list(
+    gender = c(d = "diverse", f = "female", m = "male"),
+    age = c("super young" = "younger than 10", "super old" = "older than 90")
+  ) %>%
+  new_dictionary
+dict %>%
+  write_dictionary("my_fancy_new_dictionary.yaml")
+```
+
+The resulting file looks like this:
+
+``` yaml
+gender:
+  d: diverse
+  f: female
+  m: male
+age:
+  super young: younger than 10
+  super old: older than 90
+```
+
 License
 -------
 

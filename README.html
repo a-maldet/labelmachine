@@ -168,6 +168,23 @@ dict2 &lt;-<span class="st"> </span><span class="kw">list</span>(
 ##           0           1 
 ##   &quot;Primary&quot; &quot;Secondary&quot;</code></pre>
 <p>The <code>merge</code> merges the arguments from left to right. Therefore, the variable translations of <code>dict1</code> are overwritten by the entries of <code>dict2</code>. In this example the resulting dictionary has contains the variable translations for <code>age</code> and <code>country</code> as defined in <code>dict1</code> and the variable translations for <code>school</code> and <code>gender</code> as defined in <code>dict2</code>. The variable translations for <code>gender</code> in <code>dict1</code> are overwritten by <code>dict2</code>.</p>
+<h3 id="save-your-dictionary-in-a-yaml-file">Save your dictionary in a yaml file</h3>
+<p>With <code>write_dictionary</code> you can save a dictionary object to a yaml file:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dict &lt;-<span class="st"> </span><span class="kw">list</span>(
+    <span class="dt">gender =</span> <span class="kw">c</span>(<span class="dt">d =</span> <span class="st">&quot;diverse&quot;</span>, <span class="dt">f =</span> <span class="st">&quot;female&quot;</span>, <span class="dt">m =</span> <span class="st">&quot;male&quot;</span>),
+    <span class="dt">age =</span> <span class="kw">c</span>(<span class="st">&quot;super young&quot;</span> =<span class="st"> &quot;younger than 10&quot;</span>, <span class="st">&quot;super old&quot;</span> =<span class="st"> &quot;older than 90&quot;</span>)
+  ) %&gt;%
+<span class="st">  </span>new_dictionary
+dict %&gt;%
+<span class="st">  </span><span class="kw">write_dictionary</span>(<span class="st">&quot;my_fancy_new_dictionary.yaml&quot;</span>)</code></pre></div>
+<p>The resulting file looks like this:</p>
+<div class="sourceCode"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span class="fu">gender:</span>
+  <span class="fu">d:</span> diverse
+  <span class="fu">f:</span> female
+  <span class="fu">m:</span> male
+<span class="fu">age:</span>
+  <span class="fu">super young:</span> younger than 10
+  <span class="fu">super old:</span> older than 90</code></pre></div>
 <h2 id="license">License</h2>
 <p><a href="https://R-package.github.io/styledTables/LICENSE">GPL-3</a></p>
 
