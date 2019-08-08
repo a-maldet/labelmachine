@@ -67,7 +67,32 @@ ToothGrowth %>%
   head
 ```
 
-Now, the columns `supp` and `dose` are factor variables, which hold the desired labels and have the same ordering as in the dictionary `dict`. If the original variable is a factor variable and you want to keep the original ordering, you can use the function argurment .
+Now, the columns `supp` and `dose` are factor variables, which hold the desired labels and have the same ordering as in the dictionary `dict`.
+
+If the original variable is a factor variable and you want to keep the original ordering, you can use the function argurment . Furthermore, you can also apply your variable translations to columns with different column names than your translation names, by passing the column names into the argument `col`. If you want to save your labelled variable to a different column name, you can use the argument `col_new` in order to specify the column names of the newly generated variables.
+
+``` r
+df <- data.frame(age = factor(c(2, 2, 1, 3), levels = c(3, 2, 1)))
+dict <- list(
+    age_short = c("1" = "a<16", "2" = "16<=a<70", "3" = "70<=a"),
+    age_long = c("1" = "young", "2" = "middle aged", "3" = "old")
+  ) %>%
+  new_dictionary
+df %>%
+  translate(
+    dictionary = dict, 
+    variable = c("age_short", "age_long"), 
+    col = c("age", "age"), 
+    col_new = c("age_s", "age_l"),
+    keep_order = TRUE
+  )
+```
+
+    ##   age    age_s       age_l
+    ## 1   2 16<=a<70 middle aged
+    ## 2   2 16<=a<70 middle aged
+    ## 3   1     a<16       young
+    ## 4   3    70<=a         old
 
 ### Create a dictionary object manually
 
@@ -136,9 +161,9 @@ dict %>%
     ##      0.5      1.0      2.0 
     ##    "Low" "Medium"   "High"
 
-### Merge two ore more LabelLexicas
+### Merge two ore more dictionary objects
 
-With `merge` you can merge two or more LabelLexicas into one dictionary object:
+With `merge` you can merge two or more dictionary objects into one dictionary object:
 
 ``` r
 dict1 <- list(

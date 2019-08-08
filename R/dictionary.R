@@ -47,6 +47,7 @@ new_dictionary <- function(translation_list = NULL) {
 #' @param .data A [LabelDictionary] object, holding the variable translations
 #' @param ... Various arguments
 #' @rdname select
+#' @export
 select <- function(.data, ...) {
   UseMethod("select")
 }

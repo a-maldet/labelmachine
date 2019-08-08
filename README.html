@@ -67,7 +67,27 @@ ToothGrowth %&gt;%<span class="st"> </span>head
 ToothGrowth %&gt;%
 <span class="st">  </span><span class="kw">translate</span>(dict, <span class="kw">c</span>(<span class="st">&quot;supp&quot;</span>, <span class="st">&quot;dose&quot;</span>)) %&gt;%
 <span class="st">  </span>head</code></pre></div>
-<p>Now, the columns <code>supp</code> and <code>dose</code> are factor variables, which hold the desired labels and have the same ordering as in the dictionary <code>dict</code>. If the original variable is a factor variable and you want to keep the original ordering, you can use the function argurment .</p>
+<p>Now, the columns <code>supp</code> and <code>dose</code> are factor variables, which hold the desired labels and have the same ordering as in the dictionary <code>dict</code>.</p>
+<p>If the original variable is a factor variable and you want to keep the original ordering, you can use the function argurment . Furthermore, you can also apply your variable translations to columns with different column names than your translation names, by passing the column names into the argument <code>col</code>. If you want to save your labelled variable to a different column name, you can use the argument <code>col_new</code> in order to specify the column names of the newly generated variables.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">age =</span> <span class="kw">factor</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>)))
+dict &lt;-<span class="st"> </span><span class="kw">list</span>(
+    <span class="dt">age_short =</span> <span class="kw">c</span>(<span class="st">&quot;1&quot;</span> =<span class="st"> &quot;a&lt;16&quot;</span>, <span class="st">&quot;2&quot;</span> =<span class="st"> &quot;16&lt;=a&lt;70&quot;</span>, <span class="st">&quot;3&quot;</span> =<span class="st"> &quot;70&lt;=a&quot;</span>),
+    <span class="dt">age_long =</span> <span class="kw">c</span>(<span class="st">&quot;1&quot;</span> =<span class="st"> &quot;young&quot;</span>, <span class="st">&quot;2&quot;</span> =<span class="st"> &quot;middle aged&quot;</span>, <span class="st">&quot;3&quot;</span> =<span class="st"> &quot;old&quot;</span>)
+  ) %&gt;%
+<span class="st">  </span>new_dictionary
+df %&gt;%
+<span class="st">  </span><span class="kw">translate</span>(
+    <span class="dt">dictionary =</span> dict, 
+    <span class="dt">variable =</span> <span class="kw">c</span>(<span class="st">&quot;age_short&quot;</span>, <span class="st">&quot;age_long&quot;</span>), 
+    <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;age&quot;</span>), 
+    <span class="dt">col_new =</span> <span class="kw">c</span>(<span class="st">&quot;age_s&quot;</span>, <span class="st">&quot;age_l&quot;</span>),
+    <span class="dt">keep_order =</span> <span class="ot">TRUE</span>
+  )</code></pre></div>
+<pre><code>##   age    age_s       age_l
+## 1   2 16&lt;=a&lt;70 middle aged
+## 2   2 16&lt;=a&lt;70 middle aged
+## 3   1     a&lt;16       young
+## 4   3    70&lt;=a         old</code></pre>
 <h3 id="create-a-dictionary-object-manually">Create a dictionary object manually</h3>
 <p>Instead of reading in a yaml file you can also create a dictionary object manually from a named list object, holding named character vectors. Each entry of the named list represents a variable of your data.frame and each named character vector is a translation. The names of the character vector entries represent the original values of the variable and the values of the character vector entries are the new labels that should be assigned.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dict &lt;-<span class="st"> </span><span class="kw">list</span>(
@@ -113,8 +133,8 @@ ToothGrowth %&gt;%
 ## Variable 'DOSE':
 ##      0.5      1.0      2.0 
 ##    &quot;Low&quot; &quot;Medium&quot;   &quot;High&quot;</code></pre>
-<h3 id="merge-two-ore-more-labellexicas">Merge two ore more LabelLexicas</h3>
-<p>With <code>merge</code> you can merge two or more LabelLexicas into one dictionary object:</p>
+<h3 id="merge-two-ore-more-dictionary-objects">Merge two ore more dictionary objects</h3>
+<p>With <code>merge</code> you can merge two or more dictionary objects into one dictionary object:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dict1 &lt;-<span class="st"> </span><span class="kw">list</span>(
     <span class="dt">gender =</span> <span class="kw">c</span>(<span class="st">&quot;0&quot;</span> =<span class="st"> &quot;female&quot;</span>, <span class="st">&quot;1&quot;</span> =<span class="st"> &quot;male&quot;</span>),
     <span class="dt">age =</span> <span class="kw">c</span>(<span class="st">&quot;0&quot;</span> =<span class="st"> &quot;&lt;10y&quot;</span>, <span class="st">&quot;1&quot;</span> =<span class="st"> &quot;&gt;=10y&quot;</span>),
