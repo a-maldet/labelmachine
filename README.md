@@ -1,34 +1,34 @@
 
-labellexicon
+labelmachine
 ============
 
-`labellexicon` is an **R** package that helps you assigning new labels to data.frame variables. Furthermore, you can manage your label translations in so called **LabelLexicon** files, which are **yaml** files, which hold the mappings (translations) of your variable labels. This makes it very easy using the same label translations in multiple projects that share similar data structure.
+`labelmachine` is an **R** package that helps you assigning new labels to data.frame variables. Furthermore, you can manage your label translations in so called **dictionary** files, which are **yaml** files. This makes it very easy using the same label translations in multiple projects that share similar data structure.
 
 The most important functions are:
 
--   `read_lexicon_file`: Reads in a **yaml** file holding the label translations for one or more variables.
--   `translate`: Use a LabelLexicon object in order to relabel one or more variables of your data.frame. The variables may be of type `number`, `character` or `factor`. In case of a factor variable, you have the possibility to keep the original ordering by using the function argument `keep_ordering = TRUE`.
--   `new_lexicon`: Create a LabelLexicon object from a named list, holding the label translations for one or more variables.
--   `write_lexicon_file`: Write a LabelLexicon object to a **yaml** file.
--   `select`: Pick a subset of a LabelLexicon object.
--   `mutate`: Alter the translations of a variable in a LabelLexicon object.
--   `rename`: Rename a variable in a LabelLexicon object.
--   `merge`: Merge two or more LabelLexicon objects into a single LabelLexicon object.
+-   `read_dictionary`: Reads in a **yaml** file holding the label translations for one or more variables. The function returns a **dictionary object**, that can be used for the translation of variable labels later on.
+-   `translate`: Use a dictionary object in order to relabel one or more variables of your data.frame. The variables may be of type `number`, `character` or `factor`. In case of a factor variable, you have the possibility to keep the original ordering by using the function argument `keep_ordering = TRUE`.
+-   `new_dictionary`: Create a dictionary object from a named list, holding the translations for one or more variables.
+-   `write_dictionary`: Write a dictionary object to a **yaml** file.
+-   `select`: Pick a subset of translations in a dictionary object.
+-   `mutate`: Alter the translations in a dictionary object.
+-   `rename`: Rename a variable translations in a dictionary object.
+-   `merge`: Merge two or more dictionary objects into a single dictionary object.
 
 Installation
 ------------
 
 ``` r
 # Install development version from GitHub
-devtools::install_github('a-maldet/labellexicon', build_opts = NULL)
+devtools::install_github('a-maldet/labelmachine', build_opts = NULL)
 ```
 
 Usage
 -----
 
-### Load LabelLexicon file (yaml)
+### Load a dictionary from a yaml file
 
-Structure of your LabelLexicon file `short_lex.yaml`:
+Structure of your dictionary file `my_dictionary.yaml`:
 
 ``` yaml
 supp:
@@ -40,13 +40,20 @@ dose:
   "2": High
 ```
 
-The first level names are the variable names. The second level names represent the original values of the variables and the third level values are the labels that should be assigned to the values of the variables.
+The first level names are the names of the variables that should be translated. The second level names represent the original values of the variables and the third level holds the labels that should be assigned to the original values of the variables.
 
-Load your `LabelLexicon` file with `read_lexicon_file`:
+Load your `dictionary` file with `read_dictionary`:
 
-### Relabel your variables with a LabelLexicon
+``` r
+library(labelmachine)
+library(magrittr)
+dict <- "my_dictionary.yaml" %>%
+  read_dictionary
+```
 
-We can use the LabelLexicon object `lex` in order to translate a categorical variable (not necessarily a factor variable) in our data.frame to a factor variable with the labels that are defined in the LabelLexicon `lex`.
+### Assign new labels to your variables
+
+You can use the dictionary object `dict` in order to translate categorical variables (not necessarily factor variables) in your data.frame to a factor variable holding the labels that are defined in the dictionary `dict`.
 
 Relable your data.frame variables with `translate`:
 
@@ -56,38 +63,37 @@ ToothGrowth %>% head
 
 # data.frame with new labels
 ToothGrowth %>%
-  translate(lex, "supp") %>%
-  translate(lex, "dose") %>%
+  translate(dict, c("supp", "dose")) %>%
   head
 ```
 
-Now, the columns `supp` and `dose` are factor variables, which hold the desired labels and have the same ordering as in the `LabelLexicon` file. If the original variable is a factor variable and you want to keep the original ordering, you can set the function argurment .
+Now, the columns `supp` and `dose` are factor variables, which hold the desired labels and have the same ordering as in the dictionary `dict`. If the original variable is a factor variable and you want to keep the original ordering, you can use the function argurment .
 
-### Create a LabelLexicon object manually
+### Create a dictionary object manually
 
-Instead of reading in a yaml file you can also create a LabelLexicon manually from a named list object, holding named character vectors. Each entry of the named list represents a variable of your data.frames and each named character vector is a translation. The names of the character vector entries represent the original values of the variable and the values of the character vector entries are the new labels that should be assigned.
+Instead of reading in a yaml file you can also create a dictionary object manually from a named list object, holding named character vectors. Each entry of the named list represents a variable of your data.frame and each named character vector is a translation. The names of the character vector entries represent the original values of the variable and the values of the character vector entries are the new labels that should be assigned.
 
 ``` r
-lex <- list(
+dict <- list(
     supp = c(VC = "Ascorbic acid", OJ = "Orange juice"),
     dose = c("0.5" = "Low", "1.0" = "Medium", "2.0" = "High")
   ) %>%
-  new_lexicon
+  new_dictionary
 ```
 
-### Alter your LabelLexicon
+### Alter your dictionary
 
-Sometimes it can be useful to alter your LabelLexicon object.
+Sometimes it can be useful to alter your dictionary object.
 
-With `select` you may pick a subset of LabelLexicon entries:
+With `select` you may pick a subset of dictionary entries:
 
 ``` r
-lex %>%
+dict %>%
   select(c("supp", "dose"))
 ```
 
     ## 
-    ## --- LabelLexicon ---
+    ## --- LabelDictionary ---
     ## Variable 'supp':
     ##              VC              OJ 
     ## "Ascorbic acid"  "Orange juice" 
@@ -96,15 +102,15 @@ lex %>%
     ##      0.5      1.0      2.0 
     ##    "Low" "Medium"   "High"
 
-With `mutate` you can set a new label translation (character vector) for a variable:
+With `mutate` you can set a new translation (character vector) for a variable:
 
 ``` r
-lex %>%
+dict %>%
   mutate("supp", c(VC = "Ascorbic a.", OJ = "Orange j."))
 ```
 
     ## 
-    ## --- LabelLexicon ---
+    ## --- LabelDictionary ---
     ## Variable 'supp':
     ##            VC            OJ 
     ## "Ascorbic a."   "Orange j." 
@@ -113,15 +119,15 @@ lex %>%
     ##      0.5      1.0      2.0 
     ##    "Low" "Medium"   "High"
 
-With `rename` you can rename a LabelLexicon entry:
+With `rename` you can rename a dictionary entry:
 
 ``` r
-lex %>%
+dict %>%
   rename(c("supp", "dose"), c("SUPP", "DOSE"))
 ```
 
     ## 
-    ## --- LabelLexicon ---
+    ## --- LabelDictionary ---
     ## Variable 'SUPP':
     ##              VC              OJ 
     ## "Ascorbic acid"  "Orange juice" 
@@ -132,29 +138,45 @@ lex %>%
 
 ### Merge two ore more LabelLexicas
 
-Sometimes you may want to merge two or more LabelLexicas into one LabelLexicon. This can be done with `merge_lexica`
-
-### Overriding error handlers in nested environments
-
-The function `composerr_parent` looks up the existing error handler in the parent environment and not in the current environment. This can be useful in nested scoping situations (for example when checking if a nested list object has a valid structure) and if you want to store the nested error handler functions under the same name (overriding error handler functions).
+With `merge` you can merge two or more LabelLexicas into one dictionary object:
 
 ``` r
-### Example 2 ###
-### check if all entries of the list object 'obj' are TRUE ###
-obj <- list(x = TRUE, y = TRUE, z = FALSE)
-# original error handler
-err_h <- composerr("obj is invalid")
-# check each list element 
-sapply(names(obj), function(name) {
-  # modify error handler to nested sitation
-  err_h <- composerr_parent(paste("Error in", name), err_h)
-  # check element and throw error FALSE
-  if (!obj[[name]])
-    err_h("Value is FALSE")
-})
-# --- resulting message ---
-# "obj is invalid: Error in z: Value is FALSE"
+dict1 <- list(
+    gender = c("0" = "female", "1" = "male"),
+    age = c("0" = "<10y", "1" = ">=10y"),
+    country = c("0" = "Austria", "1" = "Australia")
+  ) %>%
+  new_dictionary
+dict2 <- list(
+    school = c("0" = "Primary", "1" = "Secondary"),
+    gender = c("0" = "Girl", "1" = "Boy")
+  ) %>%
+  new_dictionary
+merge(dict1, dict2)
 ```
+
+    ## Warning in merge.LabelDictionary(dict1, dict2): The following
+    ## LabelDictionary entries will be overwritten: 0, 1
+
+    ## 
+    ## --- LabelDictionary ---
+    ## Variable 'gender':
+    ##      0      1 
+    ## "Girl"  "Boy" 
+    ## 
+    ## Variable 'age':
+    ##       0       1 
+    ##  "<10y" ">=10y" 
+    ## 
+    ## Variable 'country':
+    ##           0           1 
+    ##   "Austria" "Australia" 
+    ## 
+    ## Variable 'school':
+    ##           0           1 
+    ##   "Primary" "Secondary"
+
+The `merge` merges the arguments from left to right. Therefore, the variable translations of `dict1` are overwritten by the entries of `dict2`. In this example the resulting dictionary has contains the variable translations for `age` and `country` as defined in `dict1` and the variable translations for `school` and `gender` as defined in `dict2`. The variable translations for `gender` in `dict1` are overwritten by `dict2`.
 
 License
 -------

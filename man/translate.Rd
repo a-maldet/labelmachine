@@ -2,19 +2,47 @@
 % Please edit documentation in R/translate.R
 \name{translate}
 \alias{translate}
-\title{Relabel a variable in a [data.frame]}
+\alias{translate.data.frame}
+\title{Assign new labels to a variable in a data.frame}
 \usage{
 translate(...)
+
+\method{translate}{data.frame}(df, dictionary, variable, col = variable,
+  col_new = col, keep_order = FALSE)
 }
 \arguments{
 \item{...}{Various arguents}
-}
-\value{
-An extended data.frame, that has a factor variable holding the
+
+\item{df}{The data.frame object which contains the variable that should be labelled}
+
+\item{dictionary}{A [LabelDictionary] object, holding the translations for various
+variables.}
+
+\item{variable}{A character vector holding the names of the variable 
+translations which
+should be used for assigning new labels to the variable. This names must be
+a subset of the translation names returned by \code{names(dictionary)}.}
+
+\item{col}{A character vector of the same length as \code{variable} holding
+the names of the data.frame columns that
+should be relabelled. If omitted, then it will be assumed that the column
+names are the same as the given translation names in the argument \code{variable}.}
+
+\item{col_new}{A character vector of the same length as \code{variable} holding
+the names under which the relabelled variables should be stored in
+the data.frame. If omitted, then it will be assumed that the new column
+names are the same as the column names of the original variables.}
+
+\item{keep_order}{A logical flag. If the original data.frame variable
+as a factor variable and \code{keep_order} is set to \code{TRUE}, then
+the order of the original factor variable is preserved.
+return An extended data.frame, that has a factor variable holding the
+assigned labels.}
 }
 \description{
-This function takes a data.frame and converts one of its categorical variables
-(not necessarely a factor variable) to a factor variable with new labels. 
-The label assignment is given by a lexicon entry (defined by the arguments
-\code{lexicon} and \code{translation}).
+This function takes a data.frame and converts one or more of its
+categorical variables
+(not necessarely a factor variable) into factor variables with new labels. 
+The label assignment is given by the variable translations, which are 
+defined by the function arguments \code{dictionary} and \code{variable}.
 }

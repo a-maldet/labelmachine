@@ -1,12 +1,12 @@
-Package: labellexicon 
-Title: R package for easy management of the variable labels of your data sets.
+Package: labelmachine 
+Title: R package for easy management of the all variable labels in your data sets.
 Version: 0.0.2
 Authors@R:
     c(person(given = "Adrian",
              family = "Maldet",
              role = c("aut", "cre"),
              email = "adrian.maldet@statistik.gv.at"))
-Description: labellexicon is an R package that helps you assigning new labels to data.frame variables. Furthermore, you can manage your label translations in yaml files. This makes it very easy using the same label translations in multiple projects that share similar data structure.
+Description: labelmachine is an R package that helps you assigning new labels to data.frame variables. Furthermore, you can manage your label translations in yaml files. This makes it very easy using the same label translations in multiple projects that share similar data structure.
 Encoding: UTF-8
 Depends:
     R (>= 3.3.0)
@@ -17,10 +17,10 @@ Imports:
 License: GPL-3 + file LICENSE
 RoxygenNote: 6.1.1
 Collate: 
+    'dictionary.R'
     'imports.R'
-    'label_lexicon.R'
-    'merge_lexica.R'
+    'merge.R'
     'utilities.R'
-    'read_yaml_file.R'
+    'read_dictionary.R'
     'translate.R'
-    'write_yaml_file.R'
+    'write_dictionary.R'

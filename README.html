@@ -25,25 +25,25 @@ body {
 
 <body>
 
-<h1 id="labellexicon">labellexicon</h1>
-<p><code>labellexicon</code> is an <strong>R</strong> package that helps you assigning new labels to data.frame variables. Furthermore, you can manage your label translations in so called <strong>LabelLexicon</strong> files, which are <strong>yaml</strong> files, which hold the mappings (translations) of your variable labels. This makes it very easy using the same label translations in multiple projects that share similar data structure.</p>
+<h1 id="labelmachine">labelmachine</h1>
+<p><code>labelmachine</code> is an <strong>R</strong> package that helps you assigning new labels to data.frame variables. Furthermore, you can manage your label translations in so called <strong>dictionary</strong> files, which are <strong>yaml</strong> files. This makes it very easy using the same label translations in multiple projects that share similar data structure.</p>
 <p>The most important functions are:</p>
 <ul>
-<li><code>read_lexicon_file</code>: Reads in a <strong>yaml</strong> file holding the label translations for one or more variables.</li>
-<li><code>translate</code>: Use a LabelLexicon object in order to relabel one or more variables of your data.frame. The variables may be of type <code>number</code>, <code>character</code> or <code>factor</code>. In case of a factor variable, you have the possibility to keep the original ordering by using the function argument <code>keep_ordering = TRUE</code>.</li>
-<li><code>new_lexicon</code>: Create a LabelLexicon object from a named list, holding the label translations for one or more variables.</li>
-<li><code>write_lexicon_file</code>: Write a LabelLexicon object to a <strong>yaml</strong> file.</li>
-<li><code>select</code>: Pick a subset of a LabelLexicon object.</li>
-<li><code>mutate</code>: Alter the translations of a variable in a LabelLexicon object.</li>
-<li><code>rename</code>: Rename a variable in a LabelLexicon object.</li>
-<li><code>merge</code>: Merge two or more LabelLexicon objects into a single LabelLexicon object.</li>
+<li><code>read_dictionary</code>: Reads in a <strong>yaml</strong> file holding the label translations for one or more variables. The function returns a <strong>dictionary object</strong>, that can be used for the translation of variable labels later on.</li>
+<li><code>translate</code>: Use a dictionary object in order to relabel one or more variables of your data.frame. The variables may be of type <code>number</code>, <code>character</code> or <code>factor</code>. In case of a factor variable, you have the possibility to keep the original ordering by using the function argument <code>keep_ordering = TRUE</code>.</li>
+<li><code>new_dictionary</code>: Create a dictionary object from a named list, holding the translations for one or more variables.</li>
+<li><code>write_dictionary</code>: Write a dictionary object to a <strong>yaml</strong> file.</li>
+<li><code>select</code>: Pick a subset of translations in a dictionary object.</li>
+<li><code>mutate</code>: Alter the translations in a dictionary object.</li>
+<li><code>rename</code>: Rename a variable translations in a dictionary object.</li>
+<li><code>merge</code>: Merge two or more dictionary objects into a single dictionary object.</li>
 </ul>
 <h2 id="installation">Installation</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Install development version from GitHub</span>
-devtools::<span class="kw">install_github</span>(<span class="st">'a-maldet/labellexicon'</span>, <span class="dt">build_opts =</span> <span class="ot">NULL</span>)</code></pre></div>
+devtools::<span class="kw">install_github</span>(<span class="st">'a-maldet/labelmachine'</span>, <span class="dt">build_opts =</span> <span class="ot">NULL</span>)</code></pre></div>
 <h2 id="usage">Usage</h2>
-<h3 id="load-labellexicon-file-yaml">Load LabelLexicon file (yaml)</h3>
-<p>Structure of your LabelLexicon file <code>short_lex.yaml</code>:</p>
+<h3 id="load-a-dictionary-from-a-yaml-file">Load a dictionary from a yaml file</h3>
+<p>Structure of your dictionary file <code>my_dictionary.yaml</code>:</p>
 <div class="sourceCode"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span class="fu">supp:</span>
   <span class="fu">VC:</span> Ascorbic acid
   <span class="fu">OJ:</span> Orange juice
@@ -51,34 +51,37 @@ devtools::<span class="kw">install_github</span>(<span class="st">'a-maldet/labe
   <span class="fu">&quot;0.5&quot;:</span> Low
   <span class="fu">&quot;1&quot;:</span> Medium
   <span class="fu">&quot;2&quot;:</span> High</code></pre></div>
-<p>The first level names are the variable names. The second level names represent the original values of the variables and the third level values are the labels that should be assigned to the values of the variables.</p>
-<p>Load your <code>LabelLexicon</code> file with <code>read_lexicon_file</code>:</p>
-<h3 id="relabel-your-variables-with-a-labellexicon">Relabel your variables with a LabelLexicon</h3>
-<p>We can use the LabelLexicon object <code>lex</code> in order to translate a categorical variable (not necessarily a factor variable) in our data.frame to a factor variable with the labels that are defined in the LabelLexicon <code>lex</code>.</p>
+<p>The first level names are the names of the variables that should be translated. The second level names represent the original values of the variables and the third level holds the labels that should be assigned to the original values of the variables.</p>
+<p>Load your <code>dictionary</code> file with <code>read_dictionary</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(labelmachine)
+<span class="kw">library</span>(magrittr)
+dict &lt;-<span class="st"> &quot;my_dictionary.yaml&quot;</span> %&gt;%
+<span class="st">  </span>read_dictionary</code></pre></div>
+<h3 id="assign-new-labels-to-your-variables">Assign new labels to your variables</h3>
+<p>You can use the dictionary object <code>dict</code> in order to translate categorical variables (not necessarily factor variables) in your data.frame to a factor variable holding the labels that are defined in the dictionary <code>dict</code>.</p>
 <p>Relable your data.frame variables with <code>translate</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># data.frame with original values </span>
 ToothGrowth %&gt;%<span class="st"> </span>head
 
 <span class="co"># data.frame with new labels</span>
 ToothGrowth %&gt;%
-<span class="st">  </span><span class="kw">translate</span>(lex, <span class="st">&quot;supp&quot;</span>) %&gt;%
-<span class="st">  </span><span class="kw">translate</span>(lex, <span class="st">&quot;dose&quot;</span>) %&gt;%
+<span class="st">  </span><span class="kw">translate</span>(dict, <span class="kw">c</span>(<span class="st">&quot;supp&quot;</span>, <span class="st">&quot;dose&quot;</span>)) %&gt;%
 <span class="st">  </span>head</code></pre></div>
-<p>Now, the columns <code>supp</code> and <code>dose</code> are factor variables, which hold the desired labels and have the same ordering as in the <code>LabelLexicon</code> file. If the original variable is a factor variable and you want to keep the original ordering, you can set the function argurment .</p>
-<h3 id="create-a-labellexicon-object-manually">Create a LabelLexicon object manually</h3>
-<p>Instead of reading in a yaml file you can also create a LabelLexicon manually from a named list object, holding named character vectors. Each entry of the named list represents a variable of your data.frames and each named character vector is a translation. The names of the character vector entries represent the original values of the variable and the values of the character vector entries are the new labels that should be assigned.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lex &lt;-<span class="st"> </span><span class="kw">list</span>(
+<p>Now, the columns <code>supp</code> and <code>dose</code> are factor variables, which hold the desired labels and have the same ordering as in the dictionary <code>dict</code>. If the original variable is a factor variable and you want to keep the original ordering, you can use the function argurment .</p>
+<h3 id="create-a-dictionary-object-manually">Create a dictionary object manually</h3>
+<p>Instead of reading in a yaml file you can also create a dictionary object manually from a named list object, holding named character vectors. Each entry of the named list represents a variable of your data.frame and each named character vector is a translation. The names of the character vector entries represent the original values of the variable and the values of the character vector entries are the new labels that should be assigned.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dict &lt;-<span class="st"> </span><span class="kw">list</span>(
     <span class="dt">supp =</span> <span class="kw">c</span>(<span class="dt">VC =</span> <span class="st">&quot;Ascorbic acid&quot;</span>, <span class="dt">OJ =</span> <span class="st">&quot;Orange juice&quot;</span>),
     <span class="dt">dose =</span> <span class="kw">c</span>(<span class="st">&quot;0.5&quot;</span> =<span class="st"> &quot;Low&quot;</span>, <span class="st">&quot;1.0&quot;</span> =<span class="st"> &quot;Medium&quot;</span>, <span class="st">&quot;2.0&quot;</span> =<span class="st"> &quot;High&quot;</span>)
   ) %&gt;%
-<span class="st">  </span>new_lexicon</code></pre></div>
-<h3 id="alter-your-labellexicon">Alter your LabelLexicon</h3>
-<p>Sometimes it can be useful to alter your LabelLexicon object.</p>
-<p>With <code>select</code> you may pick a subset of LabelLexicon entries:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lex %&gt;%
+<span class="st">  </span>new_dictionary</code></pre></div>
+<h3 id="alter-your-dictionary">Alter your dictionary</h3>
+<p>Sometimes it can be useful to alter your dictionary object.</p>
+<p>With <code>select</code> you may pick a subset of dictionary entries:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dict %&gt;%
 <span class="st">  </span><span class="kw">select</span>(<span class="kw">c</span>(<span class="st">&quot;supp&quot;</span>, <span class="st">&quot;dose&quot;</span>))</code></pre></div>
 <pre><code>## 
-## --- LabelLexicon ---
+## --- LabelDictionary ---
 ## Variable 'supp':
 ##              VC              OJ 
 ## &quot;Ascorbic acid&quot;  &quot;Orange juice&quot; 
@@ -86,11 +89,11 @@ ToothGrowth %&gt;%
 ## Variable 'dose':
 ##      0.5      1.0      2.0 
 ##    &quot;Low&quot; &quot;Medium&quot;   &quot;High&quot;</code></pre>
-<p>With <code>mutate</code> you can set a new label translation (character vector) for a variable:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lex %&gt;%
+<p>With <code>mutate</code> you can set a new translation (character vector) for a variable:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dict %&gt;%
 <span class="st">  </span><span class="kw">mutate</span>(<span class="st">&quot;supp&quot;</span>, <span class="kw">c</span>(<span class="dt">VC =</span> <span class="st">&quot;Ascorbic a.&quot;</span>, <span class="dt">OJ =</span> <span class="st">&quot;Orange j.&quot;</span>))</code></pre></div>
 <pre><code>## 
-## --- LabelLexicon ---
+## --- LabelDictionary ---
 ## Variable 'supp':
 ##            VC            OJ 
 ## &quot;Ascorbic a.&quot;   &quot;Orange j.&quot; 
@@ -98,11 +101,11 @@ ToothGrowth %&gt;%
 ## Variable 'dose':
 ##      0.5      1.0      2.0 
 ##    &quot;Low&quot; &quot;Medium&quot;   &quot;High&quot;</code></pre>
-<p>With <code>rename</code> you can rename a LabelLexicon entry:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lex %&gt;%
+<p>With <code>rename</code> you can rename a dictionary entry:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dict %&gt;%
 <span class="st">  </span><span class="kw">rename</span>(<span class="kw">c</span>(<span class="st">&quot;supp&quot;</span>, <span class="st">&quot;dose&quot;</span>), <span class="kw">c</span>(<span class="st">&quot;SUPP&quot;</span>, <span class="st">&quot;DOSE&quot;</span>))</code></pre></div>
 <pre><code>## 
-## --- LabelLexicon ---
+## --- LabelDictionary ---
 ## Variable 'SUPP':
 ##              VC              OJ 
 ## &quot;Ascorbic acid&quot;  &quot;Orange juice&quot; 
@@ -111,24 +114,40 @@ ToothGrowth %&gt;%
 ##      0.5      1.0      2.0 
 ##    &quot;Low&quot; &quot;Medium&quot;   &quot;High&quot;</code></pre>
 <h3 id="merge-two-ore-more-labellexicas">Merge two ore more LabelLexicas</h3>
-<p>Sometimes you may want to merge two or more LabelLexicas into one LabelLexicon. This can be done with <code>merge_lexica</code></p>
-<h3 id="overriding-error-handlers-in-nested-environments">Overriding error handlers in nested environments</h3>
-<p>The function <code>composerr_parent</code> looks up the existing error handler in the parent environment and not in the current environment. This can be useful in nested scoping situations (for example when checking if a nested list object has a valid structure) and if you want to store the nested error handler functions under the same name (overriding error handler functions).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### Example 2 ###
-### check if all entries of the list object 'obj' are TRUE ###
-obj &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">x =</span> <span class="ot">TRUE</span>, <span class="dt">y =</span> <span class="ot">TRUE</span>, <span class="dt">z =</span> <span class="ot">FALSE</span>)
-<span class="co"># original error handler</span>
-err_h &lt;-<span class="st"> </span><span class="kw">composerr</span>(<span class="st">&quot;obj is invalid&quot;</span>)
-<span class="co"># check each list element </span>
-<span class="kw">sapply</span>(<span class="kw">names</span>(obj), function(name) {
-  <span class="co"># modify error handler to nested sitation</span>
-  err_h &lt;-<span class="st"> </span><span class="kw">composerr_parent</span>(<span class="kw">paste</span>(<span class="st">&quot;Error in&quot;</span>, name), err_h)
-  <span class="co"># check element and throw error FALSE</span>
-  if (!obj[[name]])
-    <span class="kw">err_h</span>(<span class="st">&quot;Value is FALSE&quot;</span>)
-})
-<span class="co"># --- resulting message ---</span>
-<span class="co"># &quot;obj is invalid: Error in z: Value is FALSE&quot;</span></code></pre></div>
+<p>With <code>merge</code> you can merge two or more LabelLexicas into one dictionary object:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dict1 &lt;-<span class="st"> </span><span class="kw">list</span>(
+    <span class="dt">gender =</span> <span class="kw">c</span>(<span class="st">&quot;0&quot;</span> =<span class="st"> &quot;female&quot;</span>, <span class="st">&quot;1&quot;</span> =<span class="st"> &quot;male&quot;</span>),
+    <span class="dt">age =</span> <span class="kw">c</span>(<span class="st">&quot;0&quot;</span> =<span class="st"> &quot;&lt;10y&quot;</span>, <span class="st">&quot;1&quot;</span> =<span class="st"> &quot;&gt;=10y&quot;</span>),
+    <span class="dt">country =</span> <span class="kw">c</span>(<span class="st">&quot;0&quot;</span> =<span class="st"> &quot;Austria&quot;</span>, <span class="st">&quot;1&quot;</span> =<span class="st"> &quot;Australia&quot;</span>)
+  ) %&gt;%
+<span class="st">  </span>new_dictionary
+dict2 &lt;-<span class="st"> </span><span class="kw">list</span>(
+    <span class="dt">school =</span> <span class="kw">c</span>(<span class="st">&quot;0&quot;</span> =<span class="st"> &quot;Primary&quot;</span>, <span class="st">&quot;1&quot;</span> =<span class="st"> &quot;Secondary&quot;</span>),
+    <span class="dt">gender =</span> <span class="kw">c</span>(<span class="st">&quot;0&quot;</span> =<span class="st"> &quot;Girl&quot;</span>, <span class="st">&quot;1&quot;</span> =<span class="st"> &quot;Boy&quot;</span>)
+  ) %&gt;%
+<span class="st">  </span>new_dictionary
+<span class="kw">merge</span>(dict1, dict2)</code></pre></div>
+<pre><code>## Warning in merge.LabelDictionary(dict1, dict2): The following
+## LabelDictionary entries will be overwritten: 0, 1
+
+## 
+## --- LabelDictionary ---
+## Variable 'gender':
+##      0      1 
+## &quot;Girl&quot;  &quot;Boy&quot; 
+## 
+## Variable 'age':
+##       0       1 
+##  &quot;&lt;10y&quot; &quot;&gt;=10y&quot; 
+## 
+## Variable 'country':
+##           0           1 
+##   &quot;Austria&quot; &quot;Australia&quot; 
+## 
+## Variable 'school':
+##           0           1 
+##   &quot;Primary&quot; &quot;Secondary&quot;</code></pre>
+<p>The <code>merge</code> merges the arguments from left to right. Therefore, the variable translations of <code>dict1</code> are overwritten by the entries of <code>dict2</code>. In this example the resulting dictionary has contains the variable translations for <code>age</code> and <code>country</code> as defined in <code>dict1</code> and the variable translations for <code>school</code> and <code>gender</code> as defined in <code>dict2</code>. The variable translations for <code>gender</code> in <code>dict1</code> are overwritten by <code>dict2</code>.</p>
 <h2 id="license">License</h2>
 <p><a href="https://R-package.github.io/styledTables/LICENSE">GPL-3</a></p>
 
