@@ -69,7 +69,7 @@ ToothGrowth %>%
 
 Now, the columns `supp` and `dose` are factor variables, which hold the desired labels and have the same ordering as in the dictionary `dict`.
 
-If the original variable is a factor variable and you want to keep the original ordering, you can use the function argurment `keep_ordering = TRUE`. Furthermore, you can also apply your variable translations to columns with different column names than your translation names, by passing the column names into the argument `col`. If you want to save your labelled variable to a different column name, you can use the argument `col_new` in order to specify the column names of the newly generated variables.
+If the original variable is a factor variable and you want to keep the original ordering, you can use the function argurment `keep_ordering = TRUE`. Furthermore, you can also apply your variable translations to columns with different column names than your translation names by passing the column names into the argument `col`. If you want to save your labelled variables to a different column names, you can use the argument `col_new` in order to specify the column names of the newly generated variables.
 
 ``` r
 df <- data.frame(age = factor(c(2, 2, 1, 3), levels = c(3, 2, 1)))

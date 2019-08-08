@@ -96,9 +96,9 @@ If the original variable is a factor variable and you want to keep
 the original ordering, you can use the function argurment
 `keep_ordering = TRUE`.
 Furthermore, you can also apply your variable translations to columns with
-different column names than your translation names, by passing the column names
+different column names than your translation names by passing the column names
 into the argument `col`.
-If you want to save your labelled variable to a different column name, you can
+If you want to save your labelled variables to a different column names, you can
 use the argument `col_new` in order to specify the column names of the newly
 generated variables.
 
