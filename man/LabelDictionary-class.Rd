@@ -2,27 +2,33 @@
 % Please edit documentation in R/dictionary.R
 \name{new_dictionary}
 \alias{new_dictionary}
-\title{Constructor function of the [LabelDictionary] class}
+\alias{as.dictionary}
+\title{Constructor function of the LabelDictionary class}
 \usage{
 new_dictionary(translation_list = NULL)
+
+as.dictionary(translation_list = NULL)
 }
 \arguments{
-\item{translation_list}{A named list object holding your 
+\item{translation_list}{A named list object holding your
 variable translations. Each
 list item must be a named character vector, which represent the translations
 replacing the original values of the variables by new labels.
 The item names of the character vectors correspond to the original variable
 values which should be relabelled.
 The values of the character vectors are the new labels that should be used.
-The order of the 
+The order of the
 character vectors will be used as the order of the new labels.
 (If the original variable is of the type \code{factor}, you can also
 preserve its order by passing \code{keep_order = TRUE} to the
 \code{translate} function.)}
 }
 \value{
-A [LabelDictionary] class object
+A LabelDictionary class object
 }
 \description{
 An \code{S3 class} which holds the variable translations.
+}
+\seealso{
+\code{\link[=is.dictionary]{is.dictionary()}}, \code{\link[=translate]{translate()}}, \code{\link[=read_directory]{read_directory()}}, \code{\link[=write_directory]{write_directory()}}, \code{\link[=select]{select()}}, \code{\link[=rename]{rename()}}, \code{\link[=mutate]{mutate()}}, \code{\link[=merge]{merge()}}
 }

@@ -3,14 +3,14 @@
 \name{mutate}
 \alias{mutate}
 \alias{mutate.LabelDictionary}
-\title{Change a variable translation or append a variable translation to an existing [LabelDictionary] object}
+\title{Change a variable translation or append a variable translation to an existing \link[=new_dictionary]{LabelDictionary} object}
 \usage{
 mutate(.data, ...)
 
 \method{mutate}{LabelDictionary}(.data, variable, translation)
 }
 \arguments{
-\item{.data}{A [LabelDictionary] object}
+\item{.data}{A \link[=new_dictionary]{LabelDictionary} object}
 
 \item{...}{Various arguments}
 
@@ -25,9 +25,12 @@ The values in the character vector \code{translations} are the labels
 that should be assigned to the original values.}
 }
 \value{
-An updated [LabelDictionary] class object.
+An updated \link[=new_dictionary]{LabelDictionary} class object.
 }
 \description{
-This function alters a [LabelDictionary] object. It can be used for altering
-or appending a translation to a [LabelDictionary] object.
+This function alters a \link[=new_dictionary]{LabelDictionary} object. It can be used for altering
+or appending a translation to a \link[=new_dictionary]{LabelDictionary} object.
+}
+\seealso{
+\code{\link[=translate]{translate()}}, \code{\link[=new_dictionary]{new_dictionary()}}, \code{\link[=select]{select()}}, \code{\link[=rename]{rename()}}, \code{\link[=merge]{merge()}}, \code{\link[=read_directory]{read_directory()}}, \code{\link[=write_directory]{write_directory()}}
 }

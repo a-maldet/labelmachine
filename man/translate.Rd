@@ -15,10 +15,10 @@ translate(...)
 
 \item{df}{The data.frame object which contains the variable that should be labelled}
 
-\item{dictionary}{A [LabelDictionary] object, holding the translations for various
+\item{dictionary}{A \link[=new_dictionary]{LabelDictionary} object, holding the translations for various
 variables.}
 
-\item{variable}{A character vector holding the names of the variable 
+\item{variable}{A character vector holding the names of the variable
 translations which
 should be used for assigning new labels to the variable. This names must be
 a subset of the translation names returned by \code{names(dictionary)}.}
@@ -42,7 +42,7 @@ assigned labels.}
 \description{
 This function takes a data.frame and converts one or more of its
 categorical variables
-(not necessarely a factor variable) into factor variables with new labels. 
-The label assignment is given by the variable translations, which are 
+(not necessarely a factor variable) into factor variables with new labels.
+The label assignment is given by the variable translations, which are
 defined by the function arguments \code{dictionary} and \code{variable}.
 }

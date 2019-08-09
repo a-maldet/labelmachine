@@ -7,22 +7,22 @@
 \method{merge}{LabelDictionary}(x, y, ..., show_warnings = TRUE)
 }
 \arguments{
-\item{x}{A [LabelDictionary] class object}
+\item{x}{A \link[=new_dictionary]{LabelDictionary} class object}
 
-\item{y}{A [LabelDictionary] class object}
+\item{y}{A \link[=new_dictionary]{LabelDictionary} class object}
 
-\item{...}{Optional additional multiple [LabelDictionary] class objects}
+\item{...}{Optional additional multiple \link[=new_dictionary]{LabelDictionary} class objects}
 
 \item{show_wanings}{A logical flag that defines, whether warnings should be shown (\code{TRUE}) or not (\code{FALSE})}
 }
 \value{
-The merged [LabelDictionary] class object
+The merged \link[=new_dictionary]{LabelDictionary} class object
 }
 \description{
-This function takes multiple [LabelDictionary] class objects and merges them together into
-a single [LabelDictionary] class object.
-In case some class objects have entries with the same name, the 
-class objects passed in later overwrite the class objects passed in first 
+This function takes multiple \link[=new_dictionary]{LabelDictionary} class objects and merges them together into
+a single \link[=new_dictionary]{LabelDictionary} class object.
+In case some class objects have entries with the same name, the
+class objects passed in later overwrite the class objects passed in first
 (e.g. in \code{merge(x, y, z)}: The lexicon \code{z} overwrites
 \code{x} and \code{y}. The lexicon \code{y} overwrites \code{x}).
 }

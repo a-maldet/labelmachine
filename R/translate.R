@@ -14,7 +14,7 @@ translate <- function(...) {
 }
 
 #' @param df The data.frame object which contains the variable that should be labelled
-#' @param dictionary A [LabelDictionary] object, holding the translations for various
+#' @param dictionary A [LabelDictionary][new_dictionary()] object, holding the translations for various
 #' variables.
 #' @param variable A character vector holding the names of the variable 
 #' translations which
@@ -41,7 +41,7 @@ translate.data.frame <- function(df, dictionary, variable, col = variable, col_n
   err_handler <- composerr("Error while calling 'translate'")
   if (!is.data.frame(df))
     err_handler("The argument 'df' must be a data.frame.")
-  if (class(dictionary) != "LabelDictionary")
+  if (!is.dictionary(dictionary))
     err_handler("The argument 'dictionary' must be a LabelDictionary class object.")
   if (!is.character(variable) || length(variable) == 0)
     err_handler("The argument 'variable' must be a character vector.")

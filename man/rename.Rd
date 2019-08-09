@@ -3,14 +3,14 @@
 \name{rename}
 \alias{rename}
 \alias{rename.LabelDictionary}
-\title{Rename multiple variable translations in a [LabelDictionary] object}
+\title{Rename multiple variable translations in a \link[=new_dictionary]{LabelDictionary} object}
 \usage{
 rename(.data, ...)
 
 \method{rename}{LabelDictionary}(.data, old, new)
 }
 \arguments{
-\item{.data}{A [LabelDictionary] object, holding the variable translations}
+\item{.data}{A \link[=new_dictionary]{LabelDictionary} object, holding the variable translations}
 
 \item{...}{Various arguments}
 
@@ -19,8 +19,11 @@ rename(.data, ...)
 \item{new}{A character vector holding the new names of the variable translations.}
 }
 \value{
-The updated [LabelDictionary] class object.
+The updated \link[=new_dictionary]{LabelDictionary} class object.
 }
 \description{
-This function renamess one or more variable translations inside of a [LabelDictionary] class object.
+This function renamess one or more variable translations inside of a \link[=new_dictionary]{LabelDictionary} class object.
+}
+\seealso{
+\code{\link[=translate]{translate()}}, \code{\link[=new_dictionary]{new_dictionary()}}, \code{\link[=select]{select()}}, \code{\link[=mutate]{mutate()}}, \code{\link[=merge]{merge()}}, \code{\link[=read_directory]{read_directory()}}, \code{\link[=write_directory]{write_directory()}}
 }

@@ -10,7 +10,7 @@ read_dictionary(yaml_path)
 \item{yaml_path}{Path to yaml file holding the labels and translations for multiple variables}
 }
 \value{
-A [LabelDictionary] class object holding the variable translations defined in
+A \link[=new_dictionary]{LabelDictionary} class object holding the variable translations defined in
 the yaml file
 }
 \description{

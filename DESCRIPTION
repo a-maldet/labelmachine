@@ -1,6 +1,6 @@
 Package: labelmachine 
 Title: R package for easy management of the all variable labels in your data sets.
-Version: 1.0.0
+Version: 1.0.1
 Authors@R:
     c(person(given = "Adrian",
              family = "Maldet",
@@ -15,6 +15,7 @@ Imports:
     composerr,
     yaml (>= 2.2.0)
 License: GPL-3 + file LICENSE
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Collate: 
     'dictionary.R'

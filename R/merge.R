@@ -1,28 +1,28 @@
 #' Merge multiple label lexicas into one
 #'
-#' This function takes multiple [LabelDictionary] class objects and merges them together into
-#' a single [LabelDictionary] class object.
+#' This function takes multiple [LabelDictionary][new_dictionary()] class objects and merges them together into
+#' a single [LabelDictionary][new_dictionary()] class object.
 #' In case some class objects have entries with the same name, the 
 #' class objects passed in later overwrite the class objects passed in first 
 #' (e.g. in \code{merge(x, y, z)}: The lexicon \code{z} overwrites
 #' \code{x} and \code{y}. The lexicon \code{y} overwrites \code{x}).
-#' @param x A [LabelDictionary] class object
-#' @param y A [LabelDictionary] class object
-#' @param ... Optional additional multiple [LabelDictionary] class objects
+#' @param x A [LabelDictionary][new_dictionary()] class object
+#' @param y A [LabelDictionary][new_dictionary()] class object
+#' @param ... Optional additional multiple [LabelDictionary][new_dictionary()] class objects
 #' @param show_wanings A logical flag that defines, whether warnings should be shown (\code{TRUE}) or not (\code{FALSE})
-#' @return The merged [LabelDictionary] class object
+#' @return The merged [LabelDictionary][new_dictionary()] class object
 #' @rdname merge
 #' @method merge LabelDictionary
 #' @export
 #' @include dictionary.R
 merge.LabelDictionary <- function(x, y, ..., show_warnings = TRUE) {
   err_handler <- composerr("Error while calling 'merge'")
-  if (class(y) != "LabelDictionary") 
+  if (!is.dictionary(y))
     err_handler(paste0("The argument at position '", 2, "' is not a LabelDictionary class object."))
   args <- list(...)
   if (length(args) > 0)
     lapply(seq_len(length(args)), function(i) {
-      if (class(args[[i]]) != "LabelDictionary") 
+      if (!is.dictionary(ars[[i]]))
         err_handler(paste0("The argument at position '", i + 2, "' is not a LabelDictionary class object."))
     })
   if (show_warnings) {

@@ -2,12 +2,12 @@
 % Please edit documentation in R/utilities.R
 \name{dictionary_to_yaml}
 \alias{dictionary_to_yaml}
-\title{Transform data structure from [LabelDictionary] class input format to the yaml format}
+\title{Transform data structure from \link[=new_dictionary]{LabelDictionary} class input format to the yaml format}
 \usage{
 dictionary_to_yaml(data)
 }
 \description{
-In the [LabelDictionary] class object the data has the structure
+In the \link[=new_dictionary]{LabelDictionary} class object the data has the structure
 vars (named list) > translations (named character vector)
 This structure is transformed to the yaml file structure
 vars (named list) > translations (named list)

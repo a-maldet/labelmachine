@@ -3,14 +3,14 @@
 \name{select}
 \alias{select}
 \alias{select.LabelDictionary}
-\title{Pick multiple variable translations and create a new [LabelDictionary] object}
+\title{Pick multiple variable translations and create a new \link[=new_dictionary]{LabelDictionary} object}
 \usage{
 select(.data, ...)
 
 \method{select}{LabelDictionary}(.data, variable)
 }
 \arguments{
-\item{.data}{A [LabelDictionary] object, holding the variable translations}
+\item{.data}{A \link[=new_dictionary]{LabelDictionary} object, holding the variable translations}
 
 \item{...}{Various arguments}
 
@@ -18,9 +18,12 @@ select(.data, ...)
 should be picked.}
 }
 \value{
-A new [LabelDictionary] class object, holding the picked variable translations.
+A new \link[=new_dictionary]{LabelDictionary} class object, holding the picked variable translations.
 }
 \description{
-This function picks one or more variable translations from a [LabelDictionary] class object
-and creates a new [LabelDictionary] class object.
+This function picks one or more variable translations from a \link[=new_dictionary]{LabelDictionary} class object
+and creates a new \link[=new_dictionary]{LabelDictionary} class object.
+}
+\seealso{
+\code{\link[=translate]{translate()}}, \code{\link[=new_dictionary]{new_dictionary()}}, \code{\link[=rename]{rename()}}, \code{\link[=mutate]{mutate()}}, \code{\link[=merge]{merge()}}, \code{\link[=read_directory]{read_directory()}}, \code{\link[=write_directory]{write_directory()}}
 }

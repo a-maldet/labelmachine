@@ -1,4 +1,4 @@
-#' Constructor function of the [LabelDictionary] class
+#' Constructor function of the LabelDictionary class
 #'
 #' An \code{S3 class} which holds the variable translations.
 #' @param translation_list A named list object holding your 
@@ -13,7 +13,8 @@
 #' (If the original variable is of the type \code{factor}, you can also
 #' preserve its order by passing \code{keep_order = TRUE} to the
 #' \code{translate} function.)
-#' @return A [LabelDictionary] class object
+#' @return A LabelDictionary class object
+#' @seealso [is.dictionary()], [translate()], [read_directory()], [write_directory()], [select()], [rename()], [mutate()], [merge()]
 #' @rdname LabelDictionary-class
 #' @export
 new_dictionary <- function(translation_list = NULL) {
@@ -40,11 +41,29 @@ new_dictionary <- function(translation_list = NULL) {
   structure(translation_list, class = "LabelDictionary")
 }
 
-#' Pick multiple variable translations and create a new [LabelDictionary] object
+#' @rdname LabelDictionary-class
+#' @export
+as.dictionary <- function(translation_list = NULL) {
+  new_dictionary(translation_list)
+}
+
+#' Check if an object is a [LabelDictionary][new_dictionary()] class object
 #'
-#' This function picks one or more variable translations from a [LabelDictionary] class object
-#' and creates a new [LabelDictionary] class object.
-#' @param .data A [LabelDictionary] object, holding the variable translations
+#' @param x The object in question
+#' @return \code{TRUE} if the object is a [LabelDictionary][new_dictionary()] class object, \code{FALSE} otherwise.
+#' @rdname is_dictionary
+#' @seealso [as.dictionary()], [new_dictionary()], [translate()], [read_directory()], [write_directory()], [select()], [rename()], [mutate()], [merge()]
+#' @export
+is.dictionary <- function(x) {
+  inherits(x, "LabelDictionary")
+}
+
+
+#' Pick multiple variable translations and create a new [LabelDictionary][new_dictionary()] object
+#'
+#' This function picks one or more variable translations from a [LabelDictionary][new_dictionary()] class object
+#' and creates a new [LabelDictionary][new_dictionary()] class object.
+#' @param .data A [LabelDictionary][new_dictionary()] object, holding the variable translations
 #' @param ... Various arguments
 #' @rdname select
 #' @export
@@ -54,13 +73,14 @@ select <- function(.data, ...) {
 
 #' @param variable A character vector holding the names of the variable translations that
 #' should be picked.
-#' @return A new [LabelDictionary] class object, holding the picked variable translations.
+#' @return A new [LabelDictionary][new_dictionary()] class object, holding the picked variable translations.
 #' @rdname select
+#' @seealso [translate()], [new_dictionary()], [rename()], [mutate()], [merge()], [read_directory()], [write_directory()]
 #' @method select LabelDictionary
 #' @export
 select.LabelDictionary <- function(.data, variable) {
   err_handler <- composerr("Error while calling 'select'")
-  if (class(.data) != "LabelDictionary")
+  if (!is.dictionary(.data))
     err_handler("The object given in the argument '.data' must be a LabelDictionary class object.")
   if (!is.character(variable) || length(variable) == 0)
     err_handler("The object given in the argument 'variable' must be a character vector.")
@@ -76,10 +96,10 @@ select.LabelDictionary <- function(.data, variable) {
   new_dictionary(.data[variable])
 }
 
-#' Rename multiple variable translations in a [LabelDictionary] object
+#' Rename multiple variable translations in a [LabelDictionary][new_dictionary()] object
 #'
-#' This function renamess one or more variable translations inside of a [LabelDictionary] class object.
-#' @param .data A [LabelDictionary] object, holding the variable translations
+#' This function renamess one or more variable translations inside of a [LabelDictionary][new_dictionary()] class object.
+#' @param .data A [LabelDictionary][new_dictionary()] object, holding the variable translations
 #' @param ... Various arguments
 #' @rdname rename
 #' @export
@@ -89,13 +109,14 @@ rename <- function(.data, ...) {
 
 #' @param old A character vector holding the names of the variable translations, that should be renamed.
 #' @param new A character vector holding the new names of the variable translations.
-#' @return The updated [LabelDictionary] class object.
+#' @return The updated [LabelDictionary][new_dictionary()] class object.
+#' @seealso [translate()], [new_dictionary()], [select()], [mutate()], [merge()], [read_directory()], [write_directory()]
 #' @rdname rename 
 #' @method rename LabelDictionary
 #' @export
 rename.LabelDictionary <- function(.data, old, new) {
   err_handler <- composerr("Error while calling 'rename'")
-  if (class(.data) != "LabelDictionary")
+  if (!is.dictionary(.data))
     err_handler("The object given in the argument '.data' must be a LabelDictionary class object.")
   if (!is.character(old) || length(old) == 0)
     err_handler("The object given in the argument 'old' must be a character vector.")
@@ -114,13 +135,13 @@ rename.LabelDictionary <- function(.data, old, new) {
   .data
 }
 
-#' Change a variable translation or append a variable translation to an existing [LabelDictionary] object
+#' Change a variable translation or append a variable translation to an existing [LabelDictionary][new_dictionary()] object
 #'
-#' This function alters a [LabelDictionary] object. It can be used for altering
-#' or appending a translation to a [LabelDictionary] object.
-#' @param .data A [LabelDictionary] object
+#' This function alters a [LabelDictionary][new_dictionary()] object. It can be used for altering
+#' or appending a translation to a [LabelDictionary][new_dictionary()] object.
+#' @param .data A [LabelDictionary][new_dictionary()] object
 #' @param ... Various arguments
-#' @return An updated [LabelDictionary] class object.
+#' @return An updated [LabelDictionary][new_dictionary()] class object.
 #' @rdname mutate
 #' @export
 mutate <- function(.data, ...) {
@@ -136,11 +157,12 @@ mutate <- function(.data, ...) {
 #' The values in the character vector \code{translations} are the labels
 #' that should be assigned to the original values.
 #' @rdname mutate
+#' @seealso [translate()], [new_dictionary()], [select()], [rename()], [merge()], [read_directory()], [write_directory()]
 #' @method mutate LabelDictionary
 #' @export
 mutate.LabelDictionary <- function(.data, variable, translation) {
   err_handler <- composerr("Error while calling 'mutate'")
-  if (class(.data) != "LabelDictionary")
+  if (!is.dictionary(.data))
     err_handler("The object given in the argument '.data' must be a LabelDictionary class object.")
   if (!is.character(variable) || length(variable) != 1)
     err_handler("The object given in the argument 'variable' must be a character string.")
@@ -156,10 +178,11 @@ mutate.LabelDictionary <- function(.data, variable, translation) {
   .data
 }
 
-#' Print a [LabelDictionary] class object
+#' Print a [LabelDictionary][new_dictionary()] class object
 #'
-#' @param x The [LabelDictionary] class object that should be printed.
+#' @param x The [LabelDictionary][new_dictionary()] class object that should be printed.
 #' @rdname print
+#' @seealso [translate()], [new_dictionary()], [select()], [rename()], [mutate()], [merge()], [read_directory()], [write_directory()]
 #' @method print LabelDictionary
 #' @export
 print.LabelDictionary <- function(x) {

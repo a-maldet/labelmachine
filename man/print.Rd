@@ -2,13 +2,16 @@
 % Please edit documentation in R/dictionary.R
 \name{print.LabelDictionary}
 \alias{print.LabelDictionary}
-\title{Print a [LabelDictionary] class object}
+\title{Print a \link[=new_dictionary]{LabelDictionary} class object}
 \usage{
 \method{print}{LabelDictionary}(x)
 }
 \arguments{
-\item{x}{The [LabelDictionary] class object that should be printed.}
+\item{x}{The \link[=new_dictionary]{LabelDictionary} class object that should be printed.}
 }
 \description{
-Print a [LabelDictionary] class object
+Print a \link[=new_dictionary]{LabelDictionary} class object
+}
+\seealso{
+\code{\link[=translate]{translate()}}, \code{\link[=new_dictionary]{new_dictionary()}}, \code{\link[=select]{select()}}, \code{\link[=rename]{rename()}}, \code{\link[=mutate]{mutate()}}, \code{\link[=merge]{merge()}}, \code{\link[=read_directory]{read_directory()}}, \code{\link[=write_directory]{write_directory()}}
 }
