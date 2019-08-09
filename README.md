@@ -7,7 +7,7 @@ labelmachine
 The most important functions are:
 
 -   `read_dictionary`: Reads in a **yaml** file holding the label translations for one or more variables. The function returns a **dictionary object**, that can be used for the translation of variable labels later on.
--   `translate`: Use a dictionary object in order to relabel one or more variables of your data.frame. The variables may be of type `number`, `character` or `factor`. In case of a factor variable, you have the possibility to keep the original ordering by using the function argument `keep_ordering = TRUE`.
+-   `translate`: Use a dictionary object in order to relabel one or more variables of your data.frame. The variables may be of type `numeric`, `character` or `factor`. In case of a factor variable, you have the possibility to keep the original ordering by using the function argument `keep_ordering = TRUE`.
 -   `new_dictionary`: Create a dictionary object from a named list, holding the translations for one or more variables.
 -   `write_dictionary`: Write a dictionary object to a **yaml** file.
 -   `select`: Pick a subset of translations in a dictionary object.
