@@ -25,3 +25,5 @@ Collate:
     'read_dictionary.R'
     'translate.R'
     'write_dictionary.R'
+Suggests: 
+    testthat (>= 2.1.0)
