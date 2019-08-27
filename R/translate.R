@@ -55,24 +55,27 @@ translate.data.frame <- function(df, dictionary, variable, col = variable, col_n
     err_handler("The argument 'keep_order' must be a character string.")
   if (any(!variable %in% names(dictionary))) 
     err_handler(paste0(
-        "The following values of the argument 'variable' could not be found ",
-        "in the LabelDictionary object given in argument 'dictionary': ",
-        paste(variable[!variable %in% names(dictionary)], collapse = ", "),
-        "\nUse a subset of the following variable names: ",
-        paste0(names(dictionary), collapse = c(", "))
-      ))
+      "The following values of the argument 'variable' could not be found ",
+      "in the LabelDictionary object given in argument 'dictionary': ",
+      stringify(variable[!variable %in% names(dictionary)]),
+      ".\nUse a subset of the following variable names: ",
+      stringify(names(dictionary)),
+      "."
+    ))
   if (any(!col %in% names(df)))
     err_handler(paste0(
-      "The following values of 'col' are no column names of the data.frame given in argument 'df': ",
-      paste(col[!col %in% names(df)], collapse = ", "),
-      "\nConsider using ",
+      "The following values of 'col' are no column names of the data.frame ",
+      "given in argument 'df': ",
+      stringify(col[!col %in% names(df)]),
+      ".\nConsider using ",
       "The argument 'col' in order to deal with column names differing ",
       "from the variable names defined in the passed in dictionary."
     ))
   if (any(!is.syntactic(col_new)))
-    err_handler(paste(
-      "The following values of 'col_new' are invalid column names:",
-      paste(col_new[!is.syntactic(col_new)], collapse = ", ")
+    err_handler(paste0(
+      "The following values of 'col_new' are invalid column names: ",
+      stringify(col_new[!is.syntactic(col_new)]),
+      "."
     ))
   for (i in seq_len(length(variable))) 
     df[[col_new[i]]] <- create_labelled_vector(
@@ -90,10 +93,11 @@ create_labelled_vector <- function(col, val, translation, keep_order, err_handle
   missing_labels <- missing_labels[!missing_labels %in% old_labels]
   if (length(missing_labels) > 0)
     err_handler(paste0(
-        "The following variable levels in 'df$", col,"' have no corresponding ",
-        "label in the LabelDictionary object given in argument 'dictionary': ",
-        paste(missing_labels, collapse = ", ")
-      ))
+      "The following variable levels in 'df$", col,"' have no corresponding ",
+      "label in the LabelDictionary object given in argument 'dictionary': ",
+      stringify(missing_labels),
+      "."
+    ))
   # --- Relabel val ---
   labelling_map <- data.frame(old = old_labels, new = translation)
   if (is.factor(val) && keep_order) {

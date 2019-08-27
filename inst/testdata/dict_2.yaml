@@ -1,0 +1,14 @@
+dose:
+  0: Low
+  1: Medium
+  2: High
+dose_long:
+  0: Low dosage
+  1: Medium dosage
+  2: High dosage
+supp:
+  VC: Asc. acid
+  OJ: O. juice
+supp_long:
+  VC: Ascorbic acid
+  OJ: Orange juice

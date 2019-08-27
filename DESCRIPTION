@@ -20,9 +20,13 @@ RoxygenNote: 6.1.1
 Collate: 
     'dictionary.R'
     'imports.R'
-    'merge.R'
     'utilities.R'
     'read_dictionary.R'
+    'rename.R'
+    'trans_merge.R'
+    'trans_rename.R'
+    'trans_select.R'
+    'trans_set.R'
     'translate.R'
     'write_dictionary.R'
 Suggests: 

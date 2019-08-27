@@ -1,4 +1,4 @@
 library(testthat)
-library(labelmachine )
+library(labelmachine)
 
-test_check("labelmachine ")
+test_check("labelmachine")

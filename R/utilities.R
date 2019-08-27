@@ -21,3 +21,7 @@ yaml_to_dictionary <- function(data) {
 dictionary_to_yaml <- function(data) {
   lapply(data, as.list)
 }
+
+#' Stringify a character vector
+stringify <- function(x)
+  paste0(paste0("'", x, "'"), collapse = ", ")

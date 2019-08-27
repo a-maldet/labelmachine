@@ -1,22 +1,32 @@
 #' Merge multiple label lexicas into one
 #'
-#' This function takes multiple [LabelDictionary][new_dictionary()] class objects and merges them together into
+#' This function takes multiple [LabelDictionary][new_dictionary()] class
+#' objects and merges them together into
 #' a single [LabelDictionary][new_dictionary()] class object.
 #' In case some class objects have entries with the same name, the 
 #' class objects passed in later overwrite the class objects passed in first 
-#' (e.g. in \code{merge(x, y, z)}: The lexicon \code{z} overwrites
+#' (e.g. in \code{trans_merge(x, y, z)}: The lexicon \code{z} overwrites
 #' \code{x} and \code{y}. The lexicon \code{y} overwrites \code{x}).
 #' @param x A [LabelDictionary][new_dictionary()] class object
 #' @param y A [LabelDictionary][new_dictionary()] class object
-#' @param ... Optional additional multiple [LabelDictionary][new_dictionary()] class objects
-#' @param show_wanings A logical flag that defines, whether warnings should be shown (\code{TRUE}) or not (\code{FALSE})
+#' @param ... Optional additional multiple [LabelDictionary][new_dictionary()]
+#' class objects
+#' @param show_wanings A logical flag that defines, whether warnings should be
+#' shown (\code{TRUE}) or not (\code{FALSE})
 #' @return The merged [LabelDictionary][new_dictionary()] class object
-#' @rdname merge
-#' @method merge LabelDictionary
+#' @seealso [translate()], [new_dictionary()], [trans_rename()], [tran_select()],
+#' [trans_set()], [read_dictionary()], [write_dictionary()]
+#' @rdname trans_merge
 #' @export
 #' @include dictionary.R
-merge.LabelDictionary <- function(x, y, ..., show_warnings = TRUE) {
-  err_handler <- composerr("Error while calling 'merge'")
+trans_merge <- function(.data, x, y, ..., show_warnings = TRUE) {
+  UseMethod("trans_merge")
+}
+
+#' @rdname trans_merge
+#' @export
+trans_merge.LabelDictionary <- function(x, y, ..., show_warnings = TRUE) {
+  err_handler <- composerr("Error while calling 'trans_merge'")
   if (!is.dictionary(y))
     err_handler(paste0("The argument at position '", 2, "' is not a LabelDictionary class object."))
   args <- list(...)
@@ -36,9 +46,10 @@ merge.LabelDictionary <- function(x, y, ..., show_warnings = TRUE) {
       all_names <<- unique(c(all_names, names(x)))
     })
     if (length(overwritten_names) > 0)
-      warning(paste(
-        "The following LabelDictionary entries will be overwritten:",
-        paste0(overwritten_names, collapse = ", ")
+      warning(paste0(
+        "The following LabelDictionary entries will be overwritten: ",
+       stringify(overwritten_names),
+       "."
       ))
   }
   # Merge the 1st with the 2nd LabelDictionary object
