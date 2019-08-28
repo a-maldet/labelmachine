@@ -13,37 +13,13 @@ expect_dictionary <- function(object) {
   invisible(act$val)
 }
 
-#' Check that a dictionary contains some specific translations
-#'
-#' Check that the dictionary contains at least the translations whoose names
-#' are given in \code{translation}.
-#' @param object A [LabelDictionary][new_dictionary()]
-#' @param translation A character vector holding the translation names
-expect_has_translation <- function(object, translation) {
-  # 1. Capture object and label
-  act <- quasi_label(rlang::enquo(object), arg = "object")
-  # 2. Call expect()
-  missing <- !translation %in% names(act$val)
-  expect_dictionary(object)
-  expect(
-    all(!missing),
-    sprintf(
-      "The dictionary '%s' does not contain the following translations: %s.",
-      act$lab, 
-      stringify(translation[missing])
-    )
-  )
-  # 3. Invisibly return the value
-  invisible(act$val)
-}
-
 #' Check that a dictionary contains the right translations
 #'
 #' Check that the translation names of the dictionary are just the names given
 #' in \code{translation}.
 #' @param object A [LabelDictionary][new_dictionary()]
 #' @param translation A character vector holding the translation names
-expect_has_exact_translation <- function(object, translation) {
+expect_translation_names <- function(object, translation) {
   # 1. Capture object and label
   act <- quasi_label(rlang::enquo(object), arg = "object")
   # 2. Call expect()
@@ -100,5 +76,38 @@ expect_translation_identical <- function(object, key, translation) {
     )
   )
   # 3. Invisibly return the values
+  invisible(act$val)
+}
+
+#' Check that a dictionary contains the right translations
+#'
+#' Check that the translation names of the dictionary are just the names given
+#' in \code{translation}.
+#' @param object A [LabelDictionary][new_dictionary()]
+#' @param translation A character vector holding the translation names
+expect_translation_names <- function(object, translation) {
+  # 1. Capture object and label
+  act <- quasi_label(rlang::enquo(object), arg = "object")
+  # 2. Call expect()
+  expect_dictionary(object)
+  missing <- !translation %in% names(act$val)
+  expect(
+    all(!missing),
+    sprintf(
+      "The dictionary '%s' does not contain the following translations: %s.",
+      act$lab, 
+      stringify(translation[missing])
+    )
+  )
+  too_much <- !names(act$val) %in% translation
+  expect(
+    all(!too_much),
+    sprintf(
+      "The dictionary '%s' contains too many translations: %s.",
+      act$lab,
+      stringify(names(act$val)[too_much])
+    )
+  )
+  # 3. Invisibly return the value
   invisible(act$val)
 }

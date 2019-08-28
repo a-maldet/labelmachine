@@ -20,14 +20,13 @@ RoxygenNote: 6.1.1
 Collate: 
     'dictionary.R'
     'imports.R'
+    'lama_merge.R'
+    'lama_mutate.R'
     'utilities.R'
-    'read_dictionary.R'
-    'rename.R'
-    'trans_merge.R'
-    'trans_rename.R'
-    'trans_select.R'
-    'trans_set.R'
-    'translate.R'
-    'write_dictionary.R'
+    'lama_read.R'
+    'lama_select.R'
+    'lama_rename.R'
+    'lama_translate.R'
+    'lama_write.R'
 Suggests: 
     testthat (>= 2.1.0)

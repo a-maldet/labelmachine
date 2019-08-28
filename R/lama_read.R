@@ -5,6 +5,11 @@
 #' the yaml file
 #' @export
 #' @include utilities.R dictionary.R
-read_dictionary <- function(yaml_path) {
-  new_dictionary(yaml_to_dictionary(yaml::read_yaml(yaml_path)))
+lama_read <- function(yaml_path) {
+  err_handler <- composerr("Error while calling 'lama_read'")
+  tryCatch(
+    new_dictionary(yaml_to_dictionary(yaml::read_yaml(yaml_path))),
+    error = function(e) err_handler(e),
+    warning = function(w) err_handler(w)
+  )
 }

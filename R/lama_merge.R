@@ -5,7 +5,7 @@
 #' a single [LabelDictionary][new_dictionary()] class object.
 #' In case some class objects have entries with the same name, the 
 #' class objects passed in later overwrite the class objects passed in first 
-#' (e.g. in \code{trans_merge(x, y, z)}: The lexicon \code{z} overwrites
+#' (e.g. in \code{lama_merge(x, y, z)}: The lexicon \code{z} overwrites
 #' \code{x} and \code{y}. The lexicon \code{y} overwrites \code{x}).
 #' @param x A [LabelDictionary][new_dictionary()] class object
 #' @param y A [LabelDictionary][new_dictionary()] class object
@@ -14,19 +14,19 @@
 #' @param show_wanings A logical flag that defines, whether warnings should be
 #' shown (\code{TRUE}) or not (\code{FALSE})
 #' @return The merged [LabelDictionary][new_dictionary()] class object
-#' @seealso [translate()], [new_dictionary()], [trans_rename()], [tran_select()],
-#' [trans_set()], [read_dictionary()], [write_dictionary()]
-#' @rdname trans_merge
+#' @seealso [translate()], [new_dictionary()], [lama_rename()], [tran_select()],
+#' [lama_mutate()], [lama_read()], [lama_write()]
+#' @rdname lama_merge
 #' @export
 #' @include dictionary.R
-trans_merge <- function(.data, x, y, ..., show_warnings = TRUE) {
-  UseMethod("trans_merge")
+lama_merge <- function(.data, x, y, ..., show_warnings = TRUE) {
+  UseMethod("lama_merge")
 }
 
-#' @rdname trans_merge
+#' @rdname lama_merge
 #' @export
-trans_merge.LabelDictionary <- function(x, y, ..., show_warnings = TRUE) {
-  err_handler <- composerr("Error while calling 'trans_merge'")
+lama_merge.LabelDictionary <- function(x, y, ..., show_warnings = TRUE) {
+  err_handler <- composerr("Error while calling 'lama_merge'")
   if (!is.dictionary(y))
     err_handler(paste0("The argument at position '", 2, "' is not a LabelDictionary class object."))
   args <- list(...)
