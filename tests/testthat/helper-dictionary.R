@@ -1,3 +1,6 @@
+library(magrittr)
+library(labelmachine)
+
 #' Check that an object is a [LabelDictionary][new_dictionary()] class object
 #'
 #' @param object The object that should be checked

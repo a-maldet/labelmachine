@@ -13,5 +13,5 @@
 Print a \link[=new_dictionary]{LabelDictionary} class object
 }
 \seealso{
-\code{\link[=translate]{translate()}}, \code{\link[=new_dictionary]{new_dictionary()}}, \code{\link[=select]{select()}}, \code{\link[=rename]{rename()}}, \code{\link[=mutate]{mutate()}}, \code{\link[=merge]{merge()}}, \code{\link[=read_directory]{read_directory()}}, \code{\link[=write_directory]{write_directory()}}
+\code{\link[=lama_translate]{lama_translate()}}, \code{\link[=new_dictionary]{new_dictionary()}}, \code{\link[=lama_select]{lama_select()}}, \code{\link[=lama_rename]{lama_rename()}}, \code{\link[=lama_mutate]{lama_mutate()}}, \code{\link[=lama_merge]{lama_merge()}}, \code{\link[=lama_read]{lama_read()}}, \code{\link[=lama_write]{lama_write()}}
 }

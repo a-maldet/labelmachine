@@ -4,17 +4,20 @@
 \alias{is.dictionary}
 \title{Check if an object is a \link[=new_dictionary]{LabelDictionary} class object}
 \usage{
-is.dictionary(x)
+is.dictionary(obj)
 }
 \arguments{
-\item{x}{The object in question}
+\item{obj}{The object in question}
 }
 \value{
-\code{TRUE} if the object is a \link[=new_dictionary]{LabelDictionary} class object, \code{FALSE} otherwise.
+\code{TRUE} if the object is a
+\link[=new_dictionary]{LabelDictionary} class object, \code{FALSE} otherwise.
 }
 \description{
 Check if an object is a \link[=new_dictionary]{LabelDictionary} class object
 }
 \seealso{
-\code{\link[=as.dictionary]{as.dictionary()}}, \code{\link[=new_dictionary]{new_dictionary()}}, \code{\link[=translate]{translate()}}, \code{\link[=read_directory]{read_directory()}}, \code{\link[=write_directory]{write_directory()}}, \code{\link[=select]{select()}}, \code{\link[=rename]{rename()}}, \code{\link[=mutate]{mutate()}}, \code{\link[=merge]{merge()}}
+\code{\link[=validate_dictionary]{validate_dictionary()}}, \code{\link[=as.dictionary]{as.dictionary()}}, \code{\link[=new_dictionary]{new_dictionary()}},
+\code{\link[=lama_translate]{lama_translate()}}, \code{\link[=lama_read]{lama_read()}}, \code{\link[=lama_write]{lama_write()}}, \code{\link[=lama_select]{lama_select()}},
+\code{\link[=lama_rename]{lama_rename()}}, \code{\link[=lama_mutate]{lama_mutate()}}, \code{\link[=lama_merge]{lama_merge()}}
 }

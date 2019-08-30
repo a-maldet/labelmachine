@@ -4,14 +4,12 @@
 \alias{translate_variable}
 \title{This function relabels a vector}
 \usage{
-translate_variable(col, val, translation, keep_order, err_handler)
+translate_variable(val, translation, keep_order, err_handler)
 }
 \arguments{
-\item{col}{Character string holding the column name of the vector}
-
 \item{val}{The vector that should be relabelled. Allowed are all vector types (also factor).}
 
-\item{translation}{Character string holding the name of the translation, which should be used.}
+\item{translation}{Named character vector holding the label assignements.}
 
 \item{keep_order}{A logical flag. If the vector in \code{val}
 is a factor variable and \code{keep_order} is set to \code{TRUE}, then
@@ -20,7 +18,7 @@ the order of the original factor variable is preserved.}
 \item{err_handler}{An error handling function}
 }
 \value{
-An factor vector holding the assigned labels.
+A factor vector holding the assigned labels
 }
 \description{
 This function relabels a vector

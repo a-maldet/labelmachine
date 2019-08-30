@@ -5,20 +5,16 @@
 \alias{lama_merge.LabelDictionary}
 \title{Merge multiple label lexicas into one}
 \usage{
-lama_merge(.data, x, y, ..., show_warnings = TRUE)
+lama_merge(..., show_warnings = TRUE)
 
-\method{lama_merge}{LabelDictionary}(x, y, ..., show_warnings = TRUE)
+\method{lama_merge}{LabelDictionary}(..., show_warnings = TRUE)
 }
 \arguments{
-\item{x}{A \link[=new_dictionary]{LabelDictionary} class object}
-
-\item{y}{A \link[=new_dictionary]{LabelDictionary} class object}
-
-\item{...}{Optional additional multiple \link[=new_dictionary]{LabelDictionary}
-class objects}
+\item{...}{Two or more \link[=new_dictionary]{LabelDictionary}
+class objects, which should be merged together.}
 
 \item{show_wanings}{A logical flag that defines, whether warnings should be
-shown (\code{TRUE}) or not (\code{FALSE})}
+shown (\code{TRUE}) or not (\code{FALSE}).}
 }
 \value{
 The merged \link[=new_dictionary]{LabelDictionary} class object

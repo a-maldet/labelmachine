@@ -20,11 +20,16 @@ lama_rename <- function(.data, ...) {
 lama_rename.LabelDictionary <- function(.data, ...) {
   args <- rlang::quos(...)
   err_handler <- composerr("Error while calling 'lama_rename'")
+  err_handler_argument <- composerr(
+    err_prior = err_handler,
+    text_2 = "Use named arguments, e.g. ‘new_name = old_name’, to rename translations.",
+    sep_2 = " "
+  )
   if (length(args) == 0)
-    err_handler("Name assignments are missing. Use named arguments, e.g. ‘new_name = old_name’, to rename translations.")
+    err_handler_argument("Name assignments are missing.")
   new <- names(args)
   if (is.null(new) || any(new == ""))
-    err_handler("Name assignment is invalid. Use named arguments, e.g. ‘new_name = old_name’, to rename translations.")
+    err_handler_argument("Name assignment is invalid.")
   old <- as.character(sapply(args, function(x) {
     if (!rlang::quo_is_symbolic(x)) {
       x_name <- rlang::quo_get_expr(x)

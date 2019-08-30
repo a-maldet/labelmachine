@@ -2,6 +2,12 @@
 labelmachine
 ============
 
+!Caution!
+---------
+
+`labelmachine` is currently under heavy development and will be released
+in a week or so.
+
 `labelmachine` is an **R** package that helps you assigning new labels to data.frame variables. Furthermore, you can manage your label translations in so called **dictionary** files, which are **yaml** files. This makes it very easy using the same label translations in multiple projects that share similar data structure.
 
 The most important functions are:

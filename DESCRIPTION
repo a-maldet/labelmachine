@@ -1,5 +1,5 @@
 Package: labelmachine 
-Title: R package for easy management of the all variable labels in your data sets.
+Title: Easy management of variable labels in R data sets
 Version: 1.0.1
 Authors@R:
     c(person(given = "Adrian",
@@ -18,15 +18,20 @@ License: GPL-3 + file LICENSE
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Collate: 
+    'lappli.R'
+    'utilities.R'
     'dictionary.R'
     'imports.R'
+    'lama_check.R'
     'lama_merge.R'
     'lama_mutate.R'
-    'utilities.R'
     'lama_read.R'
     'lama_select.R'
     'lama_rename.R'
     'lama_translate.R'
     'lama_write.R'
 Suggests: 
-    testthat (>= 2.1.0)
+    testthat (>= 2.1.0),
+    roxygen2 (>= 6.1.1),
+    magrittr (>= 1.5),
+    rlang (>= 0.4.0)

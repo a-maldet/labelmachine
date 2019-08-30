@@ -1,84 +1,62 @@
 context("lama_rename")
+dict_a = new_dictionary(
+  x = c(x = "a"), 
+  y = c(y = "a"),
+  z = c(z = "a")
+)
 # lama_rename
 test_that("'lama_rename' works unquoted", {
-  expect_dictionary(dict_2)
-  dict_new <- lama_rename(dict_2, x = dose_long, y = dose)
+  dict_new <- lama_rename(dict_a, x1_. = x, y1 = y)
   expect_dictionary(dict_new)
-  expect_translation_names(
-    dict_new,
-    c("supp", "supp_long", "x", "y"))
-  expect_translation_identical(
-    dict_new,
-    "y",
-    c("0" = "Low", "1" = "Medium", "2" = "High")
-  )
-  dict_new_2 <- lama_rename(dict_2, supp = dose_long, y = dose)
-  expect_translation_identical(
-    dict_new_2,
-    "supp",
-    c("0" = "Low dosage", "1" = "Medium dosage", "2" = "High dosage")
-  )
-  expect_translation_names(
-    dict_new_2,
-    c("y", "supp", "supp_long")
-  )
+  expect_translation_names(dict_new, c("x1_.", "y1", "z"))
+  expect_translation_identical(dict_new, "y1", c("y" = "a"))
+  dict_new_2 <- lama_rename(dict_a, y = x, x = y, z = z)
+  expect_translation_names(dict_new_2, c("x", "y", "z"))
+  expect_translation_identical(dict_new_2, "x", c(y = "a"))
+  expect_translation_identical(dict_new_2, "y", c(x = "a"))
+  expect_translation_identical(dict_new_2, "z", c(z = "a"))
 })
 test_that("'lama_rename' throws the right errors", {
   expect_error(
-    lama_rename(dict_2, x = dose, x = supp),
+    lama_rename(dict_a, x = x, x = y),
     "Error while calling 'lama_rename': The following translation names are used more than once: 'x'.",
     fixed = TRUE
   )
   expect_error(
-    lama_rename(dict_2, x = dose, y = dose),
-    "The following old translation names are used more than once: 'dose'.",
+    lama_rename(dict_a, x = x, y = x),
+    "The following old translation names are used more than once: 'x'.",
     fixed = TRUE
   )
   expect_error(
-    lama_rename(dict_2, x = DOSE, y = SUPP),
-    "The following old translation names could not be found in the LabelDictionary object: 'DOSE', 'SUPP'.",
+    lama_rename(dict_a, x = X, y = Y),
+    "The following old translation names could not be found in the LabelDictionary object: 'X', 'Y'.",
     fixed = TRUE
   )
 })
 
 # lama_rename_
 test_that("lama_rename_ works", {
-  dict_new <- lama_rename_(dict_2, c("dose_long", "dose"), c("x", "y"))
-  expect_dictionary(dict_2)
+  dict_new <- lama_rename_(dict_a, c("x", "y"), c("y", "x1_."))
   expect_dictionary(dict_new)
-  expect_translation_names(
-    dict_new,
-    c("supp", "supp_long", "x", "y"))
-  expect_translation_identical(
-    dict_new,
-    "y",
-    c("0" = "Low", "1" = "Medium", "2" = "High")
-  )
-  dict_new_2 <- lama_rename_(dict_2, c("dose_long", "dose"), c("supp", "y"))
-  expect_translation_identical(
-    dict_new_2,
-    "supp",
-    c("0" = "Low dosage", "1" = "Medium dosage", "2" = "High dosage")
-  )
-  expect_translation_names(
-    dict_new_2,
-    c("y", "supp", "supp_long")
-  )
+  expect_translation_names(dict_new, c("x1_.", "y", "z"))
+  expect_translation_identical(dict_new, "x1_.", c(y = "a"))
+  expect_translation_identical(dict_new, "y", c(x = "a"))
+  expect_translation_identical(dict_new, "z", c(z = "a"))
 })
 test_that("'lama_rename_' throws the right errors", {
   expect_error(
-    lama_rename_(dict_2, c("dose", "supp"), c("x", "x")),
+    lama_rename_(dict_a, c("x", "y"), c("x", "x")),
     "The following translation names are used more than once: 'x'.",
     fixed = TRUE
   )
   expect_error(
-    lama_rename_(dict_2, c("dose", "dose"), c("x", "y")),
-    "The following old translation names are used more than once: 'dose'.",
+    lama_rename_(dict_a, c("x", "x"), c("x", "y")),
+    "The following old translation names are used more than once: 'x'.",
     fixed = TRUE
   )
   expect_error(
-    lama_rename_(dict_2, c("DOSE", "SUPP"), c("x", "y")),
-    "The following old translation names could not be found in the LabelDictionary object: 'DOSE', 'SUPP'.",
+    lama_rename_(dict_a, c("X", "Y"), c("x", "y")),
+    "The following old translation names could not be found in the LabelDictionary object: 'X', 'Y'.",
     fixed = TRUE
   )
 })

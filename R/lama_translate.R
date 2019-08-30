@@ -134,7 +134,7 @@ lama_translate_ <- function(.data, dictionary, translation, col = translation, c
 #' @export
 lama_translate_.data.frame <- function(.data, dictionary, translation, col = translation, col_new = col, keep_order = FALSE) {
   # --- Check arguments ---
-  err_handler <- composerr("Error while calling 'lama_translate'")
+  err_handler <- composerr("Error while calling 'lama_translate_'")
   check_translate_general(.data, dictionary, col_new = col_new, keep_order, err_handler)
   if (length(keep_order) == 1)
     keep_order <- rep(keep_order, length(col_new))
@@ -196,11 +196,16 @@ translate_df <- function(
     seq_len(length(translation)),
     function(i) {
       translate_variable(
-        col = col[i], 
         val = .data[[col[i]]],
         translation = dictionary[[translation[i]]],
         keep_order = keep_order[i],
-        err_handler = err_handler
+        err_handler = composerr_parent(
+          paste0(
+            "Translation '", translation[i], "' could not be applied to ",
+            "column '", col[i], "'"
+          ),
+          err_handler
+        )
       )
     }
   )
@@ -209,15 +214,14 @@ translate_df <- function(
 
 #' This function relabels a vector
 #'
-#' @param col Character string holding the column name of the vector
 #' @param val The vector that should be relabelled. Allowed are all vector types (also factor).
-#' @param translation Character string holding the name of the translation, which should be used.
+#' @param translation Named character vector holding the label assignements.
 #' @param keep_order A logical flag. If the vector in \code{val}
 #' is a factor variable and \code{keep_order} is set to \code{TRUE}, then
 #' the order of the original factor variable is preserved.
 #' @param err_handler An error handling function
-#' @return An factor vector holding the assigned labels.
-translate_variable <- function(col, val, translation, keep_order, err_handler) {
+#' @return A factor vector holding the assigned labels
+translate_variable <- function(val, translation, keep_order, err_handler) {
   val_char <- as.character(val)
   # Check that all old labels can be found in the labelling dictionary
   old_labels <- names(translation)
@@ -225,8 +229,8 @@ translate_variable <- function(col, val, translation, keep_order, err_handler) {
   missing_labels <- missing_labels[!missing_labels %in% old_labels]
   if (length(missing_labels) > 0)
     err_handler(paste0(
-      "The following variable levels in '.data$", col,"' have no corresponding ",
-      "label in the LabelDictionary object given in argument 'dictionary': ",
+      "The following values in the column variable could not be found ",
+      "in the translation: ",
       stringify(missing_labels),
       "."
     ))

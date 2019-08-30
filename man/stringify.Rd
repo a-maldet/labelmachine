@@ -2,10 +2,10 @@
 % Please edit documentation in R/utilities.R
 \name{stringify}
 \alias{stringify}
-\title{Stringify a character vector}
+\title{Stringify a vector into a single character string (\code{'x1', 'x2', ...})}
 \usage{
 stringify(x)
 }
 \description{
-Stringify a character vector
+Stringify a vector into a single character string (\code{'x1', 'x2', ...})
 }
