@@ -52,7 +52,7 @@ test_that("'lama_merge' throws the right errors", {
   )
   expect_error(
     lama_merge(dict_a, dict_b, list(a = 1)),
-    "The argument at position '3' is not a LabelDictionary class object"
+    "Invalid argument at position '3': Object is not a LabelDictionary class object."
   )
   expect_error(
     lama_merge(dict_a, dict_b, show_warnings = NA),

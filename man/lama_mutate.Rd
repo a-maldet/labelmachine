@@ -13,14 +13,20 @@ lama_mutate(.data, ...)
 
 lama_mutate_(.data, key, translation)
 
-\method{lama_mutate}{LabelDictionary}(.data, key, translation)
+\method{lama_mutate_}{LabelDictionary}(.data, key, translation)
 }
 \arguments{
 \item{.data}{A \link[=new_dictionary]{LabelDictionary} object}
 
 \item{...}{One or more unquoted expressions separated by commas. Use named
-arguments, e.g. ‘new_transation_name = c(a = "A", b = "B")’, to set
-translations (named character vectors) to new translation names.}
+arguments, e.g. \code{new_transation_name = c(a = "A", b = "B")}, to set
+translations (named character vectors) to new translation names. It is also
+possible use complex expressions as long as the resulting object is a valid
+translation object (named character vector).
+Furthermore, it is possible to use translation names that are already
+existing in the dictionary, in order to modify them
+(e.g. \code{new_translation = c(v = "V", w = "W", old_translation, z = "Z")}, where
+\code{old_translation = c(x = "X", y = "Y")}).}
 
 \item{key}{The name of the variable translation that should be altered.
 It can also be variable translation name that does not exist yet.}
@@ -40,12 +46,12 @@ The functions \code{\link[=lama_mutate]{lama_mutate()}} and \code{\link[=lama_mu
 \link[=new_dictionary]{LabelDictionary} object. They either alter
 or append a translation to a \link[=new_dictionary]{LabelDictionary} object.
 The function \code{\link[=lama_mutate]{lama_mutate()}} uses named arguments to assign the translations
-to the new names (similar to \code{\link[=dplyr:mutate]{dplyr:mutate()}}), whereas the function
+to the new names (similar to \code{\link[dplyr:mutate]{dplyr::mutate()}}), whereas the function
 \code{\link[=lama_mutate_]{lama_mutate_()}} is takes a character string \code{key} holding the
 name to which the translation should be assigned and a named character
 vector \code{translation} holding the actual translation mapping.
 }
 \seealso{
-\code{\link[=translate]{translate()}}, \code{\link[=new_dictionary]{new_dictionary()}}, \code{\link[=lama_rename]{lama_rename()}}, \code{\link[=tran_select]{tran_select()}},
+\code{\link[=lama_translate]{lama_translate()}}, \code{\link[=new_dictionary]{new_dictionary()}}, \code{\link[=lama_rename]{lama_rename()}}, \code{\link[=lama_select]{lama_select()}},
 \code{\link[=lama_merge]{lama_merge()}}, \code{\link[=lama_read]{lama_read()}}, \code{\link[=lama_write]{lama_write()}}
 }

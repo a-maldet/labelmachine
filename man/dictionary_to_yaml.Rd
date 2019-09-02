@@ -6,6 +6,12 @@
 \usage{
 dictionary_to_yaml(data)
 }
+\arguments{
+\item{data}{A pre-dictionary object.}
+}
+\value{
+An object similar to a pre-dictionary object, but each translation is not a named character vector, but a named list holding character strings.
+}
 \description{
 In the \link[=new_dictionary]{LabelDictionary} class object the data has the structure
 vars (named list) > translations (named character vector)

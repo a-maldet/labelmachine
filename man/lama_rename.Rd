@@ -15,7 +15,7 @@ lama_rename_(.data, old, new)
 \arguments{
 \item{.data}{A \link[=new_dictionary]{LabelDictionary} object, holding the variable translations}
 
-\item{...}{One or more unquoted expressions separated by commas. Use named arguments, e.g. ‘new_name = old_name’, to rename selected variables.}
+\item{...}{One or more unquoted expressions separated by commas. Use named arguments, e.g. \code{new_name = old_name}, to rename selected variables.}
 
 \item{old}{A character vector holding the names of the variable translations,
 that should be renamed.}
@@ -34,6 +34,6 @@ The function \code{\link[=lama_rename]{lama_rename()}} uses non-standard evaluat
 whereas \code{\link[=lama_rename_]{lama_rename_()}} is the standard evaluation alternativ.
 }
 \seealso{
-\code{\link[=translate]{translate()}}, \code{\link[=new_dictionary]{new_dictionary()}}, \code{\link[=lama_select]{lama_select()}}, \code{\link[=lama_set]{lama_set()}},
+\code{\link[=lama_translate]{lama_translate()}}, \code{\link[=new_dictionary]{new_dictionary()}}, \code{\link[=lama_select]{lama_select()}}, \code{\link[=lama_mutate]{lama_mutate()}},
 \code{\link[=lama_merge]{lama_merge()}}, \code{\link[=lama_read]{lama_read()}}, \code{\link[=lama_write]{lama_write()}}
 }

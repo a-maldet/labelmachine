@@ -14,9 +14,6 @@ variable translations}
 translations, that should be renamed.}
 
 \item{err_handler}{A error handling function}
-
-\item{new}{A character vector holding the new names of the variable
-translations.}
 }
 \description{
 Function that checks the passed in arguments for \code{\link[=lama_select]{lama_select()}} and \code{\link[=lama_select_]{lama_select_()}}

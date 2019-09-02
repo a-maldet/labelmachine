@@ -158,5 +158,6 @@ translations with different names
 }
 
 \seealso{
-\code{\link[=is.dictionary]{is.dictionary()}}, \code{\link[=lama_translate]{lama_translate()}}, \code{\link[=lama_read]{lama_read()}}, \code{\link[=lama_write]{lama_write()}}, \code{\link[=lama_select]{lama_select()}}, \code{\link[=lama_rename]{lama_rename()}}, \code{\link[=lama_mutate]{lama_mutate()}}, \code{\link[=lama_merge]{lama_merge()}}
+\code{\link[=is.dictionary]{is.dictionary()}}, \code{\link[=lama_translate]{lama_translate()}}, \code{\link[=lama_read]{lama_read()}}, \code{\link[=lama_write]{lama_write()}},
+\code{\link[=lama_select]{lama_select()}}, \code{\link[=lama_rename]{lama_rename()}}, \code{\link[=lama_mutate]{lama_mutate()}}, \code{\link[=lama_merge]{lama_merge()}}
 }

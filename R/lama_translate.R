@@ -11,7 +11,7 @@
 #' @param ... One or more unquoted expressions separated by commas. Use unquoted
 #' arguments that tell which translation should be applied to which column and
 #' which column name the relabelled variable should be assigned to. E.g.
-#' \code{lama_trans(.data, dict, Y1 = TRANS1(X1), Y2 = TRANS2(Y2))}
+#' `lama_trans(.data, dict, Y1 = TRANS1(X1), Y2 = TRANS2(Y2))`
 #' to apply the translations \code{TRANS1} and \code{TRANS2} to the data.frame
 #' variables \code{X1} and \code{X2} and save the new labelled variables under
 #' the names \code{Y1} and \code{Y2}.
@@ -36,7 +36,6 @@ lama_translate <- function(.data, dictionary, ..., keep_order = FALSE) {
 }
 
 #' @rdname lama_translate
-#' @method lama_translate data.frame
 #' @export
 lama_translate.data.frame <- function(.data, dictionary, ..., keep_order = FALSE) {
   args <- rlang::quos(...)
@@ -53,29 +52,50 @@ lama_translate.data.frame <- function(.data, dictionary, ..., keep_order = FALSE
     seq_len(length(args)), 
     function(i) {
       col_new <- new_cols[i]
-      arg_str <- rlang::as_label(rlang::quo_get_expr(args[[i]]))
-      err_handler <- composerr_parent(paste0(
-        "Argument in position '", i, "' could not be parsed: ",
-        stringify(ifelse(col_new == "", arg_str, paste(col_new, "=", arg_str))),
-        "."
-      ), err_handler)
-      p_long <- "^([^\\s\\(\\)\\[\\]\\{\\}=\\+-]+)\\(([^\\s\\(\\)\\[\\]\\{\\}=\\+-]+)\\)$"
-      p_short <- "^([^\\s\\(\\)\\[\\]\\{\\}=\\+-]+)$"
-      if (grepl(p_long, arg_str, perl = TRUE)) {
-        translation <- gsub(p_long, "\\1", arg_str, per = TRUE)
-        col <- gsub(p_long, "\\2", arg_str, perl = TRUE)
-      } else if (grepl(p_short, arg_str, perl = TRUE)) {
-        translation <- gsub(p_short, "\\1", arg_str, perl = TRUE)
-        col <- translation
+      x <- args[[i]]
+      arg_str <- rlang::as_label(rlang::quo_get_expr(x))
+      err_handler <- composerr_parent(paste(
+          "Invalid argument at position",
+          stringify(i + 2)
+        ),
+        err_handler
+      )
+      err_handler_parse <- composerr(
+        paste(
+          "The expression",
+          stringify(ifelse(col_new == "", arg_str, paste(col_new, "=", arg_str))),
+          "could not be parsed. Use unquoted function calls with a single",
+          "argument, where the function name is the translation that should be used",
+          "and the function argument is the unquoted name of the column,",
+          "which should be translated",
+          "(e.g. 'lama_translate(df, dict, y = foo(x))',",
+          "where 'y' is the new column name, 'x' is the name of the column",
+          "holding the original data and 'foo' is the name of the translation",
+          " stored in 'dict'). It is also possible to just pass a translation",
+          "name. In this case it will be assumed that the column name matches",
+          "the translation name",
+          "(e.g. 'lama_translate(df, dict, y = foo)' is the same as",
+          "('lama_translate(df, dict, y = foo(foo))')."
+        ),
+        err_handler
+      )
+      if (rlang::is_call(rlang::quo_get_expr(x), n = 1, name = names(dictionary))) {
+        tryCatch(
+          {
+            translation <- rlang::call_name(x)
+            col <- deparse(rlang::call_args(x)[[1]])
+          },
+          error = function(e) err_handler_parse(e),
+          warning = function(w) err_handler_parse(w)
+        ) 
       } else {
-        err_handler() 
+        if (!rlang::quo_is_symbol(x))
+          err_handler_parse()
+        translation <- rlang::quo_name(x)
+        col <- translation
       }
       if (col_new == "")
         col_new <- col
-      if (!is.syntactic(translation) || !is.syntactic(col))
-        err_handler()
-      if (!col %in% names(.data))
-        err_handler()
       if (!col %in% names(.data))
         err_handler(paste0(
           "The variable name '", col, "' could not be found in the data.frame."
@@ -139,14 +159,28 @@ lama_translate_.data.frame <- function(.data, dictionary, translation, col = tra
   if (length(keep_order) == 1)
     keep_order <- rep(keep_order, length(col_new))
   # specific checks for 'lama_translate_'
-  if (!is.character(translation) || length(translation) == 0 || any(is.na(translation)))
+  if (!is.character(translation) || length(translation) == 0)
     err_handler("The argument 'translation' must be a character vector.")
-  if (!is.character(col) || length(col) != length(translation) || any(is.na(col)))
+  if (any(is.na(translation)))
+    err_handler("The argument 'translation' contains missing values ('NA').")
+  if (!is.character(col) || length(col) != length(translation))
     err_handler("The argument 'col' must be a character vector of the same length as 'translation'.")
-  if (!is.character(col_new) || length(col_new) != length(translation) || any(is.na(col_new)))
+  if (any(is.na(col)))
+    err_handler("The argument 'col' contains missing values ('NA').")
+  if (!is.character(col_new) || length(col_new) != length(translation))
     err_handler("The argument 'col_new' must be a character vector of the same length as 'translation'.")
-  if (length(col_new) != length(unique(col_new)))
-    err_handler("The argument 'col_new' must be a character vector without duplicates.")
+  if (any(is.na(col_new)))
+    err_handler("The argument 'col_new' contains missing values ('NA').")
+  duplicates <- table(col_new)
+  duplicates <- names(duplicates[duplicates > 1])
+  if (length(duplicates) > 0)
+    err_handler(paste0(
+      "The argument 'col_new' is invalid: More than one relabelled variable ",
+      "was assigned to the same column name. ",
+      "The following column names have multiple assignments: ",
+      stringify(duplicates),
+      "."
+    ))
   invalid <- !translation %in% names(dictionary)
   if (any(invalid)) 
     err_handler(paste0(
@@ -222,9 +256,11 @@ translate_df <- function(
 #' @param err_handler An error handling function
 #' @return A factor vector holding the assigned labels
 translate_variable <- function(val, translation, keep_order, err_handler) {
-  val_char <- as.character(val)
-  # Check that all old labels can be found in the labelling dictionary
   old_labels <- names(translation)
+  val_char <- as.character(val)
+  if (contains_na_escape(val_char))
+    val_char <- na_to_escape(val_char) 
+  # Check that all old labels can be found in the labelling dictionary
   missing_labels <- unique(val_char)
   missing_labels <- missing_labels[!missing_labels %in% old_labels]
   if (length(missing_labels) > 0)

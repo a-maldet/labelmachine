@@ -31,6 +31,6 @@ The function \code{\link[=lama_select]{lama_select()}} uses non-standard evaluat
 \code{\link[=lama_select_]{lama_select_()}} is the standard evaluation alternative.
 }
 \seealso{
-\code{\link[=translate]{translate()}}, \code{\link[=new_dictionary]{new_dictionary()}}, \code{\link[=lama_rename]{lama_rename()}}, \code{\link[=lama_set]{lama_set()}},
+\code{\link[=lama_translate]{lama_translate()}}, \code{\link[=new_dictionary]{new_dictionary()}}, \code{\link[=lama_rename]{lama_rename()}}, \code{\link[=lama_mutate]{lama_mutate()}},
 \code{\link[=lama_merge]{lama_merge()}}, \code{\link[=lama_read]{lama_read()}}, \code{\link[=lama_write]{lama_write()}}
 }

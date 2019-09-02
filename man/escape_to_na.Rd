@@ -6,6 +6,12 @@
 \usage{
 escape_to_na(x)
 }
+\arguments{
+\item{x}{A character vector that should be modified.}
+}
+\value{
+A character vector, where the NA replacement strings are replaced by \code{NA}s.
+}
 \description{
 Replace \code{"NA_"} by \code{NA}
 }

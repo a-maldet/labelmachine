@@ -83,16 +83,16 @@ test_that("'lama_translate' throws the right errors", {
     "More than one relabelled variable was assigned to the same column name. The following column names have multiple assignments: 'x'."
   )
   expect_error(
-    lama_translate(df, dict, x = (var_t)),
-    "Argument in position '1' could not be parsed: 'x = \\(var_t\\)'."
+    lama_translate(df, dict, y = s(var_s), x = (var_t)),
+    "Invalid argument at position '4': The expression 'x = \\(var_t\\)' could not be parsed."
   )
   expect_error(
-    lama_translate(df, dict, x = asdf(var_t)),
-    "The translation name 'asdf' could not be found in the LabelDictionary."
+    lama_translate(df, dict, y = s(var_s), x = asdf(var_t)),
+    "Invalid argument at position '4': The expression 'x = asdf\\(var_t\\)' could not be parsed."
   )
   expect_error(
-    lama_translate(df, dict, s(asdf)),
-    "Argument in position '1' could not be parsed: 's\\(asdf\\)'."
+    lama_translate(df, dict, y = s(var_s), s(asdf)),
+    "Invalid argument at position '4': The variable name 'asdf' could not be found in the data.frame."
   )
   expect_error(
     lama_translate(df, dict, r._(var_r_false)),
@@ -179,7 +179,7 @@ test_that("'lama_translate_' throws the right errors", {
       translation = c("var_t", "var_t", "var_t"),
       col_new = c("X", "x2", "X")
     ),
-    "The argument 'col_new' must be a character vector without duplicates."
+    "The argument 'col_new' is invalid: More than one relabelled variable was assigned to the same column name. The following column names have multiple assignments: 'X'."
   )
   expect_error(
     lama_translate_(

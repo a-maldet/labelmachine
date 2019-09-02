@@ -2,10 +2,16 @@
 % Please edit documentation in R/utilities.R
 \name{stringify}
 \alias{stringify}
-\title{Stringify a vector into a single character string (\code{'x1', 'x2', ...})}
+\title{Coerce a vector into a character string (\code{'x1', 'x2', ...})}
 \usage{
 stringify(x)
 }
+\arguments{
+\item{x}{A vector that should be coerced.}
+}
+\value{
+A character string holding the collapsed vector.
+}
 \description{
-Stringify a vector into a single character string (\code{'x1', 'x2', ...})
+Coerce a vector into a character string (\code{'x1', 'x2', ...})
 }

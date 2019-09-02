@@ -101,7 +101,7 @@ lama_check_character <- function(
   }
 }
 
-lama_check_in_dictionary <- function(x, dict) {
+lama_check_in_dictionary <- function(x, dict, err_handler) {
   x_name <- deparse(substitute(x))
   dict_name <- deparse(substitute(dict))
   wrong_variable <- x[!x %in% names(dict)]

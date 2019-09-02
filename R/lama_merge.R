@@ -9,10 +9,10 @@
 #' \code{x} and \code{y}. The lexicon \code{y} overwrites \code{x}).
 #' @param ... Two or more [LabelDictionary][new_dictionary()]
 #' class objects, which should be merged together.
-#' @param show_wanings A logical flag that defines, whether warnings should be
+#' @param show_warnings A logical flag that defines, whether warnings should be
 #' shown (\code{TRUE}) or not (\code{FALSE}).
 #' @return The merged [LabelDictionary][new_dictionary()] class object
-#' @seealso [translate()], [new_dictionary()], [lama_rename()], [tran_select()],
+#' @seealso [lama_translate()], [new_dictionary()], [lama_rename()], [lama_select()],
 #' [lama_mutate()], [lama_read()], [lama_write()]
 #' @rdname lama_merge
 #' @export
@@ -30,7 +30,11 @@ lama_merge.LabelDictionary <- function(..., show_warnings = TRUE) {
     err_handler(paste0("There must be at least two LabelDictionary class object passed into."))
   lapply(seq_len(length(args)), function(i) {
     if (!is.dictionary(args[[i]]))
-      err_handler(paste0("The argument at position '", i, "' is not a LabelDictionary class object."))
+      err_handler(paste0(
+        "Invalid argument at position ",
+        stringify(i),
+        ": Object is not a LabelDictionary class object."
+      ))
   })
   if (!is.logical(show_warnings) || is.na(show_warnings) || length(show_warnings) != 1)
     err_handler("The value passed into 'show_warnings' must be either 'TRUE' or 'FALSE'.")

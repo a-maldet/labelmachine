@@ -9,18 +9,18 @@
 \usage{
 as.dictionary(.data, ...)
 
-\method{as.dictionary}{list}(.data)
+\method{as.dictionary}{list}(.data, ...)
 
-\method{as.dictionary}{default}(...)
+\method{as.dictionary}{default}(.data = NULL, ...)
 
 \method{as.dictionary}{data.frame}(.data, translation, col_old, col_new,
-  ordering = "row")
+  ordering = "row", ...)
 }
 \arguments{
 \item{.data}{An object holding the translations. \code{.data} can be of the
 following data types:
 \itemize{
-\item \emph{named list}: A named list object, where each list element is a translation
+\item \emph{named list}: A named list object, where each list entry is a translation
 (a named character vector)
 \item \emph{data.frame}: A data.frame holding one or more column pairs,
 where each column pair consists of
@@ -33,15 +33,40 @@ which should be assigned to the original values.
 
 \item{translation}{A character vector holding the names of all translations}
 
-\item{col_old}{A character vector (same length as \code{translation}) holding the
+\item{col_old}{This argument is only used, if the argument given in \code{.data}
+is a data.frame. In this case, the
+argument \code{col_old} must be a character vector (same length as \code{translation}) holding the
 names of the columns in the data.frame (in the argument \code{.data}) which hold
 the original variable values.
 These columns can be of any type: \code{character}, \code{logical}, \code{numerical} or \code{factor}.}
 
-\item{col_new}{A character vector (same length as \code{translation}) holding the
+\item{col_new}{This argument is only used, if the argument given in \code{.data}
+is a data.frame. In this case, the
+argument \code{col_old} must be a character vector (same length as \code{translation}) holding the
 names of the columns in the data.frame (in the argument \code{.data}) which hold
 the new labels, which should be assigend to the original values.
 These columns can be \code{character} vectors or \code{factors} with character labels.}
+
+\item{ordering}{This argument is only used, if the argument given in \code{.data}
+is a data.frame. In this case, the
+argument \code{ordering} must be a character vector (same length as \code{translation}) holding
+one of the following configuration strings configuring
+the ordering of each corresponding translation
+should be orde:
+\itemize{
+\item \code{"row"}: The corresponding translation will be ordered exactly in the same
+way as the rows are ordered in the data.frame \code{.data}.
+\item \code{"old"}: The corresponding translation will be ordered by the given
+original values which are contained in the corresponding column \code{col_old}.
+If the column contains a factor variable, then the ordering of the
+factor will be used. If it just contains a plain character variable,
+then it will be ordered alphanumerically.
+\item \code{"new"}: The corresponding translation will be ordered by the given
+new labels which are contained in the corresponding column \code{col_new}.
+If the column contains a factor variable, then the ordering of the
+factor will be used. If it just contains a plain character variable,
+then it will be ordered alphanumerically.
+}}
 }
 \value{
 A new LabelDictionary class object holding the passed in translations.
@@ -103,6 +128,27 @@ Therefore, it is sufficient to define the translation mapping for the
 one can decide whether or not to keep the original ordering. Like in the
 other cases the levels of the factor variable will always be turned into
 character strings before the translation process.
+}
+}
+
+\section{Missing values}{
+
+It is also possible to handle missing values with \code{\link[=lama_translate]{lama_translate()}}.
+Therefore, the used translation must contain a information that tells how
+to handle a missing value. In order to define such a translation
+the missing value (\code{NA}) can be escaped with the character string \code{"NA_"}.
+This can be useful in two sitations:
+\itemize{
+\item All missing values should be labelled
+(e.g. the translation \code{c("0" = "urban", "1" = "rural", NA_ = "missing")}
+assigns the character string \code{"missing"} to all missing values of a variable).
+\item Map some original values to \code{NA}
+(e.g. the translation \code{c("0" = "urban", "1" = "rural", "2" = "NA_", "3" = "NA_")}
+assigns \code{NA} (the missing character) to the original values \code{2} and \code{3}).
+Actually, in this case the translation definition does not always have to
+use this escape mechanism, but only
+when defining the translations inside of a \code{YAML} file,
+since the \code{YAML} parser does not recognice missing values.
 }
 }
 

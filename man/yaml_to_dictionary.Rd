@@ -6,6 +6,12 @@
 \usage{
 yaml_to_dictionary(data)
 }
+\arguments{
+\item{data}{An object similar to a pre-dictionary object, but each translation is not a named character vector, but a named list holding character strings.}
+}
+\value{
+A pre-dictionary object.
+}
 \description{
 When a yaml file is read in, the data has the structure
 vars (named list) > translations (named list)

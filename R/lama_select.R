@@ -8,7 +8,7 @@
 #' @param .data A [LabelDictionary][new_dictionary()] object, holding the variable translations
 #' @param ... One or more unquoted translation names separated by commas.
 #' @return A new [LabelDictionary][new_dictionary()] class object, holding the picked variable translations.
-#' @seealso [translate()], [new_dictionary()], [lama_rename()], [lama_set()],
+#' @seealso [lama_translate()], [new_dictionary()], [lama_rename()], [lama_mutate()],
 #' [lama_merge()], [lama_read()], [lama_write()]
 #' @rdname lama_select
 #' @export
@@ -19,24 +19,30 @@ lama_select <- function(.data, ...) {
 #' @export
 lama_select.LabelDictionary <- function(.data, ...) {
   args <- rlang::quos(...)
-  err_handler <- composerr("Error while calling 'lama_select'")
+  err_handler <- composerr(
+    text_1 = "Error while calling 'lama_select'",
+    text_2 = "Use unquoted arguments e.g. 'lama_select(.data, x, y, z)'.",
+    sep_2 = " "
+  )
   if (length(args) == 0)
-    err_handler("Selected translation names are missing. Use unquoted arguments e.g. 'lama_select(.data, x, y, z)'.")
-  key <- as.character(sapply(args, function(x) {
-    if (!rlang::quo_is_symbolic(x)) {
-      x_name <- rlang::quo_get_expr(x)
-    } else {
-      x_name <- rlang::quo_name(x)
-    }
-    x_name
+    err_handler("Selected translation names are missing.")
+  key <- as.character(sapply(seq_len(length(args)), function(i) {
+    err_handler <- composerr_parent(
+      paste(
+        "Invalid argument at position",
+        stringify(i + 1)
+      ),
+      err_handler
+    )
+    x <- args[[i]]
+    if (!rlang::quo_is_symbol(x))
+      err_handler(paste(
+        "The expression",
+        stringify(rlang::quo_name(x)),
+        "could not be parsed."
+      ))
+    rlang::quo_name(x)
   }))
-  invalid <- !is.syntactic(key) 
-  if (any(invalid)) {
-    err_handler(paste(
-      "Some passed in arguments are invalid. The passed in translation names could not", 
-      "be parsed. Use unquoted arguments for the variable selection (e.g. 'lama_select(.data, x, y, z)')."
-    ))
-  }
   check_select(.data, key, err_handler)
   new_dictionary(.data[key])
 }
@@ -65,8 +71,6 @@ lama_select_.LabelDictionary <- function(.data, key) {
 #' variable translations
 #' @param key A character vector holding the names of the variable
 #' translations, that should be renamed.
-#' @param new A character vector holding the new names of the variable
-#' translations.
 #' @param err_handler A error handling function
 check_select <- function(.data, key, err_handler) {
   if (!is.dictionary(.data))

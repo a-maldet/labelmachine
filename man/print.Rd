@@ -4,14 +4,18 @@
 \alias{print.LabelDictionary}
 \title{Print a \link[=new_dictionary]{LabelDictionary} class object}
 \usage{
-\method{print}{LabelDictionary}(x)
+\method{print}{LabelDictionary}(x, ...)
 }
 \arguments{
 \item{x}{The \link[=new_dictionary]{LabelDictionary} class object that should be printed.}
+
+\item{...}{Unused arguments}
 }
 \description{
 Print a \link[=new_dictionary]{LabelDictionary} class object
 }
 \seealso{
-\code{\link[=lama_translate]{lama_translate()}}, \code{\link[=new_dictionary]{new_dictionary()}}, \code{\link[=lama_select]{lama_select()}}, \code{\link[=lama_rename]{lama_rename()}}, \code{\link[=lama_mutate]{lama_mutate()}}, \code{\link[=lama_merge]{lama_merge()}}, \code{\link[=lama_read]{lama_read()}}, \code{\link[=lama_write]{lama_write()}}
+\code{\link[=lama_translate]{lama_translate()}}, \code{\link[=new_dictionary]{new_dictionary()}}, \code{\link[=lama_select]{lama_select()}},
+\code{\link[=lama_rename]{lama_rename()}}, \code{\link[=lama_mutate]{lama_mutate()}}, \code{\link[=lama_merge]{lama_merge()}}, \code{\link[=lama_read]{lama_read()}},
+\code{\link[=lama_write]{lama_write()}}
 }

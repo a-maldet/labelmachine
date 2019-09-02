@@ -13,7 +13,7 @@ lama_merge(..., show_warnings = TRUE)
 \item{...}{Two or more \link[=new_dictionary]{LabelDictionary}
 class objects, which should be merged together.}
 
-\item{show_wanings}{A logical flag that defines, whether warnings should be
+\item{show_warnings}{A logical flag that defines, whether warnings should be
 shown (\code{TRUE}) or not (\code{FALSE}).}
 }
 \value{
@@ -29,6 +29,6 @@ class objects passed in later overwrite the class objects passed in first
 \code{x} and \code{y}. The lexicon \code{y} overwrites \code{x}).
 }
 \seealso{
-\code{\link[=translate]{translate()}}, \code{\link[=new_dictionary]{new_dictionary()}}, \code{\link[=lama_rename]{lama_rename()}}, \code{\link[=tran_select]{tran_select()}},
+\code{\link[=lama_translate]{lama_translate()}}, \code{\link[=new_dictionary]{new_dictionary()}}, \code{\link[=lama_rename]{lama_rename()}}, \code{\link[=lama_select]{lama_select()}},
 \code{\link[=lama_mutate]{lama_mutate()}}, \code{\link[=lama_read]{lama_read()}}, \code{\link[=lama_write]{lama_write()}}
 }

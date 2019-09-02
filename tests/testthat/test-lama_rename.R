@@ -23,6 +23,16 @@ test_that("'lama_rename' throws the right errors", {
     fixed = TRUE
   )
   expect_error(
+    lama_rename(dict_a, x = x, y = 35),
+    "Invalid argument at position '3': The expression 'y = 35' could not be parsed.",
+    fixed = TRUE
+  )
+  expect_error(
+    lama_rename(dict_a, x = x, y = y(1)),
+    "Invalid argument at position '3': The expression 'y = y(1)' could not be parsed.",
+    fixed = TRUE
+  )
+  expect_error(
     lama_rename(dict_a, x = x, y = x),
     "The following old translation names are used more than once: 'x'.",
     fixed = TRUE

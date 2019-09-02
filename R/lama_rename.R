@@ -6,9 +6,9 @@
 #' The function [lama_rename()] uses non-standard evaluation,
 #' whereas [lama_rename_()] is the standard evaluation alternativ.
 #' @param .data A [LabelDictionary][new_dictionary()] object, holding the variable translations
-#' @param ... One or more unquoted expressions separated by commas. Use named arguments, e.g. ‘new_name = old_name’, to rename selected variables.
+#' @param ... One or more unquoted expressions separated by commas. Use named arguments, e.g. `new_name = old_name`, to rename selected variables.
 #' @return The updated [LabelDictionary][new_dictionary()] class object.
-#' @seealso [translate()], [new_dictionary()], [lama_select()], [lama_set()],
+#' @seealso [lama_translate()], [new_dictionary()], [lama_select()], [lama_mutate()],
 #' [lama_merge()], [lama_read()], [lama_write()]
 #' @rdname lama_rename
 #' @export
@@ -22,7 +22,7 @@ lama_rename.LabelDictionary <- function(.data, ...) {
   err_handler <- composerr("Error while calling 'lama_rename'")
   err_handler_argument <- composerr(
     err_prior = err_handler,
-    text_2 = "Use named arguments, e.g. ‘new_name = old_name’, to rename translations.",
+    text_2 = "Use named arguments, e.g. `new_name = old_name`, to rename translations.",
     sep_2 = " "
   )
   if (length(args) == 0)
@@ -30,13 +30,30 @@ lama_rename.LabelDictionary <- function(.data, ...) {
   new <- names(args)
   if (is.null(new) || any(new == ""))
     err_handler_argument("Name assignment is invalid.")
-  old <- as.character(sapply(args, function(x) {
-    if (!rlang::quo_is_symbolic(x)) {
-      x_name <- rlang::quo_get_expr(x)
+  old <- as.character(sapply(seq_len(length(new)), function(i) {
+    err_handler <- composerr_parent(
+      paste(
+        "Invalid argument at position",
+        stringify(i + 1)
+      ),
+      err_handler
+    )
+    obj <- args[[i]]
+    if (!rlang::quo_is_symbol(obj)) {
+      obj <- rlang::quo_get_expr(obj)
+      if (!is.character(obj))
+        err_handler(paste(
+          "The expression",
+          stringify(paste(
+            c(new[i], rlang::quo_name(args[[i]])),
+            collapse = " = "
+          )),
+          "could not be parsed."
+        ))
     } else {
-      x_name <- rlang::quo_name(x)
+      obj <- rlang::quo_name(obj)
     }
-    x_name
+    obj
   }))
   check_rename(.data, old, new, err_handler)
   rename_translation(.data, old, new)
@@ -115,7 +132,10 @@ check_rename <- function(.data, old, new, err_handler) {
     ))
   # check new
   if (!is.character(new) || length(new) != length(old))
-    err_handler("The object given in the argument 'new' must be a character vector of the same length as the one given in argument 'old'.")
+    err_handler(paste("The object given in the argument 'new' must be",
+      "a character vector of the same length as the one given in",
+      "argument 'old'."
+    ))
   invalid <- !is.syntactic(new)
   if (any(invalid))
     err_handler(paste0(

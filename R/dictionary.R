@@ -114,7 +114,8 @@ NA_lama_ <- "NA_"
 #'    The names of the caller arguments will be used as names under which the given translations
 #'    will be added to the new LabelDictionary class object. 
 #' @return A new LabelDictionary class object holding the passed in translations.
-#' @seealso [is.dictionary()], [lama_translate()], [lama_read()], [lama_write()], [lama_select()], [lama_rename()], [lama_mutate()], [lama_merge()]
+#' @seealso [is.dictionary()], [lama_translate()], [lama_read()], [lama_write()],
+#'   [lama_select()], [lama_rename()], [lama_mutate()], [lama_merge()]
 #' @rdname new_dictionary
 #' @export
 #' @include utilities.R
@@ -156,11 +157,11 @@ new_dictionary.list <- function(.data, ...) {
         # is a character of length 1
         invalid <- sapply(translation, function(x) !is.character(x) || length(x) != 1)
         if (any(invalid) || is.null(names(translation)) || any(names(translation) == ""))
-          err_handler("The element must be a named character vector holding the variable translations.")
+          err_handler("The object must be a named character vector holding the variable translations.")
         translation <- unlist(translation)
       }
       if (!is.character(translation) || is.null(names(translation)) || any(names(translation) == ""))
-        err_handler("The element must be a named character vector holding the variable translations.")
+        err_handler("The object must be a named character vector holding the variable translations.")
       escape_to_na(translation)
     })
   }
@@ -194,7 +195,7 @@ new_dictionary.default <- function(...) {
 #'   configured by a character vector given in argument `ordering`.
 #' @param .data An object holding the translations. `.data` can be of the
 #'   following data types:
-#'   * _named list_: A named list object, where each list element is a translation
+#'   * _named list_: A named list object, where each list entry is a translation
 #'     (a named character vector)
 #'   * _data.frame_: A data.frame holding one or more column pairs,
 #'     where each column pair consists of
@@ -204,6 +205,7 @@ new_dictionary.default <- function(...) {
 #' @param ... Various arguments, depending on the data type of `.data`.
 #' @return A new LabelDictionary class object holding the passed in translations.
 #' @inheritSection new_dictionary Translations
+#' @inheritSection new_dictionary Missing values
 #' @inheritSection new_dictionary LabelDictionary class objects
 #' @rdname as_dictionary
 #' @export
@@ -213,29 +215,51 @@ as.dictionary <- function(.data, ...) {
 
 #' @rdname as_dictionary
 #' @export
-as.dictionary.list <- function(.data) {
+as.dictionary.list <- function(.data, ...) {
   new_dictionary(.data)
 }
 
 #' @rdname as_dictionary
 #' @export
-as.dictionary.default <- function(...) {
+as.dictionary.default <- function(.data = NULL, ...) {
   stop("Error while calling `as.dictionary`: The supplied argument must either be a list or a data.frame object")
 }
 
 #' @param translation A character vector holding the names of all translations
-#' @param col_old A character vector (same length as `translation`) holding the
+#' @param col_old This argument is only used, if the argument given in `.data`
+#'   is a data.frame. In this case, the
+#'   argument `col_old` must be a character vector (same length as `translation`) holding the
 #'   names of the columns in the data.frame (in the argument `.data`) which hold
 #'   the original variable values.
 #'   These columns can be of any type: `character`, `logical`, `numerical` or `factor`.
-#' @param col_new A character vector (same length as `translation`) holding the
+#' @param col_new This argument is only used, if the argument given in `.data`
+#'   is a data.frame. In this case, the
+#'   argument `col_old` must be a character vector (same length as `translation`) holding the
 #'   names of the columns in the data.frame (in the argument `.data`) which hold
 #'   the new labels, which should be assigend to the original values.
 #'   These columns can be `character` vectors or `factors` with character labels.
+#' @param ordering This argument is only used, if the argument given in `.data`
+#'   is a data.frame. In this case, the
+#'   argument `ordering` must be a character vector (same length as `translation`) holding
+#'   one of the following configuration strings configuring 
+#'   the ordering of each corresponding translation
+#'   should be orde:
+#'   * `"row"`: The corresponding translation will be ordered exactly in the same
+#'     way as the rows are ordered in the data.frame `.data`. 
+#'   * `"old"`: The corresponding translation will be ordered by the given 
+#'     original values which are contained in the corresponding column `col_old`.
+#'     If the column contains a factor variable, then the ordering of the
+#'     factor will be used. If it just contains a plain character variable,
+#'     then it will be ordered alphanumerically.
+#'   * `"new"`: The corresponding translation will be ordered by the given 
+#'     new labels which are contained in the corresponding column `col_new`.
+#'     If the column contains a factor variable, then the ordering of the
+#'     factor will be used. If it just contains a plain character variable,
+#'     then it will be ordered alphanumerically.
 #' @rdname as_dictionary
 #' @export
 as.dictionary.data.frame <- function(
-  .data, translation, col_old, col_new, ordering = "row" 
+  .data, translation, col_old, col_new, ordering = "row", ...
 ) {
   err_handler <- composerr("Error while calling 'as.dictionary'")
   if (!is.character(translation) || length(translation) == 0 || any(is.na(translation)))
@@ -366,7 +390,7 @@ is.dictionary <- function(obj) {
 #' @param obj An object that should be tested
 #' @param err_handler An error handling function
 #' @rdname validate_dictionary
-#' @seealso [is_dictionary()], [as.dictionary()], [new_dictionary()],
+#' @seealso [is.dictionary()], [as.dictionary()], [new_dictionary()],
 #' [lama_translate()], [lama_read()], [lama_write()], [lama_select()],
 #' [lama_rename()], [lama_mutate()], [lama_merge()]
 #' @export
@@ -410,15 +434,15 @@ validate_translation <- function(
   err_handler = composerr("The object has not a valid translation structure")
 ) {
   if (
-    !is.character(x) || length(names(x)) == 0 || any(is.na(names(x))) ||
-      any(names(x) == "")
+    !is.character(obj) || length(names(obj)) == 0 || any(is.na(names(obj))) ||
+      any(names(obj) == "")
   )
-    err_handler("The element is not a valid named character vector.")
-  duplicates <- table(names(x))
+    err_handler("The object is not a valid named character vector.")
+  duplicates <- table(names(obj))
   duplicates <- names(duplicates[duplicates > 1])
   if (length(duplicates) > 0)
     err_handler(paste0(
-      "The element has duplicate names. The following original values ",
+      "The object has duplicate names. The following original values ",
       "are defined more than once: ",
       stringify(duplicates),
       "."
@@ -431,11 +455,13 @@ validate_translation <- function(
 #' Print a [LabelDictionary][new_dictionary()] class object
 #'
 #' @param x The [LabelDictionary][new_dictionary()] class object that should be printed.
+#' @param ... Unused arguments
 #' @rdname print
-#' @seealso [lama_translate()], [new_dictionary()], [lama_select()], [lama_rename()], [lama_mutate()], [lama_merge()], [lama_read()], [lama_write()]
-#' @method print LabelDictionary
+#' @seealso [lama_translate()], [new_dictionary()], [lama_select()],
+#'   [lama_rename()], [lama_mutate()], [lama_merge()], [lama_read()],
+#'   [lama_write()]
 #' @export
-print.LabelDictionary <- function(x) {
+print.LabelDictionary <- function(x, ...) {
   cat("\n--- LabelDictionary ---\n")
   for (name in names(x)) {
     cat(paste0("Variable '", name, "':\n"))
