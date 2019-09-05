@@ -1,0 +1,124 @@
+
+R version 3.6.0 (2019-04-26) -- "Planting of a Tree"
+Copyright (C) 2019 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "labelmachine"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('labelmachine')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("lapplI")
+> ### * lapplI
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: lapplI
+> ### Title: Improve 'lapply and 'sapply' with index
+> ### Aliases: lapplI sapplI
+> 
+> ### ** Examples
+> 
+> # 'lapply' with index
+> lapplI(
++   list("x1", "x2"),
++   function(x, y, .I) list(x = x, y = y, i = .I),
++   y = "extra argument"
++ )
+[[1]]
+[[1]]$x
+[1] "x1"
+
+[[1]]$y
+[1] "extra argument"
+
+[[1]]$i
+[1] 1
+
+
+[[2]]
+[[2]]$x
+[1] "x2"
+
+[[2]]$y
+[1] "extra argument"
+
+[[2]]$i
+[1] 2
+
+
+> 
+> # 'lapply' without index
+> lapplI(
++   list("x1", "x2"),
++   function(x, y) list(x = x, y = y),
++   y = "extra argument"
++ )
+[[1]]
+[[1]]$x
+[1] "x1"
+
+[[1]]$y
+[1] "extra argument"
+
+
+[[2]]
+[[2]]$x
+[1] "x2"
+
+[[2]]$y
+[1] "extra argument"
+
+
+> # 'sapply' with index
+> sapplI(
++   c("x1", "x2"),
++   function(x, y, .I) paste(x, y, .I),
++   y = "extra argument",
++   USE.NAMES = FALSE
++ )
+[1] "x1 extra argument 1" "x2 extra argument 2"
+> 
+> # 'sapply' without index
+> sapplI(
++   c("x1", "x2"),
++   function(x, y) paste(x, y),
++   y = "extra argument",
++   USE.NAMES = FALSE
++ )
+[1] "x1 extra argument" "x2 extra argument"
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  0.084 0.02 0.123 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

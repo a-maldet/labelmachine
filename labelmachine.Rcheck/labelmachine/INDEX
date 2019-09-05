@@ -1,0 +1,52 @@
+NA_lama_                NA replace string
+as.dictionary           Coerce to a LabelDictionary class object
+check_rename            Function that checks the passed in arguments
+                        for 'lama_rename()' and 'lama_rename_()'
+check_select            Function that checks the passed in arguments
+                        for 'lama_select()' and 'lama_select_()'
+check_translate_general
+                        Function that applies some general checks to
+                        the arguments of 'lama_translate()' and
+                        'lama_translate_()'
+contains_na_escape      Check if a character vector contains NA
+                        replacement strings
+dictionary_to_yaml      Transform data structure from LabelDictionary
+                        class input format to the yaml format
+escape_to_na            Replace '"NA_"' by 'NA'
+is.dictionary           Check if an object is a LabelDictionary class
+                        object
+is.syntactic            Check if a variable name is syntactically valid
+lama_check_character    Check if an object is a character
+lama_check_length       Check if an object has the right length
+lama_merge              Merge multiple label lexicas into one
+lama_mutate             Change or append a variable translation to an
+                        existing LabelDictionary object
+lama_read               Read in a 'yaml' file holding translations for
+                        one or multiple variables
+lama_rename             Rename multiple variable translations in a
+                        LabelDictionary object
+lama_select             Select multiple variable translations and
+                        create a new LabelDictionary object
+lama_translate          Assign new labels to a variable of a data.frame
+lama_write              Write a 'yaml' file holding translations for
+                        one or multiple variables
+lapplI                  Improve 'lapply and 'sapply' with index
+na_to_escape            Replace 'NA' by '"NA_"'
+named_lapply            Create a named list with lapply from a
+                        character vector
+named_list              Create a named list
+new_dictionary          Create a new LabelDictionary class object
+print.LabelDictionary   Print a LabelDictionary class object
+rename_translation      Function that actually performs the renaming of
+                        the translations
+stringify               Coerce a vector into a character string ("x1',
+                        'x2', ...')
+translate_df            This function relabels several variables in a
+                        data.frame
+translate_variable      This function relabels a vector
+validate_dictionary     Check if an object has a valid LabelDictionary
+                        structure
+validate_translation    Check if an object has a valid translation
+                        structure
+yaml_to_dictionary      Transform data structure from yaml format to
+                        the LabelDictionary class input format
