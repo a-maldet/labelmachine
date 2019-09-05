@@ -10,5 +10,5 @@ before_install:
 
 deploy:
   provider: script
-  script: Rscript -e 'pkgdown::build_favicon(pkg = "labelmachine"); pkgdown::deploy_site_github()'
+  script: Rscript -e 'pkgdown::build_favicon(pkg = "."); pkgdown::deploy_site_github()'
   skip_cleanup: true
