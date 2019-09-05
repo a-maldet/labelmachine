@@ -1,19 +1,22 @@
 
-labelmachine
-============
+labelmachine <img src="man/figures/logo.png" align="right" alt="" width=140 height=162 />
+=========================================================================================
 
 !Caution!
 ---------
 
-`labelmachine` is currently under heavy development and will be released
-in a week or so.
+`labelmachine` is currently under heavy development and will be released in a week or so.
 
 `labelmachine` is an **R** package that helps you assigning new labels to data.frame variables. Furthermore, you can manage your label translations in so called **dictionary** files, which are **yaml** files. This makes it very easy using the same label translations in multiple projects that share similar data structure.
+
+``` r
+knitr::opts_chunk$set(eval = FALSE)
+```
 
 The most important functions are:
 
 -   `read_dictionary`: Reads in a **yaml** file holding the label translations for one or more variables. The function returns a **dictionary object**, that can be used for the translation of variable labels later on.
--   `translate`: Use a dictionary object in order to relabel one or more variables of your data.frame. The variables may be of type `numeric`, `character` or `factor`. In case of a factor variable, you have the possibility to keep the original ordering by using the function argument `keep_ordering = TRUE`.
+-   `translate`: Use a dictionary object in order to relabel one or more variables of your data.frame. The variables may be of type `number`, `character` or `factor`. In case of a factor variable, you have the possibility to keep the original ordering by using the function argument `keep_ordering = TRUE`.
 -   `new_dictionary`: Create a dictionary object from a named list, holding the translations for one or more variables.
 -   `write_dictionary`: Write a dictionary object to a **yaml** file.
 -   `select`: Pick a subset of translations in a dictionary object.
@@ -94,12 +97,6 @@ df %>%
   )
 ```
 
-    ##   age    age_s       age_l
-    ## 1   2 16<=a<70 middle aged
-    ## 2   2 16<=a<70 middle aged
-    ## 3   1     a<16       young
-    ## 4   3    70<=a         old
-
 ### Create a dictionary object manually
 
 Instead of reading in a yaml file you can also create a dictionary object manually from a named list object, holding named character vectors. Each entry of the named list represents a variable of your data.frame and each named character vector is a translation. The names of the character vector entries represent the original values of the variable and the values of the character vector entries are the new labels that should be assigned.
@@ -123,16 +120,6 @@ dict %>%
   select(c("supp", "dose"))
 ```
 
-    ## 
-    ## --- LabelDictionary ---
-    ## Variable 'supp':
-    ##              VC              OJ 
-    ## "Ascorbic acid"  "Orange juice" 
-    ## 
-    ## Variable 'dose':
-    ##      0.5      1.0      2.0 
-    ##    "Low" "Medium"   "High"
-
 With `mutate` you can set a new translation (character vector) for a variable:
 
 ``` r
@@ -140,32 +127,12 @@ dict %>%
   mutate("supp", c(VC = "Ascorbic a.", OJ = "Orange j."))
 ```
 
-    ## 
-    ## --- LabelDictionary ---
-    ## Variable 'supp':
-    ##            VC            OJ 
-    ## "Ascorbic a."   "Orange j." 
-    ## 
-    ## Variable 'dose':
-    ##      0.5      1.0      2.0 
-    ##    "Low" "Medium"   "High"
-
 With `rename` you can rename a dictionary entry:
 
 ``` r
 dict %>%
   rename(c("supp", "dose"), c("SUPP", "DOSE"))
 ```
-
-    ## 
-    ## --- LabelDictionary ---
-    ## Variable 'SUPP':
-    ##              VC              OJ 
-    ## "Ascorbic acid"  "Orange juice" 
-    ## 
-    ## Variable 'DOSE':
-    ##      0.5      1.0      2.0 
-    ##    "Low" "Medium"   "High"
 
 ### Merge two ore more dictionary objects
 
@@ -185,27 +152,6 @@ dict2 <- list(
   new_dictionary
 merge(dict1, dict2)
 ```
-
-    ## Warning in merge.LabelDictionary(dict1, dict2): The following
-    ## LabelDictionary entries will be overwritten: 0, 1
-
-    ## 
-    ## --- LabelDictionary ---
-    ## Variable 'gender':
-    ##      0      1 
-    ## "Girl"  "Boy" 
-    ## 
-    ## Variable 'age':
-    ##       0       1 
-    ##  "<10y" ">=10y" 
-    ## 
-    ## Variable 'country':
-    ##           0           1 
-    ##   "Austria" "Australia" 
-    ## 
-    ## Variable 'school':
-    ##           0           1 
-    ##   "Primary" "Secondary"
 
 The `merge` merges the arguments from left to right. Therefore, the variable translations of `dict1` are overwritten by the entries of `dict2`. In this example the resulting dictionary has contains the variable translations for `age` and `country` as defined in `dict1` and the variable translations for `school` and `gender` as defined in `dict2`. The variable translations for `gender` in `dict1` are overwritten by `dict2`.
 
