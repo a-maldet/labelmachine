@@ -4,6 +4,7 @@ temp/
 ^\.Rproj\.user$
 ^\.travis\.yml$
 ^README\.Rmd$
+^README\.html$
 ^various$
 ^_pkgdown\.yml$
 ^docs$
