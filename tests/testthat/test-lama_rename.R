@@ -39,7 +39,7 @@ test_that("'lama_rename' throws the right errors", {
   )
   expect_error(
     lama_rename(dict_a, x = X, y = Y),
-    "The following old translation names could not be found in the LabelDictionary object: 'X', 'Y'.",
+    "The following old translation names could not be found in the LamaDictionary object: 'X', 'Y'.",
     fixed = TRUE
   )
 })
@@ -66,7 +66,7 @@ test_that("'lama_rename_' throws the right errors", {
   )
   expect_error(
     lama_rename_(dict_a, c("X", "Y"), c("x", "y")),
-    "The following old translation names could not be found in the LabelDictionary object: 'X', 'Y'.",
+    "The following old translation names could not be found in the LamaDictionary object: 'X', 'Y'.",
     fixed = TRUE
   )
 })

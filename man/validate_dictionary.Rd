@@ -2,10 +2,10 @@
 % Please edit documentation in R/dictionary.R
 \name{validate_dictionary}
 \alias{validate_dictionary}
-\title{Check if an object has a valid \link[=new_dictionary]{LabelDictionary} structure}
+\title{Check if an object has a valid \link[=new_dictionary]{LamaDictionary} structure}
 \usage{
 validate_dictionary(obj,
-  err_handler = composerr("The object has not a valid LabelDictionary structure"))
+  err_handler = composerr("The object has not a valid LamaDictionary structure"))
 }
 \arguments{
 \item{obj}{An object that should be tested}
@@ -82,11 +82,11 @@ since the \code{YAML} parser does not recognice missing values.
 }
 }
 
-\section{LabelDictionary class objects}{
+\section{LamaDictionary class objects}{
 
-Each \emph{LabelDictionary} class object can contain multiple \emph{translations},
+Each \emph{LamaDictionary} class object can contain multiple \emph{translations},
 each with a unique name under which the translation can be found.
-The function \code{\link[=lama_translate]{lama_translate()}} uses a LabelDictionary class object
+The function \code{\link[=lama_translate]{lama_translate()}} uses a LamaDictionary class object
 to translate a normal \code{vector} or to translate one or more columns in a
 \code{data.frame}.
 Sometimes it may be necessary to have different translations

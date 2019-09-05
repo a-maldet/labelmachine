@@ -7,7 +7,7 @@
 lama_write(x, yaml_path)
 }
 \arguments{
-\item{x}{A \link[=new_dictionary]{LabelDictionary} class object holding the variable translations}
+\item{x}{A \link[=new_dictionary]{LamaDictionary} class object holding the variable translations}
 
 \item{yaml_path}{File path, where the yaml file should be saved}
 }

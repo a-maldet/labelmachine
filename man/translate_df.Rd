@@ -10,7 +10,7 @@ translate_df(.data, dictionary, translation, col, col_new, keep_order,
 \arguments{
 \item{.data}{The data.frame object which contains the variable that should be relabelled}
 
-\item{dictionary}{A \link[=new_dictionary]{LabelDictionary} object, holding the translations for various
+\item{dictionary}{A \link[=new_dictionary]{LamaDictionary} object, holding the translations for various
 variables.}
 
 \item{translation}{A character vector holding the names of the variable

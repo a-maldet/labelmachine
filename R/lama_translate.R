@@ -6,7 +6,7 @@
 #' The function [lama_translate()] uses non-standard evaluation, whereas 
 #' [lama_translate_()] is the standard evaluation alternative.
 #' @param .data The data.frame object which contains the variable that should be relabelled
-#' @param dictionary A [LabelDictionary][new_dictionary()] object, holding the translations for various
+#' @param dictionary A [LamaDictionary][new_dictionary()] object, holding the translations for various
 #' variables.
 #' @param ... One or more unquoted expressions separated by commas. Use unquoted
 #' arguments that tell which translation should be applied to which column and
@@ -102,7 +102,7 @@ lama_translate.data.frame <- function(.data, dictionary, ..., keep_order = FALSE
         ))
       if (!translation %in% names(dictionary))
         err_handler(paste0(
-          "The translation name '", translation, "' could not be found in the LabelDictionary."
+          "The translation name '", translation, "' could not be found in the LamaDictionary."
         ))
       list(
         col_new = col_new,
@@ -185,7 +185,7 @@ lama_translate_.data.frame <- function(.data, dictionary, translation, col = tra
   if (any(invalid)) 
     err_handler(paste0(
       "The following values of the argument 'translation' could not be found ",
-      "in the LabelDictionary object given in argument 'dictionary': ",
+      "in the LamaDictionary object given in argument 'dictionary': ",
       stringify(translation[invalid]),
       ".\nUse a subset of the following variable names: ",
       stringify(names(dictionary)),
@@ -304,7 +304,7 @@ check_translate_general <- function(.data, dictionary, col_new, keep_order, err_
   if (!is.data.frame(.data))
     err_handler("The argument '.data' must be a data.frame.")
   if (!is.dictionary(dictionary))
-    err_handler("The argument 'dictionary' must be a LabelDictionary class object.")
+    err_handler("The argument 'dictionary' must be a LamaDictionary class object.")
   if (!is.logical(keep_order) || !length(keep_order) %in% c(1, length(col_new)))
     err_handler(paste(
       "The argument 'keep_order' must be a character string or a character",

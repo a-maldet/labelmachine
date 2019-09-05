@@ -7,7 +7,7 @@
 rename_translation(.data, old, new)
 }
 \arguments{
-\item{.data}{A \link[=new_dictionary]{LabelDictionary} object, holding the
+\item{.data}{A \link[=new_dictionary]{LamaDictionary} object, holding the
 variable translations}
 
 \item{old}{A character vector holding the names of the variable
@@ -17,7 +17,7 @@ translations, that should be renamed.}
 translations.}
 }
 \value{
-The updated \link[=new_dictionary]{LabelDictionary} class object.
+The updated \link[=new_dictionary]{LamaDictionary} class object.
 }
 \description{
 Function that actually performs the renaming of the translations

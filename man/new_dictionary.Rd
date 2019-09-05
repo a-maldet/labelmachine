@@ -5,7 +5,7 @@
 \alias{new_dictionary.list}
 \alias{new_dictionary.character}
 \alias{new_dictionary.default}
-\title{Create a new LabelDictionary class object}
+\title{Create a new LamaDictionary class object}
 \usage{
 new_dictionary(...)
 
@@ -21,37 +21,37 @@ the type of the first argument passed into \code{new_dictionary},
 there are different valid ways of using \code{new_dictionary}:
 \itemize{
 \item \emph{No arguments} were passed into \code{...}: In this case \code{new_dictionary}
-returns an empty LabelDictionary class object (e.g. \code{dict <- new_dictionary()}).
+returns an empty LamaDictionary class object (e.g. \code{dict <- new_dictionary()}).
 \item \emph{The first argument is a list}: In this case, only the first argument of
 \code{new_dictionary} is used and it is allowed to use an unnamed argument call.
 Furthermore, the passed in object must be a named list object, which contains all
-translations that should be added to the new LabelDictionary class object.
+translations that should be added to the new LamaDictionary class object.
 Each item of the named list object must be a named character vector defining a translation
 (e.g. \code{new_dictionary(list(area = c("0" = "urban", "1" = "rural"),  = c(l = "Low", h = "High")))}
-generates a LabelDictionary class object holding the translations \code{"area"} and \code{"density"}).
+generates a LamaDictionary class object holding the translations \code{"area"} and \code{"density"}).
 \item \emph{The first argument is a character vector}: In this case, it is allowed to pass in
 more than one argument, but all given arguments when calling \code{new_directory}
 must be \emph{named arguments} and each argument must be
 a named character vectors defining translations
 (e.g. \code{new_dictionary(area = c("0" = "urban", "1" = "rural"), density = c(l = "Low", h = "High"))}
-generates a LabelDictionary class object holding the translations \code{"area"} and \code{"density"}).
+generates a LamaDictionary class object holding the translations \code{"area"} and \code{"density"}).
 The names of the caller arguments will be used as names under which the given translations
-will be added to the new LabelDictionary class object.
+will be added to the new LamaDictionary class object.
 }}
 
 \item{.data}{A named list object, where each list entry corresponds to a
-translation that should be added to the LabelDictionary object
+translation that should be added to the LamaDictionary object
 (e.g. \code{new_dictionary(list(area = c("0" = "urban", "1" = "rural"),  = c(l = "Low", h = "High")))}
-generates a LabelDictionary class object holding the translations \code{"area"} and \code{"density"}).
+generates a LamaDictionary class object holding the translations \code{"area"} and \code{"density"}).
 The names of the list entries are the names under which the translation
-will be added to the new LabelDictionary class object (e.g. \code{area} and \code{density}).
+will be added to the new LamaDictionary class object (e.g. \code{area} and \code{density}).
 Each list entry must be a named character vector defining a translation
 (e.g. \code{c("0" = "urban", "1" = "rural")} is the translation with
 the name \code{area} and \code{c(l = "Low", h = "High")} is the translation
 with the name \code{density}).}
 }
 \value{
-A new LabelDictionary class object holding the passed in translations.
+A new LamaDictionary class object holding the passed in translations.
 }
 \description{
 Generates an \emph{S3} class object, which holds the \emph{variable translations}.
@@ -59,22 +59,22 @@ There are three valid ways to use \code{new_dictionary} in order to create a
 LableDictionary class object:
 \itemize{
 \item \emph{No arguments} were passed into \code{...}: In this case \code{new_dictionary}
-returns an empty LabelDictionary class object (e.g. \code{dict <- new_dictionary()}).
+returns an empty LamaDictionary class object (e.g. \code{dict <- new_dictionary()}).
 \item \emph{The first argument is a list}: In this case only the first argument of
 \code{new_dictionary} is used. It is not necessary to pass in a named argument.
 The passed in object must be a \emph{named list object}, which contains all
-translations that should be added to the new LabelDictionary class object.
+translations that should be added to the new LamaDictionary class object.
 Each item of the named list object must be a \emph{named character vector} defining a translation
 (e.g. \code{new_dictionary(list(area = c("0" = "urban", "1" = "rural"),  = c(l = "Low", h = "High")))}
-generates a LabelDictionary class object holding the translations \code{"area"} and \code{"density"}).
+generates a LamaDictionary class object holding the translations \code{"area"} and \code{"density"}).
 \item \emph{The first argument is a character vector}: In this case, it is allowed to pass in
 \emph{more than one argument}. In this case, all given arguments must be \emph{named arguments}
 holding \emph{named character vectors} defining translations
 (e.g. \code{new_dictionary(area = c("0" = "urban", "1" = "rural"), density = c(l = "Low", h = "High"))}
-generates a LabelDictionary class object holding the translations \code{"area"} and \code{"density"}).
+generates a LamaDictionary class object holding the translations \code{"area"} and \code{"density"}).
 The names of the passed in arguments will be used as the names,
 under which the given translations
-will be added to the new LabelDictionary class object.
+will be added to the new LamaDictionary class object.
 }
 }
 \section{Translations}{
@@ -143,11 +143,11 @@ since the \code{YAML} parser does not recognice missing values.
 }
 }
 
-\section{LabelDictionary class objects}{
+\section{LamaDictionary class objects}{
 
-Each \emph{LabelDictionary} class object can contain multiple \emph{translations},
+Each \emph{LamaDictionary} class object can contain multiple \emph{translations},
 each with a unique name under which the translation can be found.
-The function \code{\link[=lama_translate]{lama_translate()}} uses a LabelDictionary class object
+The function \code{\link[=lama_translate]{lama_translate()}} uses a LamaDictionary class object
 to translate a normal \code{vector} or to translate one or more columns in a
 \code{data.frame}.
 Sometimes it may be necessary to have different translations

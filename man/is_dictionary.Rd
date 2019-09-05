@@ -2,7 +2,7 @@
 % Please edit documentation in R/dictionary.R
 \name{is.dictionary}
 \alias{is.dictionary}
-\title{Check if an object is a \link[=new_dictionary]{LabelDictionary} class object}
+\title{Check if an object is a \link[=new_dictionary]{LamaDictionary} class object}
 \usage{
 is.dictionary(obj)
 }
@@ -11,10 +11,10 @@ is.dictionary(obj)
 }
 \value{
 \code{TRUE} if the object is a
-\link[=new_dictionary]{LabelDictionary} class object, \code{FALSE} otherwise.
+\link[=new_dictionary]{LamaDictionary} class object, \code{FALSE} otherwise.
 }
 \description{
-Check if an object is a \link[=new_dictionary]{LabelDictionary} class object
+Check if an object is a \link[=new_dictionary]{LamaDictionary} class object
 }
 \seealso{
 \code{\link[=validate_dictionary]{validate_dictionary()}}, \code{\link[=as.dictionary]{as.dictionary()}}, \code{\link[=new_dictionary]{new_dictionary()}},

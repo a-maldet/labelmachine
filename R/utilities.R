@@ -6,11 +6,11 @@
 #' @return `TRUE` if valid, `FALSE` else.
 is.syntactic <- function(x) x == make.names(x)
 
-#' Transform data structure from yaml format to the [LabelDictionary][new_dictionary()] class input format
+#' Transform data structure from yaml format to the [LamaDictionary][new_dictionary()] class input format
 #'
 #' When a yaml file is read in, the data has the structure
 #' vars (named list) > translations (named list)
-#' This structure is transformed to the [LabelDictionary][new_dictionary()] class input structure
+#' This structure is transformed to the [LamaDictionary][new_dictionary()] class input structure
 #' vars (named list) >  translations (named character vector)
 #' @param data An object similar to a pre-dictionary object, but each translation is not a named character vector, but a named list holding character strings.
 #' @return A pre-dictionary object.
@@ -18,9 +18,9 @@ yaml_to_dictionary <- function(data) {
   lapply(data, unlist)
 }
 
-#' Transform data structure from [LabelDictionary][new_dictionary()] class input format to the yaml format
+#' Transform data structure from [LamaDictionary][new_dictionary()] class input format to the yaml format
 #'
-#' In the [LabelDictionary][new_dictionary()] class object the data has the structure
+#' In the [LamaDictionary][new_dictionary()] class object the data has the structure
 #' vars (named list) > translations (named character vector)
 #' This structure is transformed to the yaml file structure
 #' vars (named list) > translations (named list)

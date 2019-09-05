@@ -1,6 +1,6 @@
 context("as.dictionary")
-# as.dictionary.LabelDictionary
-test_that("as.dictionary takes LabelDictionary objects", {
+# as.dictionary.LamaDictionary
+test_that("as.dictionary takes LamaDictionary objects", {
   dict <- as.dictionary(new_dictionary(a = c(a = "A", b = NA, NA_ = "C"), x = list(x = "X", NA_ = NA)))
   expect_dictionary(dict)
   expect_translation_names(dict, c("a", "x"))
@@ -71,7 +71,7 @@ test_that("throws the right errors", {
 })
 
 # as_dictionary.list
-test_that("LabelDictionary objects are allowed", {
+test_that("LamaDictionary objects are allowed", {
   dict <- as.dictionary(new_dictionary(a = c(a = "A", b = NA, NA_ = "c"), x = list(x = "X", NA_ = NA)))
   expect_dictionary(dict)
   expect_translation_names(dict, c("a", "x"))

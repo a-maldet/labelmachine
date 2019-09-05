@@ -1,17 +1,17 @@
 #' Merge multiple label lexicas into one
 #'
-#' This function takes multiple [LabelDictionary][new_dictionary()] class
+#' This function takes multiple [LamaDictionary][new_dictionary()] class
 #' objects and merges them together into
-#' a single [LabelDictionary][new_dictionary()] class object.
+#' a single [LamaDictionary][new_dictionary()] class object.
 #' In case some class objects have entries with the same name, the 
 #' class objects passed in later overwrite the class objects passed in first 
 #' (e.g. in \code{lama_merge(x, y, z)}: The lexicon \code{z} overwrites
 #' \code{x} and \code{y}. The lexicon \code{y} overwrites \code{x}).
-#' @param ... Two or more [LabelDictionary][new_dictionary()]
+#' @param ... Two or more [LamaDictionary][new_dictionary()]
 #' class objects, which should be merged together.
 #' @param show_warnings A logical flag that defines, whether warnings should be
 #' shown (\code{TRUE}) or not (\code{FALSE}).
-#' @return The merged [LabelDictionary][new_dictionary()] class object
+#' @return The merged [LamaDictionary][new_dictionary()] class object
 #' @seealso [lama_translate()], [new_dictionary()], [lama_rename()], [lama_select()],
 #' [lama_mutate()], [lama_read()], [lama_write()]
 #' @rdname lama_merge
@@ -23,17 +23,17 @@ lama_merge <- function(..., show_warnings = TRUE) {
 
 #' @rdname lama_merge
 #' @export
-lama_merge.LabelDictionary <- function(..., show_warnings = TRUE) {
+lama_merge.LamaDictionary <- function(..., show_warnings = TRUE) {
   err_handler <- composerr("Error while calling 'lama_merge'")
   args <- list(...)
   if (length(args) < 2)
-    err_handler(paste0("There must be at least two LabelDictionary class object passed into."))
+    err_handler(paste0("There must be at least two LamaDictionary class object passed into."))
   lapply(seq_len(length(args)), function(i) {
     if (!is.dictionary(args[[i]]))
       err_handler(paste0(
         "Invalid argument at position ",
         stringify(i),
-        ": Object is not a LabelDictionary class object."
+        ": Object is not a LamaDictionary class object."
       ))
   })
   if (!is.logical(show_warnings) || is.na(show_warnings) || length(show_warnings) != 1)
@@ -50,16 +50,16 @@ lama_merge.LabelDictionary <- function(..., show_warnings = TRUE) {
     })
     if (length(overwritten_names) > 0)
       warning(paste0(
-        "The following LabelDictionary entries will be overwritten: ",
+        "The following LamaDictionary entries will be overwritten: ",
        stringify(overwritten_names),
        "."
       ))
   }
-  # Merge the 1st with the 2nd LabelDictionary object
+  # Merge the 1st with the 2nd LamaDictionary object
   x <- args[[1]]
   y <- args[[2]]
   lapply(names(y), function(name) x[[name]] <<- y[[name]])
-  # Merge the resulting LabelDictionary with the rest
+  # Merge the resulting LamaDictionary with the rest
   if (length(args) > 2) {
     return(do.call(
       lama_merge, 

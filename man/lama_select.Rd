@@ -3,17 +3,17 @@
 \name{lama_select}
 \alias{lama_select}
 \alias{lama_select_}
-\alias{lama_select_.LabelDictionary}
-\title{Select multiple variable translations and create a new \link[=new_dictionary]{LabelDictionary} object}
+\alias{lama_select_.LamaDictionary}
+\title{Select multiple variable translations and create a new \link[=new_dictionary]{LamaDictionary} object}
 \usage{
 lama_select(.data, ...)
 
 lama_select_(.data, key)
 
-\method{lama_select_}{LabelDictionary}(.data, key)
+\method{lama_select_}{LamaDictionary}(.data, key)
 }
 \arguments{
-\item{.data}{A \link[=new_dictionary]{LabelDictionary} object, holding the variable translations}
+\item{.data}{A \link[=new_dictionary]{LamaDictionary} object, holding the variable translations}
 
 \item{...}{One or more unquoted translation names separated by commas.}
 
@@ -21,12 +21,12 @@ lama_select_(.data, key)
 should be picked.}
 }
 \value{
-A new \link[=new_dictionary]{LabelDictionary} class object, holding the picked variable translations.
+A new \link[=new_dictionary]{LamaDictionary} class object, holding the picked variable translations.
 }
 \description{
 The functions \code{\link[=lama_select]{lama_select()}} and \code{\link[=lama_select_]{lama_select_()}} pick one or more
-variable translations from a \link[=new_dictionary]{LabelDictionary} class object
-and create a new \link[=new_dictionary]{LabelDictionary} class object.
+variable translations from a \link[=new_dictionary]{LamaDictionary} class object
+and create a new \link[=new_dictionary]{LamaDictionary} class object.
 The function \code{\link[=lama_select]{lama_select()}} uses non-standard evaluation, whereas
 \code{\link[=lama_select_]{lama_select_()}} is the standard evaluation alternative.
 }

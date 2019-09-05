@@ -3,17 +3,17 @@
 \name{lama_rename}
 \alias{lama_rename}
 \alias{lama_rename_}
-\alias{lama_rename_.LabelDictionary}
-\title{Rename multiple variable translations in a \link[=new_dictionary]{LabelDictionary} object}
+\alias{lama_rename_.LamaDictionary}
+\title{Rename multiple variable translations in a \link[=new_dictionary]{LamaDictionary} object}
 \usage{
 lama_rename(.data, ...)
 
 lama_rename_(.data, old, new)
 
-\method{lama_rename_}{LabelDictionary}(.data, old, new)
+\method{lama_rename_}{LamaDictionary}(.data, old, new)
 }
 \arguments{
-\item{.data}{A \link[=new_dictionary]{LabelDictionary} object, holding the variable translations}
+\item{.data}{A \link[=new_dictionary]{LamaDictionary} object, holding the variable translations}
 
 \item{...}{One or more unquoted expressions separated by commas. Use named arguments, e.g. \code{new_name = old_name}, to rename selected variables.}
 
@@ -24,12 +24,12 @@ that should be renamed.}
 translations.}
 }
 \value{
-The updated \link[=new_dictionary]{LabelDictionary} class object.
+The updated \link[=new_dictionary]{LamaDictionary} class object.
 }
 \description{
 The functions \code{\link[=lama_rename]{lama_rename()}} and \code{\link[=lama_rename_]{lama_rename_()}}
 are used to rename one or more variable translations inside of a
-\link[=new_dictionary]{LabelDictionary} class object.
+\link[=new_dictionary]{LamaDictionary} class object.
 The function \code{\link[=lama_rename]{lama_rename()}} uses non-standard evaluation,
 whereas \code{\link[=lama_rename_]{lama_rename_()}} is the standard evaluation alternativ.
 }

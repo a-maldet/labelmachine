@@ -2,27 +2,27 @@
 % Please edit documentation in R/lama_merge.R
 \name{lama_merge}
 \alias{lama_merge}
-\alias{lama_merge.LabelDictionary}
+\alias{lama_merge.LamaDictionary}
 \title{Merge multiple label lexicas into one}
 \usage{
 lama_merge(..., show_warnings = TRUE)
 
-\method{lama_merge}{LabelDictionary}(..., show_warnings = TRUE)
+\method{lama_merge}{LamaDictionary}(..., show_warnings = TRUE)
 }
 \arguments{
-\item{...}{Two or more \link[=new_dictionary]{LabelDictionary}
+\item{...}{Two or more \link[=new_dictionary]{LamaDictionary}
 class objects, which should be merged together.}
 
 \item{show_warnings}{A logical flag that defines, whether warnings should be
 shown (\code{TRUE}) or not (\code{FALSE}).}
 }
 \value{
-The merged \link[=new_dictionary]{LabelDictionary} class object
+The merged \link[=new_dictionary]{LamaDictionary} class object
 }
 \description{
-This function takes multiple \link[=new_dictionary]{LabelDictionary} class
+This function takes multiple \link[=new_dictionary]{LamaDictionary} class
 objects and merges them together into
-a single \link[=new_dictionary]{LabelDictionary} class object.
+a single \link[=new_dictionary]{LamaDictionary} class object.
 In case some class objects have entries with the same name, the
 class objects passed in later overwrite the class objects passed in first
 (e.g. in \code{lama_merge(x, y, z)}: The lexicon \code{z} overwrites

@@ -3,16 +3,16 @@
 \name{as.dictionary}
 \alias{as.dictionary}
 \alias{as.dictionary.list}
-\alias{as.dictionary.LabelDictionary}
+\alias{as.dictionary.LamaDictionary}
 \alias{as.dictionary.default}
 \alias{as.dictionary.data.frame}
-\title{Coerce to a \link[=new_dictionary]{LabelDictionary} class object}
+\title{Coerce to a \link[=new_dictionary]{LamaDictionary} class object}
 \usage{
 as.dictionary(.data, ...)
 
 \method{as.dictionary}{list}(.data, ...)
 
-\method{as.dictionary}{LabelDictionary}(.data, ...)
+\method{as.dictionary}{LamaDictionary}(.data, ...)
 
 \method{as.dictionary}{default}(.data = NULL, ...)
 
@@ -72,7 +72,7 @@ then it will be ordered alphanumerically.
 }}
 }
 \value{
-A new LabelDictionary class object holding the passed in translations.
+A new LamaDictionary class object holding the passed in translations.
 }
 \description{
 This function allows two types of arguments:
@@ -155,11 +155,11 @@ since the \code{YAML} parser does not recognice missing values.
 }
 }
 
-\section{LabelDictionary class objects}{
+\section{LamaDictionary class objects}{
 
-Each \emph{LabelDictionary} class object can contain multiple \emph{translations},
+Each \emph{LamaDictionary} class object can contain multiple \emph{translations},
 each with a unique name under which the translation can be found.
-The function \code{\link[=lama_translate]{lama_translate()}} uses a LabelDictionary class object
+The function \code{\link[=lama_translate]{lama_translate()}} uses a LamaDictionary class object
 to translate a normal \code{vector} or to translate one or more columns in a
 \code{data.frame}.
 Sometimes it may be necessary to have different translations
