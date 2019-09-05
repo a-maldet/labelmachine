@@ -1,1 +1,14 @@
-language: r
+language: R
+r:
+  - release
+cache: packages
+
+r_github_packages: r-lib/pkgdown
+
+before_install:
+  - tlmgr install standalone
+
+deploy:
+  provider: script
+  script: Rscript -e 'pkgdown::build_favicon(); pkgdown::deploy_site_github()'
+  skip_cleanup: true
