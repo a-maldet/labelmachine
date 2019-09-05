@@ -1,2 +1,10 @@
-^README\.html$
+temp/
+^doc$
+^.*\.Rproj$
+^\.Rproj\.user$
+^\.travis\.yml$
 ^README\.Rmd$
+^various$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
