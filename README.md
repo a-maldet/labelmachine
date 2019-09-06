@@ -75,6 +75,19 @@ str(df_new)
     ##  $ subject_new                : Factor w/ 3 levels "English","Mathematics",..: 1 2 2 1 1
     ##  $ result_new                 : Factor w/ 4 levels "Excellent","Satisfying",..: 2 1 3 2 4
 
+Highlights
+----------
+
+`labelmachine` offers the following features:
+
+-   All types of variables can be translated: **Logical**, **Numeric**, **Character**, **Factor**
+-   When translating your varaibles, you may choose between keeping the current ordering or applying a new factor ordering to your variable.
+-   Assigning labels to missing value (**NA**) is no problem.
+-   Assigning **NA** to existing values is no problem.
+-   Merging two values into a single label is no problem.
+-   Transforming **data.frame** holding label assignment lists into a **lama\_dictionary** is no problem.
+-   Manage your translations in **yaml** files in order to use the same translations in different projects sharing similare data.
+
 Further reading
 ---------------
 
