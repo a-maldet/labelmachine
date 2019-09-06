@@ -5,27 +5,9 @@ labelmachine <img src="man/figures/logo.png" align="right" alt="" width=140 heig
 <!-- badges: start -->
 [![Travis build status](https://travis-ci.org/a-maldet/labelmachine.svg?branch=master)](https://travis-ci.org/a-maldet/labelmachine) [![GitHub last commit](https://img.shields.io/github/last-commit/a-maldet/labelmachine.svg?logo=github)](https://github.com/a-maldet/labelmachine/commits/master) [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/a-maldet/labelmachine.svg?logo=github)](https://github.com/a-maldet/labelmachine)
 
-!Caution!
----------
+`labelmachine` is an **R** package that helps assigning meaningful labels to R data sets. Furthermore, you can manage your labels in so called **dictionary** files, which are **yaml** files. This makes it very easy using the same label translations in multiple projects that share similar data structure.
 
-`labelmachine` is currently under heavy development and will be released in a week or so.
-
-`labelmachine` is an **R** package that helps you assigning new labels to data.frame variables. Furthermore, you can manage your label translations in so called **dictionary** files, which are **yaml** files. This makes it very easy using the same label translations in multiple projects that share similar data structure.
-
-``` r
-knitr::opts_chunk$set(eval = FALSE)
-```
-
-The most important functions are:
-
--   `read_dictionary`: Reads in a **yaml** file holding the label translations for one or more variables. The function returns a **dictionary object**, that can be used for the translation of variable labels later on.
--   `translate`: Use a dictionary object in order to relabel one or more variables of your data.frame. The variables may be of type `number`, `character` or `factor`. In case of a factor variable, you have the possibility to keep the original ordering by using the function argument `keep_ordering = TRUE`.
--   `new_dictionary`: Create a dictionary object from a named list, holding the translations for one or more variables.
--   `write_dictionary`: Write a dictionary object to a **yaml** file.
--   `select`: Pick a subset of translations in a dictionary object.
--   `mutate`: Alter the translations in a dictionary object.
--   `rename`: Rename a variable translations in a dictionary object.
--   `merge`: Merge two or more dictionary objects into a single dictionary object.
+> Labelling your data can be easy!
 
 Installation
 ------------
@@ -35,156 +17,72 @@ Installation
 devtools::install_github('a-maldet/labelmachine', build_opts = NULL)
 ```
 
+Concept
+-------
+
+The label assignments are given as so called **translations** (named character vectors), which are like a recipe, telling which original value will be mapped onto which new label. The **translations** are collected in a so called **lama\_dictionary** object. This dictionary files will be used to translate your data.frame variables.
+
 Usage
 -----
 
-### Load a dictionary from a yaml file
-
-Structure of your dictionary file `my_dictionary.yaml`:
-
-``` yaml
-supp:
-  VC: Ascorbic acid
-  OJ: Orange juice
-dose:
-  "0.5": Low
-  "1": Medium
-  "2": High
-```
-
-The first level names are the names of the variables that should be translated. The second level names represent the original values of the variables and the third level holds the labels that should be assigned to the original values of the variables.
-
-Load your `dictionary` file with `read_dictionary`:
+Let **df** be a data.frame with marks and subjects, which should be translated
 
 ``` r
 library(labelmachine)
-library(magrittr)
-dict <- "my_dictionary.yaml" %>%
-  read_dictionary
+df <- data.frame(
+  pupil_id - c(1, 1, 2, 2, 3),
+  subject = c("en", "ma", "ma", "en", "en"),
+  result = c(2, 1, 3, 2, NA)
+)
 ```
 
-### Assign new labels to your variables
-
-You can use the dictionary object `dict` in order to translate categorical variables (not necessarily factor variables) in your data.frame to a factor variable holding the labels that are defined in the dictionary `dict`.
-
-Relable your data.frame variables with `translate`:
+Create a **lama\_dictionary** object holding the translations:
 
 ``` r
-# data.frame with original values 
-ToothGrowth %>% head
-
-# data.frame with new labels
-ToothGrowth %>%
-  translate(dict, c("supp", "dose")) %>%
-  head
+dict <- new_lama_dictionary(
+  subjects = c(en = "English", ma = "Mathematics", NA_ = "other subjects"),
+  results = c("1" = "Excellent", "2" = "Satisfying", "3" = "Failed", NA_ = "Missed")
+)
+dict
 ```
 
-Now, the columns `supp` and `dose` are factor variables, which hold the desired labels and have the same ordering as in the dictionary `dict`.
+    ## 
+    ## --- lama_dictionary ---
+    ## Variable 'subjects':
+    ##               en               ma              NA_ 
+    ##        "English"    "Mathematics" "other subjects" 
+    ## 
+    ## Variable 'results':
+    ##            1            2            3          NA_ 
+    ##  "Excellent" "Satisfying"     "Failed"     "Missed"
 
-If the original variable is a factor variable and you want to keep the original ordering, you can use the function argurment `keep_ordering = TRUE`. Furthermore, you can also apply your variable translations to columns with different column names than your translation names by passing the column names into the argument `col`. If you want to save your labelled variables to a different column names, you can use the argument `col_new` in order to specify the column names of the newly generated variables.
+Translate the data.frame variables:
 
 ``` r
-df <- data.frame(age = factor(c(2, 2, 1, 3), levels = c(3, 2, 1)))
-dict <- list(
-    age_short = c("1" = "a<16", "2" = "16<=a<70", "3" = "70<=a"),
-    age_long = c("1" = "young", "2" = "middle aged", "3" = "old")
-  ) %>%
-  new_dictionary
-df %>%
-  translate(
-    dictionary = dict, 
-    variable = c("age_short", "age_long"), 
-    col = c("age", "age"), 
-    col_new = c("age_s", "age_l"),
-    keep_order = TRUE
-  )
+df_new <- lama_translate(
+  df,
+  dict,
+  subject_new = subjects(subject),
+  result_new = results(result)
+)
+str(df_new)
 ```
 
-### Create a dictionary object manually
+    ## 'data.frame':    5 obs. of  5 variables:
+    ##  $ pupil_id...c.1..1..2..2..3.: num  0 0 0 0 0
+    ##  $ subject                    : Factor w/ 2 levels "en","ma": 1 2 2 1 1
+    ##  $ result                     : num  2 1 3 2 NA
+    ##  $ subject_new                : Factor w/ 3 levels "English","Mathematics",..: 1 2 2 1 1
+    ##  $ result_new                 : Factor w/ 4 levels "Excellent","Satisfying",..: 2 1 3 2 4
 
-Instead of reading in a yaml file you can also create a dictionary object manually from a named list object, holding named character vectors. Each entry of the named list represents a variable of your data.frame and each named character vector is a translation. The names of the character vector entries represent the original values of the variable and the values of the character vector entries are the new labels that should be assigned.
+Further reading
+---------------
 
-``` r
-dict <- list(
-    supp = c(VC = "Ascorbic acid", OJ = "Orange juice"),
-    dose = c("0.5" = "Low", "1.0" = "Medium", "2.0" = "High")
-  ) %>%
-  new_dictionary
-```
+More information can be found on the \[github-pages site\] for `labelmachine`:
 
-### Alter your dictionary
-
-Sometimes it can be useful to alter your dictionary object.
-
-With `select` you may pick a subset of dictionary entries:
-
-``` r
-dict %>%
-  select(c("supp", "dose"))
-```
-
-With `mutate` you can set a new translation (character vector) for a variable:
-
-``` r
-dict %>%
-  mutate("supp", c(VC = "Ascorbic a.", OJ = "Orange j."))
-```
-
-With `rename` you can rename a dictionary entry:
-
-``` r
-dict %>%
-  rename(c("supp", "dose"), c("SUPP", "DOSE"))
-```
-
-### Merge two ore more dictionary objects
-
-With `merge` you can merge two or more dictionary objects into one dictionary object:
-
-``` r
-dict1 <- list(
-    gender = c("0" = "female", "1" = "male"),
-    age = c("0" = "<10y", "1" = ">=10y"),
-    country = c("0" = "Austria", "1" = "Australia")
-  ) %>%
-  new_dictionary
-dict2 <- list(
-    school = c("0" = "Primary", "1" = "Secondary"),
-    gender = c("0" = "Girl", "1" = "Boy")
-  ) %>%
-  new_dictionary
-merge(dict1, dict2)
-```
-
-The `merge` merges the arguments from left to right. Therefore, the variable translations of `dict1` are overwritten by the entries of `dict2`. In this example the resulting dictionary has contains the variable translations for `age` and `country` as defined in `dict1` and the variable translations for `school` and `gender` as defined in `dict2`. The variable translations for `gender` in `dict1` are overwritten by `dict2`.
-
-### Save your dictionary to a yaml file
-
-With `write_dictionary` you can save a dictionary object to a yaml file:
-
-``` r
-dict <- list(
-    gender = c(d = "diverse", f = "female", m = "male"),
-    age = c("super young" = "younger than 10", "super old" = "older than 90")
-  ) %>%
-  new_dictionary
-dict %>%
-  write_dictionary("my_fancy_new_dictionary.yaml")
-```
-
-The resulting file looks like this:
-
-``` yaml
-gender:
-  d: diverse
-  f: female
-  m: male
-age:
-  super young: younger than 10
-  super old: older than 90
-```
+-   A simple guide is given in the [get started vignette](https://R-package.github.io/labelmachine/index.html).
 
 License
 -------
 
-[GPL-3](https://R-package.github.io/styledTables/LICENSE)
+[GPL-3](https://a-maldet.github.io/labelmachine/LICENSE)
