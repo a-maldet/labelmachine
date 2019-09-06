@@ -138,8 +138,8 @@ new_dictionary <- function(...) {
 #'   # initialize lama_dictionary
 #'   # with a list object holding the translations
 #'   dict <- new_dictionary(list(
-#'     country = c(at = "Austria", fr = "France"),
-#'     language = c(de = "German", fr = "French")
+#'     country = c(uk = "United Kingdom", fr = "France", NA_ = "other countries"),
+#'     language = c(en = "English", fr = "French")
 #'   ))
 #' @export
 new_dictionary.list <- function(.data = NULL, ...) {
@@ -173,8 +173,8 @@ new_dictionary.list <- function(.data = NULL, ...) {
 #'   # initialize lama_dictionary
 #'   # passing each translation as a named argument
 #'   dict <- new_dictionary(
-#'     country = c(at = "Austria", fr = "France"),
-#'     language = c(de = "German", fr = "French")
+#'     country = c(uk = "United Kingdom", fr = "France", NA_ = "other countries"),
+#'     language = c(en = "English", fr = "French")
 #'   )
 #' @export
 new_dictionary.character <- function(...) {
@@ -221,6 +221,13 @@ as.dictionary <- function(.data, ...) {
 }
 
 #' @rdname as_dictionary
+#' @examples
+#'   # initialize lama_dictionary
+#'   # passing each translation as a named argument
+#'   dict <- as.dictionary(list(
+#'     country = c(uk = "United Kingdom", fr = "France", NA_ = "other countries"),
+#'     language = c(en = "English", fr = "French")
+#'   ))
 #' @export
 as.dictionary.list <- function(.data, ...) {
   new_dictionary(.data)
@@ -280,6 +287,25 @@ as.dictionary.default <- function(.data = NULL, ...) {
 #'     factor will be used. If it just contains a plain character variable,
 #'     then it will be ordered alphanumerically.
 #' @rdname as_dictionary
+#' @examples
+#'   # initialize lama_dictionary
+#'   # from a data.frame holding the label mappings
+#'   df <- data.frame(
+#'     c_old = c("uk", "fr", NA),
+#'     c_new = c("United Kingdom", "France", "other countries"),
+#'     l_old = c("en", "fr"),
+#'     l_new = factor("English", "French", levels = c("French", "English"))
+#'   )
+#'   dict <- as.dictionary(
+#'     df,
+#'     translation = c("country", "language"),
+#'     old = c("c_old", "l_old"),
+#'     new = c("c_new", "l_new"),
+#'     ordering = c("row", "new")
+#'   )
+#'   dict
+#'   # 'country' is ordered as in the df
+#'   # 'language' is ordered differently (French first)
 #' @export
 as.dictionary.data.frame <- function(
   .data, translation, col_old, col_new, ordering = rep("row", length(translation)), ...
@@ -399,6 +425,10 @@ as.dictionary.data.frame <- function(
 #' @seealso [validate_dictionary()], [as.dictionary()], [new_dictionary()],
 #' [lama_translate()], [lama_read()], [lama_write()], [lama_select()],
 #' [lama_rename()], [lama_mutate()], [lama_merge()]
+#' @examples
+#' # check if an object is a 'lama_dictionary' class object
+#' dict <- new_dictionary(country = c(uk = "United Kingdom", fr = "France"))
+#' is.dictionary(dict)
 #' @export
 is.dictionary <- function(obj) {
   inherits(obj, "lama_dictionary")

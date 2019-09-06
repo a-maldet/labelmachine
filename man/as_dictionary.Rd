@@ -169,3 +169,29 @@ translations with different names
 \code{area = c("0" = "urban", "1" = "rural")}).
 }
 
+\examples{
+  # initialize lama_dictionary
+  # passing each translation as a named argument
+  dict <- as.dictionary(list(
+    country = c(uk = "United Kingdom", fr = "France", NA_ = "other countries"),
+    language = c(en = "English", fr = "French")
+  ))
+  # initialize lama_dictionary
+  # from a data.frame holding the label mappings
+  df <- data.frame(
+    c_old = c("uk", "fr", NA),
+    c_new = c("United Kingdom", "France", "other countries"),
+    l_old = c("en", "fr"),
+    l_new = factor("English", "French", levels = c("French", "English"))
+  )
+  dict <- as.dictionary(
+    df,
+    translation = c("country", "language"),
+    old = c("c_old", "l_old"),
+    new = c("c_new", "l_new"),
+    ordering = c("row", "new")
+  )
+  dict
+  # 'country' is ordered as in the df
+  # 'language' is ordered differently (French first)
+}

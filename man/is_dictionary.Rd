@@ -16,6 +16,11 @@ is.dictionary(obj)
 \description{
 Check if an object is a \link[=new_dictionary]{lama_dictionary} class object
 }
+\examples{
+# check if an object is a 'lama_dictionary' class object
+dict <- new_dictionary(country = c(uk = "United Kingdom", fr = "France"))
+is.dictionary(dict)
+}
 \seealso{
 \code{\link[=validate_dictionary]{validate_dictionary()}}, \code{\link[=as.dictionary]{as.dictionary()}}, \code{\link[=new_dictionary]{new_dictionary()}},
 \code{\link[=lama_translate]{lama_translate()}}, \code{\link[=lama_read]{lama_read()}}, \code{\link[=lama_write]{lama_write()}}, \code{\link[=lama_select]{lama_select()}},

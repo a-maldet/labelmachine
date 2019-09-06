@@ -161,14 +161,14 @@ translations with different names
   # initialize lama_dictionary
   # with a list object holding the translations
   dict <- new_dictionary(list(
-    country = c(at = "Austria", fr = "France"),
-    language = c(de = "German", fr = "French")
+    country = c(uk = "United Kingdom", fr = "France", NA_ = "other countries"),
+    language = c(en = "English", fr = "French")
   ))
   # initialize lama_dictionary
   # passing each translation as a named argument
   dict <- new_dictionary(
-    country = c(at = "Austria", fr = "France"),
-    language = c(de = "German", fr = "French")
+    country = c(uk = "United Kingdom", fr = "France", NA_ = "other countries"),
+    language = c(en = "English", fr = "French")
   )
 }
 \seealso{
