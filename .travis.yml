@@ -10,5 +10,5 @@ before_install:
 
 deploy:
   provider: script
-  script: Rscript -e 'pkgdown::build_favicons(); pkgdown::deploy_site_github()'
+  script: Rscript -e 'pkgdown::build_favicons(pkg = ".", overwrite = FALSE); pkgdown::deploy_site_github()'
   skip_cleanup: true
