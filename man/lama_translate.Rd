@@ -71,7 +71,7 @@ The function \code{\link[=lama_translate]{lama_translate()}} uses non-standard e
 \code{\link[=lama_translate_]{lama_translate_()}} is the standard evaluation alternative.
 }
 \examples{
-  # initialize lama_dictinoary
+  # --- initialize lama_dictinoary ---
   dict <- new_lama_dictionary(
     subject = c(en = "English", ma = "Mathematics"),
     result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
@@ -81,7 +81,7 @@ The function \code{\link[=lama_translate]{lama_translate()}} uses non-standard e
     subject = c("en", "ma", "ma", "en", "en"),
     res = c(1, 2, 3, 2, 2)
   )
-  # Label data.frame variables:
+  # --- label data.frame variables ---
   # Method-1: Full length assignment
   # (apply translation 'subject' to column 'subject' and save it to column 'subject_new')
   # (apply translation 'resul' to column 'res' and save it to column 'res_new')
@@ -92,6 +92,7 @@ The function \code{\link[=lama_translate]{lama_translate()}} uses non-standard e
     res_new = result(res)
   )
   str(df_new)
+
   # Method-2: Overwrite the original columns (abbreviation)
   # (apply translation 'subject' to column 'subject' and save it to column 'subject')
   # (apply translation 'resul' to column 'res' and save it to column 'res')
@@ -102,6 +103,7 @@ The function \code{\link[=lama_translate]{lama_translate()}} uses non-standard e
     result(res)
   )
   str(df_new_overwritten)
+
   # Method-3: Abbreviation if `translation_name == column_name`
   # (apply translation 'subject' to column 'subject' and save it to column 'subject_new')
   # (apply translation 'resul' to column 'res' and save it to column 'res_new')
@@ -112,17 +114,7 @@ The function \code{\link[=lama_translate]{lama_translate()}} uses non-standard e
     res_new = result(res)
   )
   str(df_new_overwritten)
-  # initialize lama_dictinoary
-  dict <- new_lama_dictionary(
-    subject = c(en = "English", ma = "Mathematics"),
-    result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
-  )
-  df <- data.frame(
-    pupil = c(1, 1, 2, 2, 3),
-    subject = c("en", "ma", "ma", "en", "en"),
-    res = c(1, 2, 3, 2, 2)
-  )
-  # Label data.frame variables:
+  # Method-4: Using 'lama_translate_'
   # (apply translation 'subject' to column 'subject' and save it to column 'subject_new')
   # (apply translation 'resul' to column 'res' and save it to column 'res_new')
   df_new <- lama_translate_(
