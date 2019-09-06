@@ -82,7 +82,7 @@ Highlights
 
 -   All types of variables can be translated: **Logical**, **Numeric**, **Character**, **Factor**
 -   When translating your varaibles, you may choose between keeping the current ordering or applying a new factor ordering to your variable.
--   Assigning labels to missing value (**NA**) is no problem.
+-   Assigning meaningful labels to missing values (**NA**) is no problem.
 -   Assigning **NA** to existing values is no problem.
 -   Merging two values into a single label is no problem.
 -   Transforming **data.frame** holding label assignment lists into a **lama\_dictionary** is no problem.
@@ -93,7 +93,7 @@ Further reading
 
 More information can be found on the \[github-pages site\] for `labelmachine`:
 
--   A simple guide is given in the [get started vignette](https://R-package.github.io/labelmachine/index.html).
+-   A simple guide is given in the [get started vignette](https://a-maldet.github.io/labelmachine/index.html).
 
 License
 -------
