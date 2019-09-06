@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Check if an object has a valid lama_dictionary structure — validate_dictionary • labelmachine</title>
+<title>Retrieve a translation from a lama_dictionary class object — lama_get • labelmachine</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -42,9 +42,11 @@
 
 
 
-<meta property="og:title" content="Check if an object has a valid lama_dictionary structure — validate_dictionary" />
-<meta property="og:description" content="This function checks if the object structure is right. It does not check
-class type." />
+<meta property="og:title" content="Retrieve a translation from a lama_dictionary class object — lama_get" />
+<meta property="og:description" content="The functions lama_get() and lama_get_() take a
+lama_dictionary and extract a specific translation.
+The function lama_get() uses non-standard evaluation, whereas
+lama_get_() is the standard evaluation alternative." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -109,32 +111,47 @@ class type." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Check if an object has a valid lama_dictionary structure</h1>
+    <h1>Retrieve a translation from a lama_dictionary class object</h1>
     
-    <div class="hidden name"><code>validate_dictionary.Rd</code></div>
+    <div class="hidden name"><code>lama_get.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function checks if the object structure is right. It does not check
-class type.</p>
+    <p>The functions <code>lama_get()</code> and <code>lama_get_()</code> take a
+lama_dictionary and extract a specific translation.
+The function <code>lama_get()</code> uses non-standard evaluation, whereas
+<code>lama_get_()</code> is the standard evaluation alternative.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>validate_dictionary</span>(<span class='no'>obj</span>,
-  <span class='kw'>err_handler</span> <span class='kw'>=</span> <span class='fu'>composerr</span>(<span class='st'>"The object has not a valid lama_dictionary structure"</span>))</pre>
+    <pre class="usage"><span class='fu'>lama_get</span>(<span class='no'>.data</span>, <span class='no'>translation</span>)
+
+<span class='co'># S3 method for lama_dictionary</span>
+<span class='fu'>lama_get</span>(<span class='no'>.data</span>, <span class='no'>translation</span>)
+
+<span class='fu'>lama_get_</span>(<span class='no'>.data</span>, <span class='no'>translation</span>)
+
+<span class='co'># S3 method for lama_dictionary</span>
+<span class='fu'>lama_get_</span>(<span class='no'>.data</span>, <span class='no'>translation</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>obj</th>
-      <td><p>An object that should be tested</p></td>
+      <th>.data</th>
+      <td><p>A lama_dictionary object</p></td>
     </tr>
     <tr>
-      <th>err_handler</th>
-      <td><p>An error handling function</p></td>
+      <th>translation</th>
+      <td><p>Depending on which function was used:</p><ul>
+<li><p><code>lama_get</code>: An unquoted translation name.</p></li>
+<li><p><code>lama_get_</code>: A character string holding the translation name.</p></li>
+</ul></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>The wanted translation (named character vector).</p>
     <h2 class="hasAnchor" id="translations"><a class="anchor" href="#translations"></a>Translations</h2>
 
     
@@ -213,21 +230,16 @@ for the same variable, in this case it is best to have multiple
 translations with different names
 (e.g. <code>area_short = c("0" = "urb", "1" = "rur")</code> and
 <code>area = c("0" = "urban", "1" = "rural")</code>).</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code>is.dictionary()</code>, <code>as.lama_dictionary()</code>, <code>new_lama_dictionary()</code>,
-<code>lama_translate()</code>, <code>lama_read()</code>, <code>lama_write()</code>, <code>lama_select()</code>,
-<code>lama_rename()</code>, <code>lama_mutate()</code>, <code>lama_merge()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
       <li><a href="#translations">Translations</a></li>
       <li><a href="#missing-values">Missing values</a></li>
       <li><a href="#lama-dictionary-class-objects">lama_dictionary class objects</a></li>
-      <li><a href="#see-also">See also</a></li>
     </ul>
 
   </div>

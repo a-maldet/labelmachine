@@ -134,10 +134,14 @@
 lama_dictionary class object, <code>FALSE</code> otherwise.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>validate_dictionary()</code>, <code>as.dictionary()</code>, <code>new_dictionary()</code>,
+    <div class='dont-index'><p><code>validate_dictionary()</code>, <code>as.lama_dictionary()</code>, <code>new_lama_dictionary()</code>,
 <code>lama_translate()</code>, <code>lama_read()</code>, <code>lama_write()</code>, <code>lama_select()</code>,
 <code>lama_rename()</code>, <code>lama_mutate()</code>, <code>lama_merge()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># check if an object is a 'lama_dictionary' class object</span>
+<span class='no'>dict</span> <span class='kw'>&lt;-</span> <span class='fu'>new_lama_dictionary</span>(<span class='kw'>country</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>uk</span> <span class='kw'>=</span> <span class='st'>"United Kingdom"</span>, <span class='kw'>fr</span> <span class='kw'>=</span> <span class='st'>"France"</span>))
+<span class='fu'>is.dictionary</span>(<span class='no'>dict</span>)</div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -145,6 +149,7 @@ lama_dictionary class object, <code>FALSE</code> otherwise.</p>
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
       <li><a href="#see-also">See also</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
