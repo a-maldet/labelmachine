@@ -1,1 +1,35 @@
 destination: docs
+reference:
+- title: create lama_dictionary objects
+  contents:
+  - '`new_lama_dictionary`'
+  - '`new_lama_dictionary`'
+  - '`as.lama_dictionary`'
+- title: translate variables
+  contents:
+  - '`lama_translate`'
+  - '`lama_translate_`'
+- title: alter lama_dictionary objects
+  contents:
+  - '`lama_select`'
+  - '`lama_select_`'
+  - '`lama_rename`'
+  - '`lama_rename_`'
+  - '`lama_mutate`'
+  - '`lama_mutate_`'
+  - '`lama_merge`'
+- title: save and read lama_dictionary objects
+  contents:
+  - '`lama_write`'
+  - '`lama_read`'
+- title: various other functions
+  contents:
+  - '`lama_get`'
+  - '`is.lama_dictionary`'
+
+development:
+  mode: release
+
+template:
+  params:
+    bootswatch: cosmo
