@@ -3,9 +3,9 @@
 hexSticker::sticker(
     "man/figures/labelmachine.png",
     package = c("label       ","     machine"), 
-    p_size = 16,
+    p_size = 18,
     p_y = 0.7,
-    p_x = c(0.63, 1.15),
+    p_x = c(0.60, 1.15),
     s_x=1,
     s_y=1.15,
     h_fill = "#17d2e1",
