@@ -2,16 +2,13 @@
 labelmachine <img src="man/figures/logo.png" align="right" alt="" width=140 height=162 />
 =========================================================================================
 
+<!-- badges: start -->
+[![Travis build status](https://travis-ci.org/a-maldet/labelmachine.svg?branch=master)](https://travis-ci.org/a-maldet/labelmachine) [![GitHub last commit](https://img.shields.io/github/last-commit/a-maldet/labelmachine.svg?logo=github)](https://github.com/a-maldet/labelmachine/commits/master) [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/a-maldet/labelmachine.svg?logo=github)](https://github.com/a-maldet/labelmachine)
+
 !Caution!
 ---------
 
 `labelmachine` is currently under heavy development and will be released in a week or so.
-
-Caution
--------
-
-`labelmachine` is currently under heavy development and will be released
-in a week or so.
 
 `labelmachine` is an **R** package that helps you assigning new labels to data.frame variables. Furthermore, you can manage your label translations in so called **dictionary** files, which are **yaml** files. This makes it very easy using the same label translations in multiple projects that share similar data structure.
 
