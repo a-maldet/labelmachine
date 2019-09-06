@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities.R
 \name{yaml_to_dictionary}
 \alias{yaml_to_dictionary}
-\title{Transform data structure from yaml format to the \link[=new_dictionary]{LamaDictionary} class input format}
+\title{Transform data structure from yaml format to the \link[=new_dictionary]{lama_dictionary} class input format}
 \usage{
 yaml_to_dictionary(data)
 }
@@ -15,6 +15,6 @@ A pre-dictionary object.
 \description{
 When a yaml file is read in, the data has the structure
 vars (named list) > translations (named list)
-This structure is transformed to the \link[=new_dictionary]{LamaDictionary} class input structure
+This structure is transformed to the \link[=new_dictionary]{lama_dictionary} class input structure
 vars (named list) >  translations (named character vector)
 }

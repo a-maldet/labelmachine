@@ -29,7 +29,7 @@ test_that("'lama_select' throws the right errors", {
   )
   expect_error(
     lama_select(dict_a, X, y, Y),
-    "The following translation names could not be found in the LamaDictionary object: 'X', 'Y'.",
+    "The following translation names could not be found in the lama_dictionary object: 'X', 'Y'.",
     fixed = TRUE
   )
 })
@@ -44,7 +44,7 @@ test_that("'lama_select_' works", {
 test_that("'lama_select_' throws the right errors", {
   expect_error(
     lama_select_(dict_a, c("X", "y", "Y")),
-    "The following translation names could not be found in the LamaDictionary object: 'X', 'Y'.",
+    "The following translation names could not be found in the lama_dictionary object: 'X', 'Y'.",
     fixed = TRUE
   )
   expect_error(

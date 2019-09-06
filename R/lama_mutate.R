@@ -1,14 +1,14 @@
-#' Change or append a variable translation to an existing [LamaDictionary][new_dictionary()] object
+#' Change or append a variable translation to an existing [lama_dictionary][new_dictionary()] object
 #'
 #' The functions [lama_mutate()] and [lama_mutate_()] alter a 
-#' [LamaDictionary][new_dictionary()] object. They either alter
-#' or append a translation to a [LamaDictionary][new_dictionary()] object.
+#' [lama_dictionary][new_dictionary()] object. They either alter
+#' or append a translation to a [lama_dictionary][new_dictionary()] object.
 #' The function [lama_mutate()] uses named arguments to assign the translations
 #' to the new names (similar to [dplyr::mutate()]), whereas the function
 #' [lama_mutate_()] is takes a character string \code{key} holding the
 #' name to which the translation should be assigned and a named character
 #' vector \code{translation} holding the actual translation mapping.
-#' @param .data A [LamaDictionary][new_dictionary()] object
+#' @param .data A [lama_dictionary][new_dictionary()] object
 #' @param ... One or more unquoted expressions separated by commas. Use named
 #'   arguments, e.g. `new_transation_name = c(a = "A", b = "B")`, to set
 #'   translations (named character vectors) to new translation names. It is also
@@ -18,7 +18,7 @@
 #'   existing in the dictionary, in order to modify them
 #'   (e.g. `new_translation = c(v = "V", w = "W", old_translation, z = "Z")`, where 
 #'   `old_translation = c(x = "X", y = "Y")`).
-#' @return An updated [LamaDictionary][new_dictionary()] class object.
+#' @return An updated [lama_dictionary][new_dictionary()] class object.
 #' @seealso [lama_translate()], [new_dictionary()], [lama_rename()], [lama_select()],
 #'   [lama_merge()], [lama_read()], [lama_write()]
 #' @rdname lama_mutate
@@ -29,11 +29,11 @@ lama_mutate <- function(.data, ...) {
 
 #' @rdname lama_mutate
 #' @export
-lama_mutate.LamaDictionary <- function(.data, ...) {
+lama_mutate.lama_dictionary <- function(.data, ...) {
   args <- rlang::quos(...)
   err_handler <- composerr("Error while calling 'lama_mutate'")
   if (!is.dictionary(.data))
-    err_handler("The object given in the argument '.data' must be a LamaDictionary class object.")
+    err_handler("The object given in the argument '.data' must be a lama_dictionary class object.")
   if (length(args) == 0)
     err_handler(paste(
       "Translation assignments are missing.",
@@ -109,10 +109,10 @@ lama_mutate_ <- function(.data, key, translation) {
 
 #' @rdname lama_mutate
 #' @export
-lama_mutate_.LamaDictionary <- function(.data, key, translation) {
+lama_mutate_.lama_dictionary <- function(.data, key, translation) {
   err_handler <- composerr("Error while calling 'lama_mutate_'")
   if (!is.dictionary(.data))
-    err_handler("The object given in the argument '.data' must be a LamaDictionary class object.")
+    err_handler("The object given in the argument '.data' must be a lama_dictionary class object.")
   if (!is.character(key) || length(key) != 1)
     err_handler("The object given in the argument 'key' must be a character string.")
   if (is.list(translation))

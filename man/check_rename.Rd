@@ -7,7 +7,7 @@
 check_rename(.data, old, new, err_handler)
 }
 \arguments{
-\item{.data}{A \link[=new_dictionary]{LamaDictionary} object, holding the
+\item{.data}{A \link[=new_dictionary]{lama_dictionary} object, holding the
 variable translations}
 
 \item{old}{A character vector holding the names of the variable

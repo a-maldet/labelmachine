@@ -193,7 +193,7 @@ test_that("'lama_translate_' throws the right errors", {
     ),
     paste(
       "The following values of the argument 'translation' could not be",
-      "found in the LamaDictionary object given in argument 'dictionary':",
+      "found in the lama_dictionary object given in argument 'dictionary':",
       "'asdf', 'blu'."
     )
   )

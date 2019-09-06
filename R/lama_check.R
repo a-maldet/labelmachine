@@ -110,7 +110,7 @@ lama_check_in_dictionary <- function(x, dict, err_handler) {
         "Object ", stringify(x_name), " must be a character vector holding ",
         "translation names: ",
         "The following old translation names could not be ",
-        "found in the LamaDictionary object ", dict_name, "': ", 
+        "found in the lama_dictionary object ", dict_name, "': ", 
         stringify(wrong_variable),
         ".\nOnly the following variable translations are available: ",
         stringify(names(dict)),

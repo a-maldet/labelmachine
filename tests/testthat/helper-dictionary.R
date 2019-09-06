@@ -1,7 +1,7 @@
 library(magrittr)
 library(labelmachine)
 
-#' Check that an object is a [LamaDictionary][new_dictionary()] class object
+#' Check that an object is a [lama_dictionary][new_dictionary()] class object
 #'
 #' @param object The object that should be checked
 expect_dictionary <- function(object) {
@@ -9,8 +9,8 @@ expect_dictionary <- function(object) {
   act <- quasi_label(rlang::enquo(object), arg = "object")
   # 2. Call expect()
   expect(
-    inherits(act$val, "LamaDictionary"),
-    sprintf("The object '%s' is not a 'LamaDictionary'.", act$lab)
+    inherits(act$val, "lama_dictionary"),
+    sprintf("The object '%s' is not a 'lama_dictionary'.", act$lab)
   )
   # 3. Invisibly return the value
   invisible(act$val)
@@ -20,7 +20,7 @@ expect_dictionary <- function(object) {
 #'
 #' Check that the translation names of the dictionary are just the names given
 #' in \code{translation}.
-#' @param object A [LamaDictionary][new_dictionary()]
+#' @param object A [lama_dictionary][new_dictionary()]
 #' @param translation A character vector holding the translation names
 expect_translation_names <- function(object, translation) {
   # 1. Capture object and label
@@ -51,7 +51,7 @@ expect_translation_names <- function(object, translation) {
 
 #' Check that a translation is identical to a given mapping
 #'
-#' @param object A [LamaDictionary][new_dictionary()]
+#' @param object A [lama_dictionary][new_dictionary()]
 #' @param key A character string holding the name of the translation in question
 #' @param translation A translation (named character vector) to which the
 #' translation in question should be identical.
@@ -88,7 +88,7 @@ expect_translation_identical <- function(object, key, translation) {
 #'
 #' Check that the translation names of the dictionary are just the names given
 #' in \code{translation}.
-#' @param object A [LamaDictionary][new_dictionary()]
+#' @param object A [lama_dictionary][new_dictionary()]
 #' @param translation A character vector holding the translation names
 expect_translation_names <- function(object, translation) {
   # 1. Capture object and label

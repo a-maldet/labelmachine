@@ -19,7 +19,7 @@ dict_c = new_dictionary(
 test_that("'lama_merge' works", {
   dict_new <- expect_warning(
     lama_merge(dict_a, dict_b, dict_c),
-    "The following LamaDictionary entries will be overwritten: 'y', 'z', 'u'."
+    "The following lama_dictionary entries will be overwritten: 'y', 'z', 'u'."
   )
   expect_translation_names(dict_new, c("u", "v", "w", "x", "y", "z"))
   expect_translation_identical(dict_new, "u", c(u = "c"))
@@ -33,11 +33,11 @@ test_that("'lama_merge' works", {
 test_that("'lama_merge' throws the right warnings", {
   expect_warning(
     lama_merge(dict_a, dict_b, dict_c),
-    "The following LamaDictionary entries will be overwritten: 'y', 'z', 'u'."
+    "The following lama_dictionary entries will be overwritten: 'y', 'z', 'u'."
   )
   expect_warning(
     lama_merge(dict_a, dict_b, dict_c),
-    "The following LamaDictionary entries will be overwritten: 'y', 'z', 'u'."
+    "The following lama_dictionary entries will be overwritten: 'y', 'z', 'u'."
   )
   expect_warning(
     lama_merge(dict_a, dict_b, dict_c, show_warnings = FALSE),
@@ -48,11 +48,11 @@ test_that("'lama_merge' throws the right warnings", {
 test_that("'lama_merge' throws the right errors", {
   expect_error(
     lama_merge(dict_a),
-    "There must be at least two LamaDictionary class object passed into."
+    "There must be at least two lama_dictionary class object passed into."
   )
   expect_error(
     lama_merge(dict_a, dict_b, list(a = 1)),
-    "Invalid argument at position '3': Object is not a LamaDictionary class object."
+    "Invalid argument at position '3': Object is not a lama_dictionary class object."
   )
   expect_error(
     lama_merge(dict_a, dict_b, show_warnings = NA),

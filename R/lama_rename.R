@@ -1,13 +1,13 @@
-#' Rename multiple variable translations in a [LamaDictionary][new_dictionary()] object
+#' Rename multiple variable translations in a [lama_dictionary][new_dictionary()] object
 #'
 #' The functions [lama_rename()] and [lama_rename_()]
 #' are used to rename one or more variable translations inside of a 
-#' [LamaDictionary][new_dictionary()] class object.
+#' [lama_dictionary][new_dictionary()] class object.
 #' The function [lama_rename()] uses non-standard evaluation,
 #' whereas [lama_rename_()] is the standard evaluation alternativ.
-#' @param .data A [LamaDictionary][new_dictionary()] object, holding the variable translations
+#' @param .data A [lama_dictionary][new_dictionary()] object, holding the variable translations
 #' @param ... One or more unquoted expressions separated by commas. Use named arguments, e.g. `new_name = old_name`, to rename selected variables.
-#' @return The updated [LamaDictionary][new_dictionary()] class object.
+#' @return The updated [lama_dictionary][new_dictionary()] class object.
 #' @seealso [lama_translate()], [new_dictionary()], [lama_select()], [lama_mutate()],
 #' [lama_merge()], [lama_read()], [lama_write()]
 #' @rdname lama_rename
@@ -17,7 +17,7 @@ lama_rename <- function(.data, ...) {
 }
 
 #' @export
-lama_rename.LamaDictionary <- function(.data, ...) {
+lama_rename.lama_dictionary <- function(.data, ...) {
   args <- rlang::quos(...)
   err_handler <- composerr("Error while calling 'lama_rename'")
   err_handler_argument <- composerr(
@@ -72,7 +72,7 @@ lama_rename_ <- function(.data, old, new) {
 
 #' @rdname lama_rename 
 #' @export
-lama_rename_.LamaDictionary <- function(.data, old, new) {
+lama_rename_.lama_dictionary <- function(.data, old, new) {
   err_handler <- composerr("Error while calling 'lama_rename_'")
   check_rename(.data, old, new, err_handler)
   rename_translation(.data, old, new)
@@ -81,13 +81,13 @@ lama_rename_.LamaDictionary <- function(.data, old, new) {
 
 #' Function that actually performs the renaming of the translations
 #'
-#' @param .data A [LamaDictionary][new_dictionary()] object, holding the
+#' @param .data A [lama_dictionary][new_dictionary()] object, holding the
 #' variable translations
 #' @param old A character vector holding the names of the variable
 #' translations, that should be renamed.
 #' @param new A character vector holding the new names of the variable
 #' translations.
-#' @return The updated [LamaDictionary][new_dictionary()] class object.
+#' @return The updated [lama_dictionary][new_dictionary()] class object.
 #' @include lama_select.R
 rename_translation <- function(.data, old, new) {
   .data <- lama_select_(.data, setdiff(names(.data), setdiff(new, old)))
@@ -98,7 +98,7 @@ rename_translation <- function(.data, old, new) {
 
 #' Function that checks the passed in arguments for [lama_rename()] and [lama_rename_()]
 #' 
-#' @param .data A [LamaDictionary][new_dictionary()] object, holding the
+#' @param .data A [lama_dictionary][new_dictionary()] object, holding the
 #' variable translations
 #' @param old A character vector holding the names of the variable
 #' translations, that should be renamed.
@@ -108,7 +108,7 @@ rename_translation <- function(.data, old, new) {
 check_rename <- function(.data, old, new, err_handler) {
   # check .data
   if (!is.dictionary(.data))
-    err_handler("The object given in the argument '.data' must be a LamaDictionary class object.")
+    err_handler("The object given in the argument '.data' must be a lama_dictionary class object.")
   # check old
   if (!is.character(old) || length(old) == 0)
     err_handler("The object given in the argument 'old' must be a character vector.")
@@ -116,7 +116,7 @@ check_rename <- function(.data, old, new, err_handler) {
   if (length(wrong_variable) != 0)
     err_handler(paste0(
         "The following old translation names could not be ",
-        "found in the LamaDictionary object: ", 
+        "found in the lama_dictionary object: ", 
         stringify(wrong_variable),
         ".\nOnly the following variable translations exist: ",
         stringify(names(.data)),

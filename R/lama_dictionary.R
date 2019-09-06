@@ -4,28 +4,28 @@
 #' the following character string is used
 NA_lama_ <- "NA_"
 
-#' Create a new LamaDictionary class object
+#' Create a new lama_dictionary class object
 #'
 #' Generates an _S3_ class object, which holds the _variable translations_.
 #' There are three valid ways to use `new_dictionary` in order to create a
 #' LableDictionary class object:
 #'  * _No arguments_ were passed into `...`: In this case `new_dictionary`
-#'    returns an empty LamaDictionary class object (e.g. `dict <- new_dictionary()`).
+#'    returns an empty lama_dictionary class object (e.g. `dict <- new_dictionary()`).
 #'  * _The first argument is a list_: In this case only the first argument of 
 #'    `new_dictionary` is used. It is not necessary to pass in a named argument.
 #'    The passed in object must be a _named list object_, which contains all 
-#'    translations that should be added to the new LamaDictionary class object.
+#'    translations that should be added to the new lama_dictionary class object.
 #'    Each item of the named list object must be a _named character vector_ defining a translation 
 #'    (e.g. `new_dictionary(list(area = c("0" = "urban", "1" = "rural"),  = c(l = "Low", h = "High")))`
-#'    generates a LamaDictionary class object holding the translations `"area"` and `"density"`).
+#'    generates a lama_dictionary class object holding the translations `"area"` and `"density"`).
 #'  * _The first argument is a character vector_: In this case, it is allowed to pass in
 #'    _more than one argument_. In this case, all given arguments must be _named arguments_
 #'    holding _named character vectors_ defining translations
 #'    (e.g. `new_dictionary(area = c("0" = "urban", "1" = "rural"), density = c(l = "Low", h = "High"))`
-#'    generates a LamaDictionary class object holding the translations `"area"` and `"density"`).
+#'    generates a lama_dictionary class object holding the translations `"area"` and `"density"`).
 #'    The names of the passed in arguments will be used as the names,
 #'    under which the given translations
-#'    will be added to the new LamaDictionary class object. 
+#'    will be added to the new lama_dictionary class object. 
 #'
 #' @section Translations:
 #' A _translation_ is a _named character vector_ of non zero length. 
@@ -81,10 +81,10 @@ NA_lama_ <- "NA_"
 #'   when defining the translations inside of a `YAML` file,
 #'   since the `YAML` parser does not recognice missing values.
 #'
-#' @section LamaDictionary class objects:
-#' Each _LamaDictionary_ class object can contain multiple _translations_,
+#' @section lama_dictionary class objects:
+#' Each _lama_dictionary_ class object can contain multiple _translations_,
 #' each with a unique name under which the translation can be found.
-#' The function [lama_translate()] uses a LamaDictionary class object
+#' The function [lama_translate()] uses a lama_dictionary class object
 #' to translate a normal `vector` or to translate one or more columns in a
 #' `data.frame`.
 #' Sometimes it may be necessary to have different translations
@@ -97,24 +97,24 @@ NA_lama_ <- "NA_"
 #'  the type of the first argument passed into `new_dictionary`,
 #'  there are different valid ways of using `new_dictionary`:
 #'  * _No arguments_ were passed into `...`: In this case `new_dictionary`
-#'    returns an empty LamaDictionary class object (e.g. `dict <- new_dictionary()`).
+#'    returns an empty lama_dictionary class object (e.g. `dict <- new_dictionary()`).
 #'  * _The first argument is a list_: In this case, only the first argument of 
 #'    `new_dictionary` is used and it is allowed to use an unnamed argument call.
 #'    Furthermore, the passed in object must be a named list object, which contains all 
-#'    translations that should be added to the new LamaDictionary class object.
+#'    translations that should be added to the new lama_dictionary class object.
 #'    Each item of the named list object must be a named character vector defining a translation 
 #'    (e.g. `new_dictionary(list(area = c("0" = "urban", "1" = "rural"),  = c(l = "Low", h = "High")))`
-#'    generates a LamaDictionary class object holding the translations `"area"` and `"density"`).
+#'    generates a lama_dictionary class object holding the translations `"area"` and `"density"`).
 #'  * _The first argument is a character vector_: In this case, it is allowed to pass in
 #'    more than one argument, but all given arguments when calling `new_directory`
 #'    must be _named arguments_ and each argument must be 
 #'    a named character vectors defining translations
 #'    (e.g. `new_dictionary(area = c("0" = "urban", "1" = "rural"), density = c(l = "Low", h = "High"))`
-#'    generates a LamaDictionary class object holding the translations `"area"` and `"density"`).
+#'    generates a lama_dictionary class object holding the translations `"area"` and `"density"`).
 #'    The names of the caller arguments will be used as names under which the given translations
-#'    will be added to the new LamaDictionary class object. 
-#' @return A new LamaDictionary class object holding the passed in translations.
-#' @seealso [is.dictionary()], [lama_translate()], [lama_read()], [lama_write()],
+#'    will be added to the new lama_dictionary class object. 
+#' @return A new lama_dictionary class object holding the passed in translations.
+#' @seealso [is.dictionary()], [as.dictionary()], [lama_translate()], [lama_read()], [lama_write()],
 #'   [lama_select()], [lama_rename()], [lama_mutate()], [lama_merge()]
 #' @rdname new_dictionary
 #' @export
@@ -124,16 +124,23 @@ new_dictionary <- function(...) {
 }
 
 #' @param .data A named list object, where each list entry corresponds to a
-#'   translation that should be added to the LamaDictionary object
+#'   translation that should be added to the lama_dictionary object
 #'   (e.g. `new_dictionary(list(area = c("0" = "urban", "1" = "rural"),  = c(l = "Low", h = "High")))`
-#'   generates a LamaDictionary class object holding the translations `"area"` and `"density"`).
+#'   generates a lama_dictionary class object holding the translations `"area"` and `"density"`).
 #'   The names of the list entries are the names under which the translation 
-#'   will be added to the new LamaDictionary class object (e.g. `area` and `density`).
+#'   will be added to the new lama_dictionary class object (e.g. `area` and `density`).
 #'   Each list entry must be a named character vector defining a translation
 #'   (e.g. `c("0" = "urban", "1" = "rural")` is the translation with
 #'   the name `area` and `c(l = "Low", h = "High")` is the translation
 #'   with the name `density`).
 #' @rdname new_dictionary
+#' @examples
+#'   # initialize lama_dictionary
+#'   # with a list object holding the translations
+#'   dict <- new_dictionary(list(
+#'     country = c(at = "Austria", fr = "France"),
+#'     language = c(de = "German", fr = "French")
+#'   ))
 #' @export
 new_dictionary.list <- function(.data = NULL, ...) {
   extra_args <- list(...)
@@ -153,15 +160,22 @@ new_dictionary.list <- function(.data = NULL, ...) {
   } else {
     # Check the '.data' argument
     err_handler <- composerr(paste(
-      "Error while initializing the LamaDictionary class object:",
+      "Error while initializing the lama_dictionary class object:",
       "The passed in translation definitions are invalid"
     ))
     .data <- validate_dictionary(.data, err_handler)
   }
-  structure(.data, class = "LamaDictionary")
+  structure(.data, class = "lama_dictionary")
 }
 
 #' @rdname new_dictionary
+#' @examples
+#'   # initialize lama_dictionary
+#'   # passing each translation as a named argument
+#'   dict <- new_dictionary(
+#'     country = c(at = "Austria", fr = "France"),
+#'     language = c(de = "German", fr = "French")
+#'   )
 #' @export
 new_dictionary.character <- function(...) {
   new_dictionary.list(list(...))
@@ -173,7 +187,7 @@ new_dictionary.default <- function(...) {
   new_dictionary.list(list(...))
 }
 
-#' Coerce to a [LamaDictionary][new_dictionary()] class object
+#' Coerce to a [lama_dictionary][new_dictionary()] class object
 #'
 #' This function allows two types of arguments:
 #' * _named list_: A named list object holding the translations.
@@ -196,10 +210,10 @@ new_dictionary.default <- function(...) {
 #'     a second column holding the new labels,
 #'     which should be assigned to the original values.
 #' @param ... Various arguments, depending on the data type of `.data`.
-#' @return A new LamaDictionary class object holding the passed in translations.
+#' @return A new lama_dictionary class object holding the passed in translations.
 #' @inheritSection new_dictionary Translations
 #' @inheritSection new_dictionary Missing values
-#' @inheritSection new_dictionary LamaDictionary class objects
+#' @inheritSection new_dictionary lama_dictionary class objects
 #' @rdname as_dictionary
 #' @export
 as.dictionary <- function(.data, ...) {
@@ -214,17 +228,17 @@ as.dictionary.list <- function(.data, ...) {
 
 #' @rdname as_dictionary
 #' @export
-as.dictionary.LamaDictionary <- function(.data, ...) {
+as.dictionary.lama_dictionary <- function(.data, ...) {
   structure(
     validate_dictionary(
       .data,
       composerr(paste(
         "Error while calling 'as.dictionary':",
-        "The passed in object is a 'LamaDictionary' class object,",
+        "The passed in object is a 'lama_dictionary' class object,",
         "but has invalid structure"
       ))
     ),
-    class = "LamaDictionary"
+    class = "lama_dictionary"
   )
 }
 
@@ -376,27 +390,27 @@ as.dictionary.data.frame <- function(
   ))
 }
 
-#' Check if an object is a [LamaDictionary][new_dictionary()] class object
+#' Check if an object is a [lama_dictionary][new_dictionary()] class object
 #'
 #' @param obj The object in question
 #' @return \code{TRUE} if the object is a
-#' [LamaDictionary][new_dictionary()] class object, \code{FALSE} otherwise.
+#' [lama_dictionary][new_dictionary()] class object, \code{FALSE} otherwise.
 #' @rdname is_dictionary
 #' @seealso [validate_dictionary()], [as.dictionary()], [new_dictionary()],
 #' [lama_translate()], [lama_read()], [lama_write()], [lama_select()],
 #' [lama_rename()], [lama_mutate()], [lama_merge()]
 #' @export
 is.dictionary <- function(obj) {
-  inherits(obj, "LamaDictionary")
+  inherits(obj, "lama_dictionary")
 }
 
-#' Check if an object has a valid [LamaDictionary][new_dictionary()] structure
+#' Check if an object has a valid [lama_dictionary][new_dictionary()] structure
 #'
 #' This function checks if the object structure is right. It does not check 
 #' class type.
 #' @inheritSection new_dictionary Translations
 #' @inheritSection new_dictionary Missing values
-#' @inheritSection new_dictionary LamaDictionary class objects
+#' @inheritSection new_dictionary lama_dictionary class objects
 #' @param obj An object that should be tested
 #' @param err_handler An error handling function
 #' @rdname validate_dictionary
@@ -406,7 +420,7 @@ is.dictionary <- function(obj) {
 #' @export
 validate_dictionary <- function(
   obj,
-  err_handler = composerr("The object has not a valid LamaDictionary structure")
+  err_handler = composerr("The object has not a valid lama_dictionary structure")
 ) {
   if (!is.list(obj))
     err_handler("The object must be a named list object.")
@@ -480,17 +494,17 @@ validate_translation <- function(
 
 
 
-#' Print a [LamaDictionary][new_dictionary()] class object
+#' Print a [lama_dictionary][new_dictionary()] class object
 #'
-#' @param x The [LamaDictionary][new_dictionary()] class object that should be printed.
+#' @param x The [lama_dictionary][new_dictionary()] class object that should be printed.
 #' @param ... Unused arguments
 #' @rdname print
 #' @seealso [lama_translate()], [new_dictionary()], [lama_select()],
 #'   [lama_rename()], [lama_mutate()], [lama_merge()], [lama_read()],
 #'   [lama_write()]
 #' @export
-print.LamaDictionary <- function(x, ...) {
-  cat("\n--- LamaDictionary ---\n")
+print.lama_dictionary <- function(x, ...) {
+  cat("\n--- lama_dictionary ---\n")
   for (name in names(x)) {
     cat(paste0("Variable '", name, "':\n"))
     print(x[[name]])

@@ -2,21 +2,21 @@
 % Please edit documentation in R/lama_mutate.R
 \name{lama_mutate}
 \alias{lama_mutate}
-\alias{lama_mutate.LamaDictionary}
+\alias{lama_mutate.lama_dictionary}
 \alias{lama_mutate_}
-\alias{lama_mutate_.LamaDictionary}
-\title{Change or append a variable translation to an existing \link[=new_dictionary]{LamaDictionary} object}
+\alias{lama_mutate_.lama_dictionary}
+\title{Change or append a variable translation to an existing \link[=new_dictionary]{lama_dictionary} object}
 \usage{
 lama_mutate(.data, ...)
 
-\method{lama_mutate}{LamaDictionary}(.data, ...)
+\method{lama_mutate}{lama_dictionary}(.data, ...)
 
 lama_mutate_(.data, key, translation)
 
-\method{lama_mutate_}{LamaDictionary}(.data, key, translation)
+\method{lama_mutate_}{lama_dictionary}(.data, key, translation)
 }
 \arguments{
-\item{.data}{A \link[=new_dictionary]{LamaDictionary} object}
+\item{.data}{A \link[=new_dictionary]{lama_dictionary} object}
 
 \item{...}{One or more unquoted expressions separated by commas. Use named
 arguments, e.g. \code{new_transation_name = c(a = "A", b = "B")}, to set
@@ -39,12 +39,12 @@ The values in the character vector \code{translations} are the labels
 that should be assigned to the original values.}
 }
 \value{
-An updated \link[=new_dictionary]{LamaDictionary} class object.
+An updated \link[=new_dictionary]{lama_dictionary} class object.
 }
 \description{
 The functions \code{\link[=lama_mutate]{lama_mutate()}} and \code{\link[=lama_mutate_]{lama_mutate_()}} alter a
-\link[=new_dictionary]{LamaDictionary} object. They either alter
-or append a translation to a \link[=new_dictionary]{LamaDictionary} object.
+\link[=new_dictionary]{lama_dictionary} object. They either alter
+or append a translation to a \link[=new_dictionary]{lama_dictionary} object.
 The function \code{\link[=lama_mutate]{lama_mutate()}} uses named arguments to assign the translations
 to the new names (similar to \code{\link[dplyr:mutate]{dplyr::mutate()}}), whereas the function
 \code{\link[=lama_mutate_]{lama_mutate_()}} is takes a character string \code{key} holding the

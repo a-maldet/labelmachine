@@ -10,7 +10,7 @@ check_translate_general(.data, dictionary, col_new, keep_order,
 \arguments{
 \item{.data}{The data.frame object which contains the variable that should be relabelled}
 
-\item{dictionary}{A \link[=new_dictionary]{LamaDictionary} object, holding the translations for various
+\item{dictionary}{A \link[=new_dictionary]{lama_dictionary} object, holding the translations for various
 variables.}
 
 \item{col_new}{A character vector of the same length as \code{translation} holding
