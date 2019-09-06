@@ -1,15 +1,15 @@
-context("as.dictionary")
-# as.dictionary.lama_dictionary
-test_that("as.dictionary takes lama_dictionary objects", {
-  dict <- as.dictionary(new_dictionary(a = c(a = "A", b = NA, NA_ = "C"), x = list(x = "X", NA_ = NA)))
+context("as.lama_dictionary")
+# as.lama_dictionary.lama_dictionary
+test_that("as.lama_dictionary takes lama_dictionary objects", {
+  dict <- as.lama_dictionary(new_lama_dictionary(a = c(a = "A", b = NA, NA_ = "C"), x = list(x = "X", NA_ = NA)))
   expect_dictionary(dict)
   expect_translation_names(dict, c("a", "x"))
   expect_translation_identical(dict, "a", c(a = "A", b = NA, NA_ = "C"))
   expect_translation_identical(dict, "x", c(x = "X", NA_ = NA))
 })
 # as_dictionary.list
-test_that("as.dictionary takes list objects", {
-  dict <- as.dictionary(list(a = c(a = "A", b = NA, NA_ = "C"), x = list(x = "X", NA_ = NA)))
+test_that("as.lama_dictionary takes list objects", {
+  dict <- as.lama_dictionary(list(a = c(a = "A", b = NA, NA_ = "C"), x = list(x = "X", NA_ = NA)))
   expect_dictionary(dict)
   expect_translation_names(dict, c("a", "x"))
   expect_translation_identical(dict, "a", c(a = "A", b = NA, NA_ = "C"))
@@ -17,7 +17,7 @@ test_that("as.dictionary takes list objects", {
 })
 test_that("throws the right errors", {
   expect_error(
-    as.dictionary(list(c(a = "A"), x = c(x = "X"))),
+    as.lama_dictionary(list(c(a = "A"), x = c(x = "X"))),
     paste(
       "The passed in translation definitions are invalid:",
       "The names of the translations are missing."
@@ -25,7 +25,7 @@ test_that("throws the right errors", {
     fixed = TRUE
   )
   expect_error(
-    as.dictionary(list(x = c(a = "A"), x = c(x = "X"))),
+    as.lama_dictionary(list(x = c(a = "A"), x = c(x = "X"))),
     paste(
       "The passed in translation definitions are invalid:",
       "The following translation names are used more than once: 'x'."
@@ -33,7 +33,7 @@ test_that("throws the right errors", {
     fixed = TRUE
   )
   expect_error(
-    as.dictionary(list(a = "A", x = c(x = "X"))),
+    as.lama_dictionary(list(a = "A", x = c(x = "X"))),
     paste(
       "The passed in translation definitions are invalid:",
       "Invalid translation with name 'a':",
@@ -42,7 +42,7 @@ test_that("throws the right errors", {
     fixed = TRUE
   )
   expect_error(
-    as.dictionary(list(a = c(a = "A"), x = list("X"))),
+    as.lama_dictionary(list(a = c(a = "A"), x = list("X"))),
     paste(
       "The passed in translation definitions are invalid:",
       "Invalid translation with name 'x':",
@@ -51,7 +51,7 @@ test_that("throws the right errors", {
     fixed = TRUE
   )
   expect_error(
-    as.dictionary(list(a = 3, x = c(x = "X"))),
+    as.lama_dictionary(list(a = 3, x = c(x = "X"))),
     paste(
       "The passed in translation definitions are invalid:",
       "Invalid translation with name 'a':",
@@ -60,7 +60,7 @@ test_that("throws the right errors", {
     fixed = TRUE
   )
   expect_error(
-    as.dictionary(list(a = 3, list = c("X"))),
+    as.lama_dictionary(list(a = 3, list = c("X"))),
     paste(
       "The passed in translation definitions are invalid:",
       "Invalid translation with name 'a':",
@@ -72,7 +72,7 @@ test_that("throws the right errors", {
 
 # as_dictionary.list
 test_that("lama_dictionary objects are allowed", {
-  dict <- as.dictionary(new_dictionary(a = c(a = "A", b = NA, NA_ = "c"), x = list(x = "X", NA_ = NA)))
+  dict <- as.lama_dictionary(new_lama_dictionary(a = c(a = "A", b = NA, NA_ = "c"), x = list(x = "X", NA_ = NA)))
   expect_dictionary(dict)
   expect_translation_names(dict, c("a", "x"))
   expect_translation_identical(dict, "a", c(a = "A", b = NA, NA_ = "c"))
@@ -80,7 +80,7 @@ test_that("lama_dictionary objects are allowed", {
 })
 test_that("throws the right errors", {
   expect_error(
-    as.dictionary(list(c(a = "A"), x = c(x = "X"))),
+    as.lama_dictionary(list(c(a = "A"), x = c(x = "X"))),
     paste(
       "The passed in translation definitions are invalid:",
       "The names of the translations are missing."
@@ -88,7 +88,7 @@ test_that("throws the right errors", {
     fixed = TRUE
   )
   expect_error(
-    as.dictionary(list(x = c(a = "A"), x = c(x = "X"))),
+    as.lama_dictionary(list(x = c(a = "A"), x = c(x = "X"))),
     paste(
       "The passed in translation definitions are invalid:",
       "The following translation names are used more than once: 'x'."
@@ -96,7 +96,7 @@ test_that("throws the right errors", {
     fixed = TRUE
   )
   expect_error(
-    as.dictionary(list(a = "A", x = c(x = "X"))),
+    as.lama_dictionary(list(a = "A", x = c(x = "X"))),
     paste(
       "The passed in translation definitions are invalid:",
       "Invalid translation with name 'a':",
@@ -105,7 +105,7 @@ test_that("throws the right errors", {
     fixed = TRUE
   )
   expect_error(
-    as.dictionary(list(a = c(a = "A"), x = list("X"))),
+    as.lama_dictionary(list(a = c(a = "A"), x = list("X"))),
     paste(
       "The passed in translation definitions are invalid:",
       "Invalid translation with name 'x':",
@@ -114,7 +114,7 @@ test_that("throws the right errors", {
     fixed = TRUE
   )
   expect_error(
-    as.dictionary(list(a = 3, x = c(x = "X"))),
+    as.lama_dictionary(list(a = 3, x = c(x = "X"))),
     paste(
       "The passed in translation definitions are invalid:",
       "Invalid translation with name 'a':",
@@ -123,7 +123,7 @@ test_that("throws the right errors", {
     fixed = TRUE
   )
   expect_error(
-    as.dictionary(list(a = 3, list = c("X"))),
+    as.lama_dictionary(list(a = 3, list = c("X"))),
     paste(
       "The passed in translation definitions are invalid:",
       "Invalid translation with name 'a':",
@@ -134,7 +134,7 @@ test_that("throws the right errors", {
 })
 
 # as_dictionary.data.frame
-test_that("as.dictionary takes data.frames", {
+test_that("as.lama_dictionary takes data.frames", {
   translations <- c("aR", "aO", "aN", "xR", "xO", "xN", "rR", "rO", "rN")
   df <- data.frame(
     a_o = c("b", "a", "NA_", "d"),
@@ -145,7 +145,7 @@ test_that("as.dictionary takes data.frames", {
     r_n = factor(c("R", "S", "T", "NAnew"), levels = c("T", "NAnew", "R", "S")),
     stringsAsFactors = FALSE
   )
-  dict <- as.dictionary(
+  dict <- as.lama_dictionary(
     df,
     translation = translations,
     col_old = rep(c("a_o", "x_o", "r_o"), each = 3),
@@ -171,7 +171,7 @@ test_that("as.dictionary takes data.frames", {
   expect_translation_identical(dict, "rR", c(r = "R", s = "S", t = "T", NA_ = "NAnew"))
   expect_translation_identical(dict, "rO", c(s = "S", t = "T", r = "R", NA_ = "NAnew"))
   expect_translation_identical(dict, "rN", c(t = "T", NA_ = "NAnew", r = "R", s = "S"))
-  dict_2 <- as.dictionary(
+  dict_2 <- as.lama_dictionary(
     data.frame(
       o = c(NA, "a", "b"),
       n = 1:3
@@ -187,7 +187,7 @@ test_that("as.dictionary takes data.frames", {
 
 test_that("throws the right errors", {
   expect_error(
-    as.dictionary(
+    as.lama_dictionary(
       data.frame(
         o = c("a", "b"),
         n = c("A", "B")
@@ -198,7 +198,7 @@ test_that("throws the right errors", {
     )
   )
   expect_error(
-    as.dictionary(
+    as.lama_dictionary(
       data.frame(
         o = c("a", "b"),
         n = c("A", "B")
@@ -210,7 +210,7 @@ test_that("throws the right errors", {
     )
   )
   expect_error(
-    as.dictionary(
+    as.lama_dictionary(
       data.frame(
         o = c("a", "b"),
         n = c("A", "B")
@@ -223,7 +223,7 @@ test_that("throws the right errors", {
     )
   )
   expect_error(
-    as.dictionary(
+    as.lama_dictionary(
       data.frame(
         o = c("a", "b"),
         n = c("A", "B")
@@ -238,7 +238,7 @@ test_that("throws the right errors", {
     )
   )
   expect_error(
-    as.dictionary(
+    as.lama_dictionary(
       data.frame(
         o = c("a", "b"),
         n = c("A", "B")
@@ -253,7 +253,7 @@ test_that("throws the right errors", {
     )
   )
   expect_error(
-    as.dictionary(
+    as.lama_dictionary(
       data.frame(
         o = c("a", "b"),
         n = c("A", "B")
@@ -268,7 +268,7 @@ test_that("throws the right errors", {
     )
   )
   expect_error(
-    as.dictionary(
+    as.lama_dictionary(
       data.frame(
         o = c("a", "b"),
         n = c("A", "B")
@@ -282,7 +282,7 @@ test_that("throws the right errors", {
     )
   )
   expect_error(
-    as.dictionary(
+    as.lama_dictionary(
       data.frame(
         o = c("a", "b"),
         n = c("A", "B")
@@ -297,7 +297,7 @@ test_that("throws the right errors", {
     )
   )
   expect_error(
-    as.dictionary(
+    as.lama_dictionary(
       data.frame(
         o = c("a", "b"),
         n = c("A", "B")
@@ -313,7 +313,7 @@ test_that("throws the right errors", {
     )
   )
   expect_error(
-    as.dictionary(
+    as.lama_dictionary(
       data.frame(
         o = c("a", "b"),
         n = c("A", "B")
@@ -329,7 +329,7 @@ test_that("throws the right errors", {
     )
   )
   expect_error(
-    as.dictionary(
+    as.lama_dictionary(
       data.frame(
         o = c("a", "b"),
         n = c("A", "B")
@@ -345,7 +345,7 @@ test_that("throws the right errors", {
     )
   )
   expect_error(
-    as.dictionary(
+    as.lama_dictionary(
       data.frame(
         o = c("a", "b"),
         n = c("A", "B")
@@ -362,7 +362,7 @@ test_that("throws the right errors", {
     )
   )
   expect_error(
-    as.dictionary(
+    as.lama_dictionary(
       data.frame(
         o = c("a", "b"),
         n = c("A", "B")
@@ -379,7 +379,7 @@ test_that("throws the right errors", {
     )
   )
   expect_error(
-    as.dictionary(
+    as.lama_dictionary(
       data.frame(
         o = c("a", "b"),
         n = c("A", "B")
@@ -394,7 +394,7 @@ test_that("throws the right errors", {
     )
   )
   expect_error(
-    as.dictionary(
+    as.lama_dictionary(
       data.frame(
         o = c("a", "a", "b"),
         n = c("A", "A", "B")
@@ -410,7 +410,7 @@ test_that("throws the right errors", {
     )
   )
   expect_error(
-    as.dictionary(
+    as.lama_dictionary(
       data.frame(
         o = c(NA, NA, "b"),
         n = c("A", "A", "B")

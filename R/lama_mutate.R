@@ -1,14 +1,14 @@
-#' Change or append a variable translation to an existing [lama_dictionary][new_dictionary()] object
+#' Change or append a variable translation to an existing [lama_dictionary][new_lama_dictionary()] object
 #'
 #' The functions [lama_mutate()] and [lama_mutate_()] alter a 
-#' [lama_dictionary][new_dictionary()] object. They either alter
-#' or append a translation to a [lama_dictionary][new_dictionary()] object.
+#' [lama_dictionary][new_lama_dictionary()] object. They either alter
+#' or append a translation to a [lama_dictionary][new_lama_dictionary()] object.
 #' The function [lama_mutate()] uses named arguments to assign the translations
 #' to the new names (similar to [dplyr::mutate()]), whereas the function
 #' [lama_mutate_()] is takes a character string \code{key} holding the
 #' name to which the translation should be assigned and a named character
 #' vector \code{translation} holding the actual translation mapping.
-#' @param .data A [lama_dictionary][new_dictionary()] object
+#' @param .data A [lama_dictionary][new_lama_dictionary()] object
 #' @param ... One or more unquoted expressions separated by commas. Use named
 #'   arguments, e.g. `new_transation_name = c(a = "A", b = "B")`, to set
 #'   translations (named character vectors) to new translation names. It is also
@@ -18,8 +18,8 @@
 #'   existing in the dictionary, in order to modify them
 #'   (e.g. `new_translation = c(v = "V", w = "W", old_translation, z = "Z")`, where 
 #'   `old_translation = c(x = "X", y = "Y")`).
-#' @return An updated [lama_dictionary][new_dictionary()] class object.
-#' @seealso [lama_translate()], [new_dictionary()], [lama_rename()], [lama_select()],
+#' @return An updated [lama_dictionary][new_lama_dictionary()] class object.
+#' @seealso [lama_translate()], [new_lama_dictionary()], [lama_rename()], [lama_select()],
 #'   [lama_merge()], [lama_read()], [lama_write()]
 #' @rdname lama_mutate
 #' @export

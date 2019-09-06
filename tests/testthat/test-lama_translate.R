@@ -1,5 +1,5 @@
 context("lama_translate")
-dict = new_dictionary(
+dict = new_lama_dictionary(
   r._ = c(a = "A", b = "B", c = "X", d = "D", e = "X", f = "F"), 
   s = c(x = "X", y = NA, "NA_" = NA, z = "Z"),
   var_t = c(u = NA, v = "V", w = NA, "NA_" = "NAnew")

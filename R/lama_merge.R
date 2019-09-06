@@ -1,18 +1,18 @@
 #' Merge multiple label lexicas into one
 #'
-#' This function takes multiple [lama_dictionary][new_dictionary()] class
+#' This function takes multiple [lama_dictionary][new_lama_dictionary()] class
 #' objects and merges them together into
-#' a single [lama_dictionary][new_dictionary()] class object.
+#' a single [lama_dictionary][new_lama_dictionary()] class object.
 #' In case some class objects have entries with the same name, the 
 #' class objects passed in later overwrite the class objects passed in first 
 #' (e.g. in \code{lama_merge(x, y, z)}: The lexicon \code{z} overwrites
 #' \code{x} and \code{y}. The lexicon \code{y} overwrites \code{x}).
-#' @param ... Two or more [lama_dictionary][new_dictionary()]
+#' @param ... Two or more [lama_dictionary][new_lama_dictionary()]
 #' class objects, which should be merged together.
 #' @param show_warnings A logical flag that defines, whether warnings should be
 #' shown (\code{TRUE}) or not (\code{FALSE}).
-#' @return The merged [lama_dictionary][new_dictionary()] class object
-#' @seealso [lama_translate()], [new_dictionary()], [lama_rename()], [lama_select()],
+#' @return The merged [lama_dictionary][new_lama_dictionary()] class object
+#' @seealso [lama_translate()], [new_lama_dictionary()], [lama_rename()], [lama_select()],
 #' [lama_mutate()], [lama_read()], [lama_write()]
 #' @rdname lama_merge
 #' @export

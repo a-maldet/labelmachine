@@ -1,14 +1,14 @@
-#' Select multiple variable translations and create a new [lama_dictionary][new_dictionary()] object
+#' Select multiple variable translations and create a new [lama_dictionary][new_lama_dictionary()] object
 #'
 #' The functions [lama_select()] and [lama_select_()] pick one or more 
-#' variable translations from a [lama_dictionary][new_dictionary()] class object
-#' and create a new [lama_dictionary][new_dictionary()] class object.
+#' variable translations from a [lama_dictionary][new_lama_dictionary()] class object
+#' and create a new [lama_dictionary][new_lama_dictionary()] class object.
 #' The function [lama_select()] uses non-standard evaluation, whereas 
 #' [lama_select_()] is the standard evaluation alternative.
-#' @param .data A [lama_dictionary][new_dictionary()] object, holding the variable translations
+#' @param .data A [lama_dictionary][new_lama_dictionary()] object, holding the variable translations
 #' @param ... One or more unquoted translation names separated by commas.
-#' @return A new [lama_dictionary][new_dictionary()] class object, holding the picked variable translations.
-#' @seealso [lama_translate()], [new_dictionary()], [lama_rename()], [lama_mutate()],
+#' @return A new [lama_dictionary][new_lama_dictionary()] class object, holding the picked variable translations.
+#' @seealso [lama_translate()], [new_lama_dictionary()], [lama_rename()], [lama_mutate()],
 #' [lama_merge()], [lama_read()], [lama_write()]
 #' @rdname lama_select
 #' @export
@@ -44,7 +44,7 @@ lama_select.lama_dictionary <- function(.data, ...) {
     rlang::quo_name(x)
   }))
   check_select(.data, key, err_handler)
-  new_dictionary(.data[key])
+  new_lama_dictionary(.data[key])
 }
 
 #' @param key A character vector holding the names of the variable translations that
@@ -62,12 +62,12 @@ lama_select_.lama_dictionary <- function(.data, key) {
   if (!is.character(key) || length(key) == 0)
     err_handler("The object given in the argument 'key' must be a character vector.")
   check_select(.data, key, err_handler)
-  new_dictionary(.data[key])
+  new_lama_dictionary(.data[key])
 }
 
 #' Function that checks the passed in arguments for [lama_select()] and [lama_select_()]
 #' 
-#' @param .data A [lama_dictionary][new_dictionary()] object, holding the
+#' @param .data A [lama_dictionary][new_lama_dictionary()] object, holding the
 #' variable translations
 #' @param key A character vector holding the names of the variable
 #' translations, that should be renamed.

@@ -1,6 +1,6 @@
 context("lama_dictionary")
 test_that("list argument is allowed",{
-  dict <- new_dictionary(
+  dict <- new_lama_dictionary(
     list(a = list(a = "A", b = NA, NA_ = NA), x = c(x = "X", NA_ = "Y"))
   )
   expect_dictionary(dict)
@@ -11,7 +11,7 @@ test_that("list argument is allowed",{
 
 test_that("list case throws the right errors", {
   expect_warning(
-    new_dictionary(
+    new_lama_dictionary(
       list(a = list(a = "A", b = "B")),
       x = c(x = "X")
     ),
@@ -19,7 +19,7 @@ test_that("list case throws the right errors", {
     fixed = TRUE
   )
   expect_error(
-    new_dictionary(
+    new_lama_dictionary(
       list(c(a = "A"), x = c(x = "X", y = "Y"))
     ),
     paste(
@@ -29,7 +29,7 @@ test_that("list case throws the right errors", {
     fixed = TRUE
   )
   expect_error(
-    new_dictionary(
+    new_lama_dictionary(
       list(a = list(a = "A"), x = c(x = "X", x = "Y"))
     ),
     paste(
@@ -40,7 +40,7 @@ test_that("list case throws the right errors", {
     fixed = TRUE
   )
   expect_error(
-    new_dictionary(
+    new_lama_dictionary(
       list(a = list(a = "A"), x = c(x = 3))
     ),
     paste(
@@ -50,7 +50,7 @@ test_that("list case throws the right errors", {
     fixed = TRUE
   )
   expect_error(
-    new_dictionary(
+    new_lama_dictionary(
       list(a = list(a = "A"), x = c("X", "Y"))
     ),
     paste(
@@ -62,7 +62,7 @@ test_that("list case throws the right errors", {
 })
 
 test_that("named arguments are allowed",{
-  dict <- new_dictionary(
+  dict <- new_lama_dictionary(
     a = list(a = "A", b = NA, NA_ = NA),
     x = c(x = "X", NA_ = "Y")
   )
@@ -73,7 +73,7 @@ test_that("named arguments are allowed",{
 })
 test_that("named arguments case throws the right errors", {
   expect_error(
-    new_dictionary(
+    new_lama_dictionary(
       a = c(a = "a", b = "b"),
       c(x = "X", y = "Y")
     ),
@@ -84,7 +84,7 @@ test_that("named arguments case throws the right errors", {
     fixed = TRUE
   )
   expect_error(
-    new_dictionary(
+    new_lama_dictionary(
       a = c(a = "a", a = "b"),
       x = c(x = "X", y = "Y")
     ),
@@ -96,7 +96,7 @@ test_that("named arguments case throws the right errors", {
     fixed = TRUE
   )
   expect_error(
-    new_dictionary(
+    new_lama_dictionary(
       a = list(a = "a", a = "b"),
       x = c(x = "X", y = "Y")
     ),
@@ -108,7 +108,7 @@ test_that("named arguments case throws the right errors", {
     fixed = TRUE
   )
   expect_error(
-    new_dictionary(
+    new_lama_dictionary(
       a = c(a = 1, b = 2),
       x = c(x = "X", y = "Y")
     ),

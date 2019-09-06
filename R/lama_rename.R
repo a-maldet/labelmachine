@@ -1,14 +1,14 @@
-#' Rename multiple variable translations in a [lama_dictionary][new_dictionary()] object
+#' Rename multiple variable translations in a [lama_dictionary][new_lama_dictionary()] object
 #'
 #' The functions [lama_rename()] and [lama_rename_()]
 #' are used to rename one or more variable translations inside of a 
-#' [lama_dictionary][new_dictionary()] class object.
+#' [lama_dictionary][new_lama_dictionary()] class object.
 #' The function [lama_rename()] uses non-standard evaluation,
 #' whereas [lama_rename_()] is the standard evaluation alternativ.
-#' @param .data A [lama_dictionary][new_dictionary()] object, holding the variable translations
+#' @param .data A [lama_dictionary][new_lama_dictionary()] object, holding the variable translations
 #' @param ... One or more unquoted expressions separated by commas. Use named arguments, e.g. `new_name = old_name`, to rename selected variables.
-#' @return The updated [lama_dictionary][new_dictionary()] class object.
-#' @seealso [lama_translate()], [new_dictionary()], [lama_select()], [lama_mutate()],
+#' @return The updated [lama_dictionary][new_lama_dictionary()] class object.
+#' @seealso [lama_translate()], [new_lama_dictionary()], [lama_select()], [lama_mutate()],
 #' [lama_merge()], [lama_read()], [lama_write()]
 #' @rdname lama_rename
 #' @export
@@ -81,13 +81,13 @@ lama_rename_.lama_dictionary <- function(.data, old, new) {
 
 #' Function that actually performs the renaming of the translations
 #'
-#' @param .data A [lama_dictionary][new_dictionary()] object, holding the
+#' @param .data A [lama_dictionary][new_lama_dictionary()] object, holding the
 #' variable translations
 #' @param old A character vector holding the names of the variable
 #' translations, that should be renamed.
 #' @param new A character vector holding the new names of the variable
 #' translations.
-#' @return The updated [lama_dictionary][new_dictionary()] class object.
+#' @return The updated [lama_dictionary][new_lama_dictionary()] class object.
 #' @include lama_select.R
 rename_translation <- function(.data, old, new) {
   .data <- lama_select_(.data, setdiff(names(.data), setdiff(new, old)))
@@ -98,7 +98,7 @@ rename_translation <- function(.data, old, new) {
 
 #' Function that checks the passed in arguments for [lama_rename()] and [lama_rename_()]
 #' 
-#' @param .data A [lama_dictionary][new_dictionary()] object, holding the
+#' @param .data A [lama_dictionary][new_lama_dictionary()] object, holding the
 #' variable translations
 #' @param old A character vector holding the names of the variable
 #' translations, that should be renamed.

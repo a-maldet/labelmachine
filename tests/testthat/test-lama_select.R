@@ -1,5 +1,5 @@
 context("lama_select")
-dict_a = new_dictionary(
+dict_a = new_lama_dictionary(
   x = c(x = "a"), 
   y = c(y = "a"),
   z = c(z = "a")

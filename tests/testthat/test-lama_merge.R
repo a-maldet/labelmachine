@@ -1,16 +1,16 @@
 context("lama_merge")
-dict_a = new_dictionary(
+dict_a = new_lama_dictionary(
   x = c(x = "a"), 
   y = c(y = "a"),
   z = c(z = "a")
 )
-dict_b = new_dictionary(
+dict_b = new_lama_dictionary(
   u = c(u = "b"),
   v = c(v = "b"),
   y = c(y = "b"),
   z = c(z = "b")
 )
-dict_c = new_dictionary(
+dict_c = new_lama_dictionary(
   z = c(z = "c"),
   w = c(w = "c"),
   u = c(u = "c")

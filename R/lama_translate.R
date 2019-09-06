@@ -6,7 +6,7 @@
 #' The function [lama_translate()] uses non-standard evaluation, whereas 
 #' [lama_translate_()] is the standard evaluation alternative.
 #' @param .data The data.frame object which contains the variable that should be relabelled
-#' @param dictionary A [lama_dictionary][new_dictionary()] object, holding the translations for various
+#' @param dictionary A [lama_dictionary][new_lama_dictionary()] object, holding the translations for various
 #' variables.
 #' @param ... One or more unquoted expressions separated by commas. Use unquoted
 #' arguments that tell which translation should be applied to which column and
