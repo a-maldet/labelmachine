@@ -43,9 +43,9 @@
 
 
 <meta property="og:title" content="Merge multiple label lexicas into one — lama_merge" />
-<meta property="og:description" content="This function takes multiple LamaDictionary class
+<meta property="og:description" content="This function takes multiple lama_dictionary class
 objects and merges them together into
-a single LamaDictionary class object.
+a single lama_dictionary class object.
 In case some class objects have entries with the same name, the
 class objects passed in later overwrite the class objects passed in first
 (e.g. in lama_merge(x, y, z): The lexicon z overwrites
@@ -120,9 +120,9 @@ x and y. The lexicon y overwrites x)." />
     </div>
 
     <div class="ref-description">
-    <p>This function takes multiple LamaDictionary class
+    <p>This function takes multiple lama_dictionary class
 objects and merges them together into
-a single LamaDictionary class object.
+a single lama_dictionary class object.
 In case some class objects have entries with the same name, the
 class objects passed in later overwrite the class objects passed in first
 (e.g. in <code>lama_merge(x, y, z)</code>: The lexicon <code>z</code> overwrites
@@ -131,7 +131,7 @@ class objects passed in later overwrite the class objects passed in first
 
     <pre class="usage"><span class='fu'>lama_merge</span>(<span class='no'>...</span>, <span class='kw'>show_warnings</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='co'># S3 method for LamaDictionary</span>
+<span class='co'># S3 method for lama_dictionary</span>
 <span class='fu'>lama_merge</span>(<span class='no'>...</span>, <span class='kw'>show_warnings</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -139,7 +139,7 @@ class objects passed in later overwrite the class objects passed in first
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>...</th>
-      <td><p>Two or more LamaDictionary
+      <td><p>Two or more lama_dictionary
 class objects, which should be merged together.</p></td>
     </tr>
     <tr>
@@ -151,7 +151,7 @@ shown (<code>TRUE</code>) or not (<code>FALSE</code>).</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The merged LamaDictionary class object</p>
+    <p>The merged lama_dictionary class object</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code>lama_translate()</code>, <code>new_dictionary()</code>, <code>lama_rename()</code>, <code>lama_select()</code>,

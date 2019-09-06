@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Change or append a variable translation to an existing LamaDictionary object — lama_mutate • labelmachine</title>
+<title>Change or append a variable translation to an existing lama_dictionary object — lama_mutate • labelmachine</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -42,10 +42,10 @@
 
 
 
-<meta property="og:title" content="Change or append a variable translation to an existing LamaDictionary object — lama_mutate" />
+<meta property="og:title" content="Change or append a variable translation to an existing lama_dictionary object — lama_mutate" />
 <meta property="og:description" content="The functions lama_mutate() and lama_mutate_() alter a
-LamaDictionary object. They either alter
-or append a translation to a LamaDictionary object.
+lama_dictionary object. They either alter
+or append a translation to a lama_dictionary object.
 The function lama_mutate() uses named arguments to assign the translations
 to the new names (similar to dplyr::mutate()), whereas the function
 lama_mutate_() is takes a character string key holding the
@@ -115,15 +115,15 @@ vector translation holding the actual translation mapping." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Change or append a variable translation to an existing LamaDictionary object</h1>
+    <h1>Change or append a variable translation to an existing lama_dictionary object</h1>
     
     <div class="hidden name"><code>lama_mutate.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>The functions <code>lama_mutate()</code> and <code>lama_mutate_()</code> alter a
-LamaDictionary object. They either alter
-or append a translation to a LamaDictionary object.
+lama_dictionary object. They either alter
+or append a translation to a lama_dictionary object.
 The function <code>lama_mutate()</code> uses named arguments to assign the translations
 to the new names (similar to <code>dplyr::mutate()</code>), whereas the function
 <code>lama_mutate_()</code> is takes a character string <code>key</code> holding the
@@ -133,12 +133,12 @@ vector <code>translation</code> holding the actual translation mapping.</p>
 
     <pre class="usage"><span class='fu'>lama_mutate</span>(<span class='no'>.data</span>, <span class='no'>...</span>)
 
-<span class='co'># S3 method for LamaDictionary</span>
+<span class='co'># S3 method for lama_dictionary</span>
 <span class='fu'>lama_mutate</span>(<span class='no'>.data</span>, <span class='no'>...</span>)
 
 <span class='fu'>lama_mutate_</span>(<span class='no'>.data</span>, <span class='no'>key</span>, <span class='no'>translation</span>)
 
-<span class='co'># S3 method for LamaDictionary</span>
+<span class='co'># S3 method for lama_dictionary</span>
 <span class='fu'>lama_mutate_</span>(<span class='no'>.data</span>, <span class='no'>key</span>, <span class='no'>translation</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -146,7 +146,7 @@ vector <code>translation</code> holding the actual translation mapping.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>.data</th>
-      <td><p>A LamaDictionary object</p></td>
+      <td><p>A lama_dictionary object</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -178,7 +178,7 @@ that should be assigned to the original values.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An updated LamaDictionary class object.</p>
+    <p>An updated lama_dictionary class object.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code>lama_translate()</code>, <code>new_dictionary()</code>, <code>lama_rename()</code>, <code>lama_select()</code>,

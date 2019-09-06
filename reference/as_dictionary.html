@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Coerce to a LamaDictionary class object — as.dictionary • labelmachine</title>
+<title>Coerce to a lama_dictionary class object — as.dictionary • labelmachine</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -42,7 +42,7 @@
 
 
 
-<meta property="og:title" content="Coerce to a LamaDictionary class object — as.dictionary" />
+<meta property="og:title" content="Coerce to a lama_dictionary class object — as.dictionary" />
 <meta property="og:description" content="This function allows two types of arguments:
 named list: A named list object holding the translations.
 data.frame: A data.frame with one ore more column pairs. Each column
@@ -120,7 +120,7 @@ configured by a character vector given in argument ordering.
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Coerce to a LamaDictionary class object</h1>
+    <h1>Coerce to a lama_dictionary class object</h1>
     
     <div class="hidden name"><code>as_dictionary.Rd</code></div>
     </div>
@@ -146,7 +146,7 @@ configured by a character vector given in argument <code>ordering</code>.</p></l
 <span class='co'># S3 method for list</span>
 <span class='fu'>as.dictionary</span>(<span class='no'>.data</span>, <span class='no'>...</span>)
 
-<span class='co'># S3 method for LamaDictionary</span>
+<span class='co'># S3 method for lama_dictionary</span>
 <span class='fu'>as.dictionary</span>(<span class='no'>.data</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
@@ -224,7 +224,7 @@ then it will be ordered alphanumerically.</p></li>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A new LamaDictionary class object holding the passed in translations.</p>
+    <p>A new lama_dictionary class object holding the passed in translations.</p>
     <h2 class="hasAnchor" id="translations"><a class="anchor" href="#translations"></a>Translations</h2>
 
     
@@ -289,13 +289,13 @@ when defining the translations inside of a <code>YAML</code> file,
 since the <code>YAML</code> parser does not recognice missing values.</p></li>
 </ul>
 
-    <h2 class="hasAnchor" id="lamadictionary-class-objects"><a class="anchor" href="#lamadictionary-class-objects"></a>LamaDictionary class objects</h2>
+    <h2 class="hasAnchor" id="lama-dictionary-class-objects"><a class="anchor" href="#lama-dictionary-class-objects"></a>lama_dictionary class objects</h2>
 
     
 
-<p>Each <em>LamaDictionary</em> class object can contain multiple <em>translations</em>,
+<p>Each <em>lama_dictionary</em> class object can contain multiple <em>translations</em>,
 each with a unique name under which the translation can be found.
-The function <code>lama_translate()</code> uses a LamaDictionary class object
+The function <code>lama_translate()</code> uses a lama_dictionary class object
 to translate a normal <code>vector</code> or to translate one or more columns in a
 <code>data.frame</code>.
 Sometimes it may be necessary to have different translations
@@ -312,7 +312,7 @@ translations with different names
       <li><a href="#value">Value</a></li>
       <li><a href="#translations">Translations</a></li>
       <li><a href="#missing-values">Missing values</a></li>
-      <li><a href="#lamadictionary-class-objects">LamaDictionary class objects</a></li>
+      <li><a href="#lama-dictionary-class-objects">lama_dictionary class objects</a></li>
     </ul>
 
   </div>
