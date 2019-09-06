@@ -21,7 +21,7 @@ lama_translate_(.data, dictionary, translation, col = translation,
 \arguments{
 \item{.data}{The data.frame object which contains the variable that should be relabelled}
 
-\item{dictionary}{A \link[=new_dictionary]{lama_dictionary} object, holding the translations for various
+\item{dictionary}{A \link[=new_lama_dictionary]{lama_dictionary} object, holding the translations for various
 variables.}
 
 \item{...}{One or more unquoted expressions separated by commas. Use unquoted
@@ -69,4 +69,68 @@ and convert one or more of its categorical variables
 (not necessarely a factor variable) into factor variables with new labels.
 The function \code{\link[=lama_translate]{lama_translate()}} uses non-standard evaluation, whereas
 \code{\link[=lama_translate_]{lama_translate_()}} is the standard evaluation alternative.
+}
+\examples{
+  # initialize lama_dictinoary
+  dict <- new_lama_dictionary(
+    subject = c(en = "English", ma = "Mathematics"),
+    result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
+  )
+  df <- data.frame(
+    pupil = c(1, 1, 2, 2, 3),
+    subject = c("en", "ma", "ma", "en", "en"),
+    res = c(1, 2, 3, 2, 2)
+  )
+  # Label data.frame variables:
+  # Method-1: Full length assignment
+  # (apply translation 'subject' to column 'subject' and save it to column 'subject_new')
+  # (apply translation 'resul' to column 'res' and save it to column 'res_new')
+  df_new <- lama_translate(
+    df,
+    dict,
+    sub_new = subject(subject),
+    res_new = result(res)
+  )
+  str(df_new)
+  # Method-2: Overwrite the original columns (abbreviation)
+  # (apply translation 'subject' to column 'subject' and save it to column 'subject')
+  # (apply translation 'resul' to column 'res' and save it to column 'res')
+  df_new_overwritten <- lama_translate(
+    df,
+    dict,
+    subject(subject),
+    result(res)
+  )
+  str(df_new_overwritten)
+  # Method-3: Abbreviation if `translation_name == column_name`
+  # (apply translation 'subject' to column 'subject' and save it to column 'subject_new')
+  # (apply translation 'resul' to column 'res' and save it to column 'res_new')
+  df_new_overwritten <- lama_translate(
+    df, 
+    dict,
+    subject_new = subject,
+    res_new = result(res)
+  )
+  str(df_new_overwritten)
+  # initialize lama_dictinoary
+  dict <- new_lama_dictionary(
+    subject = c(en = "English", ma = "Mathematics"),
+    result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
+  )
+  df <- data.frame(
+    pupil = c(1, 1, 2, 2, 3),
+    subject = c("en", "ma", "ma", "en", "en"),
+    res = c(1, 2, 3, 2, 2)
+  )
+  # Label data.frame variables:
+  # (apply translation 'subject' to column 'subject' and save it to column 'subject_new')
+  # (apply translation 'resul' to column 'res' and save it to column 'res_new')
+  df_new <- lama_translate_(
+    df, 
+    dict,
+    translation = c("subject", "result"),
+    col = c("subject", "res"),
+    col_new = c("subject_new", "res_new")
+  )
+  str(df_new)
 }

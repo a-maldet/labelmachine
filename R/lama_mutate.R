@@ -28,6 +28,21 @@ lama_mutate <- function(.data, ...) {
 }
 
 #' @rdname lama_mutate
+#' @examples
+#'   # initialize lama_dictinoary
+#'   dict <- new_lama_dictionary(
+#'     subject = c(en = "English", ma = "Mathematics"),
+#'     result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
+#'   )
+#'   # add a few subjects and a few grades
+#'   dict_new <- lama_mutate(
+#'     dict, 
+#'     subject = c(bio = "Biology", subject, sp = "Sports"),
+#'     result = c("0" = "Beyond expectations", result, "4" = "Failed", NA_ = "Missed")
+#'   )
+#'   # the subjects "Biology" and "Sports" were added
+#'   # and the results "Beyond expectations", "Failed" and "Missed"
+#'   dict_new
 #' @export
 lama_mutate.lama_dictionary <- function(.data, ...) {
   args <- rlang::quos(...)
@@ -108,6 +123,27 @@ lama_mutate_ <- function(.data, key, translation) {
 }
 
 #' @rdname lama_mutate
+#' @examples
+#'   # initialize lama_dictionary
+#'   dict <- new_lama_dictionary(
+#'     subject = c(en = "English", ma = "Mathematics"),
+#'     result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
+#'   )
+#'   # generate the new translation (character string)
+#'   subj <- c(
+#'     bio = "Biology",
+#'     lama_get(dict, subject),
+#'     sp = "Sports"
+#'   )
+#'   # save the translation under the name "subject"
+#'   dict_new <- lama_mutate_(
+#'     dict,
+#'     key = "subject",
+#'     translation = subj
+#'   )
+#'   # the translation "subject" now also contains
+#'   # the subjects "Biology" and "Sports"
+#'   dict_new
 #' @export
 lama_mutate_.lama_dictionary <- function(.data, key, translation) {
   err_handler <- composerr("Error while calling 'lama_mutate_'")

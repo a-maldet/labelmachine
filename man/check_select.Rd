@@ -7,7 +7,7 @@
 check_select(.data, key, err_handler)
 }
 \arguments{
-\item{.data}{A \link[=new_dictionary]{lama_dictionary} object, holding the
+\item{.data}{A \link[=new_lama_dictionary]{lama_dictionary} object, holding the
 variable translations}
 
 \item{key}{A character vector holding the names of the variable

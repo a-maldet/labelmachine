@@ -5,7 +5,7 @@
 \alias{lama_mutate.lama_dictionary}
 \alias{lama_mutate_}
 \alias{lama_mutate_.lama_dictionary}
-\title{Change or append a variable translation to an existing \link[=new_dictionary]{lama_dictionary} object}
+\title{Change or append a variable translation to an existing \link[=new_lama_dictionary]{lama_dictionary} object}
 \usage{
 lama_mutate(.data, ...)
 
@@ -16,7 +16,7 @@ lama_mutate_(.data, key, translation)
 \method{lama_mutate_}{lama_dictionary}(.data, key, translation)
 }
 \arguments{
-\item{.data}{A \link[=new_dictionary]{lama_dictionary} object}
+\item{.data}{A \link[=new_lama_dictionary]{lama_dictionary} object}
 
 \item{...}{One or more unquoted expressions separated by commas. Use named
 arguments, e.g. \code{new_transation_name = c(a = "A", b = "B")}, to set
@@ -39,19 +39,55 @@ The values in the character vector \code{translations} are the labels
 that should be assigned to the original values.}
 }
 \value{
-An updated \link[=new_dictionary]{lama_dictionary} class object.
+An updated \link[=new_lama_dictionary]{lama_dictionary} class object.
 }
 \description{
 The functions \code{\link[=lama_mutate]{lama_mutate()}} and \code{\link[=lama_mutate_]{lama_mutate_()}} alter a
-\link[=new_dictionary]{lama_dictionary} object. They either alter
-or append a translation to a \link[=new_dictionary]{lama_dictionary} object.
+\link[=new_lama_dictionary]{lama_dictionary} object. They either alter
+or append a translation to a \link[=new_lama_dictionary]{lama_dictionary} object.
 The function \code{\link[=lama_mutate]{lama_mutate()}} uses named arguments to assign the translations
 to the new names (similar to \code{\link[dplyr:mutate]{dplyr::mutate()}}), whereas the function
 \code{\link[=lama_mutate_]{lama_mutate_()}} is takes a character string \code{key} holding the
 name to which the translation should be assigned and a named character
 vector \code{translation} holding the actual translation mapping.
 }
+\examples{
+  # initialize lama_dictinoary
+  dict <- new_lama_dictionary(
+    subject = c(en = "English", ma = "Mathematics"),
+    result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
+  )
+  # add a few subjects and a few grades
+  dict_new <- lama_mutate(
+    dict, 
+    subject = c(bio = "Biology", subject, sp = "Sports"),
+    result = c("0" = "Beyond expectations", result, "4" = "Failed", NA_ = "Missed")
+  )
+  # the subjects "Biology" and "Sports" were added
+  # and the results "Beyond expectations", "Failed" and "Missed"
+  dict_new
+  # initialize lama_dictionary
+  dict <- new_lama_dictionary(
+    subject = c(en = "English", ma = "Mathematics"),
+    result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
+  )
+  # generate the new translation (character string)
+  subj <- c(
+    bio = "Biology",
+    lama_get(dict, subject),
+    sp = "Sports"
+  )
+  # save the translation under the name "subject"
+  dict_new <- lama_mutate_(
+    dict,
+    key = "subject",
+    translation = subj
+  )
+  # the translation "subject" now also contains
+  # the subjects "Biology" and "Sports"
+  dict_new
+}
 \seealso{
-\code{\link[=lama_translate]{lama_translate()}}, \code{\link[=new_dictionary]{new_dictionary()}}, \code{\link[=lama_rename]{lama_rename()}}, \code{\link[=lama_select]{lama_select()}},
+\code{\link[=lama_translate]{lama_translate()}}, \code{\link[=new_lama_dictionary]{new_lama_dictionary()}}, \code{\link[=lama_rename]{lama_rename()}}, \code{\link[=lama_select]{lama_select()}},
 \code{\link[=lama_merge]{lama_merge()}}, \code{\link[=lama_read]{lama_read()}}, \code{\link[=lama_write]{lama_write()}}
 }

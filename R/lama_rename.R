@@ -16,7 +16,18 @@ lama_rename <- function(.data, ...) {
   UseMethod("lama_rename")
 }
 
+#' @rdname lama_rename
 #' @export
+#' @examples
+#'   # initialize lama_dictinoary
+#'   dict <- new_lama_dictionary(
+#'     country = c(uk = "United Kingdom", fr = "France", NA_ = "other countries"),
+#'     language = c(en = "English", fr = "French"),
+#'     result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
+#'   )
+#'   # rename translations 'result' and 'language' to 'res' and 'lang'
+#'   dict_new <- lama_rename(dict, res = result, lang = language)
+#'   dict_new
 lama_rename.lama_dictionary <- function(.data, ...) {
   args <- rlang::quos(...)
   err_handler <- composerr("Error while calling 'lama_rename'")
@@ -71,6 +82,16 @@ lama_rename_ <- function(.data, old, new) {
 }
 
 #' @rdname lama_rename 
+#' @examples
+#'   # initialize lama_dictinoary
+#'   dict <- new_lama_dictionary(
+#'     country = c(uk = "United Kingdom", fr = "France", NA_ = "other countries"),
+#'     language = c(en = "English", fr = "French"),
+#'     result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
+#'   )
+#'   # rename translations 'result' and 'language' to 'res' and 'lang'
+#'   dict_new <- lama_rename_(dict, c("result", "language"), c("res", "lang"))
+#'   dict_new
 #' @export
 lama_rename_.lama_dictionary <- function(.data, old, new) {
   err_handler <- composerr("Error while calling 'lama_rename_'")

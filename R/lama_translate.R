@@ -36,6 +36,48 @@ lama_translate <- function(.data, dictionary, ..., keep_order = FALSE) {
 }
 
 #' @rdname lama_translate
+#' @examples
+#'   # initialize lama_dictinoary
+#'   dict <- new_lama_dictionary(
+#'     subject = c(en = "English", ma = "Mathematics"),
+#'     result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
+#'   )
+#'   df <- data.frame(
+#'     pupil = c(1, 1, 2, 2, 3),
+#'     subject = c("en", "ma", "ma", "en", "en"),
+#'     res = c(1, 2, 3, 2, 2)
+#'   )
+#'   # Label data.frame variables:
+#'   # Method-1: Full length assignment
+#'   # (apply translation 'subject' to column 'subject' and save it to column 'subject_new')
+#'   # (apply translation 'resul' to column 'res' and save it to column 'res_new')
+#'   df_new <- lama_translate(
+#'     df,
+#'     dict,
+#'     sub_new = subject(subject),
+#'     res_new = result(res)
+#'   )
+#'   str(df_new)
+#'   # Method-2: Overwrite the original columns (abbreviation)
+#'   # (apply translation 'subject' to column 'subject' and save it to column 'subject')
+#'   # (apply translation 'resul' to column 'res' and save it to column 'res')
+#'   df_new_overwritten <- lama_translate(
+#'     df,
+#'     dict,
+#'     subject(subject),
+#'     result(res)
+#'   )
+#'   str(df_new_overwritten)
+#'   # Method-3: Abbreviation if `translation_name == column_name`
+#'   # (apply translation 'subject' to column 'subject' and save it to column 'subject_new')
+#'   # (apply translation 'resul' to column 'res' and save it to column 'res_new')
+#'   df_new_overwritten <- lama_translate(
+#'     df, 
+#'     dict,
+#'     subject_new = subject,
+#'     res_new = result(res)
+#'   )
+#'   str(df_new_overwritten)
 #' @export
 lama_translate.data.frame <- function(.data, dictionary, ..., keep_order = FALSE) {
   args <- rlang::quos(...)
@@ -151,6 +193,28 @@ lama_translate_ <- function(.data, dictionary, translation, col = translation, c
 }
 
 #' @rdname lama_translate
+#' @examples
+#'   # initialize lama_dictinoary
+#'   dict <- new_lama_dictionary(
+#'     subject = c(en = "English", ma = "Mathematics"),
+#'     result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
+#'   )
+#'   df <- data.frame(
+#'     pupil = c(1, 1, 2, 2, 3),
+#'     subject = c("en", "ma", "ma", "en", "en"),
+#'     res = c(1, 2, 3, 2, 2)
+#'   )
+#'   # Label data.frame variables:
+#'   # (apply translation 'subject' to column 'subject' and save it to column 'subject_new')
+#'   # (apply translation 'resul' to column 'res' and save it to column 'res_new')
+#'   df_new <- lama_translate_(
+#'     df, 
+#'     dict,
+#'     translation = c("subject", "result"),
+#'     col = c("subject", "res"),
+#'     col_new = c("subject_new", "res_new")
+#'   )
+#'   str(df_new)
 #' @export
 lama_translate_.data.frame <- function(.data, dictionary, translation, col = translation, col_new = col, keep_order = FALSE) {
   # --- Check arguments ---

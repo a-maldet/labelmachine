@@ -22,6 +22,24 @@ lama_merge <- function(..., show_warnings = TRUE) {
 }
 
 #' @rdname lama_merge
+#' @examples
+#'   # initialize lama_dictinoary
+#'   dict_1 <- new_lama_dictionary(
+#'     subject = c(en = "English", ma = "Mathematics"),
+#'     result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
+#'   )
+#'   dict_2 <- new_lama_dictionary(
+#'     result = c("1" = "Super", "2" = "Fantastic", "3" = "Brilliant"),
+#'     grade = c(a = "Primary School", b = "Secondary School")
+#'   )
+#'   dict_3 <- new_lama_dictionary(
+#'     country = c(en = "England", "at" = "Austria", NA_ = "Some other country")
+#'   )
+#'   dict <- lama_merge(dict_1, dict_2, dict_3)
+#'   # The lama_dictionary now contains the translations
+#'   # 'subject', 'result', 'grade' and 'country'
+#'   # The translation 'result' from 'dict_1' was overwritten by the 'result' in 'dict_2'
+#'   dict
 #' @export
 lama_merge.lama_dictionary <- function(..., show_warnings = TRUE) {
   err_handler <- composerr("Error while calling 'lama_merge'")

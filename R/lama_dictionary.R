@@ -141,6 +141,7 @@ new_lama_dictionary <- function(...) {
 #'     country = c(uk = "United Kingdom", fr = "France", NA_ = "other countries"),
 #'     language = c(en = "English", fr = "French")
 #'   ))
+#'   dict
 #' @export
 new_lama_dictionary.list <- function(.data = NULL, ...) {
   extra_args <- list(...)
@@ -176,6 +177,7 @@ new_lama_dictionary.list <- function(.data = NULL, ...) {
 #'     country = c(uk = "United Kingdom", fr = "France", NA_ = "other countries"),
 #'     language = c(en = "English", fr = "French")
 #'   )
+#'   dict
 #' @export
 new_lama_dictionary.character <- function(...) {
   new_lama_dictionary.list(list(...))
@@ -185,6 +187,62 @@ new_lama_dictionary.character <- function(...) {
 #' @export
 new_lama_dictionary.default <- function(...) {
   new_lama_dictionary.list(list(...))
+}
+
+#' Retrieve a translation from a [lama_dictionary][new_lama_dictionary()] class object
+#'
+#' The functions [lama_get()] and [lama_get_()] take a
+#' [lama_dictionary][new_lama_dictionary()] and extract a specific translation.
+#' The function [lama_get()] uses non-standard evaluation, whereas 
+#' [lama_get_()] is the standard evaluation alternative.
+#' @inheritSection new_lama_dictionary Translations
+#' @inheritSection new_lama_dictionary Missing values
+#' @inheritSection new_lama_dictionary lama_dictionary class objects
+#' @param .data A [lama_dictionary][new_lama_dictionary()] object
+#' @param translation Depending on which function was used:
+#'   * `lama_get`: An unquoted translation name.
+#'   * `lama_get_`: A character string holding the translation name.
+#' @return The wanted translation (named character vector).
+#' @rdname lama_get
+#' @export
+lama_get <- function(.data, translation) {
+  UseMethod("lama_get")
+}
+
+#' @rdname lama_get
+#' @export
+lama_get.lama_dictionary <- function(.data, translation) {
+  err_handler <- composerr("Error while calling 'lama_get'")
+  get_translation(.data, deparse(substitute(translation)), err_handler)
+}
+
+#' @rdname lama_get
+#' @export
+lama_get_ <- function(.data, translation) {
+  UseMethod("lama_get_")
+}
+
+#' @rdname lama_get
+#' @export
+lama_get_.lama_dictionary <- function(.data, translation) {
+  err_handler <- composerr("Error while calling 'lama_get_'")
+  get_translation(.data, translation, err_handler)
+}
+
+get_translation <- function(.data, translation, err_handler) {
+  err_handler <- composerr("Invalid object passed into argument 'translation'", err_handler)
+  if (!is.character(translation) || length(translation) != 1 || is.na(translation))
+    err_handler("The argument must be a character string holding the name of the wanted translation.")
+  if (!translation %in% names(.data))
+    err_handler(paste0(
+      "Translation ",
+      stringify(translation),
+      " is not contained in the 'lama_dictionary' class object given in ",
+      "argument '.data'. Only the following translations are available: ",
+      stringify(names(.data)),
+      "."
+    ))
+  .data[[translation]]
 }
 
 #' Coerce to a [lama_dictionary][new_lama_dictionary()] class object
@@ -214,13 +272,13 @@ new_lama_dictionary.default <- function(...) {
 #' @inheritSection new_lama_dictionary Translations
 #' @inheritSection new_lama_dictionary Missing values
 #' @inheritSection new_lama_dictionary lama_dictionary class objects
-#' @rdname as_dictionary
+#' @rdname as_lama_dictionary
 #' @export
 as.lama_dictionary <- function(.data, ...) {
   UseMethod("as.lama_dictionary")
 }
 
-#' @rdname as_dictionary
+#' @rdname as_lama_dictionary
 #' @examples
 #'   # initialize lama_dictionary
 #'   # passing each translation as a named argument
@@ -228,12 +286,13 @@ as.lama_dictionary <- function(.data, ...) {
 #'     country = c(uk = "United Kingdom", fr = "France", NA_ = "other countries"),
 #'     language = c(en = "English", fr = "French")
 #'   ))
+#'   dict
 #' @export
 as.lama_dictionary.list <- function(.data, ...) {
   new_lama_dictionary(.data)
 }
 
-#' @rdname as_dictionary
+#' @rdname as_lama_dictionary
 #' @export
 as.lama_dictionary.lama_dictionary <- function(.data, ...) {
   structure(
@@ -249,7 +308,7 @@ as.lama_dictionary.lama_dictionary <- function(.data, ...) {
   )
 }
 
-#' @rdname as_dictionary
+#' @rdname as_lama_dictionary
 #' @export
 as.lama_dictionary.default <- function(.data = NULL, ...) {
   stop("Error while calling `as.lama_dictionary`: The supplied argument must either be a list or a data.frame object")
@@ -286,26 +345,26 @@ as.lama_dictionary.default <- function(.data = NULL, ...) {
 #'     If the column contains a factor variable, then the ordering of the
 #'     factor will be used. If it just contains a plain character variable,
 #'     then it will be ordered alphanumerically.
-#' @rdname as_dictionary
+#' @rdname as_lama_dictionary
 #' @examples
 #'   # initialize lama_dictionary
 #'   # from a data.frame holding the label mappings
 #'   df <- data.frame(
 #'     c_old = c("uk", "fr", NA),
 #'     c_new = c("United Kingdom", "France", "other countries"),
-#'     l_old = c("en", "fr"),
-#'     l_new = factor("English", "French", levels = c("French", "English"))
+#'     l_old = c("en", "fr", NA),
+#'     l_new = factor(c("English", "French", NA), levels = c("French", "English"))
 #'   )
 #'   dict <- as.lama_dictionary(
 #'     df,
 #'     translation = c("country", "language"),
-#'     old = c("c_old", "l_old"),
-#'     new = c("c_new", "l_new"),
+#'     col_old = c("c_old", "l_old"),
+#'     col_new = c("c_new", "l_new"),
 #'     ordering = c("row", "new")
 #'   )
-#'   dict
 #'   # 'country' is ordered as in the df
 #'   # 'language' is ordered differently (French first)
+#'   dict
 #' @export
 as.lama_dictionary.data.frame <- function(
   .data, translation, col_old, col_new, ordering = rep("row", length(translation)), ...

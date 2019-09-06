@@ -2,20 +2,20 @@
 % Please edit documentation in R/lama_dictionary.R
 \name{print.lama_dictionary}
 \alias{print.lama_dictionary}
-\title{Print a \link[=new_dictionary]{lama_dictionary} class object}
+\title{Print a \link[=new_lama_dictionary]{lama_dictionary} class object}
 \usage{
 \method{print}{lama_dictionary}(x, ...)
 }
 \arguments{
-\item{x}{The \link[=new_dictionary]{lama_dictionary} class object that should be printed.}
+\item{x}{The \link[=new_lama_dictionary]{lama_dictionary} class object that should be printed.}
 
 \item{...}{Unused arguments}
 }
 \description{
-Print a \link[=new_dictionary]{lama_dictionary} class object
+Print a \link[=new_lama_dictionary]{lama_dictionary} class object
 }
 \seealso{
-\code{\link[=lama_translate]{lama_translate()}}, \code{\link[=new_dictionary]{new_dictionary()}}, \code{\link[=lama_select]{lama_select()}},
+\code{\link[=lama_translate]{lama_translate()}}, \code{\link[=new_lama_dictionary]{new_lama_dictionary()}}, \code{\link[=lama_select]{lama_select()}},
 \code{\link[=lama_rename]{lama_rename()}}, \code{\link[=lama_mutate]{lama_mutate()}}, \code{\link[=lama_merge]{lama_merge()}}, \code{\link[=lama_read]{lama_read()}},
 \code{\link[=lama_write]{lama_write()}}
 }

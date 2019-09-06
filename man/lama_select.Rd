@@ -2,18 +2,21 @@
 % Please edit documentation in R/lama_select.R
 \name{lama_select}
 \alias{lama_select}
+\alias{lama_select.lama_dictionary}
 \alias{lama_select_}
 \alias{lama_select_.lama_dictionary}
-\title{Select multiple variable translations and create a new \link[=new_dictionary]{lama_dictionary} object}
+\title{Select multiple variable translations and create a new \link[=new_lama_dictionary]{lama_dictionary} object}
 \usage{
 lama_select(.data, ...)
+
+\method{lama_select}{lama_dictionary}(.data, ...)
 
 lama_select_(.data, key)
 
 \method{lama_select_}{lama_dictionary}(.data, key)
 }
 \arguments{
-\item{.data}{A \link[=new_dictionary]{lama_dictionary} object, holding the variable translations}
+\item{.data}{A \link[=new_lama_dictionary]{lama_dictionary} object, holding the variable translations}
 
 \item{...}{One or more unquoted translation names separated by commas.}
 
@@ -21,16 +24,38 @@ lama_select_(.data, key)
 should be picked.}
 }
 \value{
-A new \link[=new_dictionary]{lama_dictionary} class object, holding the picked variable translations.
+A new \link[=new_lama_dictionary]{lama_dictionary} class object, holding the picked variable translations.
 }
 \description{
 The functions \code{\link[=lama_select]{lama_select()}} and \code{\link[=lama_select_]{lama_select_()}} pick one or more
-variable translations from a \link[=new_dictionary]{lama_dictionary} class object
-and create a new \link[=new_dictionary]{lama_dictionary} class object.
+variable translations from a \link[=new_lama_dictionary]{lama_dictionary} class object
+and create a new \link[=new_lama_dictionary]{lama_dictionary} class object.
 The function \code{\link[=lama_select]{lama_select()}} uses non-standard evaluation, whereas
 \code{\link[=lama_select_]{lama_select_()}} is the standard evaluation alternative.
 }
+\examples{
+  # initialize lama_dictinoary
+  dict <- new_lama_dictionary(
+    country = c(uk = "United Kingdom", fr = "France", NA_ = "other countries"),
+    language = c(en = "English", fr = "French"),
+    result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
+  )
+  # pick the translations 'result' and 'language'
+  # and add them to a new lama_dictionary
+  dict_sub <- lama_select(dict, result, language)
+  dict_sub
+  # initialize lama_dictinoary
+  dict <- new_lama_dictionary(
+    country = c(uk = "United Kingdom", fr = "France", NA_ = "other countries"),
+    language = c(en = "English", fr = "French"),
+    result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
+  )
+  # pick the translations 'result' and 'language'
+  # and add them to a new lama_dictionary
+  dict_sub <- lama_select_(dict, c("result", "language"))
+  dict_sub
+}
 \seealso{
-\code{\link[=lama_translate]{lama_translate()}}, \code{\link[=new_dictionary]{new_dictionary()}}, \code{\link[=lama_rename]{lama_rename()}}, \code{\link[=lama_mutate]{lama_mutate()}},
+\code{\link[=lama_translate]{lama_translate()}}, \code{\link[=new_lama_dictionary]{new_lama_dictionary()}}, \code{\link[=lama_rename]{lama_rename()}}, \code{\link[=lama_mutate]{lama_mutate()}},
 \code{\link[=lama_merge]{lama_merge()}}, \code{\link[=lama_read]{lama_read()}}, \code{\link[=lama_write]{lama_write()}}
 }

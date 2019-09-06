@@ -10,25 +10,44 @@ lama_merge(..., show_warnings = TRUE)
 \method{lama_merge}{lama_dictionary}(..., show_warnings = TRUE)
 }
 \arguments{
-\item{...}{Two or more \link[=new_dictionary]{lama_dictionary}
+\item{...}{Two or more \link[=new_lama_dictionary]{lama_dictionary}
 class objects, which should be merged together.}
 
 \item{show_warnings}{A logical flag that defines, whether warnings should be
 shown (\code{TRUE}) or not (\code{FALSE}).}
 }
 \value{
-The merged \link[=new_dictionary]{lama_dictionary} class object
+The merged \link[=new_lama_dictionary]{lama_dictionary} class object
 }
 \description{
-This function takes multiple \link[=new_dictionary]{lama_dictionary} class
+This function takes multiple \link[=new_lama_dictionary]{lama_dictionary} class
 objects and merges them together into
-a single \link[=new_dictionary]{lama_dictionary} class object.
+a single \link[=new_lama_dictionary]{lama_dictionary} class object.
 In case some class objects have entries with the same name, the
 class objects passed in later overwrite the class objects passed in first
 (e.g. in \code{lama_merge(x, y, z)}: The lexicon \code{z} overwrites
 \code{x} and \code{y}. The lexicon \code{y} overwrites \code{x}).
 }
+\examples{
+  # initialize lama_dictinoary
+  dict_1 <- new_lama_dictionary(
+    subject = c(en = "English", ma = "Mathematics"),
+    result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
+  )
+  dict_2 <- new_lama_dictionary(
+    result = c("1" = "Super", "2" = "Fantastic", "3" = "Brilliant"),
+    grade = c(a = "Primary School", b = "Secondary School")
+  )
+  dict_3 <- new_lama_dictionary(
+    country = c(en = "England", "at" = "Austria", NA_ = "Some other country")
+  )
+  dict <- lama_merge(dict_1, dict_2, dict_3)
+  # The lama_dictionary now contains the translations
+  # 'subject', 'result', 'grade' and 'country'
+  # The translation 'result' from 'dict_1' was overwritten by the 'result' in 'dict_2'
+  dict
+}
 \seealso{
-\code{\link[=lama_translate]{lama_translate()}}, \code{\link[=new_dictionary]{new_dictionary()}}, \code{\link[=lama_rename]{lama_rename()}}, \code{\link[=lama_select]{lama_select()}},
+\code{\link[=lama_translate]{lama_translate()}}, \code{\link[=new_lama_dictionary]{new_lama_dictionary()}}, \code{\link[=lama_rename]{lama_rename()}}, \code{\link[=lama_select]{lama_select()}},
 \code{\link[=lama_mutate]{lama_mutate()}}, \code{\link[=lama_read]{lama_read()}}, \code{\link[=lama_write]{lama_write()}}
 }

@@ -16,6 +16,18 @@ lama_select <- function(.data, ...) {
   UseMethod("lama_select")
 }
 
+#' @rdname lama_select
+#' @examples
+#'   # initialize lama_dictinoary
+#'   dict <- new_lama_dictionary(
+#'     country = c(uk = "United Kingdom", fr = "France", NA_ = "other countries"),
+#'     language = c(en = "English", fr = "French"),
+#'     result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
+#'   )
+#'   # pick the translations 'result' and 'language'
+#'   # and add them to a new lama_dictionary
+#'   dict_sub <- lama_select(dict, result, language)
+#'   dict_sub
 #' @export
 lama_select.lama_dictionary <- function(.data, ...) {
   args <- rlang::quos(...)
@@ -56,6 +68,17 @@ lama_select_ <- function(.data, key) {
 }
 
 #' @rdname lama_select
+#' @examples
+#'   # initialize lama_dictinoary
+#'   dict <- new_lama_dictionary(
+#'     country = c(uk = "United Kingdom", fr = "France", NA_ = "other countries"),
+#'     language = c(en = "English", fr = "French"),
+#'     result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
+#'   )
+#'   # pick the translations 'result' and 'language'
+#'   # and add them to a new lama_dictionary
+#'   dict_sub <- lama_select_(dict, c("result", "language"))
+#'   dict_sub
 #' @export
 lama_select_.lama_dictionary <- function(.data, key) {
   err_handler <- composerr("Error while calling 'lama_select_'")

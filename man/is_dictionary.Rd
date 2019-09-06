@@ -2,7 +2,7 @@
 % Please edit documentation in R/lama_dictionary.R
 \name{is.dictionary}
 \alias{is.dictionary}
-\title{Check if an object is a \link[=new_dictionary]{lama_dictionary} class object}
+\title{Check if an object is a \link[=new_lama_dictionary]{lama_dictionary} class object}
 \usage{
 is.dictionary(obj)
 }
@@ -11,18 +11,18 @@ is.dictionary(obj)
 }
 \value{
 \code{TRUE} if the object is a
-\link[=new_dictionary]{lama_dictionary} class object, \code{FALSE} otherwise.
+\link[=new_lama_dictionary]{lama_dictionary} class object, \code{FALSE} otherwise.
 }
 \description{
-Check if an object is a \link[=new_dictionary]{lama_dictionary} class object
+Check if an object is a \link[=new_lama_dictionary]{lama_dictionary} class object
 }
 \examples{
 # check if an object is a 'lama_dictionary' class object
-dict <- new_dictionary(country = c(uk = "United Kingdom", fr = "France"))
+dict <- new_lama_dictionary(country = c(uk = "United Kingdom", fr = "France"))
 is.dictionary(dict)
 }
 \seealso{
-\code{\link[=validate_dictionary]{validate_dictionary()}}, \code{\link[=as.dictionary]{as.dictionary()}}, \code{\link[=new_dictionary]{new_dictionary()}},
+\code{\link[=validate_dictionary]{validate_dictionary()}}, \code{\link[=as.lama_dictionary]{as.lama_dictionary()}}, \code{\link[=new_lama_dictionary]{new_lama_dictionary()}},
 \code{\link[=lama_translate]{lama_translate()}}, \code{\link[=lama_read]{lama_read()}}, \code{\link[=lama_write]{lama_write()}}, \code{\link[=lama_select]{lama_select()}},
 \code{\link[=lama_rename]{lama_rename()}}, \code{\link[=lama_mutate]{lama_mutate()}}, \code{\link[=lama_merge]{lama_merge()}}
 }
