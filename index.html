@@ -72,155 +72,73 @@
 </h1></div>
 <!-- badges: start -->
 
-<div id="caution" class="section level2">
-<h2 class="hasAnchor">
-<a href="#caution" class="anchor"></a>!Caution!</h2>
-<p><code>labelmachine</code> is currently under heavy development and will be released in a week or so.</p>
-<p><code>labelmachine</code> is an <strong>R</strong> package that helps you assigning new labels to data.frame variables. Furthermore, you can manage your label translations in so called <strong>dictionary</strong> files, which are <strong>yaml</strong> files. This makes it very easy using the same label translations in multiple projects that share similar data structure.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">knitr<span class="op">::</span>opts_chunk<span class="op">$</span><span class="kw">set</span>(<span class="dt">eval =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<p>The most important functions are:</p>
-<ul>
-<li>
-<code>read_dictionary</code>: Reads in a <strong>yaml</strong> file holding the label translations for one or more variables. The function returns a <strong>dictionary object</strong>, that can be used for the translation of variable labels later on.</li>
-<li>
-<code>translate</code>: Use a dictionary object in order to relabel one or more variables of your data.frame. The variables may be of type <code>number</code>, <code>character</code> or <code>factor</code>. In case of a factor variable, you have the possibility to keep the original ordering by using the function argument <code>keep_ordering = TRUE</code>.</li>
-<li>
-<code>new_dictionary</code>: Create a dictionary object from a named list, holding the translations for one or more variables.</li>
-<li>
-<code>write_dictionary</code>: Write a dictionary object to a <strong>yaml</strong> file.</li>
-<li>
-<code>select</code>: Pick a subset of translations in a dictionary object.</li>
-<li>
-<code>mutate</code>: Alter the translations in a dictionary object.</li>
-<li>
-<code>rename</code>: Rename a variable translations in a dictionary object.</li>
-<li>
-<code>merge</code>: Merge two or more dictionary objects into a single dictionary object.</li>
-</ul>
-</div>
+<p><code>labelmachine</code> is an <strong>R</strong> package that helps assigning meaningful labels to R data sets. Furthermore, you can manage your labels in so called <strong>dictionary</strong> files, which are <strong>yaml</strong> files. This makes it very easy using the same label translations in multiple projects that share similar data structure.</p>
+<blockquote>
+<p>Labelling your data can be easy!</p>
+</blockquote>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># Install development version from GitHub</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">'a-maldet/labelmachine'</span>, <span class="dt">build_opts =</span> <span class="ot">NULL</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># Install development version from GitHub</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">'a-maldet/labelmachine'</span>, <span class="dt">build_opts =</span> <span class="ot">NULL</span>)</a></code></pre></div>
+</div>
+<div id="concept" class="section level2">
+<h2 class="hasAnchor">
+<a href="#concept" class="anchor"></a>Concept</h2>
+<p>The label assignments are given as so called <strong>translations</strong> (named character vectors), which are like a recipe, telling which original value will be mapped onto which new label. The <strong>translations</strong> are collected in a so called <strong>lama_dictionary</strong> object. This dictionary files will be used to translate your data.frame variables.</p>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
-<div id="load-a-dictionary-from-a-yaml-file" class="section level3">
-<h3 class="hasAnchor">
-<a href="#load-a-dictionary-from-a-yaml-file" class="anchor"></a>Load a dictionary from a yaml file</h3>
-<p>Structure of your dictionary file <code>my_dictionary.yaml</code>:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="fu">supp:</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="fu">VC:</span><span class="at"> Ascorbic acid</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">  <span class="fu">OJ:</span><span class="at"> Orange juice</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="fu">dose:</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">  <span class="fu">"0.5":</span><span class="at"> Low</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">  <span class="fu">"1":</span><span class="at"> Medium</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">  <span class="fu">"2":</span><span class="at"> High</span></a></code></pre></div>
-<p>The first level names are the names of the variables that should be translated. The second level names represent the original values of the variables and the third level holds the labels that should be assigned to the original values of the variables.</p>
-<p>Load your <code>dictionary</code> file with <code>read_dictionary</code>:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(labelmachine)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(magrittr)</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">dict &lt;-<span class="st"> "my_dictionary.yaml"</span> <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span>read_dictionary</a></code></pre></div>
+<p>Let <strong>df</strong> be a data.frame with marks and subjects, which should be translated</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(labelmachine)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">df &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">  pupil_id <span class="op">-</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>),</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="dt">subject =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"en"</span>, <span class="st">"ma"</span>, <span class="st">"ma"</span>, <span class="st">"en"</span>, <span class="st">"en"</span>),</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">  <span class="dt">result =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="ot">NA</span>)</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">)</a></code></pre></div>
+<p>Create a <strong>lama_dictionary</strong> object holding the translations:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">dict &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/labelmachine/man/new_lama_dictionary.html">new_lama_dictionary</a></span>(</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="dt">subjects =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dt">en =</span> <span class="st">"English"</span>, <span class="dt">ma =</span> <span class="st">"Mathematics"</span>, <span class="dt">NA_ =</span> <span class="st">"other subjects"</span>),</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">  <span class="dt">results =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"1"</span> =<span class="st"> "Excellent"</span>, <span class="st">"2"</span> =<span class="st"> "Satisfying"</span>, <span class="st">"3"</span> =<span class="st"> "Failed"</span>, <span class="dt">NA_ =</span> <span class="st">"Missed"</span>)</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">)</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">dict</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">## </a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">## --- lama_dictionary ---</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">## Variable 'subjects':</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">##               en               ma              NA_ </a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">##        "English"    "Mathematics" "other subjects" </a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">## </a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">## Variable 'results':</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">##            1            2            3          NA_ </a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">##  "Excellent" "Satisfying"     "Failed"     "Missed"</a></code></pre></div>
+<p>Translate the data.frame variables:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">df_new &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_translate</a></span>(</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">  df,</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">  dict,</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">  <span class="dt">subject_new =</span> <span class="kw">subjects</span>(subject),</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">  <span class="dt">result_new =</span> <span class="kw">results</span>(result)</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">)</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(df_new)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">## 'data.frame':    5 obs. of  5 variables:</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">##  $ pupil_id...c.1..1..2..2..3.: num  0 0 0 0 0</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">##  $ subject                    : Factor w/ 2 levels "en","ma": 1 2 2 1 1</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">##  $ result                     : num  2 1 3 2 NA</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">##  $ subject_new                : Factor w/ 3 levels "English","Mathematics",..: 1 2 2 1 1</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">##  $ result_new                 : Factor w/ 4 levels "Excellent","Satisfying",..: 2 1 3 2 4</a></code></pre></div>
 </div>
-<div id="assign-new-labels-to-your-variables" class="section level3">
-<h3 class="hasAnchor">
-<a href="#assign-new-labels-to-your-variables" class="anchor"></a>Assign new labels to your variables</h3>
-<p>You can use the dictionary object <code>dict</code> in order to translate categorical variables (not necessarily factor variables) in your data.frame to a factor variable holding the labels that are defined in the dictionary <code>dict</code>.</p>
-<p>Relable your data.frame variables with <code>translate</code>:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># data.frame with original values </span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">ToothGrowth <span class="op">%&gt;%</span><span class="st"> </span>head</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co"># data.frame with new labels</span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">ToothGrowth <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="st">  </span><span class="kw">translate</span>(dict, <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"supp"</span>, <span class="st">"dose"</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="st">  </span>head</a></code></pre></div>
-<p>Now, the columns <code>supp</code> and <code>dose</code> are factor variables, which hold the desired labels and have the same ordering as in the dictionary <code>dict</code>.</p>
-<p>If the original variable is a factor variable and you want to keep the original ordering, you can use the function argurment <code>keep_ordering = TRUE</code>. Furthermore, you can also apply your variable translations to columns with different column names than your translation names by passing the column names into the argument <code>col</code>. If you want to save your labelled variables to a different column names, you can use the argument <code>col_new</code> in order to specify the column names of the newly generated variables.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">age =</span> <span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>), <span class="dt">levels =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>)))</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">dict &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">    <span class="dt">age_short =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"1"</span> =<span class="st"> "a&lt;16"</span>, <span class="st">"2"</span> =<span class="st"> "16&lt;=a&lt;70"</span>, <span class="st">"3"</span> =<span class="st"> "70&lt;=a"</span>),</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">    <span class="dt">age_long =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"1"</span> =<span class="st"> "young"</span>, <span class="st">"2"</span> =<span class="st"> "middle aged"</span>, <span class="st">"3"</span> =<span class="st"> "old"</span>)</a>
-<a class="sourceLine" id="cb6-5" data-line-number="5">  ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="st">  </span>new_dictionary</a>
-<a class="sourceLine" id="cb6-7" data-line-number="7">df <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="st">  </span><span class="kw">translate</span>(</a>
-<a class="sourceLine" id="cb6-9" data-line-number="9">    <span class="dt">dictionary =</span> dict, </a>
-<a class="sourceLine" id="cb6-10" data-line-number="10">    <span class="dt">variable =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"age_short"</span>, <span class="st">"age_long"</span>), </a>
-<a class="sourceLine" id="cb6-11" data-line-number="11">    <span class="dt">col =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"age"</span>, <span class="st">"age"</span>), </a>
-<a class="sourceLine" id="cb6-12" data-line-number="12">    <span class="dt">col_new =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"age_s"</span>, <span class="st">"age_l"</span>),</a>
-<a class="sourceLine" id="cb6-13" data-line-number="13">    <span class="dt">keep_order =</span> <span class="ot">TRUE</span></a>
-<a class="sourceLine" id="cb6-14" data-line-number="14">  )</a></code></pre></div>
-</div>
-<div id="create-a-dictionary-object-manually" class="section level3">
-<h3 class="hasAnchor">
-<a href="#create-a-dictionary-object-manually" class="anchor"></a>Create a dictionary object manually</h3>
-<p>Instead of reading in a yaml file you can also create a dictionary object manually from a named list object, holding named character vectors. Each entry of the named list represents a variable of your data.frame and each named character vector is a translation. The names of the character vector entries represent the original values of the variable and the values of the character vector entries are the new labels that should be assigned.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">dict &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">    <span class="dt">supp =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dt">VC =</span> <span class="st">"Ascorbic acid"</span>, <span class="dt">OJ =</span> <span class="st">"Orange juice"</span>),</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">    <span class="dt">dose =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"0.5"</span> =<span class="st"> "Low"</span>, <span class="st">"1.0"</span> =<span class="st"> "Medium"</span>, <span class="st">"2.0"</span> =<span class="st"> "High"</span>)</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">  ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="st">  </span>new_dictionary</a></code></pre></div>
-</div>
-<div id="alter-your-dictionary" class="section level3">
-<h3 class="hasAnchor">
-<a href="#alter-your-dictionary" class="anchor"></a>Alter your dictionary</h3>
-<p>Sometimes it can be useful to alter your dictionary object.</p>
-<p>With <code>select</code> you may pick a subset of dictionary entries:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">dict <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"supp"</span>, <span class="st">"dose"</span>))</a></code></pre></div>
-<p>With <code>mutate</code> you can set a new translation (character vector) for a variable:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">dict <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="st">"supp"</span>, <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dt">VC =</span> <span class="st">"Ascorbic a."</span>, <span class="dt">OJ =</span> <span class="st">"Orange j."</span>))</a></code></pre></div>
-<p>With <code>rename</code> you can rename a dictionary entry:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">dict <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="st">  </span><span class="kw">rename</span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"supp"</span>, <span class="st">"dose"</span>), <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"SUPP"</span>, <span class="st">"DOSE"</span>))</a></code></pre></div>
-</div>
-<div id="merge-two-ore-more-dictionary-objects" class="section level3">
-<h3 class="hasAnchor">
-<a href="#merge-two-ore-more-dictionary-objects" class="anchor"></a>Merge two ore more dictionary objects</h3>
-<p>With <code>merge</code> you can merge two or more dictionary objects into one dictionary object:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">dict1 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(</a>
-<a class="sourceLine" id="cb11-2" data-line-number="2">    <span class="dt">gender =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"0"</span> =<span class="st"> "female"</span>, <span class="st">"1"</span> =<span class="st"> "male"</span>),</a>
-<a class="sourceLine" id="cb11-3" data-line-number="3">    <span class="dt">age =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"0"</span> =<span class="st"> "&lt;10y"</span>, <span class="st">"1"</span> =<span class="st"> "&gt;=10y"</span>),</a>
-<a class="sourceLine" id="cb11-4" data-line-number="4">    <span class="dt">country =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"0"</span> =<span class="st"> "Austria"</span>, <span class="st">"1"</span> =<span class="st"> "Australia"</span>)</a>
-<a class="sourceLine" id="cb11-5" data-line-number="5">  ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="st">  </span>new_dictionary</a>
-<a class="sourceLine" id="cb11-7" data-line-number="7">dict2 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(</a>
-<a class="sourceLine" id="cb11-8" data-line-number="8">    <span class="dt">school =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"0"</span> =<span class="st"> "Primary"</span>, <span class="st">"1"</span> =<span class="st"> "Secondary"</span>),</a>
-<a class="sourceLine" id="cb11-9" data-line-number="9">    <span class="dt">gender =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"0"</span> =<span class="st"> "Girl"</span>, <span class="st">"1"</span> =<span class="st"> "Boy"</span>)</a>
-<a class="sourceLine" id="cb11-10" data-line-number="10">  ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-11" data-line-number="11"><span class="st">  </span>new_dictionary</a>
-<a class="sourceLine" id="cb11-12" data-line-number="12"><span class="kw"><a href="https://rdrr.io/r/base/merge.html">merge</a></span>(dict1, dict2)</a></code></pre></div>
-<p>The <code>merge</code> merges the arguments from left to right. Therefore, the variable translations of <code>dict1</code> are overwritten by the entries of <code>dict2</code>. In this example the resulting dictionary has contains the variable translations for <code>age</code> and <code>country</code> as defined in <code>dict1</code> and the variable translations for <code>school</code> and <code>gender</code> as defined in <code>dict2</code>. The variable translations for <code>gender</code> in <code>dict1</code> are overwritten by <code>dict2</code>.</p>
-</div>
-<div id="save-your-dictionary-to-a-yaml-file" class="section level3">
-<h3 class="hasAnchor">
-<a href="#save-your-dictionary-to-a-yaml-file" class="anchor"></a>Save your dictionary to a yaml file</h3>
-<p>With <code>write_dictionary</code> you can save a dictionary object to a yaml file:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">dict &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2">    <span class="dt">gender =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dt">d =</span> <span class="st">"diverse"</span>, <span class="dt">f =</span> <span class="st">"female"</span>, <span class="dt">m =</span> <span class="st">"male"</span>),</a>
-<a class="sourceLine" id="cb12-3" data-line-number="3">    <span class="dt">age =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"super young"</span> =<span class="st"> "younger than 10"</span>, <span class="st">"super old"</span> =<span class="st"> "older than 90"</span>)</a>
-<a class="sourceLine" id="cb12-4" data-line-number="4">  ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="st">  </span>new_dictionary</a>
-<a class="sourceLine" id="cb12-6" data-line-number="6">dict <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="st">  </span><span class="kw">write_dictionary</span>(<span class="st">"my_fancy_new_dictionary.yaml"</span>)</a></code></pre></div>
-<p>The resulting file looks like this:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="fu">gender:</span></a>
-<a class="sourceLine" id="cb13-2" data-line-number="2">  <span class="fu">d:</span><span class="at"> diverse</span></a>
-<a class="sourceLine" id="cb13-3" data-line-number="3">  <span class="fu">f:</span><span class="at"> female</span></a>
-<a class="sourceLine" id="cb13-4" data-line-number="4">  <span class="fu">m:</span><span class="at"> male</span></a>
-<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="fu">age:</span></a>
-<a class="sourceLine" id="cb13-6" data-line-number="6">  <span class="fu">super young:</span><span class="at"> younger than 10</span></a>
-<a class="sourceLine" id="cb13-7" data-line-number="7">  <span class="fu">super old:</span><span class="at"> older than 90</span></a></code></pre></div>
-</div>
+<div id="further-reading" class="section level2">
+<h2 class="hasAnchor">
+<a href="#further-reading" class="anchor"></a>Further reading</h2>
+<p>More information can be found on the [github-pages site] for <code>labelmachine</code>:</p>
+<ul>
+<li>A simple guide is given in the <a href="https://R-package.github.io/labelmachine/index.html">get started vignette</a>.</li>
+</ul>
 </div>
 <div id="license" class="section level2">
 <h2 class="hasAnchor">
 <a href="#license" class="anchor"></a>License</h2>
-<p><a href="https://R-package.github.io/styledTables/LICENSE">GPL-3</a></p>
+<p><a href="https://a-maldet.github.io/labelmachine/LICENSE">GPL-3</a></p>
 </div>
 </div>
   </div>
