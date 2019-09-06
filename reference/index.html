@@ -19,8 +19,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -41,6 +41,8 @@
 
 
 
+  <link href="../extra.css" rel="stylesheet">
+  
 
 <meta property="og:title" content="Function reference" />
 <meta property="og:image" content="/logo.png" />
@@ -121,106 +123,50 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
+          <h2 id="section-create-lama-dictionary-objects" class="hasAnchor"><a href="#section-create-lama-dictionary-objects" class="anchor"></a>create lama_dictionary objects</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
       <tr>
         
         <td>
-          <p><code><a href="NA_lama_.html">NA_lama_</a></code> </p>
+          <p><code><a href="new_lama_dictionary.html">new_lama_dictionary()</a></code> </p>
         </td>
-        <td><p>NA replace string</p></td>
+        <td><p>Create a new lama_dictionary class object</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="as_lama_dictionary.html">as.lama_dictionary()</a></code> </p>
         </td>
         <td><p>Coerce to a lama_dictionary class object</p></td>
-      </tr><tr>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-translate-variables" class="hasAnchor"><a href="#section-translate-variables" class="anchor"></a>translate variables</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
-          <p><code><a href="check_rename.html">check_rename()</a></code> </p>
+          <p><code><a href="lama_translate.html">lama_translate()</a></code> <code><a href="lama_translate.html">lama_translate_()</a></code> </p>
         </td>
-        <td><p>Function that checks the passed in arguments for <code>lama_rename()</code> and <code>lama_rename_()</code></p></td>
-      </tr><tr>
+        <td><p>Assign new labels to a variable of a data.frame</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-alter-lama-dictionary-objects" class="hasAnchor"><a href="#section-alter-lama-dictionary-objects" class="anchor"></a>alter lama_dictionary objects</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
-          <p><code><a href="check_select.html">check_select()</a></code> </p>
+          <p><code><a href="lama_select.html">lama_select()</a></code> <code><a href="lama_select.html">lama_select_()</a></code> </p>
         </td>
-        <td><p>Function that checks the passed in arguments for <code>lama_select()</code> and <code>lama_select_()</code></p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="check_translate_general.html">check_translate_general()</a></code> </p>
-        </td>
-        <td><p>Function that applies some general checks to the arguments of <code>lama_translate()</code> and <code>lama_translate_()</code></p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="contains_na_escape.html">contains_na_escape()</a></code> </p>
-        </td>
-        <td><p>Check if a character vector contains NA replacement strings</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="dictionary_to_yaml.html">dictionary_to_yaml()</a></code> </p>
-        </td>
-        <td><p>Transform data structure from lama_dictionary class input format to the yaml format</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="escape_to_na.html">escape_to_na()</a></code> </p>
-        </td>
-        <td><p>Replace <code>"NA_"</code> by <code>NA</code></p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="is.syntactic.html">is.syntactic()</a></code> </p>
-        </td>
-        <td><p>Check if a variable name is syntactically valid</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="is_dictionary.html">is.dictionary()</a></code> </p>
-        </td>
-        <td><p>Check if an object is a lama_dictionary class object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="lama_check_character.html">lama_check_character()</a></code> </p>
-        </td>
-        <td><p>Check if an object is a character</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="lama_check_length.html">lama_check_length()</a></code> </p>
-        </td>
-        <td><p>Check if an object has the right length</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="lama_get.html">lama_get()</a></code> <code><a href="lama_get.html">lama_get_()</a></code> </p>
-        </td>
-        <td><p>Retrieve a translation from a lama_dictionary class object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="lama_merge.html">lama_merge()</a></code> </p>
-        </td>
-        <td><p>Merge multiple label lexicas into one</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="lama_mutate.html">lama_mutate()</a></code> <code><a href="lama_mutate.html">lama_mutate_()</a></code> </p>
-        </td>
-        <td><p>Change or append a variable translation to an existing lama_dictionary object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="lama_read.html">lama_read()</a></code> </p>
-        </td>
-        <td><p>Read in a <code>yaml</code> file holding translations for one or multiple variables</p></td>
+        <td><p>Select multiple variable translations and create a new lama_dictionary object</p></td>
       </tr><tr>
         
         <td>
@@ -230,16 +176,24 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="lama_select.html">lama_select()</a></code> <code><a href="lama_select.html">lama_select_()</a></code> </p>
+          <p><code><a href="lama_mutate.html">lama_mutate()</a></code> <code><a href="lama_mutate.html">lama_mutate_()</a></code> </p>
         </td>
-        <td><p>Select multiple variable translations and create a new lama_dictionary object</p></td>
+        <td><p>Change or append a variable translation to an existing lama_dictionary object</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="lama_translate.html">lama_translate()</a></code> <code><a href="lama_translate.html">lama_translate_()</a></code> </p>
+          <p><code><a href="lama_merge.html">lama_merge()</a></code> </p>
         </td>
-        <td><p>Assign new labels to a variable of a data.frame</p></td>
-      </tr><tr>
+        <td><p>Merge multiple label lexicas into one</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-save-and-read-lama-dictionary-objects" class="hasAnchor"><a href="#section-save-and-read-lama-dictionary-objects" class="anchor"></a>save and read lama_dictionary objects</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
           <p><code><a href="lama_write.html">lama_write()</a></code> </p>
@@ -248,81 +202,23 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="lapplI.html">lapplI()</a></code> <code><a href="lapplI.html">sapplI()</a></code> </p>
+          <p><code><a href="lama_read.html">lama_read()</a></code> </p>
         </td>
-        <td><p>Improve <code>lapply and </code>sapply` with index</p></td>
-      </tr><tr>
+        <td><p>Read in a <code>yaml</code> file holding translations for one or multiple variables</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-various-other-functions" class="hasAnchor"><a href="#section-various-other-functions" class="anchor"></a>various other functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
-          <p><code><a href="na_to_escape.html">na_to_escape()</a></code> </p>
+          <p><code><a href="lama_get.html">lama_get()</a></code> <code><a href="lama_get.html">lama_get_()</a></code> </p>
         </td>
-        <td><p>Replace <code>NA</code> by <code>"NA_"</code></p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="named_lapply.html">named_lapply()</a></code> </p>
-        </td>
-        <td><p>Create a named list with lapply from a character vector</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="named_list.html">named_list()</a></code> </p>
-        </td>
-        <td><p>Create a named list</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="new_lama_dictionary.html">new_lama_dictionary()</a></code> </p>
-        </td>
-        <td><p>Create a new lama_dictionary class object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="print.html">print(<i>&lt;lama_dictionary&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Print a lama_dictionary class object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="rename_translation.html">rename_translation()</a></code> </p>
-        </td>
-        <td><p>Function that actually performs the renaming of the translations</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="stringify.html">stringify()</a></code> </p>
-        </td>
-        <td><p>Coerce a vector into a character string (<code>'x1', 'x2', ...</code>)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="translate_df.html">translate_df()</a></code> </p>
-        </td>
-        <td><p>This function relabels several variables in a data.frame</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="translate_variable.html">translate_variable()</a></code> </p>
-        </td>
-        <td><p>This function relabels a vector</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="validate_dictionary.html">validate_dictionary()</a></code> </p>
-        </td>
-        <td><p>Check if an object has a valid lama_dictionary structure</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="validate_translation.html">validate_translation()</a></code> </p>
-        </td>
-        <td><p>Check if an object has a valid translation structure</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="yaml_to_dictionary.html">yaml_to_dictionary()</a></code> </p>
-        </td>
-        <td><p>Transform data structure from yaml format to the lama_dictionary class input format</p></td>
+        <td><p>Retrieve a translation from a lama_dictionary class object</p></td>
       </tr>
     </tbody>
     </table>
@@ -331,7 +227,11 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#section-create-lama-dictionary-objects">create lama_dictionary objects</a></li>
+      <li><a href="#section-translate-variables">translate variables</a></li>
+      <li><a href="#section-alter-lama-dictionary-objects">alter lama_dictionary objects</a></li>
+      <li><a href="#section-save-and-read-lama-dictionary-objects">save and read lama_dictionary objects</a></li>
+      <li><a href="#section-various-other-functions">various other functions</a></li>
     </ul>
   </div>
 </div>
