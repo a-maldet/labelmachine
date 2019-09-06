@@ -20,7 +20,7 @@ devtools::install_github('a-maldet/labelmachine', build_opts = NULL)
 Concept
 -------
 
-The label assignments are given as so called **translations** (named character vectors), which are like a recipe, telling which original value will be mapped onto which new label. The **translations** are collected in a so called **lama\_dictionary** object. This dictionary files will be used to translate your data.frame variables.
+The label assignments are given in so called **translations** (named character vectors), which are like a recipes, telling which original value will be mapped onto which new label. The **translations** are collected in so called **lama\_dictionary** objects. This **lama\_dictionary** objects will be used to translate your data.frame variables.
 
 Usage
 -----
