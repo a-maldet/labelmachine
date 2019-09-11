@@ -40,7 +40,7 @@ Let **df** be a data.frame with marks and subjects, which should be translated
 ```{r}
 library(labelmachine)
 df <- data.frame(
-  pupil_id - c(1, 1, 2, 2, 3),
+  pupil_id = c(1, 1, 2, 2, 3),
   subject = c("en", "ma", "ma", "en", "en"),
   result = c(2, 1, 3, 2, NA)
 )

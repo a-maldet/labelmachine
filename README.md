@@ -3,7 +3,7 @@ labelmachine <img src="man/figures/logo.png" align="right" alt="" width=140 heig
 =========================================================================================
 
 <!-- badges: start -->
-[![Travis build status](https://travis-ci.org/a-maldet/labelmachine.svg?branch=master)](https://travis-ci.org/a-maldet/labelmachine) [![GitHub last commit](https://img.shields.io/github/last-commit/a-maldet/labelmachine.svg?logo=github)](https://github.com/a-maldet/labelmachine/commits/master) [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/a-maldet/labelmachine.svg?logo=github)](https://github.com/a-maldet/labelmachine)
+[![Travis build status](https://travis-ci.org/a-maldet/labelmachine.svg?branch=master)](https://travis-ci.org/a-maldet/labelmachine) [![GitHub last commit](https://img.shields.io/github/last-commit/a-maldet/labelmachine.svg?logo=github)](https://github.com/a-maldet/labelmachine/commits/master) [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/a-maldet/labelmachine.svg?logo=github)](https://github.com/a-maldet/labelmachine) <!-- badges: end -->
 
 `labelmachine` is an **R** package that helps assigning meaningful labels to R data sets. Furthermore, you can manage your labels in so called **dictionary** files, which are **yaml** files. This makes it very easy using the same label translations in multiple projects that share similar data structure.
 
@@ -30,7 +30,7 @@ Let **df** be a data.frame with marks and subjects, which should be translated
 ``` r
 library(labelmachine)
 df <- data.frame(
-  pupil_id - c(1, 1, 2, 2, 3),
+  pupil_id = c(1, 1, 2, 2, 3),
   subject = c("en", "ma", "ma", "en", "en"),
   result = c(2, 1, 3, 2, NA)
 )
@@ -69,11 +69,11 @@ str(df_new)
 ```
 
     ## 'data.frame':    5 obs. of  5 variables:
-    ##  $ pupil_id...c.1..1..2..2..3.: num  0 0 0 0 0
-    ##  $ subject                    : Factor w/ 2 levels "en","ma": 1 2 2 1 1
-    ##  $ result                     : num  2 1 3 2 NA
-    ##  $ subject_new                : Factor w/ 3 levels "English","Mathematics",..: 1 2 2 1 1
-    ##  $ result_new                 : Factor w/ 4 levels "Excellent","Satisfying",..: 2 1 3 2 4
+    ##  $ pupil_id   : num  1 1 2 2 3
+    ##  $ subject    : Factor w/ 2 levels "en","ma": 1 2 2 1 1
+    ##  $ result     : num  2 1 3 2 NA
+    ##  $ subject_new: Factor w/ 3 levels "English","Mathematics",..: 1 2 2 1 1
+    ##  $ result_new : Factor w/ 4 levels "Excellent","Satisfying",..: 2 1 3 2 4
 
 Highlights
 ----------
