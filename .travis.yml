@@ -3,10 +3,16 @@ r:
   - release
 cache: packages
 
+r_packages:
+  - covr
+
 r_github_packages: r-lib/pkgdown
 
 before_install:
   - tlmgr install standalone
+
+after_success:
+  - Rscript -e 'library(covr); codecov()'
 
 deploy:
   provider: script
