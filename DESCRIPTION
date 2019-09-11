@@ -7,14 +7,13 @@ Encoding: UTF-8
 Depends:
     R (>= 3.3.0)
 BugReports: https://github.com/a-maldet/labelmachine/issues
-Remotes: a-maldet/composerr
 Imports:
-    composerr,
     yaml (>= 2.2.0)
 License: GPL-3 + file LICENSE
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Collate: 
+    'composerr.R'
     'imports.R'
     'lama_check.R'
     'lappli.R'
