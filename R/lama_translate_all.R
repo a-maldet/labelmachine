@@ -1,13 +1,12 @@
 #' Assign new labels to all variables of a data.frame
 #'
-#' Converts all variables of a data frame `.data`,
-#' which have a translation of the same name in the lama-dictionary `dictionary`
+#' Converts all variables (which have a translation in the given lama-dictionary)
+#' of a data frame `.data`
 #' into factor variables with new labels. 
 #' This function a special version of the function [lama_translate()].
 #' The difference to [lama_translate()] is, that when using [lama_translate_all()]
-#' the translations in `dictionary`, which should be used, must have exactly
-#' the same names as the columns in the data frame `.data`, to which they
-#' should be applied.
+#' the used translations in `dictionary` must have the exact
+#' same names as the corresponding columns in the data frame `.data`.
 #' @param .data Either a data frame, a factor or a vector.
 #' @param dictionary A [lama_dictionary][new_lama_dictionary()] object,
 #'   holding the translations for various variables.

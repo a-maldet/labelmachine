@@ -37,14 +37,13 @@ An extended data.frame, that has a factor variable holding the
 assigned labels.
 }
 \description{
-Converts all variables of a data frame \code{.data},
-which have a translation of the same name in the lama-dictionary \code{dictionary}
+Converts all variables (which have a translation in the given lama-dictionary)
+of a data frame \code{.data}
 into factor variables with new labels.
 This function a special version of the function \code{\link[=lama_translate]{lama_translate()}}.
 The difference to \code{\link[=lama_translate]{lama_translate()}} is, that when using \code{\link[=lama_translate_all]{lama_translate_all()}}
-the translations in \code{dictionary}, which should be used, must have exactly
-the same names as the columns in the data frame \code{.data}, to which they
-should be applied.
+the used translations in \code{dictionary} must have the exact
+same names as the corresponding columns in the data frame \code{.data}.
 }
 \examples{
   # --- initialize lama_dictinoary ---
