@@ -1,0 +1,194 @@
+---
+title: "Creating lama-dictionaries"
+date: "`r Sys.Date()`"
+author: "Adrian Maldet"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{labelmachine}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+As already described in [Get started] we need **translations**, which tell
+us how the labels should be assigned to the different values of a variable.
+These translations are collected in a **lama-dictionary** object.
+With the `labelmachine` package, translations can be written as
+named character vectors:
+```{r}
+subject_translation <- c(eng = "English", mat = "Mathematics", gym = "Gymnastics")
+```
+The names of the character vector items correspond to the original values
+(e.g.: `"eng"`, `"mat"` and `"gym"`) and the item values correspond to the
+new labels which should be used (e.g.: `"English"`, `"Mathematics"` and `"Gymnastics"`).
+
+Lama-Dictionaries always assume that the original variables are of type
+**character**. Even if they are not, it does not make a difference, since
+when calling `lama_translate()` the original variables of different types
+(**logical**, **numeric** or **factor**) will automatically be transformed
+into **character** variables. Hence, `labelmachine` can handle any type of
+variables.
+
+
+## From scratch
+
+With the command `new_lama_dictionary()` a lama-dictionary can be created
+on the fly:
+
+```{r}
+library(labelmachine)
+dict <- new_lama_dictionary(
+  sub = subject_translation,
+  res = c(
+    "1" = "Good",
+    "2" = "Passed",
+    "3" = "Not passed",
+    "4" = "Not passed",
+    NA_ = "Missed",
+    "0" = NA
+  )
+)
+dict
+```
+
+Each named argument in `new_lama_dictionary()` defines a translation. The
+passed in argument names are used as translation names
+(e.g. `"sub"` and `"res"`).
+The first translation `sub` was given by a named character vector, holding 
+the full length labels for the subjects of a data set holding encoded subject
+values (e.g. `"eng"` for `"English"`, `"mat"` for `"Mathematics"` and `"gym"`
+for `"gymnastics"`).
+The second translation `res` holds the full length labels for the encoded test results.
+In translation `res` multiple values were mapped onto a single lable string 
+(e.g. `3` and `4` were mapped onto `"Not passed"`).
+The expression `NA_` in translation `res` is used to escape the
+missing value symbol `NA` (only necessary in the name fields of the translation
+vectors).
+Hence, the last assignment `NA_ = "Missed"` defines that missing values
+should be labelled with the string `"Missed"`.
+The last expression `"0" = NA` given in translation `res` tells that
+all zero values `0` should be mapped onto the missing value symbol `NA`.
+
+<img src = "../reference/figures/vignette_create_dictionary.png" style = "max-width: 450px">
+</img>
+
+## From a list object holding translations
+
+If we have a named list object holding translations (named character vectors),
+then we can turn it into a lama-dictionary object with the command `new_lama_dictionary()`:
+
+```{r}
+obj <- list(
+  sub = c(eng = "English", mat = "Mathematics", gym = "Gymnastics"),
+  res = c(
+    "1" = "Good",
+    "2" = "Passed",
+    "3" = "Not passed",
+    "4" = "Not passed",
+    NA_ = "Missed",
+    "0" = NA
+  )
+)
+dict <- new_lama_dictionary(obj)
+dict
+```
+
+
+## From an existing **yaml** file
+
+As described in [Get started] lama-dictionaries can be saved to **yaml** files.
+These files are plain text files with a specific structure. 
+For example the file `dictionary.yaml` may looks as follows
+```{yaml, code = readLines("../man/figures/dictionary.yaml")}
+```
+
+With the command `lama_read()` it can be loaded:
+```{r, eval = FALSE}
+dict <- lama_read("dictionary.yaml")
+```
+
+With the command `lama_write()` the lama-dictionary `dict` can be saved as a
+**yaml** file:
+```{r, eval = FALSE}
+lama_write(dict, "dictionary.yaml")
+```
+
+## From already existing label assignment rules
+
+Sometimes, there are already **csv** or **excel** files or **data frames**
+holding label assignment rules. Normally this assignment rules are stored
+as column pairs, where one column always represents the original values and
+the other column holds the corresponding label strings.
+In case of the assignments are stored in a **csv** or an **excel** file, they
+can be loaded into a data frame with the commands
+`read.csv()` or `read.table()`. Hence, it is sufficient to cover the case
+of label assignment rules given as data frames.
+
+Let `df_trans` be a data frame holding the label assignment rules:
+```{r, include = FALSE}
+df_trans <- data.frame(
+  sub_old = c("eng", "mat", "gym", NA, NA, NA),
+  sub_new = c("English", "Mathematics", "Gymnastics", NA, NA, NA),
+  res_old = c(0, 1, 2, 3, 4, NA),
+  res_new = c(NA, "Good", "Passed", "Not passed", "Not passed", "Missed")
+)
+```
+```{r}
+df_trans
+```
+
+The command `as.lama_dictionary` reads in the label assignment rules given in
+`df_trans` and returns a lama-dictionary object holding the given translations:
+```{r}
+dict <- as.lama_dictionary(
+  .data = df_trans,
+  translation = c("sub", "res"),
+  col_old = c("sub_old", "res_old"),
+  col_new = c("sub_new", "res_new")
+)
+dict
+```
+The resulting lama-dictionary `dict` contains two translations `sub` and `res`.
+
+The command `as.lama_dictionary()` also allows an argument `ordering`, which
+specifies how the ordering of the translations should
+be determined. For futher details, see `as.lama_dictionary()`.
+
+## Further reading
+
+* [Translation of variables]
+* [Altering of lama-dictionaries]
+* [Get started]
+
+[magrittr]: https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html
+[Get started]: https://a-maldet.github.io/labelmachine/articles/labelmachine.html
+[Creation of lama-dictionaries]: https://a-maldet.github.io/labelmachine/articles/create_dictionaries.html
+[Altering of lama-dictionaries]: https://a-maldet.github.io/labelmachine/articles/alter_dictionaries.html
+[Translation of variables]: https://a-maldet.github.io/labelmachine/articles/translate.html
+
+Let `df` be a data frame with the following structure:
+```{r, include = FALSE}
+df <- data.frame(
+  pupil_id = rep(1:4, each = 3),
+  subject = rep(c("eng", "mat", "gym"), 4),
+  level = factor(rep(c("a", "b", "b", "a"), each = 3), levels = c("a", "b")),
+  result = c(1, 2, 2, NA, 2, NA, 1, 2, 1, 2, 3, NA),
+  stringsAsFactors = FALSE
+)
+```
+```{r}
+str(df)
+```
+
+The column `subject` (**character**) contains the subject codes the pupils
+were tested in and `result` (**integer**) contains the test results. 
+The column `level` (**factor**) holds the levels of the attended courses.
