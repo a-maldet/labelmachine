@@ -51,7 +51,7 @@ projects that share similar data structure.
 devtools::install_github('a-maldet/labelmachine', build_vignettes = TRUE)
 ```
 
-## The example data set
+## The example data frame
 
 Let us assume, you want to label the following data.frame `df`:
 
@@ -70,7 +70,7 @@ df
 The column `subject` contains the subject codes the pupils were tested in and
 `result` contains the test results.
 
-## Create a lama-dictionary
+## Your first lama-dictionary
 
 In order to assign labels to the values in the columns of `df`, we need a 
 **lama-dictionary** which holds the translations of the variables. 
@@ -95,7 +95,7 @@ should be labelled with the string `"Missed"`.
 For further details on creating lama-dictionaries
 see [Creating lama-dictionaries] and [Altering lama-dictionaries].
 
-## Translate variables
+## Translate the data frame columns
 
 With the command `lama_translate`, we can use the lama-dictionary `dict`
 in order to translate the  variables given in data frame `df`:
@@ -120,7 +120,7 @@ labels.
 The command `lama_translate` has multiple features, which are described in 
 more detail in [Translating variables].
 
-## Save and read the lama-dictionary files
+## Save your lama-dictionary
 
 With the command `lama_write` it is possible to save the lama-dictionary object
 to a **yaml** file:
@@ -151,8 +151,8 @@ dict <- lama_read("dictionary.yaml")
 ## Further reading
 
 * [Creating lama-dictionaries]
-* [Altering lama-dictionaries]
 * [Translating variables]
+* [Altering lama-dictionaries]
 
 [magrittr]: https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html
 [Get started]: https://a-maldet.github.io/labelmachine/articles/labelmachine.html
