@@ -87,18 +87,12 @@ str(df_new)
 
 ## Further reading
 
-* [Get started]: A simple guide
-* [Creating lama-dictionaries]
-* [Translate variables]
-* [Altering lama-dictionaries]
+A short introduction can be found here: [Get started] 
 
 ## License
 
 [GPL-3]
   
 [Get started]: https://a-maldet.github.io/labelmachine/articles/labelmachine.html
-[Creating lama-dictionaries]: https://a-maldet.github.io/labelmachine/articles/create_dictionaries.html
-[Altering lama-dictionaries]: https://a-maldet.github.io/labelmachine/articles/alter_dictionaries.html
-[Translating variables]: https://a-maldet.github.io/labelmachine/articles/translate.html
 [GPL-3]: https://a-maldet.github.io/labelmachine/LICENSE
 

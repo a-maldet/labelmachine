@@ -94,9 +94,7 @@ Highlights
 Further reading
 ---------------
 
--   -   [Creating lama-dictionaries](https://a-maldet.github.io/labelmachine/articles/create_dictionaries.html)
--   \[Translate variables\]
--   [Altering lama-dictionaries](https://a-maldet.github.io/labelmachine/articles/alter_dictionaries.html)
+A short introduction can be found here: [Get started](https://a-maldet.github.io/labelmachine/articles/labelmachine.html)
 
 License
 -------
