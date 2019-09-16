@@ -48,7 +48,7 @@ projects that share similar data structure.
 
 ```{r, eval = FALSE}
 # Install development version from GitHub
-devtools::install_github('a-maldet/labelmachine', build_vignettes = TRUE)
+devtools::install_github('a-maldet/labelmachine', build_opts = NULL)
 ```
 
 ## The example data frame
