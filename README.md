@@ -28,17 +28,20 @@ Usage
 Let **df** be a data.frame with marks and subjects, which should be translated
 
 ``` r
-library(labelmachine)
-df <- data.frame(
-  pupil_id = c(1, 1, 2, 2, 3),
-  subject = c("en", "ma", "ma", "en", "en"),
-  result = c(2, 1, 3, 2, NA)
-)
+df
 ```
+
+    ##   pupil_id subject result
+    ## 1        1      en      2
+    ## 2        1      ma      1
+    ## 3        2      ma      3
+    ## 4        2      en      2
+    ## 5        3      en     NA
 
 Create a **lama\_dictionary** object holding the translations:
 
 ``` r
+library(labelmachine)
 dict <- new_lama_dictionary(
   subjects = c(en = "English", ma = "Mathematics", NA_ = "other subjects"),
   results = c("1" = "Excellent", "2" = "Satisfying", "3" = "Failed", NA_ = "Missed")
@@ -91,9 +94,9 @@ Highlights
 Further reading
 ---------------
 
-More information can be found on the \[github-pages site\] for `labelmachine`:
-
--   A simple guide is given in the [get started vignette](https://a-maldet.github.io/labelmachine/index.html).
+-   -   [Creating lama-dictionaries](https://a-maldet.github.io/labelmachine/articles/create_dictionaries.html)
+-   \[Translate variables\]
+-   [Altering lama-dictionaries](https://a-maldet.github.io/labelmachine/articles/alter_dictionaries.html)
 
 License
 -------
