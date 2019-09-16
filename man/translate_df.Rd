@@ -8,7 +8,7 @@ translate_df(.data, dictionary, translation, col, col_new, keep_order,
   err_handler)
 }
 \arguments{
-\item{.data}{Either a data frame, a factor or a vector.}
+\item{.data}{Either a data frame, a factor or an atomic vector.}
 
 \item{dictionary}{A \link[=new_lama_dictionary]{lama_dictionary} object, holding the translations for various
 variables.}

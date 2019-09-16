@@ -11,7 +11,7 @@
 #' If `.data` is of type character, logical, numeric or factor, then
 #' the arguments `col` and `col_new` are omitted, since those are only
 #' necessary in the case of data frames.
-#' @param .data Either a data frame, a factor or a vector.
+#' @param .data Either a data frame, a factor or an atomic vector.
 #' @param dictionary A [lama_dictionary][new_lama_dictionary()] object, holding the translations for various
 #'   variables.
 #' @param ... Only used by [lama_translate()].
@@ -26,9 +26,9 @@
 #'   There are also two abbreviation mechanisms available:
 #'   The argument assignement \code{FOO(X)} is the same as \code{X = FOO(X)} and
 #'   \code{FOO} is an abbreviation for \code{FOO = FOO(FOO)}.
-#'   In case, `.data` is not a data frame but a plain factor or vector, then
+#'   In case, `.data` is not a data frame but a plain factor or an atomic vector, then
 #'   the argument `...` must be a single unquoted translation name
-#'   (e.g. `lama_translate(x, dict, TRANS1)`, where `x` is a factor or vector
+#'   (e.g. `lama_translate(x, dict, TRANS1)`, where `x` is a factor or an atomic vector
 #'   and `TRANS1` is the name of the translation, which should be used to assign
 #'   the labels to the values of `x`.)
 #' @param keep_order A boolean vector of length one or the same length as the
@@ -191,7 +191,7 @@ lama_translate.data.frame <- function(.data, dictionary, ..., keep_order = FALSE
 
 #' @rdname lama_translate
 #' @examples
-#'   # Example-4 (vector): Translate a vector
+#'   # Example-4 (atomic vector): Translate a vector
 #'   sub <- c("ma", "en", "ma")
 #'   sub_new <- df_new_overwritten <- lama_translate(
 #'     sub,
@@ -212,27 +212,27 @@ lama_translate.data.frame <- function(.data, dictionary, ..., keep_order = FALSE
 #' @export
 lama_translate.default <- function(.data, dictionary, ..., keep_order = FALSE) {
   err_handler <- composerr("Error while calling 'lama_translate'")
-  if (!is.vector(.data) && !is.factor(.data))
+  if (!is.atomic(.data))
     err_handler(paste(
-      "The argument '.data' must either be a data frame, a factor or a vector."
+      "The argument '.data' must either be a data frame, a factor or an atomic vector."
     ))
   args <- rlang::quos(...)
   if (length(args) == 0)
     err_handler(paste(
-      "Name of the used translation is missing",
-      "(e.g. 'lama_translate(x, dict, my_trans)'."
+      "The name of the used translation is missing",
+      "(e.g. 'lama_translate(x, dict, my_trans)')."
     ))
   if (!is.dictionary(dictionary))
     err_handler("The argument 'dictionary' must be a lama_dictionary class object.")
   if (!is.logical(keep_order) || length(keep_order) != 1 || is.na(keep_order))
     err_handler(paste(
-      "The argument 'keep_order' must be a logical.",
+      "The argument 'keep_order' must be a logical."
     ))
   if (length(args) > 1) {
       warning(paste(
         "Warning while calling `lama_translate`:",
-        "If the first element is a factor or a vector,",
-        "then only the arguments 'dictionary',  a single argument for '...'",
+        "If the first element is a factor or an atomic vector,",
+        "then only the arguments 'dictionary', a single argument for '...'",
         "(the unquoted translation name)",
         "and the argument 'keep_order' are used and all extra arguments",
         "will be ignored."
@@ -246,7 +246,7 @@ lama_translate.default <- function(.data, dictionary, ..., keep_order = FALSE) {
       stringify(x_str),
       "could not be parsed. Pass in the unquoted name of the translation, which",
       "should be used",
-      "(e.g. 'lama_translate(x, dict, my_trans)'."
+      "(e.g. 'lama_translate(x, dict, my_trans)')."
     ))
   translation <- rlang::quo_name(x)
   if (!translation %in% names(dictionary))
@@ -357,7 +357,7 @@ lama_translate_.data.frame <- function(.data, dictionary, translation, col = tra
 
 #' @rdname lama_translate
 #' @examples
-#'   # Example-7 (vector): Translate an integer vector
+#'   # Example-7 (atomic vector): Translate an integer vector
 #'   res <- c(1, 2, 1, 3, 1, 2)
 #'   res_new <- df_new_overwritten <- lama_translate_(
 #'     res,
@@ -378,15 +378,15 @@ lama_translate_.data.frame <- function(.data, dictionary, translation, col = tra
 #' @export
 lama_translate_.default <- function(.data, dictionary, translation, ..., keep_order = FALSE) {
   err_handler <- composerr("Error while calling 'lama_translate_'")
-  if (!is.vector(.data) && !is.factor(.data))
+  if (!is.atomic(.data))
     err_handler(paste(
-      "The argument '.data' must either be a data frame, a factor or a vector."
+      "The argument '.data' must either be a data frame, a factor or an atomic vector."
     ))
   if (!is.dictionary(dictionary))
     err_handler("The argument 'dictionary' must be a lama_dictionary class object.")
   if (!is.logical(keep_order) || length(keep_order) != 1 || is.na(keep_order))
     err_handler(paste(
-      "The argument 'keep_order' must be a logical.",
+      "The argument 'keep_order' must be a logical."
     ))
   if (!is.character(translation) || length(translation) != 1 || is.na(translation))
     err_handler("The argument 'translation' must be a character string.")
@@ -397,9 +397,9 @@ lama_translate_.default <- function(.data, dictionary, translation, ..., keep_or
   args <- rlang::quos(...)
   if (length(args) > 0) {
       warning(paste(
-        "Warning while calling `lama_translate_`:",
-        "If the first element is a factor or a vector,",
-        "then only the arguments 'dictionary',  'translation'",
+        "Warning while calling 'lama_translate_':",
+        "If the first element is a factor or an atomic vector,",
+        "then only the arguments 'dictionary', 'translation'",
         "and 'keep_order' are used and all extra arguments",
         "will be ignored."
       ))

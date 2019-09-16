@@ -27,7 +27,7 @@ lama_translate_(.data, dictionary, translation, col = translation,
   keep_order = FALSE)
 }
 \arguments{
-\item{.data}{Either a data frame, a factor or a vector.}
+\item{.data}{Either a data frame, a factor or an atomic vector.}
 
 \item{dictionary}{A \link[=new_lama_dictionary]{lama_dictionary} object, holding the translations for various
 variables.}
@@ -44,9 +44,9 @@ the column names \code{Y1} and \code{Y2}.
 There are also two abbreviation mechanisms available:
 The argument assignement \code{FOO(X)} is the same as \code{X = FOO(X)} and
 \code{FOO} is an abbreviation for \code{FOO = FOO(FOO)}.
-In case, \code{.data} is not a data frame but a plain factor or vector, then
+In case, \code{.data} is not a data frame but a plain factor or an atomic vector, then
 the argument \code{...} must be a single unquoted translation name
-(e.g. \code{lama_translate(x, dict, TRANS1)}, where \code{x} is a factor or vector
+(e.g. \code{lama_translate(x, dict, TRANS1)}, where \code{x} is a factor or an atomic vector
 and \code{TRANS1} is the name of the translation, which should be used to assign
 the labels to the values of \code{x}.)}
 
@@ -137,7 +137,7 @@ necessary in the case of data frames.
     res_new = result(res)
   )
   str(df_new_overwritten)
-  # Example-4 (vector): Translate a vector
+  # Example-4 (atomic vector): Translate a vector
   sub <- c("ma", "en", "ma")
   sub_new <- df_new_overwritten <- lama_translate(
     sub,
@@ -166,7 +166,7 @@ necessary in the case of data frames.
     col_new = c("subject_new", "res_new")
   )
   str(df_new)
-  # Example-7 (vector): Translate an integer vector
+  # Example-7 (atomic vector): Translate an integer vector
   res <- c(1, 2, 1, 3, 1, 2)
   res_new <- df_new_overwritten <- lama_translate_(
     res,

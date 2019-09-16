@@ -4,7 +4,7 @@ date: "`r Sys.Date()`"
 author: "Adrian Maldet"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{labelmachine}
+  %\VignetteIndexEntry{Get started}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
