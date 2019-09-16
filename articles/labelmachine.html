@@ -116,9 +116,9 @@
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># Install development version from GitHub</span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">'a-maldet/labelmachine'</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 </div>
-<div id="the-example-data-set" class="section level2">
+<div id="the-example-data-frame" class="section level2">
 <h2 class="hasAnchor">
-<a href="#the-example-data-set" class="anchor"></a>The example data set</h2>
+<a href="#the-example-data-frame" class="anchor"></a>The example data frame</h2>
 <p>Let us assume, you want to label the following data.frame <code>df</code>:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">df</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt;    pupil_id subject result</span></a>
@@ -136,9 +136,9 @@
 <a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt; 12        4     gym     NA</span></a></code></pre></div>
 <p>The column <code>subject</code> contains the subject codes the pupils were tested in and <code>result</code> contains the test results.</p>
 </div>
-<div id="create-a-lama-dictionary" class="section level2">
+<div id="your-first-lama-dictionary" class="section level2">
 <h2 class="hasAnchor">
-<a href="#create-a-lama-dictionary" class="anchor"></a>Create a lama-dictionary</h2>
+<a href="#your-first-lama-dictionary" class="anchor"></a>Your first lama-dictionary</h2>
 <p>In order to assign labels to the values in the columns of <code>df</code>, we need a <strong>lama-dictionary</strong> which holds the translations of the variables. With the command <code><a href="https://rdrr.io/pkg/labelmachine/man/new_lama_dictionary.html">new_lama_dictionary()</a></code> we can create such a lama-dictionary:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(labelmachine)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">dict &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/labelmachine/man/new_lama_dictionary.html">new_lama_dictionary</a></span>(</a>
@@ -147,9 +147,9 @@
 <a class="sourceLine" id="cb4-5" data-line-number="5">)</a></code></pre></div>
 <p>Each entry in <code>dict</code> is a translation for a variable (column) of the data frame <code>df</code>. The translation <code>sub</code> can be used to assig labels to the values given in column <code>subject</code> in <code>df</code> and translation <code>res</code> can be used to assign labels to the values in column <code>result</code> in <code>df</code>. The expression <code>NA_</code> is used to escape the missing value symbol <code>NA</code>. Hence, the last assignment <code>NA_ = "Missed"</code> defines that missing values should be labelled with the string <code>"Missed"</code>. For further details on creating lama-dictionaries see <a href="https://a-maldet.github.io/labelmachine/articles/create_dictionaries.html">Creating lama-dictionaries</a> and <a href="https://a-maldet.github.io/labelmachine/articles/alter_dictionaries.html">Altering lama-dictionaries</a>.</p>
 </div>
-<div id="translate-variables" class="section level2">
+<div id="translate-the-data-frame-columns" class="section level2">
 <h2 class="hasAnchor">
-<a href="#translate-variables" class="anchor"></a>Translate variables</h2>
+<a href="#translate-the-data-frame-columns" class="anchor"></a>Translate the data frame columns</h2>
 <p>With the command <code>lama_translate</code>, we can use the lama-dictionary <code>dict</code> in order to translate the variables given in data frame <code>df</code>:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(magrittr)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">df_new &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span></a>
@@ -167,9 +167,9 @@
 <a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">#&gt;  $ result_lab : Factor w/ 4 levels "Good","Passed",..: 1 2 2 4 2 4 1 2 1 2 ...</span></a></code></pre></div>
 <p>In this command we used the pipe operator exported by the <a href="https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html">magrittr</a> package, which chains multiple command lines together in a single expression. As we can see, the resulting data frame <code>df_new</code> now holds two extra columns <code>subject_lab</code> and <code>result_lab</code> holding the factor variables with the right labels. The command <code>lama_translate</code> has multiple features, which are described in more detail in <a href="https://a-maldet.github.io/labelmachine/articles/translate.html">Translating variables</a>.</p>
 </div>
-<div id="save-and-read-the-lama-dictionary-files" class="section level2">
+<div id="save-your-lama-dictionary" class="section level2">
 <h2 class="hasAnchor">
-<a href="#save-and-read-the-lama-dictionary-files" class="anchor"></a>Save and read the lama-dictionary files</h2>
+<a href="#save-your-lama-dictionary" class="anchor"></a>Save your lama-dictionary</h2>
 <p>With the command <code>lama_write</code> it is possible to save the lama-dictionary object to a <strong>yaml</strong> file:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">dict <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/labelmachine/man/lama_write.html">lama_write</a></span>(<span class="st">"dictionary.yaml"</span>)</a></code></pre></div>
@@ -182,8 +182,8 @@
 <a href="#further-reading" class="anchor"></a>Further reading</h2>
 <ul>
 <li><a href="https://a-maldet.github.io/labelmachine/articles/create_dictionaries.html">Creating lama-dictionaries</a></li>
-<li><a href="https://a-maldet.github.io/labelmachine/articles/alter_dictionaries.html">Altering lama-dictionaries</a></li>
 <li><a href="https://a-maldet.github.io/labelmachine/articles/translate.html">Translating variables</a></li>
+<li><a href="https://a-maldet.github.io/labelmachine/articles/alter_dictionaries.html">Altering lama-dictionaries</a></li>
 </ul>
 </div>
   </div>
@@ -195,10 +195,10 @@
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#installation">Installation</a></li>
-      <li><a href="#the-example-data-set">The example data set</a></li>
-      <li><a href="#create-a-lama-dictionary">Create a lama-dictionary</a></li>
-      <li><a href="#translate-variables">Translate variables</a></li>
-      <li><a href="#save-and-read-the-lama-dictionary-files">Save and read the lama-dictionary files</a></li>
+      <li><a href="#the-example-data-frame">The example data frame</a></li>
+      <li><a href="#your-first-lama-dictionary">Your first lama-dictionary</a></li>
+      <li><a href="#translate-the-data-frame-columns">Translate the data frame columns</a></li>
+      <li><a href="#save-your-lama-dictionary">Save your lama-dictionary</a></li>
       <li><a href="#further-reading">Further reading</a></li>
       </ul>
 </div>
