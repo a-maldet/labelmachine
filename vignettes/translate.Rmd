@@ -1,0 +1,46 @@
+---
+title: "Translate variables"
+date: "`r Sys.Date()`"
+author: "Adrian Maldet"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Translate variables}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  collapse = TRUE,
+  comment = "#>"
+)
+library(magrittr)
+```
+
+Let `df` be a data frame with the following structure:
+```{r, include = FALSE}
+df <- readRDS(system.file("extdata", "exams.rds", package = "labelmachine"))
+```
+```{r}
+str(df)
+```
+
+The column `subject` (**character**) contains the subject codes the pupils
+were tested in and `result` (**integer**) contains the test results. 
+The column `level` (**factor**) holds the levels of the attended courses.
+
+## Further reading
+
+* [Creating lama-dictionaries]
+* [Altering lama-dictionaries]
+* [Get started]
+
+[magrittr]: https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html
+[Get started]: https://a-maldet.github.io/labelmachine/articles/labelmachine.html
+[Creating lama-dictionaries]: https://a-maldet.github.io/labelmachine/articles/create_dictionaries.html
+[Altering lama-dictionaries]: https://a-maldet.github.io/labelmachine/articles/alter_dictionaries.html
+[Translating variables]: https://a-maldet.github.io/labelmachine/articles/translate.html
+

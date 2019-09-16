@@ -167,30 +167,13 @@ be determined. For futher details, see `as.lama_dictionary()`.
 
 ## Further reading
 
-* [Translation of variables]
-* [Altering of lama-dictionaries]
+* [Translating variables]
+* [Altering lama-dictionaries]
 * [Get started]
 
 [magrittr]: https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html
 [Get started]: https://a-maldet.github.io/labelmachine/articles/labelmachine.html
-[Creation of lama-dictionaries]: https://a-maldet.github.io/labelmachine/articles/create_dictionaries.html
-[Altering of lama-dictionaries]: https://a-maldet.github.io/labelmachine/articles/alter_dictionaries.html
-[Translation of variables]: https://a-maldet.github.io/labelmachine/articles/translate.html
+[Creating lama-dictionaries]: https://a-maldet.github.io/labelmachine/articles/create_dictionaries.html
+[Altering lama-dictionaries]: https://a-maldet.github.io/labelmachine/articles/alter_dictionaries.html
+[Translating variables]: https://a-maldet.github.io/labelmachine/articles/translate.html
 
-Let `df` be a data frame with the following structure:
-```{r, include = FALSE}
-df <- data.frame(
-  pupil_id = rep(1:4, each = 3),
-  subject = rep(c("eng", "mat", "gym"), 4),
-  level = factor(rep(c("a", "b", "b", "a"), each = 3), levels = c("a", "b")),
-  result = c(1, 2, 2, NA, 2, NA, 1, 2, 1, 2, 3, NA),
-  stringsAsFactors = FALSE
-)
-```
-```{r}
-str(df)
-```
-
-The column `subject` (**character**) contains the subject codes the pupils
-were tested in and `result` (**integer**) contains the test results. 
-The column `level` (**factor**) holds the levels of the attended courses.

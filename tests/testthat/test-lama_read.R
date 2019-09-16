@@ -2,9 +2,10 @@ context("'lama_read'")
 test_that("'lama_read' works", {
   dict <- lama_read(system.file("extdata", "dictionary_exams.yaml", package = "labelmachine")) 
   expect_dictionary(dict)
-  expect_translation_names(dict, c("sub", "res"))
+  expect_translation_names(dict, c("sub", "res", "lev"))
   expect_translation_identical(dict, "sub", c(eng = "English", mat = "Mathematics", gym = "Gymnastics"))
   expect_translation_identical(dict, "res", c("1" = "Good", "2" = "Passed", "3" = "Not passed", "4" = "Not passed", NA_ = "Missed", "0" = NA))
+  expect_translation_identical(dict, "lev", c(b = "Basic", a = "Advanced"))
 })
 test_that("'lama_read' throws the right errors", {
   expect_error(

@@ -9,3 +9,6 @@ res:
   '4': Not passed
   NA_: Missed
   '0': .na.character
+lev:
+  b: Basic
+  a: Advanced
