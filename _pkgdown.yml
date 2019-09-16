@@ -9,6 +9,7 @@ reference:
   contents:
   - '`lama_translate`'
   - '`lama_translate_`'
+  - '`lama_translate_all`'
 - title: alter lama_dictionary objects
   contents:
   - '`lama_select`'
