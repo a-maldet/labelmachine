@@ -8,18 +8,19 @@ check_translate_general(.data, dictionary, col_new, keep_order,
   err_handler)
 }
 \arguments{
-\item{.data}{The data.frame object which contains the variable that should be relabelled}
+\item{.data}{Either a data frame, a factor or a vector.}
 
 \item{dictionary}{A \link[=new_lama_dictionary]{lama_dictionary} object, holding the translations for various
 variables.}
 
-\item{col_new}{A character vector of the same length as \code{translation} holding
+\item{col_new}{Only used if \code{.data} is a data frame. The argument \code{col} must be
+a character vector of the same length as \code{translation} holding
 the names under which the relabelled variables should be stored in
 the data.frame. If omitted, then it will be assumed that the new column
 names are the same as the column names of the original variables.}
 
 \item{keep_order}{A boolean vector of length one or the same length as the
-number of arguments in \code{...}. If the vector has length one, then the same
+number of translations. If the vector has length one, then the same
 configuration is applied to all variable translations. If the vector has
 the same length as the number of arguments in \code{...}, then the
 to each variable translation there is a corresponding boolean configuration.

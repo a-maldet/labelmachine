@@ -1,33 +1,46 @@
 #' Assign new labels to a variable of a data.frame
 #'
-#' The functions [lama_translate()] and [lama_translate_()] take a data.frame
+#' The functions [lama_translate()] and [lama_translate_()] take a factor,
+#' a vector or a data.frame
 #' and convert one or more of its categorical variables
 #' (not necessarely a factor variable) into factor variables with new labels. 
 #' The function [lama_translate()] uses non-standard evaluation, whereas 
 #' [lama_translate_()] is the standard evaluation alternative.
-#' @param .data The data.frame object which contains the variable that should be relabelled
+#' The functions [lama_translate()] and [lama_translate_()] require different
+#' arguments, depending on the data type passed into argument `.data`.
+#' If `.data` is of type character, logical, numeric or factor, then
+#' the arguments `col` and `col_new` are omitted, since those are only
+#' necessary in the case of data frames.
+#' @param .data Either a data frame, a factor or a vector.
 #' @param dictionary A [lama_dictionary][new_lama_dictionary()] object, holding the translations for various
-#' variables.
-#' @param ... One or more unquoted expressions separated by commas. Use unquoted
-#' arguments that tell which translation should be applied to which column and
-#' which column name the relabelled variable should be assigned to. E.g.
-#' `lama_trans(.data, dict, Y1 = TRANS1(X1), Y2 = TRANS2(Y2))`
-#' to apply the translations \code{TRANS1} and \code{TRANS2} to the data.frame
-#' variables \code{X1} and \code{X2} and save the new labelled variables under
-#' the names \code{Y1} and \code{Y2}.
-#' There are also two abbreviation mechanisms available:
-#' The argument assignement \code{FOO(X)} is the same as \code{X = FOO(X)} and
-#' \code{FOO} is an abbreviation for \code{FOO = FOO(FOO)}.
+#'   variables.
+#' @param ... Only used by [lama_translate()].
+#'   Each argument in `...` is an unquoted expression and defines a translation.
+#'   Use unquoted
+#'   arguments that tell which translation should be applied to which column and
+#'   which column name the relabelled variable should be assigned to. E.g.
+#'   `lama_translate(.data, dict, Y1 = TRANS1(X1), Y2 = TRANS2(Y2))`
+#'   to apply the translations \code{TRANS1} and \code{TRANS2} to the data.frame
+#'   columns \code{X1} and \code{X2} and save the new labelled variables under
+#'   the column names \code{Y1} and \code{Y2}.
+#'   There are also two abbreviation mechanisms available:
+#'   The argument assignement \code{FOO(X)} is the same as \code{X = FOO(X)} and
+#'   \code{FOO} is an abbreviation for \code{FOO = FOO(FOO)}.
+#'   In case, `.data` is not a data frame but a plain factor or vector, then
+#'   the argument `...` must be a single unquoted translation name
+#'   (e.g. `lama_translate(x, dict, TRANS1)`, where `x` is a factor or vector
+#'   and `TRANS1` is the name of the translation, which should be used to assign
+#'   the labels to the values of `x`.)
 #' @param keep_order A boolean vector of length one or the same length as the
-#' number of arguments in \code{...}. If the vector has length one, then the same 
-#' configuration is applied to all variable translations. If the vector has 
-#' the same length as the number of arguments in \code{...}, then the 
-#' to each variable translation there is a corresponding boolean configuration.
-#' If a translated variable in the data.frame is a factor variable,
-#' and the corresponding boolean configuration is set to \code{TRUE}, then the
-#' the order of the original factor variable will be preserved.
+#'   number of translations. If the vector has length one, then the same 
+#'   configuration is applied to all variable translations. If the vector has 
+#'   the same length as the number of arguments in \code{...}, then the 
+#'   to each variable translation there is a corresponding boolean configuration.
+#'   If a translated variable in the data.frame is a factor variable,
+#'   and the corresponding boolean configuration is set to \code{TRUE}, then the
+#'   the order of the original factor variable will be preserved.
 #' @return An extended data.frame, that has a factor variable holding the
-#' assigned labels.
+#'   assigned labels.
 #' @rdname lama_translate
 #' @include lama_dictionary.R
 #' @export
@@ -48,9 +61,9 @@ lama_translate <- function(.data, dictionary, ..., keep_order = FALSE) {
 #'     res = c(1, 2, 3, 2, 2)
 #'   )
 #'   # --- label data.frame variables ---
-#'   # Method-1: Full length assignment
+#'   # Example-1 (data.frame): Full length assignment
 #'   # (apply translation 'subject' to column 'subject' and save it to column 'subject_new')
-#'   # (apply translation 'resul' to column 'res' and save it to column 'res_new')
+#'   # (apply translation 'result' to column 'res' and save it to column 'res_new')
 #'   df_new <- lama_translate(
 #'     df,
 #'     dict,
@@ -59,9 +72,9 @@ lama_translate <- function(.data, dictionary, ..., keep_order = FALSE) {
 #'   )
 #'   str(df_new)
 #'
-#'   # Method-2: Overwrite the original columns (abbreviation)
+#'   # Example-2 (data.frame): Overwrite the original columns (abbreviation)
 #'   # (apply translation 'subject' to column 'subject' and save it to column 'subject')
-#'   # (apply translation 'resul' to column 'res' and save it to column 'res')
+#'   # (apply translation 'result' to column 'res' and save it to column 'res')
 #'   df_new_overwritten <- lama_translate(
 #'     df,
 #'     dict,
@@ -70,9 +83,9 @@ lama_translate <- function(.data, dictionary, ..., keep_order = FALSE) {
 #'   )
 #'   str(df_new_overwritten)
 #'
-#'   # Method-3: Abbreviation if `translation_name == column_name`
+#'   # Example-3 (data.frame): Abbreviation if `translation_name == column_name`
 #'   # (apply translation 'subject' to column 'subject' and save it to column 'subject_new')
-#'   # (apply translation 'resul' to column 'res' and save it to column 'res_new')
+#'   # (apply translation 'result' to column 'res' and save it to column 'res_new')
 #'   df_new_overwritten <- lama_translate(
 #'     df, 
 #'     dict,
@@ -176,29 +189,104 @@ lama_translate.data.frame <- function(.data, dictionary, ..., keep_order = FALSE
   )
 }
 
+#' @rdname lama_translate
+#' @examples
+#'   # Example-4 (vector): Translate a vector
+#'   sub <- c("ma", "en", "ma")
+#'   sub_new <- df_new_overwritten <- lama_translate(
+#'     sub,
+#'     dict,
+#'     subject
+#'   )
+#'   str(sub_new)
+#' 
+#'   # Example-5 (factor): Translate a factor
+#'   sub <- factor(c("ma", "en", "ma"), levels = c("ma", "en"))
+#'   sub_new <- df_new_overwritten <- lama_translate(
+#'     sub,
+#'     dict,
+#'     subject,
+#'     keep_order = TRUE
+#'   )
+#'   str(sub_new)
+#' @export
+lama_translate.default <- function(.data, dictionary, ..., keep_order = FALSE) {
+  err_handler <- composerr("Error while calling 'lama_translate'")
+  if (!is.vector(.data) && !is.factor(.data))
+    err_handler(paste(
+      "The argument '.data' must either be a data frame, a factor or a vector."
+    ))
+  args <- rlang::quos(...)
+  if (length(args) == 0)
+    err_handler(paste(
+      "Name of the used translation is missing",
+      "(e.g. 'lama_translate(x, dict, my_trans)'."
+    ))
+  if (!is.dictionary(dictionary))
+    err_handler("The argument 'dictionary' must be a lama_dictionary class object.")
+  if (!is.logical(keep_order) || length(keep_order) != 1 || is.na(keep_order))
+    err_handler(paste(
+      "The argument 'keep_order' must be a logical.",
+    ))
+  if (length(args) > 1) {
+      warning(paste(
+        "Warning while calling `lama_translate`:",
+        "If the first element is a factor or a vector,",
+        "then only the arguments 'dictionary',  a single argument for '...'",
+        "(the unquoted translation name)",
+        "and the argument 'keep_order' are used and all extra arguments",
+        "will be ignored."
+      ))
+  }
+  x <- args[[1]]
+  x_str <- rlang::as_label(rlang::quo_get_expr(x))
+  if (!rlang::quo_is_symbol(x))
+    err_handler(paste(
+      "The expression",
+      stringify(x_str),
+      "could not be parsed. Pass in the unquoted name of the translation, which",
+      "should be used",
+      "(e.g. 'lama_translate(x, dict, my_trans)'."
+    ))
+  translation <- rlang::quo_name(x)
+  if (!translation %in% names(dictionary))
+    err_handler(paste0(
+      "The translation name '", translation, "' could not be found in the lama_dictionary."
+    ))
+  translate_variable(
+    val = .data,
+    translation = dictionary[[translation]],
+    keep_order = keep_order,
+    err_handler = err_handler
+  )
+}
+
+
 #' @param translation A character vector holding the names of the variable 
-#' translations which
-#' should be used for assigning new labels to the variable. This names must be
-#' a subset of the translation names returned by \code{names(dictionary)}.
-#' @param col A character vector of the same length as \code{translation} holding
-#' the names of the data.frame columns that
-#' should be relabelled. If omitted, then it will be assumed that the column
-#' names are the same as the given translation names in the argument \code{translation}.
-#' @param col_new A character vector of the same length as \code{translation} holding
-#' the names under which the relabelled variables should be stored in
-#' the data.frame. If omitted, then it will be assumed that the new column
-#' names are the same as the column names of the original variables.
+#'   translations which
+#'   should be used for assigning new labels to the variable. This names must be
+#'   a subset of the translation names returned by \code{names(dictionary)}.
+#' @param col Only used if `.data` is a data frame. The argument `col` must be
+#'   a character vector of the same length as \code{translation} holding
+#'   the names of the data.frame columns that
+#'   should be relabelled. If omitted, then it will be assumed that the column
+#'   names are the same as the given translation names in the argument \code{translation}.
+#' @param col_new Only used if `.data` is a data frame. The argument `col` must be
+#'   a character vector of the same length as \code{translation} holding
+#'   the names under which the relabelled variables should be stored in
+#'   the data.frame. If omitted, then it will be assumed that the new column
+#'   names are the same as the column names of the original variables.
 #' @rdname lama_translate
 #' @export
-lama_translate_ <- function(.data, dictionary, translation, col = translation, col_new = col, keep_order = FALSE) {
+lama_translate_ <- function(.data, dictionary, translation, col = translation, col_new = col, keep_order = FALSE, ...) {
   UseMethod("lama_translate_")
 }
 
 #' @rdname lama_translate
 #' @examples
-#'   # Method-4: Using 'lama_translate_'
+#'   # Example-6 (data.frame): Using 'lama_translate_'
 #'   # (apply translation 'subject' to column 'subject' and save it to column 'subject_new')
-#'   # (apply translation 'resul' to column 'res' and save it to column 'res_new')
+#'   # (apply translation 'result' to column 'res' and save it to column 'res_new')
 #'   df_new <- lama_translate_(
 #'     df, 
 #'     dict,
@@ -208,7 +296,7 @@ lama_translate_ <- function(.data, dictionary, translation, col = translation, c
 #'   )
 #'   str(df_new)
 #' @export
-lama_translate_.data.frame <- function(.data, dictionary, translation, col = translation, col_new = col, keep_order = FALSE) {
+lama_translate_.data.frame <- function(.data, dictionary, translation, col = translation, col_new = col, keep_order = FALSE, ...) {
   # --- Check arguments ---
   err_handler <- composerr("Error while calling 'lama_translate_'")
   check_translate_general(.data, dictionary, col_new = col_new, keep_order, err_handler)
@@ -266,6 +354,64 @@ lama_translate_.data.frame <- function(.data, dictionary, translation, col = tra
     ))
   translate_df(.data, dictionary, translation, col, col_new, keep_order, err_handler)
 }
+
+#' @rdname lama_translate
+#' @examples
+#'   # Example-7 (vector): Translate an integer vector
+#'   res <- c(1, 2, 1, 3, 1, 2)
+#'   res_new <- df_new_overwritten <- lama_translate_(
+#'     res,
+#'     dict,
+#'     "result"
+#'   )
+#'   str(res_new)
+#' 
+#'   # Example-8 (factor): Translate a factor
+#'   sub <- factor(c("ma", "en", "ma"), levels = c("ma", "en"))
+#'   sub_new <- df_new_overwritten <- lama_translate_(
+#'     sub,
+#'     dict,
+#'     "subject",
+#'     keep_order = TRUE
+#'   )
+#'   str(sub_new)
+#' @export
+lama_translate_.default <- function(.data, dictionary, translation, ..., keep_order = FALSE) {
+  err_handler <- composerr("Error while calling 'lama_translate_'")
+  if (!is.vector(.data) && !is.factor(.data))
+    err_handler(paste(
+      "The argument '.data' must either be a data frame, a factor or a vector."
+    ))
+  if (!is.dictionary(dictionary))
+    err_handler("The argument 'dictionary' must be a lama_dictionary class object.")
+  if (!is.logical(keep_order) || length(keep_order) != 1 || is.na(keep_order))
+    err_handler(paste(
+      "The argument 'keep_order' must be a logical.",
+    ))
+  if (!is.character(translation) || length(translation) != 1 || is.na(translation))
+    err_handler("The argument 'translation' must be a character string.")
+  if (!translation %in% names(dictionary))
+    err_handler(paste0(
+      "The translation name '", translation, "' could not be found in the lama_dictionary."
+    ))
+  args <- rlang::quos(...)
+  if (length(args) > 0) {
+      warning(paste(
+        "Warning while calling `lama_translate_`:",
+        "If the first element is a factor or a vector,",
+        "then only the arguments 'dictionary',  'translation'",
+        "and 'keep_order' are used and all extra arguments",
+        "will be ignored."
+      ))
+  }
+  translate_variable(
+    val = .data,
+    translation = dictionary[[translation]],
+    keep_order = keep_order,
+    err_handler = err_handler
+  )
+}
+
 
 #' This function relabels several variables in a data.frame
 #'
@@ -329,12 +475,18 @@ translate_variable <- function(val, translation, keep_order, err_handler) {
     ))
   # --- Relabel val ---
   labelling_map <- data.frame(old = old_labels, new = translation)
-  if (is.factor(val) && keep_order) {
+  if (keep_order) {
     # if the old order should be kept, then reorder the labelling map
-    col_levels <- intersect(as.character(levels(val)), old_labels)
+    if (is.factor(val)) {
+      col_levels <- intersect(as.character(levels(val)), old_labels)
+    } else {
+      col_levels <- unique(val)
+      col_levels <- col_levels[!is.na(col_levels)]
+      col_levels <- as.character(col_levels[order(col_levels)])
+    }
     labelling_map <- labelling_map[
-        match(c(col_levels, setdiff(old_labels, col_levels)), old_labels),
-      ]
+      match(c(col_levels, setdiff(old_labels, col_levels)), old_labels),
+    ]
   }
   # set new labels as factor
   labelling_map$new = factor(
@@ -363,7 +515,7 @@ check_translate_general <- function(.data, dictionary, col_new, keep_order, err_
     err_handler("The argument 'dictionary' must be a lama_dictionary class object.")
   if (!is.logical(keep_order) || !length(keep_order) %in% c(1, length(col_new)))
     err_handler(paste(
-      "The argument 'keep_order' must be a character string or a character",
-      "vector with length equal to the number of applied translations."
+      "The argument 'keep_order' must be a logical",
+      "vector of length or length equal to the number of applied translations."
     ))
 }

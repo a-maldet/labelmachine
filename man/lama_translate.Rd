@@ -3,8 +3,10 @@
 \name{lama_translate}
 \alias{lama_translate}
 \alias{lama_translate.data.frame}
+\alias{lama_translate.default}
 \alias{lama_translate_}
 \alias{lama_translate_.data.frame}
+\alias{lama_translate_.default}
 \title{Assign new labels to a variable of a data.frame}
 \usage{
 lama_translate(.data, dictionary, ..., keep_order = FALSE)
@@ -12,31 +14,44 @@ lama_translate(.data, dictionary, ..., keep_order = FALSE)
 \method{lama_translate}{data.frame}(.data, dictionary, ...,
   keep_order = FALSE)
 
+\method{lama_translate}{default}(.data, dictionary, ...,
+  keep_order = FALSE)
+
 lama_translate_(.data, dictionary, translation, col = translation,
-  col_new = col, keep_order = FALSE)
+  col_new = col, keep_order = FALSE, ...)
 
 \method{lama_translate_}{data.frame}(.data, dictionary, translation,
-  col = translation, col_new = col, keep_order = FALSE)
+  col = translation, col_new = col, keep_order = FALSE, ...)
+
+\method{lama_translate_}{default}(.data, dictionary, translation, ...,
+  keep_order = FALSE)
 }
 \arguments{
-\item{.data}{The data.frame object which contains the variable that should be relabelled}
+\item{.data}{Either a data frame, a factor or a vector.}
 
 \item{dictionary}{A \link[=new_lama_dictionary]{lama_dictionary} object, holding the translations for various
 variables.}
 
-\item{...}{One or more unquoted expressions separated by commas. Use unquoted
+\item{...}{Only used by \code{\link[=lama_translate]{lama_translate()}}.
+Each argument in \code{...} is an unquoted expression and defines a translation.
+Use unquoted
 arguments that tell which translation should be applied to which column and
 which column name the relabelled variable should be assigned to. E.g.
-\code{lama_trans(.data, dict, Y1 = TRANS1(X1), Y2 = TRANS2(Y2))}
+\code{lama_translate(.data, dict, Y1 = TRANS1(X1), Y2 = TRANS2(Y2))}
 to apply the translations \code{TRANS1} and \code{TRANS2} to the data.frame
-variables \code{X1} and \code{X2} and save the new labelled variables under
-the names \code{Y1} and \code{Y2}.
+columns \code{X1} and \code{X2} and save the new labelled variables under
+the column names \code{Y1} and \code{Y2}.
 There are also two abbreviation mechanisms available:
 The argument assignement \code{FOO(X)} is the same as \code{X = FOO(X)} and
-\code{FOO} is an abbreviation for \code{FOO = FOO(FOO)}.}
+\code{FOO} is an abbreviation for \code{FOO = FOO(FOO)}.
+In case, \code{.data} is not a data frame but a plain factor or vector, then
+the argument \code{...} must be a single unquoted translation name
+(e.g. \code{lama_translate(x, dict, TRANS1)}, where \code{x} is a factor or vector
+and \code{TRANS1} is the name of the translation, which should be used to assign
+the labels to the values of \code{x}.)}
 
 \item{keep_order}{A boolean vector of length one or the same length as the
-number of arguments in \code{...}. If the vector has length one, then the same
+number of translations. If the vector has length one, then the same
 configuration is applied to all variable translations. If the vector has
 the same length as the number of arguments in \code{...}, then the
 to each variable translation there is a corresponding boolean configuration.
@@ -49,12 +64,14 @@ translations which
 should be used for assigning new labels to the variable. This names must be
 a subset of the translation names returned by \code{names(dictionary)}.}
 
-\item{col}{A character vector of the same length as \code{translation} holding
+\item{col}{Only used if \code{.data} is a data frame. The argument \code{col} must be
+a character vector of the same length as \code{translation} holding
 the names of the data.frame columns that
 should be relabelled. If omitted, then it will be assumed that the column
 names are the same as the given translation names in the argument \code{translation}.}
 
-\item{col_new}{A character vector of the same length as \code{translation} holding
+\item{col_new}{Only used if \code{.data} is a data frame. The argument \code{col} must be
+a character vector of the same length as \code{translation} holding
 the names under which the relabelled variables should be stored in
 the data.frame. If omitted, then it will be assumed that the new column
 names are the same as the column names of the original variables.}
@@ -64,11 +81,17 @@ An extended data.frame, that has a factor variable holding the
 assigned labels.
 }
 \description{
-The functions \code{\link[=lama_translate]{lama_translate()}} and \code{\link[=lama_translate_]{lama_translate_()}} take a data.frame
+The functions \code{\link[=lama_translate]{lama_translate()}} and \code{\link[=lama_translate_]{lama_translate_()}} take a factor,
+a vector or a data.frame
 and convert one or more of its categorical variables
 (not necessarely a factor variable) into factor variables with new labels.
 The function \code{\link[=lama_translate]{lama_translate()}} uses non-standard evaluation, whereas
 \code{\link[=lama_translate_]{lama_translate_()}} is the standard evaluation alternative.
+The functions \code{\link[=lama_translate]{lama_translate()}} and \code{\link[=lama_translate_]{lama_translate_()}} require different
+arguments, depending on the data type passed into argument \code{.data}.
+If \code{.data} is of type character, logical, numeric or factor, then
+the arguments \code{col} and \code{col_new} are omitted, since those are only
+necessary in the case of data frames.
 }
 \examples{
   # --- initialize lama_dictinoary ---
@@ -82,9 +105,9 @@ The function \code{\link[=lama_translate]{lama_translate()}} uses non-standard e
     res = c(1, 2, 3, 2, 2)
   )
   # --- label data.frame variables ---
-  # Method-1: Full length assignment
+  # Example-1 (data.frame): Full length assignment
   # (apply translation 'subject' to column 'subject' and save it to column 'subject_new')
-  # (apply translation 'resul' to column 'res' and save it to column 'res_new')
+  # (apply translation 'result' to column 'res' and save it to column 'res_new')
   df_new <- lama_translate(
     df,
     dict,
@@ -93,9 +116,9 @@ The function \code{\link[=lama_translate]{lama_translate()}} uses non-standard e
   )
   str(df_new)
 
-  # Method-2: Overwrite the original columns (abbreviation)
+  # Example-2 (data.frame): Overwrite the original columns (abbreviation)
   # (apply translation 'subject' to column 'subject' and save it to column 'subject')
-  # (apply translation 'resul' to column 'res' and save it to column 'res')
+  # (apply translation 'result' to column 'res' and save it to column 'res')
   df_new_overwritten <- lama_translate(
     df,
     dict,
@@ -104,9 +127,9 @@ The function \code{\link[=lama_translate]{lama_translate()}} uses non-standard e
   )
   str(df_new_overwritten)
 
-  # Method-3: Abbreviation if `translation_name == column_name`
+  # Example-3 (data.frame): Abbreviation if `translation_name == column_name`
   # (apply translation 'subject' to column 'subject' and save it to column 'subject_new')
-  # (apply translation 'resul' to column 'res' and save it to column 'res_new')
+  # (apply translation 'result' to column 'res' and save it to column 'res_new')
   df_new_overwritten <- lama_translate(
     df, 
     dict,
@@ -114,9 +137,27 @@ The function \code{\link[=lama_translate]{lama_translate()}} uses non-standard e
     res_new = result(res)
   )
   str(df_new_overwritten)
-  # Method-4: Using 'lama_translate_'
+  # Example-4 (vector): Translate a vector
+  sub <- c("ma", "en", "ma")
+  sub_new <- df_new_overwritten <- lama_translate(
+    sub,
+    dict,
+    subject
+  )
+  str(sub_new)
+
+  # Example-5 (factor): Translate a factor
+  sub <- factor(c("ma", "en", "ma"), levels = c("ma", "en"))
+  sub_new <- df_new_overwritten <- lama_translate(
+    sub,
+    dict,
+    subject,
+    keep_order = TRUE
+  )
+  str(sub_new)
+  # Example-6 (data.frame): Using 'lama_translate_'
   # (apply translation 'subject' to column 'subject' and save it to column 'subject_new')
-  # (apply translation 'resul' to column 'res' and save it to column 'res_new')
+  # (apply translation 'result' to column 'res' and save it to column 'res_new')
   df_new <- lama_translate_(
     df, 
     dict,
@@ -125,4 +166,22 @@ The function \code{\link[=lama_translate]{lama_translate()}} uses non-standard e
     col_new = c("subject_new", "res_new")
   )
   str(df_new)
+  # Example-7 (vector): Translate an integer vector
+  res <- c(1, 2, 1, 3, 1, 2)
+  res_new <- df_new_overwritten <- lama_translate_(
+    res,
+    dict,
+    "result"
+  )
+  str(res_new)
+
+  # Example-8 (factor): Translate a factor
+  sub <- factor(c("ma", "en", "ma"), levels = c("ma", "en"))
+  sub_new <- df_new_overwritten <- lama_translate_(
+    sub,
+    dict,
+    "subject",
+    keep_order = TRUE
+  )
+  str(sub_new)
 }

@@ -25,10 +25,14 @@ Collate:
     'lama_select.R'
     'lama_rename.R'
     'lama_translate.R'
+    'lama_translate_all.R'
     'lama_write.R'
 Suggests: 
     testthat (>= 2.1.0),
     roxygen2 (>= 6.1.1),
     magrittr (>= 1.5),
     rlang (>= 0.4.0),
-    covr
+    covr,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
