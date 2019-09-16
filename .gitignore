@@ -2,3 +2,4 @@
 /*.Rcheck/
 docs/
 .Rproj.user
+inst/doc
