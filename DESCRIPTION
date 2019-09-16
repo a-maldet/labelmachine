@@ -15,8 +15,6 @@ RoxygenNote: 6.1.1
 Collate: 
     'composerr.R'
     'imports.R'
-    'lama_check.R'
-    'lappli.R'
     'utilities.R'
     'lama_dictionary.R'
     'lama_merge.R'
@@ -27,6 +25,7 @@ Collate:
     'lama_translate.R'
     'lama_translate_all.R'
     'lama_write.R'
+    'lappli.R'
 Suggests: 
     testthat (>= 2.1.0),
     roxygen2 (>= 6.1.1),
