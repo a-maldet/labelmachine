@@ -86,6 +86,7 @@ str(df_new)
   in different projects sharing similare data.
 
 ## Further reading
+
 * [Get started]: A simple guide
 * [Creating lama-dictionaries]
 * [Translate variables]
@@ -95,7 +96,7 @@ str(df_new)
 
 [GPL-3]
   
-[Get started]:  https://a-maldet.github.io/labelmachine/articles/labelmachine.html
+[Get started]: https://a-maldet.github.io/labelmachine/articles/labelmachine.html
 [Creating lama-dictionaries]: https://a-maldet.github.io/labelmachine/articles/create_dictionaries.html
 [Altering lama-dictionaries]: https://a-maldet.github.io/labelmachine/articles/alter_dictionaries.html
 [Translating variables]: https://a-maldet.github.io/labelmachine/articles/translate.html
