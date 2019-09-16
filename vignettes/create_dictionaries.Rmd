@@ -78,7 +78,7 @@ should be labelled with the string `"Missed"`.
 The last expression `"0" = NA` given in translation `res` tells that
 all zero values `0` should be mapped onto the missing value symbol `NA`.
 
-<img src = "../reference/figures/vignette_create_dictionary.png" style = "max-width: 450px">
+<img src = "../reference/figures/vignette_create_dictionary.png" style = "width: 100%; max-width: 450px">
 </img>
 
 ## From a list object holding translations
