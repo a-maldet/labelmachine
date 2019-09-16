@@ -9,11 +9,11 @@ p>a, a{
 }
 
 body{
-    font-family: 'Raleway', sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 code{
-    font-family: 'Ubuntu Mono', monospace;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 pre {

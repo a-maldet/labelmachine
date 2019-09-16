@@ -1,0 +1,9 @@
+sub:
+  eng: English
+  mat: Mathematics
+  gym: Gymnastics
+res:
+  '1': Good
+  '2': Passed
+  '3': Not passed
+  NA_: Missed
