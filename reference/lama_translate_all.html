@@ -45,14 +45,13 @@
   
 
 <meta property="og:title" content="Assign new labels to all variables of a data.frame — lama_translate_all" />
-<meta property="og:description" content="Converts all variables of a data frame .data,
-which have a translation of the same name in the lama-dictionary dictionary
+<meta property="og:description" content="Converts all variables (which have a translation in the given lama-dictionary)
+of a data frame .data
 into factor variables with new labels.
 This function a special version of the function lama_translate().
 The difference to lama_translate() is, that when using lama_translate_all()
-the translations in dictionary, which should be used, must have exactly
-the same names as the columns in the data frame .data, to which they
-should be applied." />
+the used translations in dictionary must have the exact
+same names as the corresponding columns in the data frame .data." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -146,14 +145,13 @@ should be applied." />
     </div>
 
     <div class="ref-description">
-    <p>Converts all variables of a data frame <code>.data</code>,
-which have a translation of the same name in the lama-dictionary <code>dictionary</code>
+    <p>Converts all variables (which have a translation in the given lama-dictionary)
+of a data frame <code>.data</code>
 into factor variables with new labels.
 This function a special version of the function <code>lama_translate()</code>.
 The difference to <code>lama_translate()</code> is, that when using <code>lama_translate_all()</code>
-the translations in <code>dictionary</code>, which should be used, must have exactly
-the same names as the columns in the data frame <code>.data</code>, to which they
-should be applied.</p>
+the used translations in <code>dictionary</code> must have the exact
+same names as the corresponding columns in the data frame <code>.data</code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>lama_translate_all</span>(<span class='no'>.data</span>, <span class='no'>dictionary</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='st'>""</span>,
