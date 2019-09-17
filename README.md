@@ -28,6 +28,12 @@ Usage
 Let **df** be a data.frame with marks and subjects, which should be translated
 
 ``` r
+df <- data.frame(
+  pupil_id = c(1, 1, 2, 2, 3),
+  subject = c("en", "ma", "ma", "en", "en"),
+  result = c(2, 1, 3, 2, NA),
+  stringsAsFactors = FALSE
+)
 df
 ```
 
@@ -73,7 +79,7 @@ str(df_new)
 
     ## 'data.frame':    5 obs. of  5 variables:
     ##  $ pupil_id   : num  1 1 2 2 3
-    ##  $ subject    : Factor w/ 2 levels "en","ma": 1 2 2 1 1
+    ##  $ subject    : chr  "en" "ma" "ma" "en" ...
     ##  $ result     : num  2 1 3 2 NA
     ##  $ subject_new: Factor w/ 3 levels "English","Mathematics",..: 1 2 2 1 1
     ##  $ result_new : Factor w/ 4 levels "Excellent","Satisfying",..: 2 1 3 2 4

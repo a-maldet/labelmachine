@@ -31,10 +31,6 @@ pkgdown_link <- function(text, file) {
 }
 ```
 
-```{r setup}
-library(labelmachine)
-```
-
 `labelmachine` is an **R** package that helps assigning meaningful
 labels to R data sets.
 Manage your labels in **yaml** files, so called **lama-dictionary** files.
@@ -55,15 +51,13 @@ devtools::install_github('a-maldet/labelmachine', build_opts = NULL)
 
 Let us assume, you want to label the following data.frame `df`:
 
-```{r, include = FALSE}
+```{r}
 df <- data.frame(
   pupil_id = rep(1:4, each = 3),
   subject = rep(c("eng", "mat", "gym"), 4),
-  result = c(1, 2, 2, NA, 2, NA, 1, 2, 1, 2, 3, NA),
+  result = c(1, 2, 2, NA, 2, NA, 1, 0, 1, 2, 3, NA),
   stringsAsFactors = FALSE
 )
-```
-```{r}
 df
 ```
 
@@ -80,8 +74,16 @@ With the command `new_lama_dictionary()` we can create such a lama-dictionary:
 library(labelmachine)
 dict <- new_lama_dictionary(
   sub = c(eng = "English", mat = "Mathematics", gym = "Gymnastics"),
-  res = c("1" = "Good", "2" = "Passed", "3" = "Not passed", NA_ = "Missed")
+  res = c(
+    "1" = "Good",
+    "2" = "Passed",
+    "3" = "Not passed",
+    "4" = "Not passed",
+    NA_ = "Missed",
+    "0" = NA
+  )
 )
+dict
 ```
 
 Each entry in `dict` is a translation for a variable (column) of the
@@ -124,10 +126,6 @@ more detail in [Translating variables].
 
 With the command `lama_write` it is possible to save the lama-dictionary object
 to a **yaml** file:
-```{r, include = FALSE}
-dict %>%
-  lama_write(fig_path("dictionary.yaml"))
-```
 ```{r, eval = FALSE}
 dict %>%
   lama_write("dictionary.yaml")
@@ -139,10 +137,6 @@ see `r pkgdown_link("dictionary.yaml", "dictionary.yaml")`.
 Lama-dictionary files make it easy to share lama-dictionaries with
 other projects holding similar data structures. With the command `lama_read`
 a lama-dictionary file can be read:
-
-```{r, include = FALSE}
-dict <- lama_read(fig_path("dictionary.yaml"))
-```
 
 ```{r, eval = FALSE}
 dict <- lama_read("dictionary.yaml")
