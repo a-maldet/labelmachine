@@ -96,7 +96,7 @@
       <h1>Get started</h1>
                         <h4 class="author">Adrian Maldet</h4>
             
-            <h4 class="date">2019-09-16</h4>
+            <h4 class="date">2019-09-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/a-maldet/labelmachine/blob/master/vignettes/labelmachine.Rmd"><code>vignettes/labelmachine.Rmd</code></a></small>
       <div class="hidden name"><code>labelmachine.Rmd</code></div>
@@ -105,7 +105,6 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(labelmachine)</a></code></pre></div>
 <p><code>labelmachine</code> is an <strong>R</strong> package that helps assigning meaningful labels to R data sets. Manage your labels in <strong>yaml</strong> files, so called <strong>lama-dictionary</strong> files. This makes it very easy using the same label translations in multiple projects that share similar data structure.</p>
 <blockquote>
 <p>Labelling your data can be easy!</p>
@@ -113,69 +112,94 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># Install development version from GitHub</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">'a-maldet/labelmachine'</span>, <span class="dt">build_opts =</span> <span class="ot">NULL</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># Install development version from GitHub</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">'a-maldet/labelmachine'</span>, <span class="dt">build_opts =</span> <span class="ot">NULL</span>)</a></code></pre></div>
 </div>
 <div id="the-example-data-frame" class="section level2">
 <h2 class="hasAnchor">
 <a href="#the-example-data-frame" class="anchor"></a>The example data frame</h2>
 <p>Let us assume, you want to label the following data.frame <code>df</code>:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">df</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt;    pupil_id subject result</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; 1         1     eng      1</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; 2         1     mat      2</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt; 3         1     gym      2</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; 4         2     eng     NA</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; 5         2     mat      2</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; 6         2     gym     NA</span></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; 7         3     eng      1</span></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt; 8         3     mat      2</span></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#&gt; 9         3     gym      1</span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#&gt; 10        4     eng      2</span></a>
-<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#&gt; 11        4     mat      3</span></a>
-<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt; 12        4     gym     NA</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="dt">pupil_id =</span> <span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dt">each =</span> <span class="dv">3</span>),</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="dt">subject =</span> <span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"eng"</span>, <span class="st">"mat"</span>, <span class="st">"gym"</span>), <span class="dv">4</span>),</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="dt">result =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="ot">NA</span>, <span class="dv">2</span>, <span class="ot">NA</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="ot">NA</span>),</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">  <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">)</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">df</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt;    pupil_id subject result</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; 1         1     eng      1</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; 2         1     mat      2</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt; 3         1     gym      2</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt; 4         2     eng     NA</span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt; 5         2     mat      2</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt; 6         2     gym     NA</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt; 7         3     eng      1</span></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; 8         3     mat      0</span></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt; 9         3     gym      1</span></a>
+<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#&gt; 10        4     eng      2</span></a>
+<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt; 11        4     mat      3</span></a>
+<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">#&gt; 12        4     gym     NA</span></a></code></pre></div>
 <p>The column <code>subject</code> contains the subject codes the pupils were tested in and <code>result</code> contains the test results.</p>
 </div>
 <div id="your-first-lama-dictionary" class="section level2">
 <h2 class="hasAnchor">
 <a href="#your-first-lama-dictionary" class="anchor"></a>Your first lama-dictionary</h2>
 <p>In order to assign labels to the values in the columns of <code>df</code>, we need a <strong>lama-dictionary</strong> which holds the translations of the variables. With the command <code><a href="https://rdrr.io/pkg/labelmachine/man/new_lama_dictionary.html">new_lama_dictionary()</a></code> we can create such a lama-dictionary:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(labelmachine)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">dict &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/labelmachine/man/new_lama_dictionary.html">new_lama_dictionary</a></span>(</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">  <span class="dt">sub =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dt">eng =</span> <span class="st">"English"</span>, <span class="dt">mat =</span> <span class="st">"Mathematics"</span>, <span class="dt">gym =</span> <span class="st">"Gymnastics"</span>),</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">  <span class="dt">res =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"1"</span> =<span class="st"> "Good"</span>, <span class="st">"2"</span> =<span class="st"> "Passed"</span>, <span class="st">"3"</span> =<span class="st"> "Not passed"</span>, <span class="dt">NA_ =</span> <span class="st">"Missed"</span>)</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(labelmachine)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">dict &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/labelmachine/man/new_lama_dictionary.html">new_lama_dictionary</a></span>(</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">  <span class="dt">sub =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dt">eng =</span> <span class="st">"English"</span>, <span class="dt">mat =</span> <span class="st">"Mathematics"</span>, <span class="dt">gym =</span> <span class="st">"Gymnastics"</span>),</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">  <span class="dt">res =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">    <span class="st">"1"</span> =<span class="st"> "Good"</span>,</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">    <span class="st">"2"</span> =<span class="st"> "Passed"</span>,</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">    <span class="st">"3"</span> =<span class="st"> "Not passed"</span>,</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">    <span class="st">"4"</span> =<span class="st"> "Not passed"</span>,</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">    <span class="dt">NA_ =</span> <span class="st">"Missed"</span>,</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">    <span class="st">"0"</span> =<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">  )</a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">)</a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">dict</a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">#&gt; --- lama_dictionary ---</span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt; Variable 'sub':</span></a>
+<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">#&gt;           eng           mat           gym </span></a>
+<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co">#&gt;     "English" "Mathematics"  "Gymnastics" </span></a>
+<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="co">#&gt; Variable 'res':</span></a>
+<a class="sourceLine" id="cb3-21" data-line-number="21"><span class="co">#&gt;            1            2            3            4          NA_ </span></a>
+<a class="sourceLine" id="cb3-22" data-line-number="22"><span class="co">#&gt;       "Good"     "Passed" "Not passed" "Not passed"     "Missed" </span></a>
+<a class="sourceLine" id="cb3-23" data-line-number="23"><span class="co">#&gt;            0 </span></a>
+<a class="sourceLine" id="cb3-24" data-line-number="24"><span class="co">#&gt;           NA</span></a></code></pre></div>
 <p>Each entry in <code>dict</code> is a translation for a variable (column) of the data frame <code>df</code>. The translation <code>sub</code> can be used to assig labels to the values given in column <code>subject</code> in <code>df</code> and translation <code>res</code> can be used to assign labels to the values in column <code>result</code> in <code>df</code>. The expression <code>NA_</code> is used to escape the missing value symbol <code>NA</code>. Hence, the last assignment <code>NA_ = "Missed"</code> defines that missing values should be labelled with the string <code>"Missed"</code>. For further details on creating lama-dictionaries see <a href="https://a-maldet.github.io/labelmachine/articles/create_dictionaries.html">Creating lama-dictionaries</a> and <a href="https://a-maldet.github.io/labelmachine/articles/alter_dictionaries.html">Altering lama-dictionaries</a>.</p>
 </div>
 <div id="translate-the-data-frame-columns" class="section level2">
 <h2 class="hasAnchor">
 <a href="#translate-the-data-frame-columns" class="anchor"></a>Translate the data frame columns</h2>
 <p>With the command <code>lama_translate</code>, we can use the lama-dictionary <code>dict</code> in order to translate the variables given in data frame <code>df</code>:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(magrittr)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">df_new &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_translate</a></span>(</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">    dict,</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">    <span class="dt">subject_lab =</span> <span class="kw"><a href="https://rdrr.io/r/base/grep.html">sub</a></span>(subject),</a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">    <span class="dt">result_lab =</span> <span class="kw">res</span>(result)</a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">  )</a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(df_new)</a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt; 'data.frame':    12 obs. of  5 variables:</span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt;  $ pupil_id   : int  1 1 1 2 2 2 3 3 3 4 ...</span></a>
-<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt;  $ subject    : chr  "eng" "mat" "gym" "eng" ...</span></a>
-<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt;  $ result     : num  1 2 2 NA 2 NA 1 2 1 2 ...</span></a>
-<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt;  $ subject_lab: Factor w/ 3 levels "English","Mathematics",..: 1 2 3 1 2 3 1 2 3 1 ...</span></a>
-<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">#&gt;  $ result_lab : Factor w/ 4 levels "Good","Passed",..: 1 2 2 4 2 4 1 2 1 2 ...</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(magrittr)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">df_new &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_translate</a></span>(</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">    dict,</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">    <span class="dt">subject_lab =</span> <span class="kw"><a href="https://rdrr.io/r/base/grep.html">sub</a></span>(subject),</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">    <span class="dt">result_lab =</span> <span class="kw">res</span>(result)</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">  )</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(df_new)</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; 'data.frame':    12 obs. of  5 variables:</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt;  $ pupil_id   : int  1 1 1 2 2 2 3 3 3 4 ...</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt;  $ subject    : chr  "eng" "mat" "gym" "eng" ...</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt;  $ result     : num  1 2 2 NA 2 NA 1 0 1 2 ...</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt;  $ subject_lab: Factor w/ 3 levels "English","Mathematics",..: 1 2 3 1 2 3 1 2 3 1 ...</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt;  $ result_lab : Factor w/ 4 levels "Good","Passed",..: 1 2 2 4 2 4 1 NA 1 2 ...</span></a></code></pre></div>
 <p>In this command we used the pipe operator exported by the <a href="https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html">magrittr</a> package, which chains multiple command lines together in a single expression. As we can see, the resulting data frame <code>df_new</code> now holds two extra columns <code>subject_lab</code> and <code>result_lab</code> holding the factor variables with the right labels. The command <code>lama_translate</code> has multiple features, which are described in more detail in <a href="https://a-maldet.github.io/labelmachine/articles/translate.html">Translating variables</a>.</p>
 </div>
 <div id="save-your-lama-dictionary" class="section level2">
 <h2 class="hasAnchor">
 <a href="#save-your-lama-dictionary" class="anchor"></a>Save your lama-dictionary</h2>
 <p>With the command <code>lama_write</code> it is possible to save the lama-dictionary object to a <strong>yaml</strong> file:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">dict <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/labelmachine/man/lama_write.html">lama_write</a></span>(<span class="st">"dictionary.yaml"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">dict <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/labelmachine/man/lama_write.html">lama_write</a></span>(<span class="st">"dictionary.yaml"</span>)</a></code></pre></div>
 <p>The resulting <strong>yaml</strong> file is a plain text file with a special text structure, see <a href="https://a-maldet.github.io/labelmachine/articles/labelmachine_files/figure-html/dictionary.yaml">dictionary.yaml</a>.</p>
 <p>Lama-dictionary files make it easy to share lama-dictionaries with other projects holding similar data structures. With the command <code>lama_read</code> a lama-dictionary file can be read:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">dict &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/labelmachine/man/lama_read.html">lama_read</a></span>(<span class="st">"dictionary.yaml"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">dict &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/labelmachine/man/lama_read.html">lama_read</a></span>(<span class="st">"dictionary.yaml"</span>)</a></code></pre></div>
 </div>
 <div id="further-reading" class="section level2">
 <h2 class="hasAnchor">
