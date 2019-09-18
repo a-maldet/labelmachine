@@ -49,7 +49,7 @@ The functions \code{\link[=lama_mutate]{lama_mutate()}} and \code{\link[=lama_mu
 delete or append a translations to a
 \link[=new_lama_dictionary]{lama_dictionary} object.
 The function \code{\link[=lama_mutate]{lama_mutate()}} uses named arguments to assign the translations
-to the new names (similar to \code{\link[dplyr:mutate]{dplyr::mutate()}}), whereas the function
+to the new names (similar to \code{dplyr::mutate}), whereas the function
 \code{\link[=lama_mutate_]{lama_mutate_()}} is takes a character string \code{key} holding the
 name to which the translation should be assigned and a named character
 vector \code{translation} holding the actual translation mapping.

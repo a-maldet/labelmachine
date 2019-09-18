@@ -5,7 +5,7 @@
 #' delete or append a translations to a
 #' [lama_dictionary][new_lama_dictionary()] object.
 #' The function [lama_mutate()] uses named arguments to assign the translations
-#' to the new names (similar to [dplyr::mutate()]), whereas the function
+#' to the new names (similar to \code{dplyr::mutate}), whereas the function
 #' [lama_mutate_()] is takes a character string \code{key} holding the
 #' name to which the translation should be assigned and a named character
 #' vector \code{translation} holding the actual translation mapping.
