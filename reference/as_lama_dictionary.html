@@ -117,12 +117,18 @@ configured by a character vector given in argument ordering.
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/alter_dictionaries.html">Altering lama-dictionaries</a>
+    </li>
+    <li>
       <a href="../articles/create_dictionaries.html">Creating lama-dictionaries</a>
     </li>
     <li>
       <a href="../articles/translate.html">Translate variables</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -330,12 +336,13 @@ translations with different names
 <code>area = c("0" = "urban", "1" = "rural")</code>).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>  <span class='co'># initialize lama_dictionary</span>
-  <span class='co'># passing each translation as a named argument</span>
-  <span class='no'>dict</span> <span class='kw'>&lt;-</span> <span class='fu'>as.lama_dictionary</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
+    <pre class="examples"><div class='input'>  <span class='co'>## Example-1: Initialize a lama-dictionary from a list oject</span>
+  <span class='co'>##            holding the translations</span>
+  <span class='no'>obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
     <span class='kw'>country</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>uk</span> <span class='kw'>=</span> <span class='st'>"United Kingdom"</span>, <span class='kw'>fr</span> <span class='kw'>=</span> <span class='st'>"France"</span>, <span class='kw'>NA_</span> <span class='kw'>=</span> <span class='st'>"other countries"</span>),
     <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>en</span> <span class='kw'>=</span> <span class='st'>"English"</span>, <span class='kw'>fr</span> <span class='kw'>=</span> <span class='st'>"French"</span>)
-  ))
+  )
+  <span class='no'>dict</span> <span class='kw'>&lt;-</span> <span class='fu'>as.lama_dictionary</span>(<span class='no'>obj</span>)
   <span class='no'>dict</span></div><div class='output co'>#&gt; 
 #&gt; --- lama_dictionary ---
 #&gt; Variable 'country':
@@ -345,23 +352,24 @@ translations with different names
 #&gt; Variable 'language':
 #&gt;        en        fr 
 #&gt; "English"  "French" 
-#&gt; </div><div class='input'>  <span class='co'># initialize lama_dictionary</span>
-  <span class='co'># from a data.frame holding the label mappings</span>
-  <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
+#&gt; </div><div class='input'>
+  <span class='co'>## Example-2: Initialize a lama-dictionary from a data frame</span>
+  <span class='co'>##            holding the label assignment rules</span>
+  <span class='no'>df_map</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
     <span class='kw'>c_old</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"uk"</span>, <span class='st'>"fr"</span>, <span class='fl'>NA</span>),
     <span class='kw'>c_new</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"United Kingdom"</span>, <span class='st'>"France"</span>, <span class='st'>"other countries"</span>),
     <span class='kw'>l_old</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"en"</span>, <span class='st'>"fr"</span>, <span class='fl'>NA</span>),
     <span class='kw'>l_new</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"English"</span>, <span class='st'>"French"</span>, <span class='fl'>NA</span>), <span class='kw'>levels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"French"</span>, <span class='st'>"English"</span>))
   )
   <span class='no'>dict</span> <span class='kw'>&lt;-</span> <span class='fu'>as.lama_dictionary</span>(
-    <span class='no'>df</span>,
+    <span class='no'>df_map</span>,
     <span class='kw'>translation</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"country"</span>, <span class='st'>"language"</span>),
     <span class='kw'>col_old</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"c_old"</span>, <span class='st'>"l_old"</span>),
     <span class='kw'>col_new</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"c_new"</span>, <span class='st'>"l_new"</span>),
     <span class='kw'>ordering</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"row"</span>, <span class='st'>"new"</span>)
   )
-  <span class='co'># 'country' is ordered as in the df</span>
-  <span class='co'># 'language' is ordered differently (French first)</span>
+  <span class='co'># 'country' is ordered as in the 'df_map'</span>
+  <span class='co'># 'language' is ordered differently ("French" first)</span>
   <span class='no'>dict</span></div><div class='output co'>#&gt; 
 #&gt; --- lama_dictionary ---
 #&gt; Variable 'country':

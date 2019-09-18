@@ -111,12 +111,18 @@ same names as the corresponding columns in the data frame .data." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/alter_dictionaries.html">Altering lama-dictionaries</a>
+    </li>
+    <li>
       <a href="../articles/create_dictionaries.html">Creating lama-dictionaries</a>
     </li>
     <li>
       <a href="../articles/translate.html">Translate variables</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -204,18 +210,19 @@ be preserved.</p></td>
 assigned labels.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>  <span class='co'># --- initialize lama_dictinoary ---</span>
+    <pre class="examples"><div class='input'>  <span class='co'>## initialize lama_dictinoary</span>
   <span class='no'>dict</span> <span class='kw'>&lt;-</span> <span class='fu'>new_lama_dictionary</span>(
     <span class='kw'>subject</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>en</span> <span class='kw'>=</span> <span class='st'>"English"</span>, <span class='kw'>ma</span> <span class='kw'>=</span> <span class='st'>"Mathematics"</span>),
     <span class='kw'>result</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"1"</span> <span class='kw'>=</span> <span class='st'>"Very good"</span>, <span class='st'>"2"</span> <span class='kw'>=</span> <span class='st'>"Good"</span>, <span class='st'>"3"</span> <span class='kw'>=</span> <span class='st'>"Not so good"</span>)
   )
+  <span class='co'>## data frame which should be translated</span>
   <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
     <span class='kw'>pupil</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='fl'>3</span>),
     <span class='kw'>subject</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"en"</span>, <span class='st'>"ma"</span>, <span class='st'>"ma"</span>, <span class='st'>"en"</span>, <span class='st'>"en"</span>),
     <span class='kw'>result</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>2</span>, <span class='fl'>2</span>)
   )
-  <span class='co'># --- label data.frame variables ---</span>
-  <span class='co'># Example-1 (data.frame): Use prefix</span>
+
+  <span class='co'>## Example-1: Use 'prefix'</span>
   <span class='co'># (apply translation 'subject' to column 'subject' and save it to column 'new_subject')</span>
   <span class='co'># (apply translation 'result' to column 'result' and save it to column 'new_result')</span>
   <span class='no'>df_new</span> <span class='kw'>&lt;-</span> <span class='fu'>lama_translate_all</span>(<span class='no'>df</span>, <span class='no'>dict</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"new_"</span>)
@@ -225,7 +232,7 @@ assigned labels.</p>
 #&gt;  $ result     : num  1 2 3 2 2
 #&gt;  $ new_subject: Factor w/ 2 levels "English","Mathematics": 1 2 2 1 1
 #&gt;  $ new_result : Factor w/ 3 levels "Very good","Good",..: 1 2 3 2 2</div><div class='input'>
-  <span class='co'># Example-2 (data.frame): Use suffix</span>
+  <span class='co'># Example-2: Use 'suffix'</span>
   <span class='co'># (apply translation 'subject' to column 'subject' and save it to column 'subject_new')</span>
   <span class='co'># (apply translation 'result' to column 'result' and save it to column 'result_new')</span>
   <span class='no'>df_new</span> <span class='kw'>&lt;-</span> <span class='fu'>lama_translate_all</span>(<span class='no'>df</span>, <span class='no'>dict</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='st'>"_new"</span>)
@@ -235,7 +242,7 @@ assigned labels.</p>
 #&gt;  $ result     : num  1 2 3 2 2
 #&gt;  $ subject_new: Factor w/ 2 levels "English","Mathematics": 1 2 2 1 1
 #&gt;  $ result_new : Factor w/ 3 levels "Very good","Good",..: 1 2 3 2 2</div><div class='input'>
-  <span class='co'># Example-3 (data.frame): Use fn_colname</span>
+  <span class='co'># Example-3: Use 'fn_colname'</span>
   <span class='co'># (apply translation 'subject' to column 'subject' and save it to column 'SUBJECT')</span>
   <span class='co'># (apply translation 'result' to column 'result' and save it to column 'RESULT')</span>
   <span class='no'>df_new</span> <span class='kw'>&lt;-</span> <span class='fu'>lama_translate_all</span>(<span class='no'>df</span>, <span class='no'>dict</span>, <span class='kw'>fn_colname</span> <span class='kw'>=</span> <span class='no'>toupper</span>)

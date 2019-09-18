@@ -65,12 +65,18 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/alter_dictionaries.html">Altering lama-dictionaries</a>
+    </li>
+    <li>
       <a href="../articles/create_dictionaries.html">Creating lama-dictionaries</a>
     </li>
     <li>
       <a href="../articles/translate.html">Translate variables</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -96,7 +102,7 @@
       <h1>Get started</h1>
                         <h4 class="author">Adrian Maldet</h4>
             
-            <h4 class="date">2019-09-17</h4>
+            <h4 class="date">2019-09-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/a-maldet/labelmachine/blob/master/vignettes/labelmachine.Rmd"><code>vignettes/labelmachine.Rmd</code></a></small>
       <div class="hidden name"><code>labelmachine.Rmd</code></div>
@@ -175,28 +181,26 @@
 <h2 class="hasAnchor">
 <a href="#translate-the-data-frame-columns" class="anchor"></a>Translate the data frame columns</h2>
 <p>With the command <code>lama_translate</code>, we can use the lama-dictionary <code>dict</code> in order to translate the variables given in data frame <code>df</code>:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(magrittr)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">df_new &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_translate</a></span>(</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">    dict,</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">    <span class="dt">subject_lab =</span> <span class="kw"><a href="https://rdrr.io/r/base/grep.html">sub</a></span>(subject),</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">    <span class="dt">result_lab =</span> <span class="kw">res</span>(result)</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">  )</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(df_new)</a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; 'data.frame':    12 obs. of  5 variables:</span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt;  $ pupil_id   : int  1 1 1 2 2 2 3 3 3 4 ...</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt;  $ subject    : chr  "eng" "mat" "gym" "eng" ...</span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt;  $ result     : num  1 2 2 NA 2 NA 1 0 1 2 ...</span></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt;  $ subject_lab: Factor w/ 3 levels "English","Mathematics",..: 1 2 3 1 2 3 1 2 3 1 ...</span></a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt;  $ result_lab : Factor w/ 4 levels "Good","Passed",..: 1 2 2 4 2 4 1 NA 1 2 ...</span></a></code></pre></div>
-<p>In this command we used the pipe operator exported by the <a href="https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html">magrittr</a> package, which chains multiple command lines together in a single expression. As we can see, the resulting data frame <code>df_new</code> now holds two extra columns <code>subject_lab</code> and <code>result_lab</code> holding the factor variables with the right labels. The command <code>lama_translate</code> has multiple features, which are described in more detail in <a href="https://a-maldet.github.io/labelmachine/articles/translate.html">Translating variables</a>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">df_new &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_translate</a></span>(</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">    df,</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">    dict,</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">    <span class="dt">subject_lab =</span> <span class="kw"><a href="https://rdrr.io/r/base/grep.html">sub</a></span>(subject),</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">    <span class="dt">result_lab =</span> <span class="kw">res</span>(result)</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">  )</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(df_new)</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; 'data.frame':    12 obs. of  5 variables:</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt;  $ pupil_id   : int  1 1 1 2 2 2 3 3 3 4 ...</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt;  $ subject    : chr  "eng" "mat" "gym" "eng" ...</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt;  $ result     : num  1 2 2 NA 2 NA 1 0 1 2 ...</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt;  $ subject_lab: Factor w/ 3 levels "English","Mathematics",..: 1 2 3 1 2 3 1 2 3 1 ...</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt;  $ result_lab : Factor w/ 4 levels "Good","Passed",..: 1 2 2 4 2 4 1 NA 1 2 ...</span></a></code></pre></div>
+<p>As we can see, the resulting data frame <code>df_new</code> now holds two extra columns <code>subject_lab</code> and <code>result_lab</code> holding the factor variables with the right labels. The command <code>lama_translate</code> has multiple features, which are described in more detail in <a href="https://a-maldet.github.io/labelmachine/articles/translate.html">Translating variables</a>.</p>
 </div>
 <div id="save-your-lama-dictionary" class="section level2">
 <h2 class="hasAnchor">
 <a href="#save-your-lama-dictionary" class="anchor"></a>Save your lama-dictionary</h2>
 <p>With the command <code>lama_write</code> it is possible to save the lama-dictionary object to a <strong>yaml</strong> file:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">dict <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/labelmachine/man/lama_write.html">lama_write</a></span>(<span class="st">"dictionary.yaml"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/pkg/labelmachine/man/lama_write.html">lama_write</a></span>(dict, <span class="st">"dictionary.yaml"</span>)</a></code></pre></div>
 <p>The resulting <strong>yaml</strong> file is a plain text file with a special text structure, see <a href="https://a-maldet.github.io/labelmachine/articles/labelmachine_files/figure-html/dictionary.yaml">dictionary.yaml</a>.</p>
 <p>Lama-dictionary files make it easy to share lama-dictionaries with other projects holding similar data structures. With the command <code>lama_read</code> a lama-dictionary file can be read:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">dict &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/labelmachine/man/lama_read.html">lama_read</a></span>(<span class="st">"dictionary.yaml"</span>)</a></code></pre></div>

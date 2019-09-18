@@ -109,12 +109,18 @@ whereas lama_rename_() is the standard evaluation alternativ." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/alter_dictionaries.html">Altering lama-dictionaries</a>
+    </li>
+    <li>
       <a href="../articles/create_dictionaries.html">Creating lama-dictionaries</a>
     </li>
     <li>
       <a href="../articles/translate.html">Translate variables</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -188,7 +194,8 @@ translations.</p></td>
     <p>The updated lama_dictionary class object.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>lama_translate()</code>, <code>new_lama_dictionary()</code>, <code>lama_select()</code>, <code>lama_mutate()</code>,
+    <div class='dont-index'><p><code>lama_translate()</code>, <code>lama_translate_all()</code>, <code>new_lama_dictionary()</code>,
+<code>as.lama_dictionary()</code>, <code>lama_select()</code>, <code>lama_mutate()</code>,
 <code>lama_merge()</code>, <code>lama_read()</code>, <code>lama_write()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -198,6 +205,8 @@ translations.</p></td>
     <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>en</span> <span class='kw'>=</span> <span class='st'>"English"</span>, <span class='kw'>fr</span> <span class='kw'>=</span> <span class='st'>"French"</span>),
     <span class='kw'>result</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"1"</span> <span class='kw'>=</span> <span class='st'>"Very good"</span>, <span class='st'>"2"</span> <span class='kw'>=</span> <span class='st'>"Good"</span>, <span class='st'>"3"</span> <span class='kw'>=</span> <span class='st'>"Not so good"</span>)
   )
+
+  <span class='co'>## Example-1: Usage of 'lama_rename'</span>
   <span class='co'># rename translations 'result' and 'language' to 'res' and 'lang'</span>
   <span class='no'>dict_new</span> <span class='kw'>&lt;-</span> <span class='fu'>lama_rename</span>(<span class='no'>dict</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='no'>result</span>, <span class='kw'>lang</span> <span class='kw'>=</span> <span class='no'>language</span>)
   <span class='no'>dict_new</span></div><div class='output co'>#&gt; 
@@ -213,12 +222,8 @@ translations.</p></td>
 #&gt; Variable 'res':
 #&gt;             1             2             3 
 #&gt;   "Very good"        "Good" "Not so good" 
-#&gt; </div><div class='input'>  <span class='co'># initialize lama_dictinoary</span>
-  <span class='no'>dict</span> <span class='kw'>&lt;-</span> <span class='fu'>new_lama_dictionary</span>(
-    <span class='kw'>country</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>uk</span> <span class='kw'>=</span> <span class='st'>"United Kingdom"</span>, <span class='kw'>fr</span> <span class='kw'>=</span> <span class='st'>"France"</span>, <span class='kw'>NA_</span> <span class='kw'>=</span> <span class='st'>"other countries"</span>),
-    <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>en</span> <span class='kw'>=</span> <span class='st'>"English"</span>, <span class='kw'>fr</span> <span class='kw'>=</span> <span class='st'>"French"</span>),
-    <span class='kw'>result</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"1"</span> <span class='kw'>=</span> <span class='st'>"Very good"</span>, <span class='st'>"2"</span> <span class='kw'>=</span> <span class='st'>"Good"</span>, <span class='st'>"3"</span> <span class='kw'>=</span> <span class='st'>"Not so good"</span>)
-  )
+#&gt; </div><div class='input'>
+  <span class='co'>## Example-2: Usage of 'lama_rename_'</span>
   <span class='co'># rename translations 'result' and 'language' to 'res' and 'lang'</span>
   <span class='no'>dict_new</span> <span class='kw'>&lt;-</span> <span class='fu'>lama_rename_</span>(<span class='no'>dict</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"result"</span>, <span class='st'>"language"</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"res"</span>, <span class='st'>"lang"</span>))
   <span class='no'>dict_new</span></div><div class='output co'>#&gt; 
