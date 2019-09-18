@@ -4,6 +4,10 @@
 #' @return A [lama_dictionary][new_lama_dictionary()] class object holding the variable translations defined in
 #' the yaml file
 #' @export
+#' @examples
+#'   \dontrun{
+#'     dict <- lama_read("my_dictionary.yaml")
+#'   }
 #' @include utilities.R lama_dictionary.R
 lama_read <- function(yaml_path) {
   err_handler <- composerr("Error while calling 'lama_read'")

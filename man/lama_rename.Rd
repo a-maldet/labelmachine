@@ -43,20 +43,19 @@ whereas \code{\link[=lama_rename_]{lama_rename_()}} is the standard evaluation a
     language = c(en = "English", fr = "French"),
     result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
   )
+
+  ## Example-1: Usage of 'lama_rename'
   # rename translations 'result' and 'language' to 'res' and 'lang'
   dict_new <- lama_rename(dict, res = result, lang = language)
   dict_new
-  # initialize lama_dictinoary
-  dict <- new_lama_dictionary(
-    country = c(uk = "United Kingdom", fr = "France", NA_ = "other countries"),
-    language = c(en = "English", fr = "French"),
-    result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
-  )
+  
+  ## Example-2: Usage of 'lama_rename_'
   # rename translations 'result' and 'language' to 'res' and 'lang'
   dict_new <- lama_rename_(dict, c("result", "language"), c("res", "lang"))
   dict_new
 }
 \seealso{
-\code{\link[=lama_translate]{lama_translate()}}, \code{\link[=new_lama_dictionary]{new_lama_dictionary()}}, \code{\link[=lama_select]{lama_select()}}, \code{\link[=lama_mutate]{lama_mutate()}},
+\code{\link[=lama_translate]{lama_translate()}}, \code{\link[=lama_translate_all]{lama_translate_all()}}, \code{\link[=new_lama_dictionary]{new_lama_dictionary()}},
+\code{\link[=as.lama_dictionary]{as.lama_dictionary()}}, \code{\link[=lama_select]{lama_select()}}, \code{\link[=lama_mutate]{lama_mutate()}},
 \code{\link[=lama_merge]{lama_merge()}}, \code{\link[=lama_read]{lama_read()}}, \code{\link[=lama_write]{lama_write()}}
 }

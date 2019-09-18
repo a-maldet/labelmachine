@@ -103,9 +103,8 @@ With the command `lama_translate`, we can use the lama-dictionary `dict`
 in order to translate the  variables given in data frame `df`:
 
 ```{r}
-library(magrittr)
-df_new <- df %>%
-  lama_translate(
+df_new <- lama_translate(
+    df,
     dict,
     subject_lab = sub(subject),
     result_lab = res(result)
@@ -113,9 +112,6 @@ df_new <- df %>%
 str(df_new)
 ```
 
-In this command we used the pipe operator exported by the [magrittr] package,
-which chains multiple command
-lines together in a single expression.
 As we can see, the resulting data frame `df_new` now holds two extra columns
 `subject_lab` and `result_lab` holding the factor variables with the right
 labels.
@@ -127,8 +123,7 @@ more detail in [Translating variables].
 With the command `lama_write` it is possible to save the lama-dictionary object
 to a **yaml** file:
 ```{r, eval = FALSE}
-dict %>%
-  lama_write("dictionary.yaml")
+lama_write(dict, "dictionary.yaml")
 ```
 
 The resulting **yaml** file is a plain text file with a special text structure,
@@ -148,7 +143,6 @@ dict <- lama_read("dictionary.yaml")
 * [Translating variables]
 * [Altering lama-dictionaries]
 
-[magrittr]: https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html
 [Get started]: https://a-maldet.github.io/labelmachine/articles/labelmachine.html
 [Creating lama-dictionaries]: https://a-maldet.github.io/labelmachine/articles/create_dictionaries.html
 [Altering lama-dictionaries]: https://a-maldet.github.io/labelmachine/articles/alter_dictionaries.html

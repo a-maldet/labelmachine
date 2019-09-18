@@ -39,30 +39,31 @@ lama_translate_all <- function(
 
 #' @rdname lama_translate_all
 #' @examples
-#'   # --- initialize lama_dictinoary ---
+#'   ## initialize lama_dictinoary
 #'   dict <- new_lama_dictionary(
 #'     subject = c(en = "English", ma = "Mathematics"),
 #'     result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
 #'   )
+#'   ## data frame which should be translated
 #'   df <- data.frame(
 #'     pupil = c(1, 1, 2, 2, 3),
 #'     subject = c("en", "ma", "ma", "en", "en"),
 #'     result = c(1, 2, 3, 2, 2)
 #'   )
-#'   # --- label data.frame variables ---
-#'   # Example-1 (data.frame): Use prefix
+#'   
+#'   ## Example-1: Use 'prefix'
 #'   # (apply translation 'subject' to column 'subject' and save it to column 'new_subject')
 #'   # (apply translation 'result' to column 'result' and save it to column 'new_result')
 #'   df_new <- lama_translate_all(df, dict, prefix = "new_")
 #'   str(df_new)
 #'
-#'   # Example-2 (data.frame): Use suffix
+#'   # Example-2: Use 'suffix'
 #'   # (apply translation 'subject' to column 'subject' and save it to column 'subject_new')
 #'   # (apply translation 'result' to column 'result' and save it to column 'result_new')
 #'   df_new <- lama_translate_all(df, dict, suffix = "_new")
 #'   str(df_new)
 #' 
-#'   # Example-3 (data.frame): Use fn_colname
+#'   # Example-3: Use 'fn_colname'
 #'   # (apply translation 'subject' to column 'subject' and save it to column 'SUBJECT')
 #'   # (apply translation 'result' to column 'result' and save it to column 'RESULT')
 #'   df_new <- lama_translate_all(df, dict, fn_colname = toupper)
@@ -97,6 +98,8 @@ lama_translate_all.data.frame <- function(
       "The argument 'keep_order' must be a logical."
     ))
   translation <- intersect(names(dictionary), colnames(.data))
+  if (length(translation) == 0)
+    return(.data)
   col_new <- sapply(translation, fn_colname)
   if (!is.character(col_new) || length(col_new) != length(translation) ||
       any(is.na(col_new))

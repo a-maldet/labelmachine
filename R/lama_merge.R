@@ -12,8 +12,8 @@
 #' @param show_warnings A logical flag that defines, whether warnings should be
 #' shown (\code{TRUE}) or not (\code{FALSE}).
 #' @return The merged [lama_dictionary][new_lama_dictionary()] class object
-#' @seealso [lama_translate()], [new_lama_dictionary()], [lama_rename()], [lama_select()],
-#' [lama_mutate()], [lama_read()], [lama_write()]
+#' @seealso [lama_translate()], [new_lama_dictionary()], [lama_select()],
+#'   [lama_rename()], [lama_mutate()], [lama_read()], [lama_write()]
 #' @rdname lama_merge
 #' @export
 #' @include lama_dictionary.R

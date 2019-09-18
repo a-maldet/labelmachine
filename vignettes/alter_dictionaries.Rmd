@@ -1,0 +1,193 @@
+---
+title: "Altering lama-dictionaries"
+date: "`r Sys.Date()`"
+author: "Adrian Maldet"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Altering lama-dictionaries}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The creation of lama-dictionaries was described in [Creating lama-dictionaries]
+and in [Translating variables] we saw how to use them in order to assign
+the right labels to our data.
+
+Now we will see, how to effectively alter lama-dictionaries, so that
+we get dictionaries holding the right translations. `labelmachine` contains
+a light weight frame work for altering lama-dictionaries, similar to the 
+package [dplyr]:
+
+* `lama_rename()` and `lama_rename_()`: Renaming translations
+* `lama_select()` and `lama_select_()`: Selecting a subset of translations
+* `lama_mutate()` and `lama_mutate_()`: Altering one or more translations
+* `lama_merge()`: Merging two or more dictionaries into one
+
+The commands which have no lodash at the end of the command name
+(`lama_rename()`, `lama_select()`, `lama_mutate()`) use
+**non-standard evaluation**.
+This means, that instead of passing in translation names as
+strings (e.g. `lama_rename_(dict, "old", "new")`), we can pass in
+**unquoted expressions** (e.g. `lama_rename(dict, new = old)`), which are
+automatically parsed. Often non-standard evaluation saves some time in writing,
+but sometimes we want to pass in the names as character vectors. 
+In this case, we need to use the **standard evaluation** variants of the commands.
+These commands have the same names, but end on a lodash 
+(e.g. `lama_rename_()`, `lama_select_()`, `lama_mutate_()`).
+
+In the following part we will alter the following dictionary:
+
+```{r}
+library(labelmachine)
+dict <- new_lama_dictionary(
+  sub = c(eng = "English", mat = "Mathematics", gym = "Gymnastics"),
+  lev = c(b = "Basic", a = "Advanced"),
+  result = c(
+    "1" = "Good",
+    "2" = "Passed",
+    "3" = "Not passed",
+    "4" = "Not passed",
+    NA_ = "Missed",
+    "0" = NA
+  )
+)
+dict
+```
+
+## Rename translations
+
+With the commands `lama_rename()` and `lama_rename_()` we can rename one or
+more translations in a lama-dictionary.
+With `lama_rename()` we can use unquoted expressions:
+```{r}
+dict_new <- lama_rename(
+  dict,
+  subject_new = sub,
+  level_new = lev,
+  result_new = result
+)
+dict_new
+```
+
+With `lama_rename_()` we can pass two character vectors. One character vector
+holding the old translation names and one vector which contains the
+new translation names which should be used:
+```{r}
+dict_new <- lama_rename_(
+  dict,
+  old = c("sub", "lev", "result"),
+  new = c("subject_new", "level_new", "result_new")
+)
+dict_new
+```
+
+## Select a subset of translations
+
+Sometimes we want to keep a subset of translations, in this case we can use
+`lama_select()` and `lama_select_()`.
+With `lama_select()` we can use unquoted translation names:
+```{r}
+dict_new <- lama_select(dict, sub, lev)
+dict_new
+```
+The resulting dictionary `dict_new` now only contains the translations `sub`
+and `lev`.
+
+With `lama_select_()` we pass in a single character vector, which
+holds the names of the translations we want to keep:
+```{r}
+dict_new <- lama_select_(dict, c("sub", "lev"))
+dict_new
+```
+
+## Alter translations
+
+The commands `lama_mutate()` and `lama_mutate_()` are used to alter or delete
+existing translations in a lama-dictionary or add
+new translations (named character vectors) to it.
+With `lama_mutate()` we use unquoted expressions:
+```{r}
+dict_new <- lama_mutate(
+  .data = dict,
+  teacher = c(jane = "Jane Doe", john = "John Doe"),
+  sub = c(geo = "Geography", sub),
+  lev = NULL,
+  result = c(P = "Passed", F = "Failed")
+)
+dict_new
+```
+
+Besides the argument `.data` all other arguments are translation assignment and
+the given argument names are used as the names to which the
+translations, given on the right hand side of the equation, will be assigned:
+
+* The translation `c(jane = "Jane Doe", john = "John Doe")` is assigned to the
+  translation name `teacher`.
+* In the expression given for translation `sub`, uses the object name `sub`
+  inside of the expression (e.g. `c(geo = "Geography", sub)`) and is evaluated
+  in this way. Therefore, the resulting translation `sub` is the combination
+  of the label assignment `geo = "Geographry"` and the label assignments
+  given in the old translation `sub` (e.g. `c(eng = "English",
+  mat = "Mathematics", gym = "Gymnastics")`).
+* The assignment `lev = NULL` deletes the translation with the name `lev`.
+* The assignment `result = c(P = "Passed", F = "Failed")` overwrites the 
+  translation `result` with a new translation.
+
+The command `lama_mutate_()` is uses standard evaluation and can only
+alter one translation at a time. We pass in a character string holding the
+name of the translation we want to alter and a second argument holding the
+translation (named character vector), we want to assign:
+
+```{r}
+dict_new <- lama_mutate_(
+  .data = dict,
+  key = "result",
+  translation = c(P = "Passed", F = "Failed")
+)
+dict_new
+```
+
+## Merging lama-dictionaries
+
+With the command `lama_merge` we can merge two or more
+lama-dictionaries together into a single lama-dictionary.
+
+Let us consider the following dictionaries:
+```{r}
+dict_a <- new_lama_dictionary(a = c(a = "A"), x = c(x = "A"), y = c(y = "A"))
+dict_b <- new_lama_dictionary(b = c(b = "B"), x = c(x = "B"), z = c(z = "B"))
+dict_c <- new_lama_dictionary(c = c(c = "C"), z = c(x = "B"))
+```
+
+We merge them together into a new dictionary:
+```{r}
+dict_new <- lama_merge(dict_a, dict_b, dict_c, show_warnings = FALSE)
+dict_new
+```
+
+The merging is done from left to right. This means that the lama-dictionary
+`dict_a` is partially overwritten by `dict_b` and the resulting lama-dictionary
+is then partially overwritten by `dict_c`.
+
+## Further reading
+
+* [Creating lama-dictionaries]
+* [Translating variables]
+* [Get started]
+
+[Get started]: https://a-maldet.github.io/labelmachine/articles/labelmachine.html
+[Creating lama-dictionaries]: https://a-maldet.github.io/labelmachine/articles/create_dictionaries.html
+[Altering lama-dictionaries]: https://a-maldet.github.io/labelmachine/articles/alter_dictionaries.html
+[Translating variables]: https://a-maldet.github.io/labelmachine/articles/translate.html
+[dplyr]: https://dplyr.tidyverse.org
+

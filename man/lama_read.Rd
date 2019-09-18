@@ -16,3 +16,8 @@ the yaml file
 \description{
 Read in a \code{yaml} file holding translations for one or multiple variables
 }
+\examples{
+  \dontrun{
+    dict <- lama_read("my_dictionary.yaml")
+  }
+}

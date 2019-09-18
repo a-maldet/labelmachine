@@ -40,22 +40,21 @@ The function \code{\link[=lama_select]{lama_select()}} uses non-standard evaluat
     language = c(en = "English", fr = "French"),
     result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
   )
+
+  ## Example-1: Usage of 'lama_select'
   # pick the translations 'result' and 'language'
   # and add them to a new lama_dictionary
   dict_sub <- lama_select(dict, result, language)
   dict_sub
-  # initialize lama_dictinoary
-  dict <- new_lama_dictionary(
-    country = c(uk = "United Kingdom", fr = "France", NA_ = "other countries"),
-    language = c(en = "English", fr = "French"),
-    result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
-  )
+  
+  ## Example-2: Usage of 'lama_select_'
   # pick the translations 'result' and 'language'
   # and add them to a new lama_dictionary
   dict_sub <- lama_select_(dict, c("result", "language"))
   dict_sub
 }
 \seealso{
-\code{\link[=lama_translate]{lama_translate()}}, \code{\link[=new_lama_dictionary]{new_lama_dictionary()}}, \code{\link[=lama_rename]{lama_rename()}}, \code{\link[=lama_mutate]{lama_mutate()}},
+\code{\link[=lama_translate]{lama_translate()}}, \code{\link[=lama_translate_all]{lama_translate_all()}}, \code{\link[=new_lama_dictionary]{new_lama_dictionary()}},
+\code{\link[=as.lama_dictionary]{as.lama_dictionary()}}, \code{\link[=lama_rename]{lama_rename()}}, \code{\link[=lama_mutate]{lama_mutate()}},
 \code{\link[=lama_merge]{lama_merge()}}, \code{\link[=lama_read]{lama_read()}}, \code{\link[=lama_write]{lama_write()}}
 }

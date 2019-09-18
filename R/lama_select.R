@@ -8,8 +8,9 @@
 #' @param .data A [lama_dictionary][new_lama_dictionary()] object, holding the variable translations
 #' @param ... One or more unquoted translation names separated by commas.
 #' @return A new [lama_dictionary][new_lama_dictionary()] class object, holding the picked variable translations.
-#' @seealso [lama_translate()], [new_lama_dictionary()], [lama_rename()], [lama_mutate()],
-#' [lama_merge()], [lama_read()], [lama_write()]
+#' @seealso [lama_translate()], [lama_translate_all()], [new_lama_dictionary()],
+#'   [as.lama_dictionary()], [lama_rename()], [lama_mutate()],
+#'   [lama_merge()], [lama_read()], [lama_write()]
 #' @rdname lama_select
 #' @export
 lama_select <- function(.data, ...) {
@@ -24,10 +25,13 @@ lama_select <- function(.data, ...) {
 #'     language = c(en = "English", fr = "French"),
 #'     result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
 #'   )
+#'
+#'   ## Example-1: Usage of 'lama_select'
 #'   # pick the translations 'result' and 'language'
 #'   # and add them to a new lama_dictionary
 #'   dict_sub <- lama_select(dict, result, language)
 #'   dict_sub
+#'   
 #' @export
 lama_select.lama_dictionary <- function(.data, ...) {
   args <- rlang::quos(...)
@@ -69,12 +73,7 @@ lama_select_ <- function(.data, key) {
 
 #' @rdname lama_select
 #' @examples
-#'   # initialize lama_dictinoary
-#'   dict <- new_lama_dictionary(
-#'     country = c(uk = "United Kingdom", fr = "France", NA_ = "other countries"),
-#'     language = c(en = "English", fr = "French"),
-#'     result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
-#'   )
+#'   ## Example-2: Usage of 'lama_select_'
 #'   # pick the translations 'result' and 'language'
 #'   # and add them to a new lama_dictionary
 #'   dict_sub <- lama_select_(dict, c("result", "language"))

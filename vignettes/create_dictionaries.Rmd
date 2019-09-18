@@ -110,12 +110,37 @@ dict
 As described in [Get started] lama-dictionaries can be saved to **yaml** files.
 These files are plain text files with a specific structure. 
 For example the file `dictionary.yaml` may looks as follows
-```{yaml, code = readLines("../man/figures/dictionary.yaml")}
+```{yaml, code = readLines(system.file("extdata", "dictionary_exams.yaml", package = "labelmachine"))}
 ```
+On the top level (no indentation) there are the translation names followed by a
+colon
+(e.g. `sub:`, `res:` and `lev:`)
+the following lines describe the laben assignment rules of the translation
+(indentation of two whitespaces `  `).
+Each line contains a single label assignment, where the original value comes
+first (use quotes in case of a numeric or logical, e.g. `'1': "Very good"`), 
+followed by a colon and then comes the label, which should be assigned to the 
+value.
+The file shown above contains the following translations:
 
-With the command `lama_read()` it can be loaded:
+* translation `sub`, which assigns
+  * the label `"English"` to the value `eng`
+  * the label `"Mathematics"` to the value `mat`
+  * the label `"Gymnastics"` to the value `gym`
+* translation `res`, which assigns
+  * the label `"Good"` to the value `1`
+  * the label `"Passed"` to the value `2`
+  * the label `"Not passed"` to the values `3` and `4`
+  * the label `"Missed"` to the missing value `NA`
+  * the missing value `NA` to the value `0`
+* translation `lev`, which assigns
+  * the label `"Basic"` to the value `"b"`
+  * the label `"Advanced"` to the value `"a"`
+
+With the command `lama_read()` a lama-dictionary can be loaded:
 ```{r, eval = FALSE}
 dict <- lama_read("dictionary.yaml")
+lama_read(system.file("extdata", "dictionary_exams.yaml", package = "labelmachine"))
 ```
 
 With the command `lama_write()` the lama-dictionary `dict` can be saved as a
@@ -171,7 +196,6 @@ be determined. For futher details, see `as.lama_dictionary()`.
 * [Altering lama-dictionaries]
 * [Get started]
 
-[magrittr]: https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html
 [Get started]: https://a-maldet.github.io/labelmachine/articles/labelmachine.html
 [Creating lama-dictionaries]: https://a-maldet.github.io/labelmachine/articles/create_dictionaries.html
 [Altering lama-dictionaries]: https://a-maldet.github.io/labelmachine/articles/alter_dictionaries.html

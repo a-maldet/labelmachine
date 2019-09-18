@@ -8,8 +8,9 @@
 #' @param .data A [lama_dictionary][new_lama_dictionary()] object, holding the variable translations
 #' @param ... One or more unquoted expressions separated by commas. Use named arguments, e.g. `new_name = old_name`, to rename selected variables.
 #' @return The updated [lama_dictionary][new_lama_dictionary()] class object.
-#' @seealso [lama_translate()], [new_lama_dictionary()], [lama_select()], [lama_mutate()],
-#' [lama_merge()], [lama_read()], [lama_write()]
+#' @seealso [lama_translate()], [lama_translate_all()], [new_lama_dictionary()],
+#'   [as.lama_dictionary()], [lama_select()], [lama_mutate()],
+#'   [lama_merge()], [lama_read()], [lama_write()]
 #' @rdname lama_rename
 #' @export
 lama_rename <- function(.data, ...) {
@@ -25,9 +26,12 @@ lama_rename <- function(.data, ...) {
 #'     language = c(en = "English", fr = "French"),
 #'     result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
 #'   )
+#' 
+#'   ## Example-1: Usage of 'lama_rename'
 #'   # rename translations 'result' and 'language' to 'res' and 'lang'
 #'   dict_new <- lama_rename(dict, res = result, lang = language)
 #'   dict_new
+#'   
 lama_rename.lama_dictionary <- function(.data, ...) {
   args <- rlang::quos(...)
   err_handler <- composerr("Error while calling 'lama_rename'")
@@ -83,12 +87,7 @@ lama_rename_ <- function(.data, old, new) {
 
 #' @rdname lama_rename 
 #' @examples
-#'   # initialize lama_dictinoary
-#'   dict <- new_lama_dictionary(
-#'     country = c(uk = "United Kingdom", fr = "France", NA_ = "other countries"),
-#'     language = c(en = "English", fr = "French"),
-#'     result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
-#'   )
+#'   ## Example-2: Usage of 'lama_rename_'
 #'   # rename translations 'result' and 'language' to 'res' and 'lang'
 #'   dict_new <- lama_rename_(dict, c("result", "language"), c("res", "lang"))
 #'   dict_new

@@ -1,8 +1,9 @@
 #' Change or append a variable translation to an existing [lama_dictionary][new_lama_dictionary()] object
 #'
 #' The functions [lama_mutate()] and [lama_mutate_()] alter a 
-#' [lama_dictionary][new_lama_dictionary()] object. They either alter
-#' or append a translation to a [lama_dictionary][new_lama_dictionary()] object.
+#' [lama_dictionary][new_lama_dictionary()] object. They can be used to alter,
+#' delete or append a translations to a
+#' [lama_dictionary][new_lama_dictionary()] object.
 #' The function [lama_mutate()] uses named arguments to assign the translations
 #' to the new names (similar to [dplyr::mutate()]), whereas the function
 #' [lama_mutate_()] is takes a character string \code{key} holding the
@@ -11,7 +12,9 @@
 #' @param .data A [lama_dictionary][new_lama_dictionary()] object
 #' @param ... One or more unquoted expressions separated by commas. Use named
 #'   arguments, e.g. `new_transation_name = c(a = "A", b = "B")`, to set
-#'   translations (named character vectors) to new translation names. It is also
+#'   translations (named character vectors) to new translation names.
+#'   If you want to delete an existing translation assign the value `NULL`
+#'   (e.g. `old_translation = NULL`). It is also
 #'   possible use complex expressions as long as the resulting object is a valid
 #'   translation object (named character vector).
 #'   Furthermore, it is possible to use translation names that are already
@@ -19,7 +22,8 @@
 #'   (e.g. `new_translation = c(v = "V", w = "W", old_translation, z = "Z")`, where 
 #'   `old_translation = c(x = "X", y = "Y")`).
 #' @return An updated [lama_dictionary][new_lama_dictionary()] class object.
-#' @seealso [lama_translate()], [new_lama_dictionary()], [lama_rename()], [lama_select()],
+#' @seealso [lama_translate()], [lama_translate_all()], [new_lama_dictionary()],
+#'   [as.lama_dictionary()], [lama_rename()], [lama_select()],
 #'   [lama_merge()], [lama_read()], [lama_write()]
 #' @rdname lama_mutate
 #' @export
@@ -34,6 +38,8 @@ lama_mutate <- function(.data, ...) {
 #'     subject = c(en = "English", ma = "Mathematics"),
 #'     result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
 #'   )
+#'  
+#'   ## Example-1: mutate and append with 'lama_mutate'
 #'   # add a few subjects and a few grades
 #'   dict_new <- lama_mutate(
 #'     dict, 
@@ -43,6 +49,14 @@ lama_mutate <- function(.data, ...) {
 #'   # the subjects "Biology" and "Sports" were added
 #'   # and the results "Beyond expectations", "Failed" and "Missed"
 #'   dict_new
+#'
+#'   ## Example-2: delete with 'lama_mutate'
+#'   dict_new <- lama_mutate(
+#'     dict, 
+#'     subject = NULL
+#'   )
+#'   dict_new
+#'
 #' @export
 lama_mutate.lama_dictionary <- function(.data, ...) {
   args <- rlang::quos(...)
@@ -102,7 +116,8 @@ lama_mutate.lama_dictionary <- function(.data, ...) {
     )
     if (is.list(translation))
       translation <- unlist(translation)
-    validate_translation(translation, err_handler)
+    if (!is.null(translation))
+      translation <- validate_translation(translation, err_handler)
     .data[[key[i]]] <<- translation
   })
   .data
@@ -124,11 +139,7 @@ lama_mutate_ <- function(.data, key, translation) {
 
 #' @rdname lama_mutate
 #' @examples
-#'   # initialize lama_dictionary
-#'   dict <- new_lama_dictionary(
-#'     subject = c(en = "English", ma = "Mathematics"),
-#'     result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
-#'   )
+#'   ## Example-3: Alter and append with 'lama_mutate_'
 #'   # generate the new translation (character string)
 #'   subj <- c(
 #'     bio = "Biology",
@@ -144,6 +155,17 @@ lama_mutate_ <- function(.data, key, translation) {
 #'   # the translation "subject" now also contains
 #'   # the subjects "Biology" and "Sports"
 #'   dict_new
+#'
+#'   ## Example-4: Delete with 'lama_mutate_'
+#'   # save the translation under the name "subject"
+#'   dict_new <- lama_mutate_(
+#'     dict,
+#'     key = "subject",
+#'     translation = NULL
+#'   )
+#'   # the translation "subject" was deleted
+#'   dict_new
+#'   
 #' @export
 lama_mutate_.lama_dictionary <- function(.data, key, translation) {
   err_handler <- composerr("Error while calling 'lama_mutate_'")
@@ -151,15 +173,6 @@ lama_mutate_.lama_dictionary <- function(.data, key, translation) {
     err_handler("The object given in the argument '.data' must be a lama_dictionary class object.")
   if (!is.character(key) || length(key) != 1)
     err_handler("The object given in the argument 'key' must be a character string.")
-  if (is.list(translation))
-    translation <- unlist(translation)
-  validate_translation(
-    translation,
-    composerr(
-      "The object given in the argument 'translation' is invalid",
-      err_handler
-    )
-  )
   if (!is.syntactic(key))
     err_handler(paste0(
       "The following translation name given in argument 'key' is not a valid ",
@@ -167,6 +180,16 @@ lama_mutate_.lama_dictionary <- function(.data, key, translation) {
       stringify(key),
       "."
     ))
+  if (is.list(translation))
+    translation <- unlist(translation)
+  if (!is.null(translation))
+    translation <- validate_translation(
+      translation,
+      composerr(
+        "The object given in the argument 'translation' is invalid",
+        err_handler
+      )
+    )
   # transform 'translation' into a mapping (named character vector)
   .data[[key]] <- translation
   .data

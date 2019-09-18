@@ -2,12 +2,13 @@ Package: labelmachine
 Title: Add meaningful labels to  R data sets
 Version: 1.0.0
 Authors@R: person(given = "Adrian", family = "Maldet", role = c("aut", "cre"), email = "adrian.maldet@statistik.gv.at")
-Description: labelmachine is an R package that helps assigning meaningful
+Description: 'labelmachine' is an R package that helps assigning meaningful
     labels to data frame variables. Furthermore, it manages the
-    label assignment rules in 'yaml' files. This makes it very easy using the same
-    label translations in multiple projects with similar data structure.
+    label assignment rules in 'yaml' files. This makes it very easy to
+    use the same label dictionaries in multiple projects with similar
+    data structure.
 Depends:
-    R (>= 3.3.0)
+    R (>= 3.5.0)
 Imports:
     yaml (>= 2.2.0)
 Suggests: 

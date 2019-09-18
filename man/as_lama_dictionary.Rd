@@ -170,29 +170,31 @@ translations with different names
 }
 
 \examples{
-  # initialize lama_dictionary
-  # passing each translation as a named argument
-  dict <- as.lama_dictionary(list(
+  ## Example-1: Initialize a lama-dictionary from a list oject
+  ##            holding the translations
+  obj <- list(
     country = c(uk = "United Kingdom", fr = "France", NA_ = "other countries"),
     language = c(en = "English", fr = "French")
-  ))
+  )
+  dict <- as.lama_dictionary(obj)
   dict
-  # initialize lama_dictionary
-  # from a data.frame holding the label mappings
-  df <- data.frame(
+  
+  ## Example-2: Initialize a lama-dictionary from a data frame
+  ##            holding the label assignment rules
+  df_map <- data.frame(
     c_old = c("uk", "fr", NA),
     c_new = c("United Kingdom", "France", "other countries"),
     l_old = c("en", "fr", NA),
     l_new = factor(c("English", "French", NA), levels = c("French", "English"))
   )
   dict <- as.lama_dictionary(
-    df,
+    df_map,
     translation = c("country", "language"),
     col_old = c("c_old", "l_old"),
     col_new = c("c_new", "l_new"),
     ordering = c("row", "new")
   )
-  # 'country' is ordered as in the df
-  # 'language' is ordered differently (French first)
+  # 'country' is ordered as in the 'df_map'
+  # 'language' is ordered differently ("French" first)
   dict
 }

@@ -17,20 +17,167 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-library(magrittr)
 ```
 
 Let `df` be a data frame with the following structure:
-```{r, include = FALSE}
-df <- readRDS(system.file("extdata", "exams.rds", package = "labelmachine"))
-```
 ```{r}
-str(df)
+df <- data.frame(
+  pupil_id = rep(1:4, each = 3),
+  subject = rep(c("eng", "mat", "gym"), 4),
+  level = factor(
+    c("a", "a", "a", "b", "b", "b", "b", "b", "b", "a", "a", "a"),
+    levels = c("a", "b")
+  ),
+  result = c(1, 2, 2, NA, 2, NA, 1, 0, 1, 2, 3, NA),
+  stringsAsFactors = FALSE
+)
+df
 ```
 
-The column `subject` (**character**) contains the subject codes the pupils
-were tested in and `result` (**integer**) contains the test results. 
-The column `level` (**factor**) holds the levels of the attended courses.
+The column `subject` (**character**) contains the subject codes and the column
+`level` (**factor**) holds the level of the courses (`basic` and `advanced`)
+pupils were tested in. The column `result` (**integer**) contains the
+test results (`1` and `2` are positive, `3` and `4` are negative, `NA` means
+that the pupil missed the test and `0` means that something else went wrong). 
+
+We want to use the following lama-dictionary in order to translate the data
+frame variables:
+```{r}
+library(labelmachine)
+dict <- new_lama_dictionary(
+  sub = c(eng = "English", mat = "Mathematics", gym = "Gymnastics"),
+  lev = c(b = "Basic", a = "Advanced"),
+  result = c(
+    "1" = "Good",
+    "2" = "Passed",
+    "3" = "Not passed",
+    "4" = "Not passed",
+    NA_ = "Missed",
+    "0" = NA
+  )
+)
+dict
+```
+
+## Translate using non-standard evaluation
+
+The function `lama_translate()` uses non-standard evaluation, which means that
+we pass in expressions, which will be parsed and we can spare the quotes surrounding 
+column and translation names:
+
+```{r}
+df_new <- lama_translate(
+  .data = df,
+  dictionary = dict,
+  subject_new = sub(subject),
+  level = lev(level),
+  result = result(result),
+  keep_order = c(FALSE, TRUE, FALSE)
+)
+str(df_new)
+```
+
+The arguments `.data` and `dictionary` define which data frame should be
+translated and which lama-dictionary should be used for the translation.
+The argument `keep_order` defines for each given translation if the
+original ordering of the variable should be kept (ordering of the variable
+in the data frame `df`) or if the ordering given in the translation should be
+used.
+Besides the arguments `.data`, `dictionary` and `keep_order` all other
+arguments are label assignments. The names of the arguments
+(left hand side of the equations) define the column names under which the
+labelled variable should be stored. The right hand side
+of the assignments define the column which should be labelled
+(parameter name in the brackets) and which 
+translation should be used (function name the left of the brackets).
+Hence, the statement above does the following things:
+
+* `subject_new = sub(subject)`: The column `subject` in the data frame `df` is
+  translated using the translation `sub` and the resulting factor is stored
+  under the column name `subject_new`. Since the first entry in `keep_order` is
+  `FALSE`, the ordering given in the transaltion `sub` is used for the labels.
+* `level = lev(level)`: The column `level` in the data frame `df` is translated
+  using the translation `lev` and then overwritten by the resulting factor.
+  Since the second entry in `keep_order` is `TRUE`, the labelled variable
+  has the same ordering as the original column.
+* `result = result(result)`: The column `result` in the data frame `df` is
+  translated using the translation `result` and then overwritten by the
+  resulting factor. Since the third entry in `keep_order` is
+  `FALSE`, the ordering given in the transaltion is used for the labels.
+
+There are several aggreviations, in order to spare some writing:
+
+* If the translation has the same name as the original column name, then
+  it is sufficient to just write the translation name on the right hand side.
+  E.g: `result_new = result` is the same as `result_new = result(result)`.
+* If the column name under which the labelled variable should be stored is the
+  same as the original column name, then
+  the left hand side of the assignment can be omitted.
+  E.g: `lev(level)` is the same as `level = lev(level)`.
+* If the names of the translation, of the original column and the new column 
+  are equal then only the name of the translation is needed.
+  E.g: `result` is the same as `result = result(result)`.
+
+## Translate using standard evaluation
+
+The function `lama_translate_()` is the standard evaluation variant of 
+`lama_translate()`, which means that instead of expressions, we pass in 
+character strings holding the names of the translations and columns we want
+to use:
+
+```{r}
+df_new <- lama_translate_(
+  .data = df,
+  dictionary = dict,
+  translation = c("sub", "lev", "result"),
+  col = c("subject", "level", "result"),
+  col_new = c("subject_new", "level", "result"),
+  keep_order = c(FALSE, TRUE, FALSE)
+)
+str(df_new)
+```
+
+The arguments `.data` and `dictionary` define which data frame should be
+translated and which lama-dictionary should be used for the translation.
+The argument `keep_order` defines for each given translation if the
+original ordering of the variable should be kept (ordering of the variable
+in the data frame `df`) or if the ordering given in the translation should be
+used. The result is the same as before, when we used `lama_translate()`.
+
+## Translate all possible variables
+
+The function `lama_translate_all()` is an extension of `lama_translate()`,
+which tries to automatically translate as many columns in the 
+data frame `.data` as possible.
+Therefore, the names of the columns which should be translated must match
+the names of the translations which should be used:
+
+```{r}
+df_new <- lama_translate_all(
+  .data = df,
+  dictionary = dict,
+  prefix = "new_",
+  fn_colname = toupper,
+  suffix = "_labelled",
+  keep_order = TRUE
+)
+str(df_new)
+```
+
+In the above example, only the column name `result` matches the translation
+name and is therefore translated and stored under the column name
+`new_RESULT_labelled`. The name of the new columns is a transformation of
+the old column name (e.g. `result`), appending the strings given in the
+arguments `prefix` and `suffix` at the beginning and at the end of the
+column name. Before this string concatenation, the name of the original
+column can be transformed into a other string by using the string
+transformation function `fn_colname`. In our case `fn_colname` is given
+the function `toupper` which transforms all letters of the column name `result`
+to upper case `RESULT`.
+Contrary to `lama_translate()`, the argument `keep_order` is just a single
+boolean flag. It defines wether the original order of all columns should
+be kept (`keep_order = TRUE`)
+or if the order in the translation vector should be used.
 
 ## Further reading
 
@@ -38,7 +185,6 @@ The column `level` (**factor**) holds the levels of the attended courses.
 * [Altering lama-dictionaries]
 * [Get started]
 
-[magrittr]: https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html
 [Get started]: https://a-maldet.github.io/labelmachine/articles/labelmachine.html
 [Creating lama-dictionaries]: https://a-maldet.github.io/labelmachine/articles/create_dictionaries.html
 [Altering lama-dictionaries]: https://a-maldet.github.io/labelmachine/articles/alter_dictionaries.html

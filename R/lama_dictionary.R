@@ -135,13 +135,14 @@ new_lama_dictionary <- function(...) {
 #'   with the name `density`).
 #' @rdname new_lama_dictionary
 #' @examples
-#'   # initialize lama_dictionary
-#'   # with a list object holding the translations
+#'   ## Example-1: Initialize a lama-dictionary from a list object
+#'   ##            holding the translations
 #'   dict <- new_lama_dictionary(list(
 #'     country = c(uk = "United Kingdom", fr = "France", NA_ = "other countries"),
 #'     language = c(en = "English", fr = "French")
 #'   ))
 #'   dict
+#'
 #' @export
 new_lama_dictionary.list <- function(.data = NULL, ...) {
   extra_args <- list(...)
@@ -171,13 +172,14 @@ new_lama_dictionary.list <- function(.data = NULL, ...) {
 
 #' @rdname new_lama_dictionary
 #' @examples
-#'   # initialize lama_dictionary
-#'   # passing each translation as a named argument
+#'   ## Example-2: Initialize the lama-dictionary directly
+#'   ##            by assigning each translation to a name
 #'   dict <- new_lama_dictionary(
 #'     country = c(uk = "United Kingdom", fr = "France", NA_ = "other countries"),
 #'     language = c(en = "English", fr = "French")
 #'   )
 #'   dict
+#'   
 #' @export
 new_lama_dictionary.character <- function(...) {
   new_lama_dictionary.list(list(...))
@@ -280,13 +282,15 @@ as.lama_dictionary <- function(.data, ...) {
 
 #' @rdname as_lama_dictionary
 #' @examples
-#'   # initialize lama_dictionary
-#'   # passing each translation as a named argument
-#'   dict <- as.lama_dictionary(list(
+#'   ## Example-1: Initialize a lama-dictionary from a list oject
+#'   ##            holding the translations
+#'   obj <- list(
 #'     country = c(uk = "United Kingdom", fr = "France", NA_ = "other countries"),
 #'     language = c(en = "English", fr = "French")
-#'   ))
+#'   )
+#'   dict <- as.lama_dictionary(obj)
 #'   dict
+#'   
 #' @export
 as.lama_dictionary.list <- function(.data, ...) {
   new_lama_dictionary(.data)
@@ -347,23 +351,23 @@ as.lama_dictionary.default <- function(.data = NULL, ...) {
 #'     then it will be ordered alphanumerically.
 #' @rdname as_lama_dictionary
 #' @examples
-#'   # initialize lama_dictionary
-#'   # from a data.frame holding the label mappings
-#'   df <- data.frame(
+#'   ## Example-2: Initialize a lama-dictionary from a data frame
+#'   ##            holding the label assignment rules
+#'   df_map <- data.frame(
 #'     c_old = c("uk", "fr", NA),
 #'     c_new = c("United Kingdom", "France", "other countries"),
 #'     l_old = c("en", "fr", NA),
 #'     l_new = factor(c("English", "French", NA), levels = c("French", "English"))
 #'   )
 #'   dict <- as.lama_dictionary(
-#'     df,
+#'     df_map,
 #'     translation = c("country", "language"),
 #'     col_old = c("c_old", "l_old"),
 #'     col_new = c("c_new", "l_new"),
 #'     ordering = c("row", "new")
 #'   )
-#'   # 'country' is ordered as in the df
-#'   # 'language' is ordered differently (French first)
+#'   # 'country' is ordered as in the 'df_map'
+#'   # 'language' is ordered differently ("French" first)
 #'   dict
 #' @export
 as.lama_dictionary.data.frame <- function(

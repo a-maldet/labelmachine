@@ -94,18 +94,20 @@ the arguments \code{col} and \code{col_new} are omitted, since those are only
 necessary in the case of data frames.
 }
 \examples{
-  # --- initialize lama_dictinoary ---
+  # initialize lama_dictinoary
   dict <- new_lama_dictionary(
     subject = c(en = "English", ma = "Mathematics"),
     result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
   )
+  # the data frame which should be translated
   df <- data.frame(
     pupil = c(1, 1, 2, 2, 3),
     subject = c("en", "ma", "ma", "en", "en"),
     res = c(1, 2, 3, 2, 2)
   )
-  # --- label data.frame variables ---
-  # Example-1 (data.frame): Full length assignment
+
+  ## Example-1: Usage of 'lama_translate' for data frames
+  ##            Full length assignment
   # (apply translation 'subject' to column 'subject' and save it to column 'subject_new')
   # (apply translation 'result' to column 'res' and save it to column 'res_new')
   df_new <- lama_translate(
@@ -116,7 +118,8 @@ necessary in the case of data frames.
   )
   str(df_new)
 
-  # Example-2 (data.frame): Overwrite the original columns (abbreviation)
+  ## Example-2: Usage of 'lama_translate' for data frames
+  ##            Abbreviation overwriting original columns
   # (apply translation 'subject' to column 'subject' and save it to column 'subject')
   # (apply translation 'result' to column 'res' and save it to column 'res')
   df_new_overwritten <- lama_translate(
@@ -127,7 +130,8 @@ necessary in the case of data frames.
   )
   str(df_new_overwritten)
 
-  # Example-3 (data.frame): Abbreviation if `translation_name == column_name`
+  ## Example-3: Usage of 'lama_translate' for data frames
+  ##            Abbreviation if `translation_name == column_name`
   # (apply translation 'subject' to column 'subject' and save it to column 'subject_new')
   # (apply translation 'result' to column 'res' and save it to column 'res_new')
   df_new_overwritten <- lama_translate(
@@ -137,7 +141,8 @@ necessary in the case of data frames.
     res_new = result(res)
   )
   str(df_new_overwritten)
-  # Example-4 (atomic vector): Translate a vector
+  
+  ## Example-3: Usage of 'lama_translate' for atomic vectors
   sub <- c("ma", "en", "ma")
   sub_new <- df_new_overwritten <- lama_translate(
     sub,
@@ -146,7 +151,7 @@ necessary in the case of data frames.
   )
   str(sub_new)
 
-  # Example-5 (factor): Translate a factor
+  ## Example-5: Usage of 'lama_translate' for factors
   sub <- factor(c("ma", "en", "ma"), levels = c("ma", "en"))
   sub_new <- df_new_overwritten <- lama_translate(
     sub,
@@ -155,7 +160,8 @@ necessary in the case of data frames.
     keep_order = TRUE
   )
   str(sub_new)
-  # Example-6 (data.frame): Using 'lama_translate_'
+  
+  ## Example-6: Usage of 'lama_translate_' for data frames
   # (apply translation 'subject' to column 'subject' and save it to column 'subject_new')
   # (apply translation 'result' to column 'res' and save it to column 'res_new')
   df_new <- lama_translate_(
@@ -166,7 +172,8 @@ necessary in the case of data frames.
     col_new = c("subject_new", "res_new")
   )
   str(df_new)
-  # Example-7 (atomic vector): Translate an integer vector
+  
+  ## Example-7: Usage of 'lama_translate_' for atomic vectors
   res <- c(1, 2, 1, 3, 1, 2)
   res_new <- df_new_overwritten <- lama_translate_(
     res,
@@ -175,7 +182,7 @@ necessary in the case of data frames.
   )
   str(res_new)
 
-  # Example-8 (factor): Translate a factor
+  ## Example-8: Usage of 'lama_translate_' for factors
   sub <- factor(c("ma", "en", "ma"), levels = c("ma", "en"))
   sub_new <- df_new_overwritten <- lama_translate_(
     sub,

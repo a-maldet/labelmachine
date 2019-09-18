@@ -158,20 +158,22 @@ translations with different names
 }
 
 \examples{
-  # initialize lama_dictionary
-  # with a list object holding the translations
+  ## Example-1: Initialize a lama-dictionary from a list object
+  ##            holding the translations
   dict <- new_lama_dictionary(list(
     country = c(uk = "United Kingdom", fr = "France", NA_ = "other countries"),
     language = c(en = "English", fr = "French")
   ))
   dict
-  # initialize lama_dictionary
-  # passing each translation as a named argument
+
+  ## Example-2: Initialize the lama-dictionary directly
+  ##            by assigning each translation to a name
   dict <- new_lama_dictionary(
     country = c(uk = "United Kingdom", fr = "France", NA_ = "other countries"),
     language = c(en = "English", fr = "French")
   )
   dict
+  
 }
 \seealso{
 \code{\link[=is.dictionary]{is.dictionary()}}, \code{\link[=as.lama_dictionary]{as.lama_dictionary()}}, \code{\link[=lama_translate]{lama_translate()}}, \code{\link[=lama_read]{lama_read()}}, \code{\link[=lama_write]{lama_write()}},

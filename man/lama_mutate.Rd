@@ -20,7 +20,9 @@ lama_mutate_(.data, key, translation)
 
 \item{...}{One or more unquoted expressions separated by commas. Use named
 arguments, e.g. \code{new_transation_name = c(a = "A", b = "B")}, to set
-translations (named character vectors) to new translation names. It is also
+translations (named character vectors) to new translation names.
+If you want to delete an existing translation assign the value \code{NULL}
+(e.g. \code{old_translation = NULL}). It is also
 possible use complex expressions as long as the resulting object is a valid
 translation object (named character vector).
 Furthermore, it is possible to use translation names that are already
@@ -43,8 +45,9 @@ An updated \link[=new_lama_dictionary]{lama_dictionary} class object.
 }
 \description{
 The functions \code{\link[=lama_mutate]{lama_mutate()}} and \code{\link[=lama_mutate_]{lama_mutate_()}} alter a
-\link[=new_lama_dictionary]{lama_dictionary} object. They either alter
-or append a translation to a \link[=new_lama_dictionary]{lama_dictionary} object.
+\link[=new_lama_dictionary]{lama_dictionary} object. They can be used to alter,
+delete or append a translations to a
+\link[=new_lama_dictionary]{lama_dictionary} object.
 The function \code{\link[=lama_mutate]{lama_mutate()}} uses named arguments to assign the translations
 to the new names (similar to \code{\link[dplyr:mutate]{dplyr::mutate()}}), whereas the function
 \code{\link[=lama_mutate_]{lama_mutate_()}} is takes a character string \code{key} holding the
@@ -57,6 +60,8 @@ vector \code{translation} holding the actual translation mapping.
     subject = c(en = "English", ma = "Mathematics"),
     result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
   )
+ 
+  ## Example-1: mutate and append with 'lama_mutate'
   # add a few subjects and a few grades
   dict_new <- lama_mutate(
     dict, 
@@ -66,11 +71,15 @@ vector \code{translation} holding the actual translation mapping.
   # the subjects "Biology" and "Sports" were added
   # and the results "Beyond expectations", "Failed" and "Missed"
   dict_new
-  # initialize lama_dictionary
-  dict <- new_lama_dictionary(
-    subject = c(en = "English", ma = "Mathematics"),
-    result = c("1" = "Very good", "2" = "Good", "3" = "Not so good")
+
+  ## Example-2: delete with 'lama_mutate'
+  dict_new <- lama_mutate(
+    dict, 
+    subject = NULL
   )
+  dict_new
+
+  ## Example-3: Alter and append with 'lama_mutate_'
   # generate the new translation (character string)
   subj <- c(
     bio = "Biology",
@@ -86,8 +95,20 @@ vector \code{translation} holding the actual translation mapping.
   # the translation "subject" now also contains
   # the subjects "Biology" and "Sports"
   dict_new
+
+  ## Example-4: Delete with 'lama_mutate_'
+  # save the translation under the name "subject"
+  dict_new <- lama_mutate_(
+    dict,
+    key = "subject",
+    translation = NULL
+  )
+  # the translation "subject" was deleted
+  dict_new
+  
 }
 \seealso{
-\code{\link[=lama_translate]{lama_translate()}}, \code{\link[=new_lama_dictionary]{new_lama_dictionary()}}, \code{\link[=lama_rename]{lama_rename()}}, \code{\link[=lama_select]{lama_select()}},
+\code{\link[=lama_translate]{lama_translate()}}, \code{\link[=lama_translate_all]{lama_translate_all()}}, \code{\link[=new_lama_dictionary]{new_lama_dictionary()}},
+\code{\link[=as.lama_dictionary]{as.lama_dictionary()}}, \code{\link[=lama_rename]{lama_rename()}}, \code{\link[=lama_select]{lama_select()}},
 \code{\link[=lama_merge]{lama_merge()}}, \code{\link[=lama_read]{lama_read()}}, \code{\link[=lama_write]{lama_write()}}
 }
