@@ -10,3 +10,4 @@ temp/
 ^docs$
 ^pkgdown$
 ^codecov\.yml$
+^cran-comments\.md$
