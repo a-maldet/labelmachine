@@ -11,15 +11,15 @@ output:
 [![GitHub last commit](https://img.shields.io/github/last-commit/a-maldet/labelmachine.svg?logo=github)](https://github.com/a-maldet/labelmachine/commits/master)
 [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/a-maldet/labelmachine.svg?logo=github)](https://github.com/a-maldet/labelmachine)
 [![codecov.io](https://codecov.io/github/a-maldet/labelmachine/coverage.svg?branch=master)](https://codecov.io/github/a-maldet/labelmachine?branch=master)
+[![cran release](https://www.r-pkg.org/badges/version-last-release/labelmachine)](https://www.r-pkg.org/badges/version-last-release/labelmachine)
 <!-- badges: end -->
 
-
 `labelmachine` is an **R** package that helps assigning meaningful
-labels to R data sets.
+labels to data sets.
 Furthermore, you can manage your labels
-in so called **dictionary** files, which are **yaml** files.
+in so called **lama-dictionary** files, which are **yaml** files.
 This makes it very easy using the same label translations in multiple
-projects that share similar data structure.
+projects which share similar data structure.
 
 > Labelling your data can be easy!
 
@@ -88,10 +88,5 @@ str(df_new)
 
 A short introduction can be found here: [Get started] 
 
-## License
-
-[GPL-3]
-  
 [Get started]: https://a-maldet.github.io/labelmachine/articles/labelmachine.html
-[GPL-3]: https://a-maldet.github.io/labelmachine/LICENSE
 
