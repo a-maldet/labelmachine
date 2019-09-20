@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Improve <code>lapply and </code>sapply` with index — lapplI • labelmachine</title>
+<title>Improve <code>lapply</code> and <code>sapply</code> with index — lapplI • labelmachine</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,7 +44,7 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Improve <code>lapply and </code>sapply` with index — lapplI" />
+<meta property="og:title" content="Improve <code>lapply</code> and <code>sapply</code> with index — lapplI" />
 <meta property="og:description" content="Improve base::lapply() and base::sapply() functions by allowing
 an extra index argument .I to be passed into the function given in FUN.
 If the function given in FUN has an argument .I then, for each entry
@@ -147,7 +147,7 @@ base::sapply()." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Improve <code>lapply and </code>sapply` with index</h1>
+    <h1>Improve <code>lapply</code> and <code>sapply</code> with index</h1>
     <small class="dont-index">Source: <a href='https://github.com/a-maldet/labelmachine/blob/master/R/lappli.R'><code>R/lappli.R</code></a></small>
     <div class="hidden name"><code>lapplI.Rd</code></div>
     </div>
@@ -180,7 +180,7 @@ Besides this extra feature, there is no difference to <code><a href='https://rdr
     <tr>
       <th>FUN</th>
       <td><p>Here comes the great difference to <code><a href='https://rdrr.io/r/base/lapply.html'>base::lapply()</a></code> and
-<code><a href='https://rdrr.io/r/base/lapply.html'>base::sapply()</a></code>. When using lapplI and sapplI, the function
+<code><a href='https://rdrr.io/r/base/lapply.html'>base::sapply()</a></code>. When using <code>lapplI</code> and <code>sapplI</code>, the function
 passed into <code>FUN</code> may also have an extra argument <code>.I</code>. If it does, then
 for each item of <code>X</code> the current item index
 is passed into argument <code>.I</code> of <code>FUN</code>.

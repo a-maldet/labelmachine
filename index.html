@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Make Labelling of R Data Sets Easy • labelmachine</title>
+<title>Make Labeling of R Data Sets Easy • labelmachine</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
-<meta property="og:title" content="Make Labelling of R Data Sets Easy">
+<meta property="og:title" content="Make Labeling of R Data Sets Easy">
 <meta property="og:description" content="Assign meaningful labels to data frame columns.
     labelmachine manages your label assignment rules in yaml files
     and makes it easy to share the use labels in multiple projects.">
@@ -106,9 +106,14 @@
 </h1></div>
 <!-- badges: start -->
 
+<p><a href="https://github.com/a-maldet/labelmachine/commits/master"><img src="https://img.shields.io/github/last-commit/a-maldet/labelmachine.svg?logo=github" alt="GitHub last commit"></a></p>
+<p><a href="https://github.com/a-maldet/labelmachine"><img src="https://img.shields.io/github/languages/code-size/a-maldet/labelmachine.svg?logo=github" alt="GitHub code size in bytes"></a></p>
+<p><a href="https://codecov.io/github/a-maldet/labelmachine?branch=master"><img src="https://codecov.io/github/a-maldet/labelmachine/coverage.svg?branch=master" alt="codecov.io"></a></p>
+<p><a href="https://www.r-pkg.org/badges/version-last-release/labelmachine"><img src="https://www.r-pkg.org/badges/version-last-release/labelmachine" alt="cran release"></a></p>
+<!-- badges: end -->
 <p><code>labelmachine</code> is an <strong>R</strong> package that helps assigning meaningful labels to data sets. Furthermore, you can manage your labels in so called <strong>lama-dictionary</strong> files, which are <strong>yaml</strong> files. This makes it very easy using the same label translations in multiple projects which share similar data structure.</p>
 <blockquote>
-<p>Labelling your data can be easy!</p>
+<p>Labeling your data can be easy!</p>
 </blockquote>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -124,7 +129,7 @@
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
-<p>Let <strong>df</strong> be a data.frame with marks and subjects, which should be translated</p>
+<p>Let <code>df</code> be a data.frame with marks and subjects, which should be translated</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="dt">pupil_id =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>),</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="dt">subject =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"en"</span>, <span class="st">"ma"</span>, <span class="st">"ma"</span>, <span class="st">"en"</span>, <span class="st">"en"</span>),</a>
@@ -176,12 +181,12 @@
 <ul>
 <li>All types of variables can be translated: <strong>Logical</strong>, <strong>Numeric</strong>, <strong>Character</strong>, <strong>Factor</strong>
 </li>
-<li>When translating your varaibles, you may choose between keeping the current ordering or applying a new factor ordering to your variable.</li>
+<li>When translating your variables, you may choose between keeping the current ordering or applying a new factor ordering to your variable.</li>
 <li>Assigning meaningful labels to missing values (<strong>NA</strong>) is no problem.</li>
 <li>Assigning <strong>NA</strong> to existing values is no problem.</li>
 <li>Merging two values into a single label is no problem.</li>
 <li>Transforming <strong>data.frame</strong> holding label assignment lists into a <strong>lama_dictionary</strong> is no problem.</li>
-<li>Manage your translations in <strong>yaml</strong> files in order to use the same translations in different projects sharing similare data.</li>
+<li>Manage your translations in <strong>yaml</strong> files in order to use the same translations in different projects sharing similar data.</li>
 </ul>
 </div>
 <div id="further-reading" class="section level2">
@@ -221,10 +226,6 @@
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://travis-ci.org/a-maldet/labelmachine"><img src="https://travis-ci.org/a-maldet/labelmachine.svg?branch=master" alt="Travis build status"></a></li>
-<li><a href="https://github.com/a-maldet/labelmachine/commits/master"><img src="https://img.shields.io/github/last-commit/a-maldet/labelmachine.svg?logo=github" alt="GitHub last commit"></a></li>
-<li><a href="https://github.com/a-maldet/labelmachine"><img src="https://img.shields.io/github/languages/code-size/a-maldet/labelmachine.svg?logo=github" alt="GitHub code size in bytes"></a></li>
-<li><a href="https://codecov.io/github/a-maldet/labelmachine?branch=master"><img src="https://codecov.io/github/a-maldet/labelmachine/coverage.svg?branch=master" alt="codecov.io"></a></li>
-<li><a href="https://www.r-pkg.org/badges/version-last-release/labelmachine"><img src="https://www.r-pkg.org/badges/version-last-release/labelmachine" alt="cran release"></a></li>
 </ul>
 </div>
 </div>

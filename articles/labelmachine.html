@@ -113,7 +113,7 @@
     
 <p><code>labelmachine</code> is an <strong>R</strong> package that helps assigning meaningful labels to R data sets. Manage your labels in <strong>yaml</strong> files, so called <strong>lama-dictionary</strong> files. This makes it very easy using the same label translations in multiple projects that share similar data structure.</p>
 <blockquote>
-<p>Labelling your data can be easy!</p>
+<p>Labeling your data can be easy!</p>
 </blockquote>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -175,7 +175,7 @@
 <a class="sourceLine" id="cb3-22" data-line-number="22"><span class="co">#&gt;       "Good"     "Passed" "Not passed" "Not passed"     "Missed" </span></a>
 <a class="sourceLine" id="cb3-23" data-line-number="23"><span class="co">#&gt;            0 </span></a>
 <a class="sourceLine" id="cb3-24" data-line-number="24"><span class="co">#&gt;           NA</span></a></code></pre></div>
-<p>Each entry in <code>dict</code> is a translation for a variable (column) of the data frame <code>df</code>. The translation <code>sub</code> can be used to assig labels to the values given in column <code>subject</code> in <code>df</code> and translation <code>res</code> can be used to assign labels to the values in column <code>result</code> in <code>df</code>. The expression <code>NA_</code> is used to escape the missing value symbol <code>NA</code>. Hence, the last assignment <code>NA_ = "Missed"</code> defines that missing values should be labelled with the string <code>"Missed"</code>. For further details on creating lama-dictionaries see <a href="https://a-maldet.github.io/labelmachine/articles/create_dictionaries.html">Creating lama-dictionaries</a> and <a href="https://a-maldet.github.io/labelmachine/articles/alter_dictionaries.html">Altering lama-dictionaries</a>.</p>
+<p>Each entry in <code>dict</code> is a translation for a variable (column) of the data frame <code>df</code>. The translation <code>sub</code> can be used to assign labels to the values given in column <code>subject</code> in <code>df</code> and translation <code>res</code> can be used to assign labels to the values in column <code>result</code> in <code>df</code>. The expression <code>NA_</code> is used to escape the missing value symbol <code>NA</code>. Hence, the last assignment <code>NA_ = "Missed"</code> defines that missing values should be labeled with the string <code>"Missed"</code>. For further details on creating lama-dictionaries see <a href="https://a-maldet.github.io/labelmachine/articles/create_dictionaries.html">Creating lama-dictionaries</a> and <a href="https://a-maldet.github.io/labelmachine/articles/alter_dictionaries.html">Altering lama-dictionaries</a>.</p>
 </div>
 <div id="translate-the-data-frame-columns" class="section level2">
 <h2 class="hasAnchor">

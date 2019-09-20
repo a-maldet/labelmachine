@@ -47,7 +47,7 @@
 <meta property="og:title" content="Create a new lama_dictionary class object — new_lama_dictionary" />
 <meta property="og:description" content="Generates an S3 class object, which holds the variable translations.
 There are three valid ways to use new_lama_dictionary in order to create a
-LableDictionary class object:
+lama_dictionary class object:
 No arguments were passed into ...: In this case new_lama_dictionary
 returns an empty lama_dictionary class object (e.g. dict &amp;lt;- new_lama_dictionary()).
 The first argument is a list: In this case only the first argument of
@@ -168,7 +168,7 @@ will be added to the new lama_dictionary class object.
     <div class="ref-description">
     <p>Generates an <em>S3</em> class object, which holds the <em>variable translations</em>.
 There are three valid ways to use <code>new_lama_dictionary</code> in order to create a
-LableDictionary class object:</p><ul>
+<code>lama_dictionary</code> class object:</p><ul>
 <li><p><em>No arguments</em> were passed into <code>...</code>: In this case <code>new_lama_dictionary</code>
 returns an empty lama_dictionary class object (e.g. <code>dict &lt;- new_lama_dictionary()</code>).</p></li>
 <li><p><em>The first argument is a list</em>: In this case only the first argument of
@@ -265,7 +265,7 @@ character vector (e.g. <code>0</code> and <code>1</code> are treated like <code>
 <li><p>The <em>entries</em> (character strings) of the character vector correspond to
 the new <em>labels</em>, which will be assigned to the original variable levels.
 It is also allowed to have missing labels (<code>NA</code>s).
-In this case, the original values are mappend to missing values.</p></li>
+In this case, the original values are mapped onto missing values.</p></li>
 </ul>
 
 <p>The function <code>lama_translate()</code> is used in order to apply a translation on a variable.
@@ -297,8 +297,8 @@ character strings before the translation process.</p></li>
 Therefore, the used translation must contain a information that tells how
 to handle a missing value. In order to define such a translation
 the missing value (<code>NA</code>) can be escaped with the character string <code>"NA_"</code>.
-This can be useful in two sitations:</p><ul>
-<li><p>All missing values should be labelled
+This can be useful in two situations:</p><ul>
+<li><p>All missing values should be labeled
 (e.g. the translation <code><a href='https://rdrr.io/r/base/c.html'>c("0" = "urban", "1" = "rural", NA_ = "missing")</a></code>
 assigns the character string <code>"missing"</code> to all missing values of a variable).</p></li>
 <li><p>Map some original values to <code>NA</code>
@@ -307,7 +307,7 @@ assigns <code>NA</code> (the missing character) to the original values <code>2</
 Actually, in this case the translation definition does not always have to
 use this escape mechanism, but only
 when defining the translations inside of a <code>YAML</code> file,
-since the <code>YAML</code> parser does not recognice missing values.</p></li>
+since the <code>YAML</code> parser does not recognize missing values.</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="lama-dictionary-class-objects"><a class="anchor" href="#lama-dictionary-class-objects"></a>lama_dictionary class objects</h2>
