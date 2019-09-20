@@ -13,6 +13,9 @@ Installation
 ------------
 
 ``` r
+# Install release version from CRAN
+install.packages("labelmachine")
+
 # Install development version from GitHub
 devtools::install_github('a-maldet/labelmachine', build_opts = NULL)
 ```

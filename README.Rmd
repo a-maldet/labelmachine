@@ -25,6 +25,9 @@ projects which share similar data structure.
 ## Installation
 
 ```{r, eval = FALSE}
+# Install release version from CRAN
+install.packages("labelmachine")
+
 # Install development version from GitHub
 devtools::install_github('a-maldet/labelmachine', build_opts = NULL)
 ```
