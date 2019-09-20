@@ -21,7 +21,7 @@ Encoding: UTF-8
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
-License: GPL-3 + file LICENSE
+License: GPL-3
 URL:
     https://a-maldet.github.io/labelmachine,
     https://github.com/a-maldet/labelmachine
