@@ -7,13 +7,13 @@
 is.syntactic(x)
 }
 \arguments{
-\item{x}{A character string that should be checked, if it conatains a valid object name.}
+\item{x}{A character string that should be checked, if it contains a valid object name.}
 }
 \value{
 \code{TRUE} if valid, \code{FALSE} else.
 }
 \description{
-This function was suggested by Hadley Wickham in a forum
+This function was suggested by 'Hadley Wickham' in a forum
 }
 \references{
 \url{http://r.789695.n4.nabble.com/Syntactically-valid-names-td3636819.html}

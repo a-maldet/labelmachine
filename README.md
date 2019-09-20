@@ -16,7 +16,7 @@ labelmachine <img src="man/figures/logo.png" align="right" alt="" width=140 heig
 <!-- badges: end -->
 `labelmachine` is an **R** package that helps assigning meaningful labels to data sets. Furthermore, you can manage your labels in so called **lama-dictionary** files, which are **yaml** files. This makes it very easy using the same label translations in multiple projects which share similar data structure.
 
-> Labelling your data can be easy!
+> Labeling your data can be easy!
 
 Installation
 ------------
@@ -34,7 +34,7 @@ The label assignments are given in so called **translations** (named character v
 Usage
 -----
 
-Let **df** be a data.frame with marks and subjects, which should be translated
+Let `df` be a data.frame with marks and subjects, which should be translated
 
 ``` r
 df <- data.frame(
@@ -99,12 +99,12 @@ Highlights
 `labelmachine` offers the following features:
 
 -   All types of variables can be translated: **Logical**, **Numeric**, **Character**, **Factor**
--   When translating your varaibles, you may choose between keeping the current ordering or applying a new factor ordering to your variable.
+-   When translating your variables, you may choose between keeping the current ordering or applying a new factor ordering to your variable.
 -   Assigning meaningful labels to missing values (**NA**) is no problem.
 -   Assigning **NA** to existing values is no problem.
 -   Merging two values into a single label is no problem.
 -   Transforming **data.frame** holding label assignment lists into a **lama\_dictionary** is no problem.
--   Manage your translations in **yaml** files in order to use the same translations in different projects sharing similare data.
+-   Manage your translations in **yaml** files in order to use the same translations in different projects sharing similar data.
 
 Further reading
 ---------------

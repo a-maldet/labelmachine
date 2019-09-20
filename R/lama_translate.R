@@ -3,7 +3,7 @@
 #' The functions [lama_translate()] and [lama_translate_()] take a factor,
 #' a vector or a data.frame
 #' and convert one or more of its categorical variables
-#' (not necessarely a factor variable) into factor variables with new labels. 
+#' (not necessarily a factor variable) into factor variables with new labels. 
 #' The function [lama_translate()] uses non-standard evaluation, whereas 
 #' [lama_translate_()] is the standard evaluation alternative.
 #' The functions [lama_translate()] and [lama_translate_()] require different
@@ -18,13 +18,13 @@
 #'   Each argument in `...` is an unquoted expression and defines a translation.
 #'   Use unquoted
 #'   arguments that tell which translation should be applied to which column and
-#'   which column name the relabelled variable should be assigned to. E.g.
+#'   which column name the relabeled variable should be assigned to. E.g.
 #'   `lama_translate(.data, dict, Y1 = TRANS1(X1), Y2 = TRANS2(Y2))`
 #'   to apply the translations \code{TRANS1} and \code{TRANS2} to the data.frame
-#'   columns \code{X1} and \code{X2} and save the new labelled variables under
+#'   columns \code{X1} and \code{X2} and save the new labeled variables under
 #'   the column names \code{Y1} and \code{Y2}.
 #'   There are also two abbreviation mechanisms available:
-#'   The argument assignement \code{FOO(X)} is the same as \code{X = FOO(X)} and
+#'   The argument assignment \code{FOO(X)} is the same as \code{X = FOO(X)} and
 #'   \code{FOO} is an abbreviation for \code{FOO = FOO(FOO)}.
 #'   In case, `.data` is not a data frame but a plain factor or an atomic vector, then
 #'   the argument `...` must be a single unquoted translation name
@@ -178,7 +178,7 @@ lama_translate.data.frame <- function(.data, dictionary, ..., keep_order = FALSE
   duplicates <- names(duplicates[duplicates > 1])
   if (length(duplicates) > 0)
     err_handler(paste0(
-      "More than one relabelled variable was assigned to the same column ",
+      "More than one relabeled variable was assigned to the same column ",
       "name. The following column names have multiple assignments: ",
       stringify(duplicates),
       "."
@@ -275,11 +275,11 @@ lama_translate.default <- function(.data, dictionary, ..., keep_order = FALSE) {
 #' @param col Only used if `.data` is a data frame. The argument `col` must be
 #'   a character vector of the same length as \code{translation} holding
 #'   the names of the data.frame columns that
-#'   should be relabelled. If omitted, then it will be assumed that the column
+#'   should be relabeled. If omitted, then it will be assumed that the column
 #'   names are the same as the given translation names in the argument \code{translation}.
 #' @param col_new Only used if `.data` is a data frame. The argument `col` must be
 #'   a character vector of the same length as \code{translation} holding
-#'   the names under which the relabelled variables should be stored in
+#'   the names under which the relabeled variables should be stored in
 #'   the data.frame. If omitted, then it will be assumed that the new column
 #'   names are the same as the column names of the original variables.
 #' @rdname lama_translate
@@ -326,7 +326,7 @@ lama_translate_.data.frame <- function(.data, dictionary, translation, col = tra
   duplicates <- names(duplicates[duplicates > 1])
   if (length(duplicates) > 0)
     err_handler(paste0(
-      "The argument 'col_new' is invalid: More than one relabelled variable ",
+      "The argument 'col_new' is invalid: More than one relabeled variable ",
       "was assigned to the same column name. ",
       "The following column names have multiple assignments: ",
       stringify(duplicates),
@@ -457,8 +457,8 @@ translate_df <- function(
 
 #' This function relabels a vector
 #'
-#' @param val The vector that should be relabelled. Allowed are all vector types (also factor).
-#' @param translation Named character vector holding the label assignements.
+#' @param val The vector that should be relabeled. Allowed are all vector types (also factor).
+#' @param translation Named character vector holding the label assignments.
 #' @param keep_order A logical flag. If the vector in \code{val}
 #' is a factor variable and \code{keep_order} is set to \code{TRUE}, then
 #' the order of the original factor variable is preserved.
@@ -470,7 +470,7 @@ translate_variable <- function(val, translation, keep_order, err_handler) {
   flag_na_escape <- any(is.na(val_char)) && contains_na_escape(old_labels)
   if (flag_na_escape)
     val_char <- na_to_escape(val_char) 
-  # Check that all old labels can be found in the labelling dictionary
+  # Check that all old labels can be found in the labeling dictionary
   missing_labels <- unique(val_char[!is.na(val_char)])
   missing_labels <- missing_labels[!missing_labels %in% old_labels]
   if (length(missing_labels) > 0)
@@ -481,9 +481,9 @@ translate_variable <- function(val, translation, keep_order, err_handler) {
       "."
     ))
   # --- Relabel val ---
-  labelling_map <- data.frame(old = old_labels, new = translation)
+  labeling_map <- data.frame(old = old_labels, new = translation)
   if (keep_order) {
-    # if the old order should be kept, then reorder the labelling map
+    # if the old order should be kept, then reorder the labeling map
     if (is.factor(val)) {
       col_levels <- intersect(as.character(levels(val)), old_labels)
     } else {
@@ -491,19 +491,19 @@ translate_variable <- function(val, translation, keep_order, err_handler) {
       col_levels <- col_levels[!is.na(col_levels)]
       col_levels <- as.character(col_levels[order(col_levels)])
     }
-    labelling_map <- labelling_map[
+    labeling_map <- labeling_map[
       match(c(col_levels, setdiff(old_labels, col_levels)), old_labels),
     ]
   }
   # set new labels as factor
-  labelling_map$new = factor(
-      labelling_map$new,
-      levels = unique(labelling_map$new)
+  labeling_map$new = factor(
+      labeling_map$new,
+      levels = unique(labeling_map$new)
     )
   # Merge labels
   temp <- merge(
     data.frame(ord = seq_len(length(val_char)), old = val_char),
-    labelling_map,
+    labeling_map,
     by = "old",
     all.x = TRUE
   )

@@ -70,13 +70,13 @@ the full length labels for the subjects of a data set holding encoded subject
 values (e.g. `"eng"` for `"English"`, `"mat"` for `"Mathematics"` and `"gym"`
 for `"gymnastics"`).
 The second translation `res` holds the full length labels for the encoded test results.
-In translation `res` multiple values were mapped onto a single lable string 
+In translation `res` multiple values were mapped onto a single label string 
 (e.g. `3` and `4` were mapped onto `"Not passed"`).
 The expression `NA_` in translation `res` is used to escape the
 missing value symbol `NA` (only necessary in the name fields of the translation
 vectors).
 Hence, the last assignment `NA_ = "Missed"` defines that missing values
-should be labelled with the string `"Missed"`.
+should be labeled with the string `"Missed"`.
 The last expression `"0" = NA` given in translation `res` tells that
 all zero values `0` should be mapped onto the missing value symbol `NA`.
 
@@ -115,7 +115,7 @@ For example the file `dictionary.yaml` may looks as follows
 On the top level (no indentation) there are the translation names followed by a
 colon
 (e.g. `sub:`, `res:` and `lev:`)
-the following lines describe the laben assignment rules of the translation
+the following lines describe the label assignment rules of the translation
 (indentation of two whitespaces `  `).
 Each line contains a single label assignment, where the original value comes
 first (use quotes in case of a numeric or logical, e.g. `'1': "Very good"`), 
@@ -188,7 +188,7 @@ The resulting lama-dictionary `dict` contains two translations `sub` and `res`.
 
 The command `as.lama_dictionary()` also allows an argument `ordering`, which
 specifies how the ordering of the translations should
-be determined. For futher details, see `as.lama_dictionary()`.
+be determined. For further details, see `as.lama_dictionary()`.
 
 ## Further reading
 

@@ -9,14 +9,14 @@ df <- data.frame(
     c("c", "d", "d", "a", "a", "f", NA, "e"),
     levels = c("f", "e", "X1", "d", "c", "a", "X2")
   ),
-  var_r_labelled = c("X", "D", "D", "A", "A", "F", NA, "X"),
+  var_r_labeled = c("X", "D", "D", "A", "A", "F", NA, "X"),
   var_s = factor(
     c("y", "y", NA, "x", "x", "y", "y", "x"),
     levels = c("X1", "y", "X2", "x", "X3")
   ),
-  var_s_labelled = c(NA, NA, NA, "X", "X", NA, NA, "X"),
+  var_s_labeled = c(NA, NA, NA, "X", "X", NA, NA, "X"),
   var_t = c("u", "v", NA, "v", "u", "v", "u", "v"),
-  var_t_labelled = c(NA, "V", "NAnew", "V", NA, "V", NA, "V"),
+  var_t_labeled = c(NA, "V", "NAnew", "V", NA, "V", NA, "V"),
   var_t_false = c("u", "v", "X", "u", "v", "u", "v", "u"),
   var_r_false = factor(
     c("c", "d", "d", "a", "a", "f", "e", "X2"),
@@ -40,8 +40,8 @@ test_that("'lama_translate' works unquoted", {
   expect_column_names(
     df_new, 
     c(
-      "var_r", "var_r_labelled", "var_s", "var_s_labelled", "var_t",
-      "var_t_labelled", "var_t_false", "var_r_false",
+      "var_r", "var_r_labeled", "var_s", "var_s_labeled", "var_t",
+      "var_t_labeled", "var_t_false", "var_r_false",
       "var_r_new", "var_s_new", "var_t_new"
     )
   )
@@ -50,10 +50,10 @@ test_that("'lama_translate' works unquoted", {
   expect_factor_levels(df_new$var_s_new, c("X", "Z"))
   expect_factor_levels(df_new$var_t_new, c("V", "NAnew"))
   expect_factor_levels(df_new$var_t, c("V", "NAnew"))
-  expect_identical(as.character(df_new$var_r), df_new$var_r_labelled)
-  expect_identical(as.character(df_new$var_r_new), df_new$var_r_labelled)
-  expect_identical(as.character(df_new$var_t_new), df_new$var_t_labelled)
-  expect_identical(as.character(df_new$var_t), df_new$var_t_labelled)
+  expect_identical(as.character(df_new$var_r), df_new$var_r_labeled)
+  expect_identical(as.character(df_new$var_r_new), df_new$var_r_labeled)
+  expect_identical(as.character(df_new$var_t_new), df_new$var_t_labeled)
+  expect_identical(as.character(df_new$var_t), df_new$var_t_labeled)
   df_new_2 <- lama_translate(
     df,
     dict,
@@ -65,14 +65,14 @@ test_that("'lama_translate' works unquoted", {
   expect_column_names(
     df_new_2, 
     c(
-      "var_r", "var_r_labelled", "var_s", "var_s_labelled", "var_t",
-      "var_t_labelled", "var_t_false", "var_r_false"
+      "var_r", "var_r_labeled", "var_s", "var_s_labeled", "var_t",
+      "var_t_labeled", "var_t_false", "var_r_false"
     )
   )
   expect_factor_levels(df_new_2$var_r, c("F", "X", "D", "A", "B"))
   expect_factor_levels(df_new_2$var_s, c("X", "Z"))
-  expect_identical(as.character(df_new_2$var_r), df_new_2$var_r_labelled)
-  expect_identical(as.character(df_new_2$var_s), df_new_2$var_s_labelled)
+  expect_identical(as.character(df_new_2$var_r), df_new_2$var_r_labeled)
+  expect_identical(as.character(df_new_2$var_s), df_new_2$var_s_labeled)
 })
 # lama_translate errors
 test_that("'lama_translate' throws the right errors", {
@@ -82,7 +82,7 @@ test_that("'lama_translate' throws the right errors", {
   )
   expect_error(
     lama_translate(df, dict, x = s(var_s), y = r._(var_r), x = s(var_s)),
-    "More than one relabelled variable was assigned to the same column name. The following column names have multiple assignments: 'x'."
+    "More than one relabeled variable was assigned to the same column name. The following column names have multiple assignments: 'x'."
   )
   expect_error(
     lama_translate(df, dict, y = s(var_s), x = (var_t)),
@@ -120,8 +120,8 @@ test_that("'lama_translate_' works", {
   expect_column_names(
     df_new, 
     c(
-      "var_r", "var_r_labelled", "var_s", "var_s_labelled", "var_t",
-      "var_t_labelled", "var_t_false", "var_r_false",
+      "var_r", "var_r_labeled", "var_s", "var_s_labeled", "var_t",
+      "var_t_labeled", "var_t_false", "var_r_false",
       "var_r_new", "var_t_new"
     )
   )
@@ -129,10 +129,10 @@ test_that("'lama_translate_' works", {
   expect_factor_levels(df_new$var_r, c("A", "B", "X", "D", "F"))
   expect_factor_levels(df_new$var_t_new, c("V", "NAnew"))
   expect_factor_levels(df_new$var_t, c("V", "NAnew"))
-  expect_identical(as.character(df_new$var_r), df_new$var_r_labelled)
-  expect_identical(as.character(df_new$var_r_new), df_new$var_r_labelled)
-  expect_identical(as.character(df_new$var_t_new), df_new$var_t_labelled)
-  expect_identical(as.character(df_new$var_t), df_new$var_t_labelled)
+  expect_identical(as.character(df_new$var_r), df_new$var_r_labeled)
+  expect_identical(as.character(df_new$var_r_new), df_new$var_r_labeled)
+  expect_identical(as.character(df_new$var_t_new), df_new$var_t_labeled)
+  expect_identical(as.character(df_new$var_t), df_new$var_t_labeled)
   df_new_2 <- lama_translate_(
     df,
     dict,
@@ -144,14 +144,14 @@ test_that("'lama_translate_' works", {
   expect_column_names(
     df_new_2, 
     c(
-      "var_r", "var_r_labelled", "var_s", "var_s_labelled", "var_t",
-      "var_t_labelled", "var_t_false", "var_r_false"
+      "var_r", "var_r_labeled", "var_s", "var_s_labeled", "var_t",
+      "var_t_labeled", "var_t_false", "var_r_false"
     )
   )
   expect_factor_levels(df_new_2$var_r, c("F", "X", "D", "A", "B"))
   expect_factor_levels(df_new_2$var_s, c("X", "Z"))
-  expect_identical(as.character(df_new_2$var_r), df_new_2$var_r_labelled)
-  expect_identical(as.character(df_new_2$var_s), df_new_2$var_s_labelled)
+  expect_identical(as.character(df_new_2$var_r), df_new_2$var_r_labeled)
+  expect_identical(as.character(df_new_2$var_s), df_new_2$var_s_labeled)
   df_new_3 <- lama_translate_(
     df,
     dict,
@@ -162,8 +162,8 @@ test_that("'lama_translate_' works", {
   expect_column_names(
     df_new_3, 
     c(
-      "var_r", "var_r_labelled", "var_s", "var_s_labelled", "var_t",
-      "var_t_labelled", "var_t_false", "var_r_false", "var_t_new"
+      "var_r", "var_r_labeled", "var_s", "var_s_labeled", "var_t",
+      "var_t_labeled", "var_t_false", "var_r_false", "var_t_new"
     )
   )
   expect_factor_levels(df_new_3$var_t_new, c("V", "NAnew"))
@@ -181,7 +181,7 @@ test_that("'lama_translate_' throws the right errors", {
       translation = c("var_t", "var_t", "var_t"),
       col_new = c("X", "x2", "X")
     ),
-    "The argument 'col_new' is invalid: More than one relabelled variable was assigned to the same column name. The following column names have multiple assignments: 'X'."
+    "The argument 'col_new' is invalid: More than one relabeled variable was assigned to the same column name. The following column names have multiple assignments: 'X'."
   )
   expect_error(
     lama_translate_(

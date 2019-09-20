@@ -1,4 +1,4 @@
-#' Merge multiple label lexicas into one
+#' Merge multiple lama-dictionaries into one
 #'
 #' This function takes multiple [lama_dictionary][new_lama_dictionary()] class
 #' objects and merges them together into

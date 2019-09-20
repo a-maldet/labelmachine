@@ -10,14 +10,14 @@ df <- data.frame(
     c("c", "d", "d", "a", "a", "f", NA, "e"),
     levels = c("f", "e", "X1", "d", "c", "a", "X2")
   ),
-  a_labelled = c("X", "D", "D", "A", "A", "F", NA, "X"),
+  a_labeled = c("X", "D", "D", "A", "A", "F", NA, "X"),
   x = factor(
     c("y", "y", NA, "x", "x", "y", "y", "x"),
     levels = c("X1", "y", "X2", "x", "X3")
   ),
-  x_labelled = c(NA, NA, NA, "X", "X", NA, NA, "X"),
+  x_labeled = c(NA, NA, NA, "X", "X", NA, NA, "X"),
   u = c("u", "v", NA, "v", "u", "v", "u", "v"),
-  u_labelled = c(NA, "V", "NAnew", "V", NA, "V", NA, "V"),
+  u_labeled = c(NA, "V", "NAnew", "V", NA, "V", NA, "V"),
   stringsAsFactors = FALSE
 )
 # lama_translate
@@ -34,16 +34,16 @@ test_that("'lama_translate_all' works", {
   expect_column_names(
     df_new, 
     c(
-      "a", "a_labelled", "x", "x_labelled", "u", "u_labelled",
+      "a", "a_labeled", "x", "x_labeled", "u", "u_labeled",
       "new_A_new", "new_X_new", "new_U_new"
     )
   )
   expect_factor_levels(df_new$new_A_new, c("F", "X", "D", "A", "B"))
   expect_factor_levels(df_new$new_X_new, c("X", "Z"))
   expect_factor_levels(df_new$new_U_new, c("V", "NAnew"))
-  expect_identical(as.character(df_new$new_A_new), df_new$a_labelled)
-  expect_identical(as.character(df_new$new_X_new), df_new$x_labelled)
-  expect_identical(as.character(df_new$new_U_new), df_new$u_labelled)
+  expect_identical(as.character(df_new$new_A_new), df_new$a_labeled)
+  expect_identical(as.character(df_new$new_X_new), df_new$x_labeled)
+  expect_identical(as.character(df_new$new_U_new), df_new$u_labeled)
 })
 # lama_translate errors
 test_that("'lama_translate_all' throws the right errors", {

@@ -16,7 +16,7 @@
 #'   column names.
 #' @param fn_colname A function, which transforms character string into a new
 #'   character string. This function will be used to transform the old column
-#'   names into new column names under which the labelled variables will then
+#'   names into new column names under which the labeled variables will then
 #'   be stored.
 #' @param keep_order A logical of length one, defining if the original order
 #'   (factor order or alphanumerical order) of the data frame variables should

@@ -8,7 +8,7 @@ NA_lama_ <- "NA_"
 #'
 #' Generates an _S3_ class object, which holds the _variable translations_.
 #' There are three valid ways to use `new_lama_dictionary` in order to create a
-#' LableDictionary class object:
+#' `lama_dictionary` class object:
 #'  * _No arguments_ were passed into `...`: In this case `new_lama_dictionary`
 #'    returns an empty lama_dictionary class object (e.g. `dict <- new_lama_dictionary()`).
 #'  * _The first argument is a list_: In this case only the first argument of 
@@ -43,7 +43,7 @@ NA_lama_ <- "NA_"
 #' * The _entries_ (character strings) of the character vector correspond to
 #'   the new _labels_, which will be assigned to the original variable levels.
 #'   It is also allowed to have missing labels (`NA`s).
-#'   In this case, the original values are mappend to missing values.
+#'   In this case, the original values are mapped onto missing values.
 #' 
 #' The function [lama_translate()] is used in order to apply a translation on a variable.
 #' The resulting vector with the assigned labels can be of the following types:
@@ -69,8 +69,8 @@ NA_lama_ <- "NA_"
 #' Therefore, the used translation must contain a information that tells how
 #' to handle a missing value. In order to define such a translation 
 #' the missing value (`NA`) can be escaped with the character string `"NA_"`.  
-#' This can be useful in two sitations:
-#' * All missing values should be labelled
+#' This can be useful in two situations:
+#' * All missing values should be labeled
 #'   (e.g. the translation `c("0" = "urban", "1" = "rural", NA_ = "missing")`
 #'   assigns the character string `"missing"` to all missing values of a variable).
 #' * Map some original values to `NA`
@@ -79,7 +79,7 @@ NA_lama_ <- "NA_"
 #'   Actually, in this case the translation definition does not always have to
 #'   use this escape mechanism, but only
 #'   when defining the translations inside of a `YAML` file,
-#'   since the `YAML` parser does not recognice missing values.
+#'   since the `YAML` parser does not recognize missing values.
 #'
 #' @section lama_dictionary class objects:
 #' Each _lama_dictionary_ class object can contain multiple _translations_,
@@ -252,8 +252,8 @@ get_translation <- function(.data, translation, err_handler) {
 #' This function allows two types of arguments:
 #' * _named list_: A named list object holding the translations.
 #' * _data.frame_: A data.frame with one ore more column pairs. Each column
-#'   pair consists of a column holding the original values, which should be relapced,
-#'   and a second charachter column holding the new labels which should be
+#'   pair consists of a column holding the original values, which should be replaced,
+#'   and a second character column holding the new labels which should be
 #'   assigned to the original values. Use the arguments `col_old` and `col_new`
 #'   in order to define which columns are holding original values and which 
 #'   columns hold the new labels. The names of the resulting translations
@@ -335,8 +335,7 @@ as.lama_dictionary.default <- function(.data = NULL, ...) {
 #'   is a data.frame. In this case, the
 #'   argument `ordering` must be a character vector (same length as `translation`) holding
 #'   one of the following configuration strings configuring 
-#'   the ordering of each corresponding translation
-#'   should be orde:
+#'   the ordering of each corresponding translation:
 #'   * `"row"`: The corresponding translation will be ordered exactly in the same
 #'     way as the rows are ordered in the data.frame `.data`. 
 #'   * `"old"`: The corresponding translation will be ordered by the given 

@@ -33,7 +33,7 @@ package [dplyr]:
 * `lama_mutate()` and `lama_mutate_()`: Altering one or more translations
 * `lama_merge()`: Merging two or more dictionaries into one
 
-The commands which have no lodash at the end of the command name
+The commands which have no underscore at the end of the command name
 (`lama_rename()`, `lama_select()`, `lama_mutate()`) use
 **non-standard evaluation**.
 This means, that instead of passing in translation names as
@@ -42,7 +42,7 @@ strings (e.g. `lama_rename_(dict, "old", "new")`), we can pass in
 automatically parsed. Often non-standard evaluation saves some time in writing,
 but sometimes we want to pass in the names as character vectors. 
 In this case, we need to use the **standard evaluation** variants of the commands.
-These commands have the same names, but end on a lodash 
+These commands have the same names, but end on a underscore 
 (e.g. `lama_rename_()`, `lama_select_()`, `lama_mutate_()`).
 
 In the following part we will alter the following dictionary:

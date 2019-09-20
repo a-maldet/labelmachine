@@ -51,7 +51,7 @@ character vector (e.g. \code{0} and \code{1} are treated like \code{"0"} and \co
 \item The \emph{entries} (character strings) of the character vector correspond to
 the new \emph{labels}, which will be assigned to the original variable levels.
 It is also allowed to have missing labels (\code{NA}s).
-In this case, the original values are mappend to missing values.
+In this case, the original values are mapped onto missing values.
 }
 
 The function \code{\link[=lama_translate]{lama_translate()}} is used in order to apply a translation on a variable.
@@ -84,9 +84,9 @@ It is also possible to handle missing values with \code{\link[=lama_translate]{l
 Therefore, the used translation must contain a information that tells how
 to handle a missing value. In order to define such a translation
 the missing value (\code{NA}) can be escaped with the character string \code{"NA_"}.
-This can be useful in two sitations:
+This can be useful in two situations:
 \itemize{
-\item All missing values should be labelled
+\item All missing values should be labeled
 (e.g. the translation \code{c("0" = "urban", "1" = "rural", NA_ = "missing")}
 assigns the character string \code{"missing"} to all missing values of a variable).
 \item Map some original values to \code{NA}
@@ -95,7 +95,7 @@ assigns \code{NA} (the missing character) to the original values \code{2} and \c
 Actually, in this case the translation definition does not always have to
 use this escape mechanism, but only
 when defining the translations inside of a \code{YAML} file,
-since the \code{YAML} parser does not recognice missing values.
+since the \code{YAML} parser does not recognize missing values.
 }
 }
 

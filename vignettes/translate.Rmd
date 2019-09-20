@@ -86,8 +86,8 @@ used.
 Besides the arguments `.data`, `dictionary` and `keep_order` all other
 arguments are label assignments. The names of the arguments
 (left hand side of the equations) define the column names under which the
-labelled variable should be stored. The right hand side
-of the assignments define the column which should be labelled
+labeled variable should be stored. The right hand side
+of the assignments define the column which should be labeled
 (parameter name in the brackets) and which 
 translation should be used (function name the left of the brackets).
 Hence, the statement above does the following things:
@@ -95,22 +95,22 @@ Hence, the statement above does the following things:
 * `subject_new = sub(subject)`: The column `subject` in the data frame `df` is
   translated using the translation `sub` and the resulting factor is stored
   under the column name `subject_new`. Since the first entry in `keep_order` is
-  `FALSE`, the ordering given in the transaltion `sub` is used for the labels.
+  `FALSE`, the ordering given in the translation `sub` is used for the labels.
 * `level = lev(level)`: The column `level` in the data frame `df` is translated
   using the translation `lev` and then overwritten by the resulting factor.
-  Since the second entry in `keep_order` is `TRUE`, the labelled variable
+  Since the second entry in `keep_order` is `TRUE`, the labeled variable
   has the same ordering as the original column.
 * `result = result(result)`: The column `result` in the data frame `df` is
   translated using the translation `result` and then overwritten by the
   resulting factor. Since the third entry in `keep_order` is
-  `FALSE`, the ordering given in the transaltion is used for the labels.
+  `FALSE`, the ordering given in the translation is used for the labels.
 
-There are several aggreviations, in order to spare some writing:
+There are several abbreviations, in order to spare some writing:
 
 * If the translation has the same name as the original column name, then
   it is sufficient to just write the translation name on the right hand side.
   E.g: `result_new = result` is the same as `result_new = result(result)`.
-* If the column name under which the labelled variable should be stored is the
+* If the column name under which the labeled variable should be stored is the
   same as the original column name, then
   the left hand side of the assignment can be omitted.
   E.g: `lev(level)` is the same as `level = lev(level)`.
@@ -158,7 +158,7 @@ df_new <- lama_translate_all(
   dictionary = dict,
   prefix = "new_",
   fn_colname = toupper,
-  suffix = "_labelled",
+  suffix = "_labeled",
   keep_order = TRUE
 )
 str(df_new)
@@ -166,7 +166,7 @@ str(df_new)
 
 In the above example, only the column name `result` matches the translation
 name and is therefore translated and stored under the column name
-`new_RESULT_labelled`. The name of the new columns is a transformation of
+`new_RESULT_labeled`. The name of the new columns is a transformation of
 the old column name (e.g. `result`), appending the strings given in the
 arguments `prefix` and `suffix` at the beginning and at the end of the
 column name. Before this string concatenation, the name of the original
@@ -175,7 +175,7 @@ transformation function `fn_colname`. In our case `fn_colname` is given
 the function `toupper` which transforms all letters of the column name `result`
 to upper case `RESULT`.
 Contrary to `lama_translate()`, the argument `keep_order` is just a single
-boolean flag. It defines wether the original order of all columns should
+boolean flag. It defines whether the original order of all columns should
 be kept (`keep_order = TRUE`)
 or if the order in the translation vector should be used.
 

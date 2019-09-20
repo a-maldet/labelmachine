@@ -4,7 +4,7 @@
 #' are used to rename one or more variable translations inside of a 
 #' [lama_dictionary][new_lama_dictionary()] class object.
 #' The function [lama_rename()] uses non-standard evaluation,
-#' whereas [lama_rename_()] is the standard evaluation alternativ.
+#' whereas [lama_rename_()] is the standard evaluation alternative.
 #' @param .data A [lama_dictionary][new_lama_dictionary()] object, holding the variable translations
 #' @param ... One or more unquoted expressions separated by commas. Use named arguments, e.g. `new_name = old_name`, to rename selected variables.
 #' @return The updated [lama_dictionary][new_lama_dictionary()] class object.

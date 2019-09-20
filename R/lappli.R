@@ -1,4 +1,4 @@
-#' Improve `lapply and `sapply` with index
+#' Improve `lapply` and `sapply` with index
 #'
 #' Improve [base::lapply()] and [base::sapply()] functions by allowing
 #' an extra index argument `.I` to be passed into the function given in `FUN`.
@@ -10,7 +10,7 @@
 #' Besides this extra feature, there is no difference to [base::lapply()] and
 #' [base::sapply()].
 #' @param FUN Here comes the great difference to [base::lapply()] and
-#'   [base::sapply()]. When using [lapplI] and [sapplI], the function
+#'   [base::sapply()]. When using `lapplI` and `sapplI`, the function
 #'   passed into `FUN` may also have an extra argument `.I`. If it does, then
 #'   for each item of `X` the current item index
 #'   is passed into argument `.I` of `FUN`.

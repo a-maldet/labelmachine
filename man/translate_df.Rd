@@ -21,12 +21,12 @@ a subset of the translation names returned by \code{names(dictionary)}.}
 \item{col}{Only used if \code{.data} is a data frame. The argument \code{col} must be
 a character vector of the same length as \code{translation} holding
 the names of the data.frame columns that
-should be relabelled. If omitted, then it will be assumed that the column
+should be relabeled. If omitted, then it will be assumed that the column
 names are the same as the given translation names in the argument \code{translation}.}
 
 \item{col_new}{Only used if \code{.data} is a data frame. The argument \code{col} must be
 a character vector of the same length as \code{translation} holding
-the names under which the relabelled variables should be stored in
+the names under which the relabeled variables should be stored in
 the data.frame. If omitted, then it will be assumed that the new column
 names are the same as the column names of the original variables.}
 

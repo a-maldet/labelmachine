@@ -3,7 +3,7 @@
 \name{lapplI}
 \alias{lapplI}
 \alias{sapplI}
-\title{Improve \code{lapply and }sapply` with index}
+\title{Improve \code{lapply} and \code{sapply} with index}
 \usage{
 lapplI(X, FUN, ...)
 
@@ -15,7 +15,7 @@ sapplI(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE)
     by \code{base::\link{as.list}}.}
 
 \item{FUN}{Here comes the great difference to \code{\link[base:lapply]{base::lapply()}} and
-\code{\link[base:sapply]{base::sapply()}}. When using \link{lapplI} and \link{sapplI}, the function
+\code{\link[base:sapply]{base::sapply()}}. When using \code{lapplI} and \code{sapplI}, the function
 passed into \code{FUN} may also have an extra argument \code{.I}. If it does, then
 for each item of \code{X} the current item index
 is passed into argument \code{.I} of \code{FUN}.

@@ -54,8 +54,7 @@ These columns can be \code{character} vectors or \code{factors} with character l
 is a data.frame. In this case, the
 argument \code{ordering} must be a character vector (same length as \code{translation}) holding
 one of the following configuration strings configuring
-the ordering of each corresponding translation
-should be orde:
+the ordering of each corresponding translation:
 \itemize{
 \item \code{"row"}: The corresponding translation will be ordered exactly in the same
 way as the rows are ordered in the data.frame \code{.data}.
@@ -79,8 +78,8 @@ This function allows two types of arguments:
 \itemize{
 \item \emph{named list}: A named list object holding the translations.
 \item \emph{data.frame}: A data.frame with one ore more column pairs. Each column
-pair consists of a column holding the original values, which should be relapced,
-and a second charachter column holding the new labels which should be
+pair consists of a column holding the original values, which should be replaced,
+and a second character column holding the new labels which should be
 assigned to the original values. Use the arguments \code{col_old} and \code{col_new}
 in order to define which columns are holding original values and which
 columns hold the new labels. The names of the resulting translations
@@ -107,7 +106,7 @@ character vector (e.g. \code{0} and \code{1} are treated like \code{"0"} and \co
 \item The \emph{entries} (character strings) of the character vector correspond to
 the new \emph{labels}, which will be assigned to the original variable levels.
 It is also allowed to have missing labels (\code{NA}s).
-In this case, the original values are mappend to missing values.
+In this case, the original values are mapped onto missing values.
 }
 
 The function \code{\link[=lama_translate]{lama_translate()}} is used in order to apply a translation on a variable.
@@ -140,9 +139,9 @@ It is also possible to handle missing values with \code{\link[=lama_translate]{l
 Therefore, the used translation must contain a information that tells how
 to handle a missing value. In order to define such a translation
 the missing value (\code{NA}) can be escaped with the character string \code{"NA_"}.
-This can be useful in two sitations:
+This can be useful in two situations:
 \itemize{
-\item All missing values should be labelled
+\item All missing values should be labeled
 (e.g. the translation \code{c("0" = "urban", "1" = "rural", NA_ = "missing")}
 assigns the character string \code{"missing"} to all missing values of a variable).
 \item Map some original values to \code{NA}
@@ -151,7 +150,7 @@ assigns \code{NA} (the missing character) to the original values \code{2} and \c
 Actually, in this case the translation definition does not always have to
 use this escape mechanism, but only
 when defining the translations inside of a \code{YAML} file,
-since the \code{YAML} parser does not recognice missing values.
+since the \code{YAML} parser does not recognize missing values.
 }
 }
 

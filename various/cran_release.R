@@ -6,4 +6,8 @@ sink("various/cran-comments.md")
 chk$cran_summary()
 sink(NULL)
 
+rmarkdown::render("README.Rmd")
 
+devtools::spell_check()
+
+devtools::release()

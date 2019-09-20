@@ -37,7 +37,7 @@ Manage your labels in **yaml** files, so called **lama-dictionary** files.
 This makes it very easy using the same label translations in multiple
 projects that share similar data structure.
 
-> Labelling your data can be easy!
+> Labeling your data can be easy!
 
 
 ## Installation
@@ -88,12 +88,12 @@ dict
 
 Each entry in `dict` is a translation for a variable (column) of the
 data frame `df`.
-The translation `sub` can be used to assig labels to the values given in
+The translation `sub` can be used to assign labels to the values given in
 column `subject` in `df` and translation `res` can be used to assign labels
 to the values in column `result` in `df`.
 The expression `NA_` is used to escape the missing value symbol `NA`.
 Hence, the last assignment `NA_ = "Missed"` defines that missing values
-should be labelled with the string `"Missed"`.
+should be labeled with the string `"Missed"`.
 For further details on creating lama-dictionaries
 see [Creating lama-dictionaries] and [Altering lama-dictionaries].
 

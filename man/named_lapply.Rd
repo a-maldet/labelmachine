@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities.R
 \name{named_lapply}
 \alias{named_lapply}
-\title{Create a named list with lapply from a character vector}
+\title{Create a named list with \code{lapply} from a character vector}
 \usage{
 named_lapply(.names, FUN, ...)
 }
@@ -10,7 +10,7 @@ named_lapply(.names, FUN, ...)
 \item{.names}{A character vector holding the names of the list}
 
 \item{FUN}{Here comes the great difference to \code{\link[base:lapply]{base::lapply()}} and
-\code{\link[base:sapply]{base::sapply()}}. When using \link{lapplI} and \link{sapplI}, the function
+\code{\link[base:sapply]{base::sapply()}}. When using \code{lapplI} and \code{sapplI}, the function
 passed into \code{FUN} may also have an extra argument \code{.I}. If it does, then
 for each item of \code{X} the current item index
 is passed into argument \code{.I} of \code{FUN}.
@@ -23,5 +23,5 @@ Besides this extra feature, there is no difference to \code{\link[base:lapply]{b
 A named list
 }
 \description{
-Create a named list with lapply from a character vector
+Create a named list with \code{lapply} from a character vector
 }

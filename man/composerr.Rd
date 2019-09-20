@@ -18,7 +18,7 @@ composerr_parent(text_1 = NULL, err_prior = NULL, text_2 = NULL,
 \arguments{
 \item{text_1}{A character string, which will be appended
 at the beginning of the error message. The argument \code{sep_1} will be used
-as text seperator.}
+as text separator.}
 
 \item{err_prior}{There are three valid types:
 \itemize{
@@ -33,12 +33,12 @@ to which the message part should be appended.
 
 \item{text_2}{A character string, which will be appended
 at the end of the error message. The argument \code{sep_2} will be used
-as text seperator.}
+as text separator.}
 
-\item{sep_1}{A character string that is used as seperator for the
+\item{sep_1}{A character string that is used as separator for the
 concatenation of \code{text_1} at the beginning of the error message.}
 
-\item{sep_2}{A character string that is used as seperator for the
+\item{sep_2}{A character string that is used as separator for the
 concatenation of \code{text_2} at the end of the error message.}
 
 \item{env_prior}{An environment where the error handling function given in

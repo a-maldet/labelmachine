@@ -34,7 +34,7 @@ The functions \code{\link[=lama_rename]{lama_rename()}} and \code{\link[=lama_re
 are used to rename one or more variable translations inside of a
 \link[=new_lama_dictionary]{lama_dictionary} class object.
 The function \code{\link[=lama_rename]{lama_rename()}} uses non-standard evaluation,
-whereas \code{\link[=lama_rename_]{lama_rename_()}} is the standard evaluation alternativ.
+whereas \code{\link[=lama_rename_]{lama_rename_()}} is the standard evaluation alternative.
 }
 \examples{
   # initialize lama_dictinoary

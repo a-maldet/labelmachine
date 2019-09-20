@@ -36,13 +36,13 @@ variables.}
 Each argument in \code{...} is an unquoted expression and defines a translation.
 Use unquoted
 arguments that tell which translation should be applied to which column and
-which column name the relabelled variable should be assigned to. E.g.
+which column name the relabeled variable should be assigned to. E.g.
 \code{lama_translate(.data, dict, Y1 = TRANS1(X1), Y2 = TRANS2(Y2))}
 to apply the translations \code{TRANS1} and \code{TRANS2} to the data.frame
-columns \code{X1} and \code{X2} and save the new labelled variables under
+columns \code{X1} and \code{X2} and save the new labeled variables under
 the column names \code{Y1} and \code{Y2}.
 There are also two abbreviation mechanisms available:
-The argument assignement \code{FOO(X)} is the same as \code{X = FOO(X)} and
+The argument assignment \code{FOO(X)} is the same as \code{X = FOO(X)} and
 \code{FOO} is an abbreviation for \code{FOO = FOO(FOO)}.
 In case, \code{.data} is not a data frame but a plain factor or an atomic vector, then
 the argument \code{...} must be a single unquoted translation name
@@ -67,12 +67,12 @@ a subset of the translation names returned by \code{names(dictionary)}.}
 \item{col}{Only used if \code{.data} is a data frame. The argument \code{col} must be
 a character vector of the same length as \code{translation} holding
 the names of the data.frame columns that
-should be relabelled. If omitted, then it will be assumed that the column
+should be relabeled. If omitted, then it will be assumed that the column
 names are the same as the given translation names in the argument \code{translation}.}
 
 \item{col_new}{Only used if \code{.data} is a data frame. The argument \code{col} must be
 a character vector of the same length as \code{translation} holding
-the names under which the relabelled variables should be stored in
+the names under which the relabeled variables should be stored in
 the data.frame. If omitted, then it will be assumed that the new column
 names are the same as the column names of the original variables.}
 }
@@ -84,7 +84,7 @@ assigned labels.
 The functions \code{\link[=lama_translate]{lama_translate()}} and \code{\link[=lama_translate_]{lama_translate_()}} take a factor,
 a vector or a data.frame
 and convert one or more of its categorical variables
-(not necessarely a factor variable) into factor variables with new labels.
+(not necessarily a factor variable) into factor variables with new labels.
 The function \code{\link[=lama_translate]{lama_translate()}} uses non-standard evaluation, whereas
 \code{\link[=lama_translate_]{lama_translate_()}} is the standard evaluation alternative.
 The functions \code{\link[=lama_translate]{lama_translate()}} and \code{\link[=lama_translate_]{lama_translate_()}} require different

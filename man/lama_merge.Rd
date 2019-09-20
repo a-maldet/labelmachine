@@ -3,7 +3,7 @@
 \name{lama_merge}
 \alias{lama_merge}
 \alias{lama_merge.lama_dictionary}
-\title{Merge multiple label lexicas into one}
+\title{Merge multiple lama-dictionaries into one}
 \usage{
 lama_merge(..., show_warnings = TRUE)
 

@@ -22,7 +22,7 @@
 #'
 #' @param text_1 A character string, which will be appended
 #'   at the beginning of the error message. The argument `sep_1` will be used
-#'   as text seperator.
+#'   as text separator.
 #' @param err_prior There are three valid types:
 #'   * `err_prior` is omitted: A new error handling message will be returned.
 #'   * `composerr_` is the calling function: `err_prio` must be a character
@@ -33,7 +33,7 @@
 #'     to which the message part should be appended.
 #' @param text_2 A character string, which will be appended
 #'   at the end of the error message. The argument `sep_2` will be used
-#'   as text seperator.
+#'   as text separator.
 #' @param env_prior An environment where the error handling function given in
 #'   \code{err_prior} can be found. If no environment is given, then
 #'   the \code{err_prior} will be looked up in the current environment.
@@ -41,9 +41,9 @@
 #'   to the parent environment in order to be able to recursively override
 #'   the name of the error handling function. In order to keep it simple,
 #'   the function [composerr_parent()] can be used instead. 
-#' @param sep_1 A character string that is used as seperator for the
+#' @param sep_1 A character string that is used as separator for the
 #'   concatenation of `text_1` at the beginning of the error message.
-#' @param sep_2 A character string that is used as seperator for the
+#' @param sep_2 A character string that is used as separator for the
 #'   concatenation of `text_2` at the end of the error message.
 #' @return A new error handling function that has an extended error message.
 #' @rdname composerr

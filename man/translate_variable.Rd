@@ -7,9 +7,9 @@
 translate_variable(val, translation, keep_order, err_handler)
 }
 \arguments{
-\item{val}{The vector that should be relabelled. Allowed are all vector types (also factor).}
+\item{val}{The vector that should be relabeled. Allowed are all vector types (also factor).}
 
-\item{translation}{Named character vector holding the label assignements.}
+\item{translation}{Named character vector holding the label assignments.}
 
 \item{keep_order}{A logical flag. If the vector in \code{val}
 is a factor variable and \code{keep_order} is set to \code{TRUE}, then

@@ -1,5 +1,5 @@
 Package: labelmachine
-Title: Make Labelling of R Data Sets Easy
+Title: Make Labeling of R Data Sets Easy
 Version: 1.0.0
 Authors@R: person(given = "Adrian", family = "Maldet", role = c("aut", "cre"), email = "maldet@posteo.at")
 Description: Assign meaningful labels to data frame columns.
