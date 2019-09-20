@@ -4,10 +4,6 @@
 - R-hub fedora-clang-devel (r-devel)
 
 ## R CMD check results
-0 errors ✔ | 0 warnings ✔ | 2 notes ✖
-Remarks:
-  The 2 notes are due to the fact that ''
-
 ❯ On windows-x86_64-devel (r-devel), ubuntu-gcc-release (r-release)
   checking CRAN incoming feasibility ... NOTE
   Maintainer: 'Adrian Maldet <maldet@posteo.at>'
@@ -1376,6 +1372,3 @@ Remarks:
     <https://www.gnu.org/licenses/why-not-lgpl.html>.
 
 0 errors ✔ | 0 warnings ✔ | 2 notes ✖
-
-## Downstream dependencies
-There are currently no downstream dependencies for this package
