@@ -13,4 +13,6 @@ rmarkdown::render("README.Rmd")
 
 devtools::spell_check()
 
-devtools::release()
+
+setwd("..")
+devtools::release(pkg = "./labelmachine")
