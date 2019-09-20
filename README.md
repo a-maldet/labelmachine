@@ -3,8 +3,17 @@ labelmachine <img src="man/figures/logo.png" align="right" alt="" width=140 heig
 =========================================================================================
 
 <!-- badges: start -->
-[![Travis build status](https://travis-ci.org/a-maldet/labelmachine.svg?branch=master)](https://travis-ci.org/a-maldet/labelmachine) [![GitHub last commit](https://img.shields.io/github/last-commit/a-maldet/labelmachine.svg?logo=github)](https://github.com/a-maldet/labelmachine/commits/master) [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/a-maldet/labelmachine.svg?logo=github)](https://github.com/a-maldet/labelmachine) [![codecov.io](https://codecov.io/github/a-maldet/labelmachine/coverage.svg?branch=master)](https://codecov.io/github/a-maldet/labelmachine?branch=master) [![cran release](https://www.r-pkg.org/badges/version-last-release/labelmachine)](https://www.r-pkg.org/badges/version-last-release/labelmachine) <!-- badges: end -->
+[![Travis build status](https://travis-ci.org/a-maldet/labelmachine.svg?branch=master)](https://travis-ci.org/a-maldet/labelmachine)
 
+[![GitHub last commit](https://img.shields.io/github/last-commit/a-maldet/labelmachine.svg?logo=github)](https://github.com/a-maldet/labelmachine/commits/master)
+
+[![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/a-maldet/labelmachine.svg?logo=github)](https://github.com/a-maldet/labelmachine)
+
+[![codecov.io](https://codecov.io/github/a-maldet/labelmachine/coverage.svg?branch=master)](https://codecov.io/github/a-maldet/labelmachine?branch=master)
+
+[![cran release](https://www.r-pkg.org/badges/version-last-release/labelmachine)](https://www.r-pkg.org/badges/version-last-release/labelmachine)
+
+<!-- badges: end -->
 `labelmachine` is an **R** package that helps assigning meaningful labels to data sets. Furthermore, you can manage your labels in so called **lama-dictionary** files, which are **yaml** files. This makes it very easy using the same label translations in multiple projects which share similar data structure.
 
 > Labelling your data can be easy!
