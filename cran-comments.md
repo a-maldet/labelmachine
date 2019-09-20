@@ -4,18 +4,20 @@
 - R-hub fedora-clang-devel (r-devel)
 
 ## R CMD check results
-0 errors ✔ | 0 warnings ✔ | 2 notes ✖
+Results with `rhub::check_for_cran()`:
+  0 errors ✔ | 0 warnings ✔ | 2 notes ✖
 
-Remark: The 2 notes are due to the fact that I am no registered
+Remark:
+  The 2 notes are due to the fact that I am no registered
   maintainer on CRAN yet and this is my first package released on CRAN. 
 
+Output of `rhub::check_for_cran()`:
 ❯ On windows-x86_64-devel (r-devel), ubuntu-gcc-release (r-release)
   checking CRAN incoming feasibility ... NOTE
   Maintainer: 'Adrian Maldet <maldet@posteo.at>'
+  
   New submission
   
-  
-  License components with restrictions and base license permitting such:
     GPL-3 + file LICENSE
   File 'LICENSE':
                         GNU GENERAL PUBLIC LICENSE
@@ -23,6 +25,7 @@ Remark: The 2 notes are due to the fact that I am no registered
     
      Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
      Everyone is permitted to copy and distribute verbatim copies
+  License components with restrictions and base license permitting such:
      of this license document, but changing it is not allowed.
     
                                 Preamble
@@ -41,26 +44,26 @@ Remark: The 2 notes are due to the fact that I am no registered
     
       When we speak of free software, we are referring to freedom, not
     price.  Our General Public Licenses are designed to make sure that you
-    want it, that you can change the software or use pieces of it in new
+    have the freedom to distribute copies of free software (and charge for
     them if you wish), that you receive source code or can get it if you
+    want it, that you can change the software or use pieces of it in new
     free programs, and that you know you can do these things.
     
       To protect your rights, we need to prevent others from denying you
     these rights or asking you to surrender the rights.  Therefore, you have
     certain responsibilities if you distribute copies of the software, or if
-    have the freedom to distribute copies of free software (and charge for
     you modify it: responsibilities to respect the freedom of others.
     
       For example, if you distribute copies of such a program, whether
     gratis or for a fee, you must pass on to the recipients the same
     freedoms that you received.  You must make sure that they, too, receive
+    or can get the source code.  And you must show them these terms so they
     
       Developers that use the GNU GPL protect your rights with two steps:
-    know their rights.
     (1) assert copyright on the software, and (2) offer you this License
+    know their rights.
     giving you legal permission to copy, distribute and/or modify it.
     
-    or can get the source code.  And you must show them these terms so they
       For the developers' and authors' protection, the GPL clearly explains
     that there is no warranty for this free software.  For both users' and
     authors' sake, the GPL requires that modified versions be marked as
@@ -71,8 +74,8 @@ Remark: The 2 notes are due to the fact that I am no registered
     modified versions of the software inside them, although the manufacturer
     can do so.  This is fundamentally incompatible with the aim of
     protecting users' freedom to change the software.  The systematic
-    use, which is precisely where it is most unacceptable.  Therefore, we
     pattern of such abuse occurs in the area of products for individuals to
+    use, which is precisely where it is most unacceptable.  Therefore, we
     have designed this version of the GPL to prohibit the practice for those
     products.  If such problems arise substantially in other domains, we
     stand ready to extend this provision to those domains in future versions
@@ -149,10 +152,11 @@ Remark: The 2 notes are due to the fact that I am no registered
     "Major Component", in this context, means a major essential component
     (kernel, window system, and so on) of the specific operating system
     (if any) on which the executable work runs, or a compiler used to
-    
     produce the work, or an object code interpreter used to run it.
+    
       The "Corresponding Source" for a work in object code form means all
     the source code needed to generate, install, and (for an executable
+    work) run the object code and to modify the work, including scripts to
     control those activities.  However, it does not include the work's
     System Libraries, or general-purpose tools or generally available free
     programs which are used unmodified in performing those activities but
@@ -164,7 +168,6 @@ Remark: The 2 notes are due to the fact that I am no registered
     subprograms and other parts of the work.
     
       The Corresponding Source need not include anything that users
-    work) run the object code and to modify the work, including scripts to
     can regenerate automatically from other parts of the Corresponding
     Source.
     
@@ -179,17 +182,18 @@ Remark: The 2 notes are due to the fact that I am no registered
     permission to run the unmodified Program.  The output from running a
     covered work is covered by this License only if the output, given its
     content, constitutes a covered work.  This License acknowledges your
+    rights of fair use or other equivalent, as provided by copyright law.
     
       You may make, run and propagate covered works that you do not
     convey, without conditions so long as your license otherwise remains
     in force.  You may convey covered works to others for the sole purpose
     of having them make modifications exclusively for you, or provide you
-    rights of fair use or other equivalent, as provided by copyright law.
     with facilities for running those works, provided that you comply with
-    the terms of this License in conveying all material for which you do
     not control copyright.  Those thus making or running the covered works
-    for you must do so exclusively on your behalf, under your direction
+    the terms of this License in conveying all material for which you do
     and control, on terms that prohibit them from making any copies of
+    for you must do so exclusively on your behalf, under your direction
+    your copyrighted material outside their relationship with you.
     
       Conveying under any other circumstances is permitted solely under
     the conditions stated below.  Sublicensing is not allowed; section 10
@@ -204,7 +208,6 @@ Remark: The 2 notes are due to the fact that I am no registered
     measures.
     
       When you convey a covered work, you waive any legal power to forbid
-    your copyrighted material outside their relationship with you.
     circumvention of technological measures to the extent such circumvention
     is effected by exercising rights under this License with respect to
     the covered work, and you disclaim any intention to limit operation or
@@ -242,8 +245,8 @@ Remark: The 2 notes are due to the fact that I am no registered
         c) You must license the entire work, as a whole, under this
         License to anyone who comes into possession of a copy.  This
         License will therefore apply, along with any applicable section 7
-        additional terms, to the whole of the work, and all its parts,
         regardless of how they are packaged.  This License gives no
+        additional terms, to the whole of the work, and all its parts,
         permission to license the work in any other way, but it does not
         invalidate such permission if you have separately received it.
     
@@ -270,8 +273,8 @@ Remark: The 2 notes are due to the fact that I am no registered
     in one of these ways:
     
         a) Convey the object code in, or embodied in, a physical product
-        Corresponding Source fixed on a durable physical medium
         (including a physical distribution medium), accompanied by the
+        Corresponding Source fixed on a durable physical medium
         customarily used for software interchange.
     
         b) Convey the object code in, or embodied in, a physical product
@@ -320,15 +323,15 @@ Remark: The 2 notes are due to the fact that I am no registered
     into a dwelling.  In determining whether a product is a consumer product,
     doubtful cases shall be resolved in favor of coverage.  For a particular
     product received by a particular user, "normally used" refers to a
+    typical or common use of that class of product, regardless of the status
     of the particular user or of the way in which the particular user
     actually uses, or expects or is expected to use, the product.  A product
-    commercial, industrial or non-consumer uses, unless such uses represent
     is a consumer product regardless of whether the product has substantial
+    commercial, industrial or non-consumer uses, unless such uses represent
     the only significant mode of use of the product.
     
       "Installation Information" for a User Product means any methods,
     procedures, authorization keys, or other information required to install
-    typical or common use of that class of product, regardless of the status
     and execute modified versions of a covered work in that User Product from
     a modified version of its Corresponding Source.  The information must
     suffice to ensure that the continued functioning of the modified object
@@ -344,13 +347,13 @@ Remark: The 2 notes are due to the fact that I am no registered
     by the Installation Information.  But this requirement does not apply
     if neither you nor any third party retains the ability to install
     modified object code on the User Product (for example, the work has
+    been installed in ROM).
     
       The requirement to provide Installation Information does not include a
-    been installed in ROM).
     requirement to continue to provide support service, warranty, or updates
     for a work that has been modified or installed by the recipient, or for
-    network may be denied when the modification itself materially and
     the User Product in which it has been modified or installed.  Access to a
+    network may be denied when the modification itself materially and
     adversely affects the operation of the network or violates the rules and
     protocols for communication across the network.
     
@@ -358,8 +361,8 @@ Remark: The 2 notes are due to the fact that I am no registered
     in accord with this section must be in a format that is publicly
     documented (and with an implementation available to the public in
     source code form), and must require no special password or key for
-    unpacking, reading or copying.
     
+    unpacking, reading or copying.
       7. Additional Terms.
     
       "Additional permissions" are terms that supplement the terms of this
@@ -376,8 +379,8 @@ Remark: The 2 notes are due to the fact that I am no registered
     it.  (Additional permissions may be written to require their own
     removal in certain cases when you modify the work.)  You may place
     additional permissions on material, added by you to a covered work,
-    for which you have or can give appropriate copyright permission.
     
+    for which you have or can give appropriate copyright permission.
       Notwithstanding any other provision of this License, for material you
     add to a covered work, you may (if authorized by the copyright holders of
     that material) supplement the terms of this License with terms:
@@ -468,17 +471,17 @@ Remark: The 2 notes are due to the fact that I am no registered
       Each time you convey a covered work, the recipient automatically
     receives a license from the original licensors, to run, modify and
     propagate that work, subject to this License.  You are not responsible
-      An "entity transaction" is a transaction transferring control of an
+    for enforcing compliance by third parties with this License.
     
+      An "entity transaction" is a transaction transferring control of an
     organization, or substantially all assets of one, or subdividing an
     organization, or merging organizations.  If propagation of a covered
     work results from an entity transaction, each party to that
-    for enforcing compliance by third parties with this License.
     transaction who receives a copy of the work also receives whatever
     licenses to the work the party's predecessor in interest had or could
     give under the previous paragraph, plus a right to possession of the
-    the predecessor has it or can get it with reasonable efforts.
     Corresponding Source of the work from the predecessor in interest, if
+    the predecessor has it or can get it with reasonable efforts.
     
       You may not impose any further restrictions on the exercise of the
     rights granted or affirmed under this License.  For example, you may
@@ -486,8 +489,8 @@ Remark: The 2 notes are due to the fact that I am no registered
     rights granted under this License, and you may not initiate litigation
     (including a cross-claim or counterclaim in a lawsuit) alleging that
     any patent claim is infringed by making, using, selling, offering for
-    sale, or importing the Program or any portion of it.
     
+    sale, or importing the Program or any portion of it.
       11. Patents.
     
       A "contributor" is a copyright holder who authorizes use under this
@@ -497,8 +500,8 @@ Remark: The 2 notes are due to the fact that I am no registered
       A contributor's "essential patent claims" are all patent claims
     owned or controlled by the contributor, whether already acquired or
     hereafter acquired, that would be infringed by some manner, permitted
-    but do not include claims that would be infringed only as a
     by this License, of making, using, or selling its contributor version,
+    but do not include claims that would be infringed only as a
     consequence of further modification of the contributor version.  For
     purposes of this definition, "control" includes the right to grant
     patent sublicenses in a manner consistent with the requirements of
@@ -523,8 +526,8 @@ Remark: The 2 notes are due to the fact that I am no registered
     then you must either (1) cause the Corresponding Source to be so
     available, or (2) arrange to deprive yourself of the benefit of the
     patent license for this particular work, or (3) arrange, in a manner
-    license to downstream recipients.  "Knowingly relying" means you have
     consistent with the requirements of this License, to extend the patent
+    license to downstream recipients.  "Knowingly relying" means you have
     actual knowledge that, but for the patent license, your conveying the
     covered work in a country, or your recipient's use of the covered work
     in a country, would infringe one or more identifiable patents in that
@@ -553,13 +556,13 @@ Remark: The 2 notes are due to the fact that I am no registered
     contain the covered work, unless you entered into that arrangement,
     or that patent license was granted, prior to 28 March 2007.
     
-    any implied license or other defenses to infringement that may
       Nothing in this License shall be construed as excluding or limiting
+    any implied license or other defenses to infringement that may
     otherwise be available to you under applicable patent law.
     
       12. No Surrender of Others' Freedom.
-      If conditions are imposed on you (whether by court order, agreement or
     
+      If conditions are imposed on you (whether by court order, agreement or
     otherwise) that contradict the conditions of this License, they do not
     excuse you from the conditions of this License.  If you cannot convey a
     covered work so as to satisfy simultaneously your obligations under this
@@ -598,8 +601,8 @@ Remark: The 2 notes are due to the fact that I am no registered
     
       If the Program specifies that a proxy can decide which future
     versions of the GNU General Public License can be used, that proxy's
-    to choose that version for the Program.
     public statement of acceptance of a version permanently authorizes you
+    to choose that version for the Program.
     
       Later license versions may give you additional or different
     permissions.  However, no additional obligations are imposed on any
@@ -649,12 +652,13 @@ Remark: The 2 notes are due to the fact that I am no registered
       To do so, attach the following notices to the program.  It is safest
     to attach them to the start of each source file to most effectively
     state the exclusion of warranty; and each file should have at least
-    the "copyright" line and a pointer to where the full notice is found.
     
+    the "copyright" line and a pointer to where the full notice is found.
         <one line to give the program's name and a brief idea of what it does.>
         Copyright (C) <year>  <name of author>
     
         This program is free software: you can redistribute it and/or modify
+        it under the terms of the GNU General Public License as published by
         the Free Software Foundation, either version 3 of the License, or
         (at your option) any later version.
     
@@ -668,6 +672,7 @@ Remark: The 2 notes are due to the fact that I am no registered
     
     Also add information on how to contact you by electronic and paper mail.
     
+      If the program does terminal interaction, make it output a short
     notice like this when it starts in an interactive mode:
     
         <program>  Copyright (C) <year>  <name of author>
@@ -680,9 +685,7 @@ Remark: The 2 notes are due to the fact that I am no registered
     might be different; for a GUI interface, you would use an "about box".
     
       You should also get your employer (if you work as a programmer) or school,
-      If the program does terminal interaction, make it output a short
     if any, to sign a "copyright disclaimer" for the program, if necessary.
-        it under the terms of the GNU General Public License as published by
     For more information on this, and how to apply and follow the GNU GPL, see
     <https://www.gnu.org/licenses/>.
     
