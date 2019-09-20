@@ -15,4 +15,4 @@ devtools::spell_check()
 
 
 setwd("..")
-devtools::release(pkg = "./labelmachine")
+devtools::release()
