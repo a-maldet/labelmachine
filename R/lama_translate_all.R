@@ -1,12 +1,27 @@
 #' Assign new labels to all variables of a data.frame
 #'
-#' Converts all variables (which have a translation in the given lama-dictionary)
+#' The functions [lama_translate_all()] and [lama_to_factor_all()]
+#' converts all variables (which have a translation in the given lama-dictionary)
 #' of a data frame `.data`
-#' into factor variables with new labels. 
-#' This function a special version of the function [lama_translate()].
-#' The difference to [lama_translate()] is, that when using [lama_translate_all()]
+#' into factor variables with new labels.
+#' These functions are special versions of the functions [lama_translate()]
+#' and [lama_to_factor()].
+#' The difference to [lama_translate()] and [lama_to_factor()] is,
+#' that when using [lama_translate_all()] and [lama_to_factor_all()]
 #' the used translations in `dictionary` must have the exact
 #' same names as the corresponding columns in the data frame `.data`.
+#' 
+#' The difference between [lama_translate_all()] and [lama_to_factor_all()]
+#' is the following:
+#' * [lama_translate_all()]: Assign new labels to the variables
+#'   and turn them into factor variables with the order given in the corresponding
+#'   translations (`keep_order = FALSE`) or in the same order as the original
+#'   variable (`keep_order = TRUE`).
+#' * [lama_to_factor_all()]: The variariables are character
+#'   vectors or factors already holding the right label strings. The variables
+#'   are turned into a factor variables with the order given in the corresponding
+#'   translation (`keep_order = FALSE`) or in the same order as the original
+#'   variable (`keep_order = TRUE`).
 #' @param .data Either a data frame, a factor or a vector.
 #' @param dictionary A [lama_dictionary][new_lama_dictionary()] object,
 #'   holding the translations for various variables.
@@ -28,6 +43,9 @@
 #'   assigned labels.
 #' @rdname lama_translate_all
 #' @include lama_translate.R lama_dictionary.R
+#' @seealso [lama_translate()], [lama_to_factor()], [new_lama_dictionary()],
+#'   [as.lama_dictionary()], [lama_rename()], [lama_select()], [lama_mutate()],
+#'   [lama_merge()], [lama_read()], [lama_write()]
 #' @export
 lama_translate_all <- function(
   .data,
@@ -55,27 +73,18 @@ lama_translate_all <- function(
 #'     result = c(1, 2, 3, 2, 2)
 #'   )
 #'   
-#'   ## Example-1: Use 'prefix'
-#'   # (apply translation 'subject' to column 'subject' and save it to column 'new_subject')
-#'   # (apply translation 'result' to column 'result' and save it to column 'new_result')
-#'   df_new <- lama_translate_all(df, dict, prefix = "new_")
-#'   str(df_new)
-#'
-#'   # Example-2: Use 'suffix'
-#'   # (apply translation 'subject' to column 'subject' and save it to column 'subject_new')
-#'   # (apply translation 'result' to column 'result' and save it to column 'result_new')
-#'   df_new <- lama_translate_all(df, dict, suffix = "_new")
+#'   ## Example-1: 'lama_translate_all''
+#'   df_new <- lama_translate_all(
+#'     df,
+#'     dict,
+#'     prefix = "pre_",
+#'     fn_colname = toupper,
+#'     suffix = "_suf"
+#'   )
 #'   str(df_new)
 #' 
-#'   # Example-3: Use 'fn_colname'
-#'   # (apply translation 'subject' to column 'subject' and save it to column 'SUBJECT')
-#'   # (apply translation 'result' to column 'result' and save it to column 'RESULT')
-#'   df_new <- lama_translate_all(df, dict, fn_colname = toupper)
-#'   str(df_new)
-#' 
-#'   # Example-4: Use plain character vectors as labeled variables
-#'   # (apply translation 'subject' to column 'subject' and save it to column 'SUBJECT')
-#'   # (apply translation 'result' to column 'result' and save it to column 'RESULT')
+#'   ## Example-2: 'lama_translate_all' with 'to_factor = FALSE'
+#'   # The resulting variables are plain character vectors
 #'   df_new <- lama_translate_all(df, dict, suffix = "_new", to_factor = TRUE)
 #'   str(df_new)
 #'
@@ -90,6 +99,88 @@ lama_translate_all.data.frame <- function(
   to_factor = TRUE
 ) {
   err_handler <- composerr("Error while calling 'lama_translate_all'")
+  check_and_translate_all(
+    .data = .data, 
+    dictionary = dictionary,
+    prefix = prefix,
+    suffix = suffix,
+    fn_colname = fn_colname,
+    keep_order = keep_order,
+    to_factor = to_factor,
+    is_translated = FALSE,
+    err_handler = err_handler
+  )
+}
+
+#' @rdname lama_translate_all
+#' @export
+lama_to_factor_all <- function(
+  .data,
+  dictionary,
+  prefix = "",
+  suffix = "",
+  fn_colname = function(x) x,
+  keep_order = FALSE
+) {
+  UseMethod("lama_to_factor_all")
+}
+
+#' @rdname lama_translate_all
+#' @examples
+#'   ## Example-3: 'lama_to_factor_all'
+#'   # The variables 'subject' and 'result' are turned into factor variables
+#'   # The ordering is taken from the translations 'subject' and 'result'
+#'   df_2 <- data.frame(
+#'     pupil = c(1, 1, 2, 2, 3),
+#'     subject = c("English", "Mathematics", "Mathematics", "English", "English"),
+#'     result = c("Very good", "Good", "Good", "Very good", "Good")
+#'   )
+#'   df_2_new <- lama_to_factor_all(
+#'     df_2, dict,
+#'     prefix = "pre_",
+#'     fn_colname = toupper,
+#'     suffix = "_suf"
+#'   )
+#'   str(df_new)
+#'
+#' @export
+lama_to_factor_all.data.frame <- function(
+  .data,
+  dictionary,
+  prefix = "",
+  suffix = "",
+  fn_colname = function(x) x,
+  keep_order = FALSE
+) {
+  err_handler <- composerr("Error while calling 'lama_to_factor_all'")
+  check_and_translate_all(
+    .data = .data, 
+    dictionary = dictionary,
+    prefix = prefix,
+    suffix = suffix,
+    fn_colname = fn_colname,
+    keep_order = keep_order,
+    to_factor = TRUE,
+    is_translated = TRUE,
+    err_handler = err_handler
+  )
+}
+
+#' Check and translate function used by `lama_translate_all()` and `lama_to_factor_all()`
+#'
+#' @inheritParams lama_translate_all
+#' @inheritParams translate_df
+check_and_translate_all <- function(
+  .data,
+  dictionary,
+  prefix,
+  suffix,
+  fn_colname,
+  keep_order,
+  to_factor,
+  is_translated,
+  err_handler
+) {
   if (!is.dictionary(dictionary))
     err_handler("The argument 'dictionary' must be a lama_dictionary class object.")
   if (!is.character(prefix) || length(prefix) != 1 || is.na(prefix))
@@ -140,8 +231,9 @@ lama_translate_all.data.frame <- function(
     translation = translation,
     col = translation,
     col_new = col_new,
-    keep_order = rep(keep_order, length(translation)),
-    to_factor = rep(to_factor, length(translation)),
+    keep_order = keep_order,
+    to_factor = to_factor,
+    is_translated = is_translated,
     err_handler = err_handler
   )
 }

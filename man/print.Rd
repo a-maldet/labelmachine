@@ -15,7 +15,9 @@
 Print a \link[=new_lama_dictionary]{lama_dictionary} class object
 }
 \seealso{
-\code{\link[=lama_translate]{lama_translate()}}, \code{\link[=new_lama_dictionary]{new_lama_dictionary()}}, \code{\link[=lama_select]{lama_select()}},
-\code{\link[=lama_rename]{lama_rename()}}, \code{\link[=lama_mutate]{lama_mutate()}}, \code{\link[=lama_merge]{lama_merge()}}, \code{\link[=lama_read]{lama_read()}},
-\code{\link[=lama_write]{lama_write()}}
+\code{\link[=new_lama_dictionary]{new_lama_dictionary()}}, \code{\link[=as.lama_dictionary]{as.lama_dictionary()}},
+\code{\link[=lama_translate]{lama_translate()}}, \code{\link[=lama_to_factor]{lama_to_factor()}}, \code{\link[=lama_translate_all]{lama_translate_all()}},
+\code{\link[=lama_to_factor_all]{lama_to_factor_all()}}, \code{\link[=lama_read]{lama_read()}}, \code{\link[=lama_write]{lama_write()}},
+\code{\link[=lama_rename]{lama_rename()}}, \code{\link[=lama_select]{lama_select()}}, \code{\link[=lama_mutate]{lama_mutate()}}, \code{\link[=lama_merge]{lama_merge()}},
+\code{\link[=lama_read]{lama_read()}}, \code{\link[=lama_write]{lama_write()}}
 }

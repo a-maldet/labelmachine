@@ -3,6 +3,8 @@
 \name{lama_translate_all}
 \alias{lama_translate_all}
 \alias{lama_translate_all.data.frame}
+\alias{lama_to_factor_all}
+\alias{lama_to_factor_all.data.frame}
 \title{Assign new labels to all variables of a data.frame}
 \usage{
 lama_translate_all(.data, dictionary, prefix = "", suffix = "",
@@ -11,6 +13,12 @@ lama_translate_all(.data, dictionary, prefix = "", suffix = "",
 \method{lama_translate_all}{data.frame}(.data, dictionary, prefix = "",
   suffix = "", fn_colname = function(x) x, keep_order = FALSE,
   to_factor = TRUE)
+
+lama_to_factor_all(.data, dictionary, prefix = "", suffix = "",
+  fn_colname = function(x) x, keep_order = FALSE)
+
+\method{lama_to_factor_all}{data.frame}(.data, dictionary, prefix = "",
+  suffix = "", fn_colname = function(x) x, keep_order = FALSE)
 }
 \arguments{
 \item{.data}{Either a data frame, a factor or a vector.}
@@ -42,13 +50,31 @@ An extended data.frame, that has a factor variable holding the
 assigned labels.
 }
 \description{
-Converts all variables (which have a translation in the given lama-dictionary)
+The functions \code{\link[=lama_translate_all]{lama_translate_all()}} and \code{\link[=lama_to_factor_all]{lama_to_factor_all()}}
+converts all variables (which have a translation in the given lama-dictionary)
 of a data frame \code{.data}
 into factor variables with new labels.
-This function a special version of the function \code{\link[=lama_translate]{lama_translate()}}.
-The difference to \code{\link[=lama_translate]{lama_translate()}} is, that when using \code{\link[=lama_translate_all]{lama_translate_all()}}
+These functions are special versions of the functions \code{\link[=lama_translate]{lama_translate()}}
+and \code{\link[=lama_to_factor]{lama_to_factor()}}.
+The difference to \code{\link[=lama_translate]{lama_translate()}} and \code{\link[=lama_to_factor]{lama_to_factor()}} is,
+that when using \code{\link[=lama_translate_all]{lama_translate_all()}} and \code{\link[=lama_to_factor_all]{lama_to_factor_all()}}
 the used translations in \code{dictionary} must have the exact
 same names as the corresponding columns in the data frame \code{.data}.
+}
+\details{
+The difference between \code{\link[=lama_translate_all]{lama_translate_all()}} and \code{\link[=lama_to_factor_all]{lama_to_factor_all()}}
+is the following:
+\itemize{
+\item \code{\link[=lama_translate_all]{lama_translate_all()}}: Assign new labels to the variables
+and turn them into factor variables with the order given in the corresponding
+translations (\code{keep_order = FALSE}) or in the same order as the original
+variable (\code{keep_order = TRUE}).
+\item \code{\link[=lama_to_factor_all]{lama_to_factor_all()}}: The variariables are character
+vectors or factors already holding the right label strings. The variables
+are turned into a factor variables with the order given in the corresponding
+translation (\code{keep_order = FALSE}) or in the same order as the original
+variable (\code{keep_order = TRUE}).
+}
 }
 \examples{
   ## initialize lama_dictinoary
@@ -63,28 +89,40 @@ same names as the corresponding columns in the data frame \code{.data}.
     result = c(1, 2, 3, 2, 2)
   )
   
-  ## Example-1: Use 'prefix'
-  # (apply translation 'subject' to column 'subject' and save it to column 'new_subject')
-  # (apply translation 'result' to column 'result' and save it to column 'new_result')
-  df_new <- lama_translate_all(df, dict, prefix = "new_")
+  ## Example-1: 'lama_translate_all''
+  df_new <- lama_translate_all(
+    df,
+    dict,
+    prefix = "pre_",
+    fn_colname = toupper,
+    suffix = "_suf"
+  )
   str(df_new)
 
-  # Example-2: Use 'suffix'
-  # (apply translation 'subject' to column 'subject' and save it to column 'subject_new')
-  # (apply translation 'result' to column 'result' and save it to column 'result_new')
-  df_new <- lama_translate_all(df, dict, suffix = "_new")
-  str(df_new)
-
-  # Example-3: Use 'fn_colname'
-  # (apply translation 'subject' to column 'subject' and save it to column 'SUBJECT')
-  # (apply translation 'result' to column 'result' and save it to column 'RESULT')
-  df_new <- lama_translate_all(df, dict, fn_colname = toupper)
-  str(df_new)
-
-  # Example-4: Use plain character vectors as labeled variables
-  # (apply translation 'subject' to column 'subject' and save it to column 'SUBJECT')
-  # (apply translation 'result' to column 'result' and save it to column 'RESULT')
+  ## Example-2: 'lama_translate_all' with 'to_factor = FALSE'
+  # The resulting variables are plain character vectors
   df_new <- lama_translate_all(df, dict, suffix = "_new", to_factor = TRUE)
   str(df_new)
 
+  ## Example-3: 'lama_to_factor_all'
+  # The variables 'subject' and 'result' are turned into factor variables
+  # The ordering is taken from the translations 'subject' and 'result'
+  df_2 <- data.frame(
+    pupil = c(1, 1, 2, 2, 3),
+    subject = c("English", "Mathematics", "Mathematics", "English", "English"),
+    result = c("Very good", "Good", "Good", "Very good", "Good")
+  )
+  df_2_new <- lama_to_factor_all(
+    df_2, dict,
+    prefix = "pre_",
+    fn_colname = toupper,
+    suffix = "_suf"
+  )
+  str(df_new)
+
+}
+\seealso{
+\code{\link[=lama_translate]{lama_translate()}}, \code{\link[=lama_to_factor]{lama_to_factor()}}, \code{\link[=new_lama_dictionary]{new_lama_dictionary()}},
+\code{\link[=as.lama_dictionary]{as.lama_dictionary()}}, \code{\link[=lama_rename]{lama_rename()}}, \code{\link[=lama_select]{lama_select()}}, \code{\link[=lama_mutate]{lama_mutate()}},
+\code{\link[=lama_merge]{lama_merge()}}, \code{\link[=lama_read]{lama_read()}}, \code{\link[=lama_write]{lama_write()}}
 }

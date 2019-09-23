@@ -8,7 +8,8 @@
 #' @param .data A [lama_dictionary][new_lama_dictionary()] object, holding the variable translations
 #' @param ... One or more unquoted translation names separated by commas.
 #' @return A new [lama_dictionary][new_lama_dictionary()] class object, holding the picked variable translations.
-#' @seealso [lama_translate()], [lama_translate_all()], [new_lama_dictionary()],
+#' @seealso [lama_translate()], [lama_to_factor()], [lama_translate_all()],
+#'   [lama_to_factor_all()], [new_lama_dictionary()],
 #'   [as.lama_dictionary()], [lama_rename()], [lama_mutate()],
 #'   [lama_merge()], [lama_read()], [lama_write()]
 #' @rdname lama_select

@@ -10,6 +10,9 @@ reference:
   - '`lama_translate`'
   - '`lama_translate_`'
   - '`lama_translate_all`'
+  - '`lama_to_factor`'
+  - '`lama_to_factor_`'
+  - '`lama_to_factor_all`'
 - title: alter lama_dictionary objects
   contents:
   - '`lama_select`'
@@ -26,7 +29,8 @@ reference:
 - title: various other functions
   contents:
   - '`lama_get`'
-  - '`is.lama_dictionary`'
+  - '`is.dictionary`'
+  - '`validate_lama_dictionary`'
 
 development:
   mode: release

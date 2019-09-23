@@ -114,7 +114,9 @@ NA_lama_ <- "NA_"
 #'    The names of the caller arguments will be used as names under which the given translations
 #'    will be added to the new lama_dictionary class object. 
 #' @return A new lama_dictionary class object holding the passed in translations.
-#' @seealso [is.dictionary()], [as.lama_dictionary()], [lama_translate()], [lama_read()], [lama_write()],
+#' @seealso [is.dictionary()], [as.lama_dictionary()], [lama_translate()],
+#'   [lama_to_factor()], [lama_translate_all()], [lama_to_factor_all()],
+#'   [lama_read()], [lama_write()],
 #'   [lama_select()], [lama_rename()], [lama_mutate()], [lama_merge()]
 #' @rdname new_lama_dictionary
 #' @export
@@ -165,7 +167,7 @@ new_lama_dictionary.list <- function(.data = NULL, ...) {
       "Error while initializing the lama_dictionary class object:",
       "The passed in translation definitions are invalid"
     ))
-    .data <- validate_dictionary(.data, err_handler)
+    .data <- validate_lama_dictionary(.data, err_handler)
   }
   structure(.data, class = "lama_dictionary")
 }
@@ -300,7 +302,7 @@ as.lama_dictionary.list <- function(.data, ...) {
 #' @export
 as.lama_dictionary.lama_dictionary <- function(.data, ...) {
   structure(
-    validate_dictionary(
+    validate_lama_dictionary(
       .data,
       composerr(paste(
         "Error while calling 'as.lama_dictionary':",
@@ -484,9 +486,11 @@ as.lama_dictionary.data.frame <- function(
 #' @return \code{TRUE} if the object is a
 #' [lama_dictionary][new_lama_dictionary()] class object, \code{FALSE} otherwise.
 #' @rdname is_dictionary
-#' @seealso [validate_dictionary()], [as.lama_dictionary()], [new_lama_dictionary()],
-#' [lama_translate()], [lama_read()], [lama_write()], [lama_select()],
-#' [lama_rename()], [lama_mutate()], [lama_merge()]
+#' @seealso [validate_lama_dictionary()], [as.lama_dictionary()], [new_lama_dictionary()],
+#'   [lama_translate()], [lama_to_factor()], [lama_translate_all()],
+#'   [lama_to_factor_all()], [lama_read()], [lama_write()],
+#'   [lama_translate()], [lama_read()], [lama_write()], [lama_select()],
+#'   [lama_rename()], [lama_mutate()], [lama_merge()]
 #' @examples
 #' # check if an object is a 'lama_dictionary' class object
 #' dict <- new_lama_dictionary(country = c(uk = "United Kingdom", fr = "France"))
@@ -505,12 +509,14 @@ is.dictionary <- function(obj) {
 #' @inheritSection new_lama_dictionary lama_dictionary class objects
 #' @param obj An object that should be tested
 #' @param err_handler An error handling function
-#' @rdname validate_dictionary
+#' @rdname validate_lama_dictionary
 #' @seealso [is.dictionary()], [as.lama_dictionary()], [new_lama_dictionary()],
-#' [lama_translate()], [lama_read()], [lama_write()], [lama_select()],
-#' [lama_rename()], [lama_mutate()], [lama_merge()]
+#'   [lama_translate()], [lama_to_factor()], [lama_translate_all()],
+#'   [lama_to_factor_all()], [lama_read()], [lama_write()],
+#'   [lama_select()],
+#'   [lama_rename()], [lama_mutate()], [lama_merge()]
 #' @export
-validate_dictionary <- function(
+validate_lama_dictionary <- function(
   obj,
   err_handler = composerr("The object has not a valid lama_dictionary structure")
 ) {
@@ -591,9 +597,11 @@ validate_translation <- function(
 #' @param x The [lama_dictionary][new_lama_dictionary()] class object that should be printed.
 #' @param ... Unused arguments
 #' @rdname print
-#' @seealso [lama_translate()], [new_lama_dictionary()], [lama_select()],
-#'   [lama_rename()], [lama_mutate()], [lama_merge()], [lama_read()],
-#'   [lama_write()]
+#' @seealso [new_lama_dictionary()], [as.lama_dictionary()],
+#'   [lama_translate()], [lama_to_factor()], [lama_translate_all()],
+#'   [lama_to_factor_all()], [lama_read()], [lama_write()],
+#'   [lama_rename()], [lama_select()], [lama_mutate()], [lama_merge()],
+#'   [lama_read()], [lama_write()]
 #' @export
 print.lama_dictionary <- function(x, ...) {
   cat("\n--- lama_dictionary ---\n")

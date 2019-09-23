@@ -7,6 +7,12 @@
 \alias{lama_translate_}
 \alias{lama_translate_.data.frame}
 \alias{lama_translate_.default}
+\alias{lama_to_factor}
+\alias{lama_to_factor.data.frame}
+\alias{lama_to_factor.default}
+\alias{lama_to_factor_}
+\alias{lama_to_factor_.data.frame}
+\alias{lama_to_factor_.default}
 \title{Assign new labels to a variable of a data.frame}
 \usage{
 lama_translate(.data, dictionary, ..., keep_order = FALSE,
@@ -27,6 +33,23 @@ lama_translate_(.data, dictionary, translation, col = translation,
 
 \method{lama_translate_}{default}(.data, dictionary, translation, ...,
   keep_order = FALSE, to_factor = TRUE)
+
+lama_to_factor(.data, dictionary, ..., keep_order = FALSE)
+
+\method{lama_to_factor}{data.frame}(.data, dictionary, ...,
+  keep_order = FALSE)
+
+\method{lama_to_factor}{default}(.data, dictionary, ...,
+  keep_order = FALSE)
+
+lama_to_factor_(.data, dictionary, translation, col = translation,
+  col_new = col, keep_order = FALSE, ...)
+
+\method{lama_to_factor_}{data.frame}(.data, dictionary, translation,
+  col = translation, col_new = col, keep_order = FALSE, ...)
+
+\method{lama_to_factor_}{default}(.data, dictionary, translation, ...,
+  keep_order = FALSE)
 }
 \arguments{
 \item{.data}{Either a data frame, a factor or an atomic vector.}
@@ -34,12 +57,13 @@ lama_translate_(.data, dictionary, translation, col = translation,
 \item{dictionary}{A \link[=new_lama_dictionary]{lama_dictionary} object, holding the translations for various
 variables.}
 
-\item{...}{Only used by \code{\link[=lama_translate]{lama_translate()}}.
+\item{...}{Only used by \code{\link[=lama_translate]{lama_translate()}} and \code{\link[=lama_to_factor]{lama_to_factor()}}.
 Each argument in \code{...} is an unquoted expression and defines a translation.
 Use unquoted
 arguments that tell which translation should be applied to which column and
 which column name the relabeled variable should be assigned to. E.g.
-\code{lama_translate(.data, dict, Y1 = TRANS1(X1), Y2 = TRANS2(Y2))}
+\code{lama_translate(.data, dict, Y1 = TRANS1(X1), Y2 = TRANS2(Y2))} and
+\code{lama_to_factor(.data, dict, Y1 = TRANS1(X1), Y2 = TRANS2(Y2))} and
 to apply the translations \code{TRANS1} and \code{TRANS2} to the data.frame
 columns \code{X1} and \code{X2} and save the new labeled variables under
 the column names \code{Y1} and \code{Y2}.
@@ -98,7 +122,26 @@ and convert one or more of its categorical variables
 (not necessarily a factor variable) into factor variables with new labels.
 The function \code{\link[=lama_translate]{lama_translate()}} uses non-standard evaluation, whereas
 \code{\link[=lama_translate_]{lama_translate_()}} is the standard evaluation alternative.
-The functions \code{\link[=lama_translate]{lama_translate()}} and \code{\link[=lama_translate_]{lama_translate_()}} require different
+The functions \code{\link[=lama_to_factor]{lama_to_factor()}} and \code{\link[=lama_to_factor_]{lama_to_factor_()}} are very similar
+to the functions \code{\link[=lama_translate]{lama_translate()}} and \code{\link[=lama_translate_]{lama_translate_()}}, but instead
+of assigning new label strings to values, it is assumed that the variables
+are character vectors or factors, but need to be turned into factors
+with the order given in the translations:
+\itemize{
+\item \code{\link[=lama_translate]{lama_translate()}} and \code{\link[=lama_translate_]{lama_translate_()}}: Assign new labels to a variable
+and turn it into a factor variable with the order given in the corresponding
+translation (\code{keep_order = FALSE}) or in the same order as the original
+variable (\code{keep_order = TRUE}).
+\item \code{\link[=lama_to_factor]{lama_to_factor()}} and \code{\link[=lama_to_factor_]{lama_to_factor_()}}: The variariable is a character
+vector or a factor already holding the right label strings. The variables
+are turned into a factor variable with the order given in the corresponding
+translation (\code{keep_order = FALSE}) or in the same order as the original
+variable (\code{keep_order = TRUE}).
+}
+}
+\details{
+The functions \code{\link[=lama_translate]{lama_translate()}}, \code{\link[=lama_translate_]{lama_translate_()}}, \code{\link[=lama_to_factor]{lama_to_factor()}}
+and \code{\link[=lama_to_factor_]{lama_to_factor_()}} require different
 arguments, depending on the data type passed into argument \code{.data}.
 If \code{.data} is of type character, logical, numeric or factor, then
 the arguments \code{col} and \code{col_new} are omitted, since those are only
@@ -226,4 +269,81 @@ necessary in the case of data frames.
     keep_order = TRUE
   )
   str(sub_new)
+  # the data frame which holds the right labels, but no factors
+  df_translated <- data.frame(
+    pupil = c(1, 1, 2, 2, 3),
+    subject = c("English", "Mathematics", "Mathematics", "English", "English"),
+    res = c("Very good", "Good", "Not so good", "Good", "Good")
+  )
+ 
+  ## Example-11: Usage of 'lama_to_factor' for data frames
+  ##            Full length assignment
+  # (apply order of translation 'subject' to column 'subject' and save it to column 'subject_new')
+  # (apply order of translation 'result' to column 'res' and save it to column 'res_new')
+  df_new <- lama_to_factor(
+    df_translated,
+    dict,
+    sub_new = subject(subject),
+    res_new = result(res)
+  )
+  str(df_new)
+
+  ## Example-12: Usage of 'lama_to_factor' for data frames
+  ##            Abbreviation overwriting original columns
+  # (apply order of translation 'subject' to column 'subject' and save it to column 'subject')
+  # (apply order of translation 'result' to column 'res' and save it to column 'res')
+  df_new_overwritten <- lama_to_factor(
+    df_translated,
+    dict,
+    subject(subject),
+    result(res)
+  )
+  str(df_new_overwritten)
+
+  ## Example-13: Usage of 'lama_to_factor' for data frames
+  ##            Abbreviation if `translation_name == column_name`
+  # (apply order of translation 'subject' to column 'subject' and save it to column 'subject_new')
+  # (apply order of translation 'result' to column 'res' and save it to column 'res_new')
+  df_new_overwritten <- lama_to_factor(
+    df_translated, 
+    dict,
+    subject_new = subject,
+    res_new = result(res)
+  )
+  str(df_new_overwritten)
+  
+  ## Example-14: Usage of 'lama_translate' for atomic vectors
+  var <- c("Mathematics", "English", "Mathematics")
+  var_new <- lama_to_factor(
+    var,
+    dict,
+    subject
+  )
+  str(var_new)
+  
+  ## Example-15: Usage of 'lama_to_factor_' for data frames
+  # (apply order of translation 'subject' to column 'subject' and save it to column 'subject_new')
+  # (apply order of translation 'result' to column 'res' and save it to column 'res_new')
+  df_new <- lama_to_factor_(
+    df_translated, 
+    dict,
+    translation = c("subject", "result"),
+    col = c("subject", "res"),
+    col_new = c("subject_new", "res_new")
+  )
+  str(df_new)
+  
+  ## Example-16: Usage of 'lama_to_factor_' for atomic vectors
+  var <- c("Very good", "Good", "Good")
+  var_new <- lama_to_factor_(
+    var,
+    dict,
+    "result"
+  )
+  str(var_new)
+}
+\seealso{
+\code{\link[=lama_translate_all]{lama_translate_all()}}, \code{\link[=lama_to_factor_all]{lama_to_factor_all()}}, \code{\link[=new_lama_dictionary]{new_lama_dictionary()}},
+\code{\link[=as.lama_dictionary]{as.lama_dictionary()}}, \code{\link[=lama_rename]{lama_rename()}}, \code{\link[=lama_select]{lama_select()}}, \code{\link[=lama_mutate]{lama_mutate()}},
+\code{\link[=lama_merge]{lama_merge()}}, \code{\link[=lama_read]{lama_read()}}, \code{\link[=lama_write]{lama_write()}}
 }

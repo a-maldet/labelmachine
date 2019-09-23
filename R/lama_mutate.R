@@ -22,7 +22,8 @@
 #'   (e.g. `new_translation = c(v = "V", w = "W", old_translation, z = "Z")`, where 
 #'   `old_translation = c(x = "X", y = "Y")`).
 #' @return An updated [lama_dictionary][new_lama_dictionary()] class object.
-#' @seealso [lama_translate()], [lama_translate_all()], [new_lama_dictionary()],
+#' @seealso [lama_translate()], [lama_to_factor()], [lama_translate_all()],
+#'   [lama_to_factor_all()], [new_lama_dictionary()],
 #'   [as.lama_dictionary()], [lama_rename()], [lama_select()],
 #'   [lama_merge()], [lama_read()], [lama_write()]
 #' @rdname lama_mutate
