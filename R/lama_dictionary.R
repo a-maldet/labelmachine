@@ -114,7 +114,7 @@ NA_lama_ <- "NA_"
 #'    The names of the caller arguments will be used as names under which the given translations
 #'    will be added to the new lama_dictionary class object. 
 #' @return A new lama_dictionary class object holding the passed in translations.
-#' @seealso [is.dictionary()], [as.lama_dictionary()], [lama_translate()],
+#' @seealso [is.lama_dictionary()], [as.lama_dictionary()], [lama_translate()],
 #'   [lama_to_factor()], [lama_translate_all()], [lama_to_factor_all()],
 #'   [lama_read()], [lama_write()],
 #'   [lama_select()], [lama_rename()], [lama_mutate()], [lama_merge()]
@@ -494,9 +494,9 @@ as.lama_dictionary.data.frame <- function(
 #' @examples
 #' # check if an object is a 'lama_dictionary' class object
 #' dict <- new_lama_dictionary(country = c(uk = "United Kingdom", fr = "France"))
-#' is.dictionary(dict)
+#' is.lama_dictionary(dict)
 #' @export
-is.dictionary <- function(obj) {
+is.lama_dictionary <- function(obj) {
   inherits(obj, "lama_dictionary")
 }
 
@@ -510,7 +510,7 @@ is.dictionary <- function(obj) {
 #' @param obj An object that should be tested
 #' @param err_handler An error handling function
 #' @rdname validate_lama_dictionary
-#' @seealso [is.dictionary()], [as.lama_dictionary()], [new_lama_dictionary()],
+#' @seealso [is.lama_dictionary()], [as.lama_dictionary()], [new_lama_dictionary()],
 #'   [lama_translate()], [lama_to_factor()], [lama_translate_all()],
 #'   [lama_to_factor_all()], [lama_read()], [lama_write()],
 #'   [lama_select()],

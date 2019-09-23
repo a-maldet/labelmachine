@@ -49,7 +49,7 @@ lama_merge.lama_dictionary <- function(..., show_warnings = TRUE) {
   if (length(args) < 2)
     err_handler(paste0("There must be at least two lama_dictionary class object passed into."))
   lapply(seq_len(length(args)), function(i) {
-    if (!is.dictionary(args[[i]]))
+    if (!is.lama_dictionary(args[[i]]))
       err_handler(paste0(
         "Invalid argument at position ",
         stringify(i),

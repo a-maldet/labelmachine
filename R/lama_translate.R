@@ -736,7 +736,7 @@ check_arguments <- function(
 ) {
   if (!is.data.frame(.data))
     err_handler("The argument '.data' must be a data.frame.")
-  if (!is.dictionary(dictionary))
+  if (!is.lama_dictionary(dictionary))
     err_handler("The argument 'dictionary' must be a lama_dictionary class object.")
   if (!is.logical(keep_order) || !length(keep_order) %in% c(1, length(col_new)))
     err_handler(paste(
@@ -878,7 +878,7 @@ check_and_translate_vector <- function(
       "The name of the used translation is missing",
       "(e.g. 'lama_translate(x, dict, my_trans)')."
     ))
-  if (!is.dictionary(dictionary))
+  if (!is.lama_dictionary(dictionary))
     err_handler("The argument 'dictionary' must be a lama_dictionary class object.")
   if (!is.logical(keep_order) || length(keep_order) != 1 || is.na(keep_order))
     err_handler(paste(
@@ -1002,7 +1002,7 @@ check_and_translate_vector_ <- function(
     err_handler(paste(
       "The argument '.data' must either be a data frame, a factor or an atomic vector."
     ))
-  if (!is.dictionary(dictionary))
+  if (!is.lama_dictionary(dictionary))
     err_handler("The argument 'dictionary' must be a lama_dictionary class object.")
   if (!is.logical(keep_order) || length(keep_order) != 1 || is.na(keep_order))
     err_handler(paste(

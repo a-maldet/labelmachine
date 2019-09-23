@@ -29,7 +29,7 @@ reference:
 - title: various other functions
   contents:
   - '`lama_get`'
-  - '`is.dictionary`'
+  - '`is.lama_dictionary`'
   - '`validate_lama_dictionary`'
 
 development:

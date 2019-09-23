@@ -62,7 +62,7 @@ lama_mutate <- function(.data, ...) {
 lama_mutate.lama_dictionary <- function(.data, ...) {
   args <- rlang::quos(...)
   err_handler <- composerr("Error while calling 'lama_mutate'")
-  if (!is.dictionary(.data))
+  if (!is.lama_dictionary(.data))
     err_handler("The object given in the argument '.data' must be a lama_dictionary class object.")
   if (length(args) == 0)
     err_handler(paste(
@@ -170,7 +170,7 @@ lama_mutate_ <- function(.data, key, translation) {
 #' @export
 lama_mutate_.lama_dictionary <- function(.data, key, translation) {
   err_handler <- composerr("Error while calling 'lama_mutate_'")
-  if (!is.dictionary(.data))
+  if (!is.lama_dictionary(.data))
     err_handler("The object given in the argument '.data' must be a lama_dictionary class object.")
   if (!is.character(key) || length(key) != 1)
     err_handler("The object given in the argument 'key' must be a character string.")

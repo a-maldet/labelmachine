@@ -181,7 +181,7 @@ check_and_translate_all <- function(
   is_translated,
   err_handler
 ) {
-  if (!is.dictionary(dictionary))
+  if (!is.lama_dictionary(dictionary))
     err_handler("The argument 'dictionary' must be a lama_dictionary class object.")
   if (!is.character(prefix) || length(prefix) != 1 || is.na(prefix))
     err_handler("The argument 'prefix' must be a character string.")

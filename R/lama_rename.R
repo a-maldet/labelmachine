@@ -128,7 +128,7 @@ rename_translation <- function(.data, old, new) {
 #' @param err_handler A error handling function
 check_rename <- function(.data, old, new, err_handler) {
   # check .data
-  if (!is.dictionary(.data))
+  if (!is.lama_dictionary(.data))
     err_handler("The object given in the argument '.data' must be a lama_dictionary class object.")
   # check old
   if (!is.character(old) || length(old) == 0)

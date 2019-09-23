@@ -96,7 +96,7 @@ lama_select_.lama_dictionary <- function(.data, key) {
 #' translations, that should be renamed.
 #' @param err_handler A error handling function
 check_select <- function(.data, key, err_handler) {
-  if (!is.dictionary(.data))
+  if (!is.lama_dictionary(.data))
     err_handler("The object given in the argument '.data' must be a lama_dictionary class object.")
   invalid <- !key %in% names(.data)
   if (any(invalid))
