@@ -67,8 +67,8 @@ test_that("'lama_translate' throws the right errors", {
     paste(
       "If the first element is a factor or an",
       "atomic vector, then only the arguments 'dictionary', a single argument",
-      "for '...' \\(the unquoted translation name\\) and the argument",
-      "'keep_order' are used and all extra arguments will be ignored."
+      "for '...' \\(the unquoted translation name\\) and the arguments",
+      "'keep_order' and 'to_factor' are used and all extra arguments will be ignored."
     )
   )
 })

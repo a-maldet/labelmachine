@@ -21,6 +21,9 @@
 #' @param keep_order A logical of length one, defining if the original order
 #'   (factor order or alphanumerical order) of the data frame variables should
 #'   be preserved.
+#' @param to_factor A logical of length one, defining if the resulting labeled
+#'   varibles should be factor variables (`to_factor = TRUE`) or plain
+#'   character vectors (`to_factor = FALSE`).
 #' @return An extended data.frame, that has a factor variable holding the
 #'   assigned labels.
 #' @rdname lama_translate_all
@@ -32,7 +35,8 @@ lama_translate_all <- function(
   prefix = "",
   suffix = "",
   fn_colname = function(x) x,
-  keep_order = FALSE
+  keep_order = FALSE,
+  to_factor = TRUE
 ) {
   UseMethod("lama_translate_all")
 }
@@ -68,6 +72,13 @@ lama_translate_all <- function(
 #'   # (apply translation 'result' to column 'result' and save it to column 'RESULT')
 #'   df_new <- lama_translate_all(df, dict, fn_colname = toupper)
 #'   str(df_new)
+#' 
+#'   # Example-4: Use plain character vectors as labeled variables
+#'   # (apply translation 'subject' to column 'subject' and save it to column 'SUBJECT')
+#'   # (apply translation 'result' to column 'result' and save it to column 'RESULT')
+#'   df_new <- lama_translate_all(df, dict, suffix = "_new", to_factor = TRUE)
+#'   str(df_new)
+#'
 #' @export
 lama_translate_all.data.frame <- function(
   .data,
@@ -75,7 +86,8 @@ lama_translate_all.data.frame <- function(
   prefix = "",
   suffix = "",
   fn_colname = function(x) x,
-  keep_order = FALSE
+  keep_order = FALSE,
+  to_factor = TRUE
 ) {
   err_handler <- composerr("Error while calling 'lama_translate_all'")
   if (!is.dictionary(dictionary))
@@ -96,6 +108,10 @@ lama_translate_all.data.frame <- function(
   if (!is.logical(keep_order) || length(keep_order) != 1 || is.na(keep_order))
     err_handler(paste(
       "The argument 'keep_order' must be a logical."
+    ))
+  if (!is.logical(to_factor) || length(to_factor) != 1 || is.na(to_factor))
+    err_handler(paste(
+      "The argument 'to_factor' must be a logical."
     ))
   translation <- intersect(names(dictionary), colnames(.data))
   if (length(translation) == 0)
@@ -125,6 +141,7 @@ lama_translate_all.data.frame <- function(
     col = translation,
     col_new = col_new,
     keep_order = rep(keep_order, length(translation)),
+    to_factor = rep(to_factor, length(translation)),
     err_handler = err_handler
   )
 }

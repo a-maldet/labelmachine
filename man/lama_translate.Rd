@@ -9,22 +9,24 @@
 \alias{lama_translate_.default}
 \title{Assign new labels to a variable of a data.frame}
 \usage{
-lama_translate(.data, dictionary, ..., keep_order = FALSE)
+lama_translate(.data, dictionary, ..., keep_order = FALSE,
+  to_factor = TRUE)
 
 \method{lama_translate}{data.frame}(.data, dictionary, ...,
-  keep_order = FALSE)
+  keep_order = FALSE, to_factor = TRUE)
 
 \method{lama_translate}{default}(.data, dictionary, ...,
-  keep_order = FALSE)
+  keep_order = FALSE, to_factor = TRUE)
 
 lama_translate_(.data, dictionary, translation, col = translation,
-  col_new = col, keep_order = FALSE, ...)
+  col_new = col, keep_order = FALSE, to_factor = TRUE, ...)
 
 \method{lama_translate_}{data.frame}(.data, dictionary, translation,
-  col = translation, col_new = col, keep_order = FALSE, ...)
+  col = translation, col_new = col, keep_order = FALSE,
+  to_factor = TRUE, ...)
 
 \method{lama_translate_}{default}(.data, dictionary, translation, ...,
-  keep_order = FALSE)
+  keep_order = FALSE, to_factor = TRUE)
 }
 \arguments{
 \item{.data}{Either a data frame, a factor or an atomic vector.}
@@ -58,6 +60,15 @@ to each variable translation there is a corresponding boolean configuration.
 If a translated variable in the data.frame is a factor variable,
 and the corresponding boolean configuration is set to \code{TRUE}, then the
 the order of the original factor variable will be preserved.}
+
+\item{to_factor}{A boolean vector of length one or the same length as the
+number of translations. If the vector has length one, then the same
+configuration is applied to all variable translations. If the vector has
+the same length as the number of arguments in \code{...}, then the
+to each variable translation there is a corresponding boolean configuration.
+If \code{to_factor} is \code{TRUE}, then the resulting labeled
+variable will be a factor. If \code{to_factor} is set to \code{FALSE}, then
+the resulting labeled variable will be a plain character vector.}
 
 \item{translation}{A character vector holding the names of the variable
 translations which
@@ -142,7 +153,18 @@ necessary in the case of data frames.
   )
   str(df_new_overwritten)
   
-  ## Example-3: Usage of 'lama_translate' for atomic vectors
+  ## Example-4: Usage of 'lama_translate' for data frames labeling as character vectors
+  # (apply translation 'subject' to column 'subject' and
+  # save it as a character vector to column 'subject_new')
+  df_new_overwritten <- lama_translate(
+    df, 
+    dict,
+    subject_new = subject,
+    to_factor = TRUE
+  )
+  str(df_new_overwritten)
+  
+  ## Example-5: Usage of 'lama_translate' for atomic vectors
   sub <- c("ma", "en", "ma")
   sub_new <- df_new_overwritten <- lama_translate(
     sub,
@@ -151,7 +173,7 @@ necessary in the case of data frames.
   )
   str(sub_new)
 
-  ## Example-5: Usage of 'lama_translate' for factors
+  ## Example-6: Usage of 'lama_translate' for factors
   sub <- factor(c("ma", "en", "ma"), levels = c("ma", "en"))
   sub_new <- df_new_overwritten <- lama_translate(
     sub,
@@ -161,7 +183,7 @@ necessary in the case of data frames.
   )
   str(sub_new)
   
-  ## Example-6: Usage of 'lama_translate_' for data frames
+  ## Example-7: Usage of 'lama_translate_' for data frames
   # (apply translation 'subject' to column 'subject' and save it to column 'subject_new')
   # (apply translation 'result' to column 'res' and save it to column 'res_new')
   df_new <- lama_translate_(
@@ -173,7 +195,20 @@ necessary in the case of data frames.
   )
   str(df_new)
   
-  ## Example-7: Usage of 'lama_translate_' for atomic vectors
+  ## Example-8: Usage of 'lama_translate_' for data frames and store as character vector
+  # (apply translation 'subject' to column 'subject' and save it to column 'subject_new')
+  # (apply translation 'result' to column 'res' and save it to column 'res_new')
+  df_new <- lama_translate_(
+    df, 
+    dict,
+    translation = c("subject", "result"),
+    col = c("subject", "res"),
+    col_new = c("subject_new", "res_new"),
+    to_factor = c(FALSE, FALSE)
+  )
+  str(df_new)
+  
+  ## Example-9: Usage of 'lama_translate_' for atomic vectors
   res <- c(1, 2, 1, 3, 1, 2)
   res_new <- df_new_overwritten <- lama_translate_(
     res,
@@ -182,7 +217,7 @@ necessary in the case of data frames.
   )
   str(res_new)
 
-  ## Example-8: Usage of 'lama_translate_' for factors
+  ## Example-10: Usage of 'lama_translate_' for factors
   sub <- factor(c("ma", "en", "ma"), levels = c("ma", "en"))
   sub_new <- df_new_overwritten <- lama_translate_(
     sub,

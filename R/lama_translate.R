@@ -39,12 +39,20 @@
 #'   If a translated variable in the data.frame is a factor variable,
 #'   and the corresponding boolean configuration is set to \code{TRUE}, then the
 #'   the order of the original factor variable will be preserved.
+#' @param to_factor A boolean vector of length one or the same length as the
+#'   number of translations. If the vector has length one, then the same 
+#'   configuration is applied to all variable translations. If the vector has 
+#'   the same length as the number of arguments in \code{...}, then the 
+#'   to each variable translation there is a corresponding boolean configuration.
+#'   If `to_factor` is `TRUE`, then the resulting labeled
+#'   variable will be a factor. If `to_factor` is set to `FALSE`, then
+#'   the resulting labeled variable will be a plain character vector.
 #' @return An extended data.frame, that has a factor variable holding the
 #'   assigned labels.
 #' @rdname lama_translate
 #' @include lama_dictionary.R
 #' @export
-lama_translate <- function(.data, dictionary, ..., keep_order = FALSE) {
+lama_translate <- function(.data, dictionary, ..., keep_order = FALSE, to_factor = TRUE) {
   UseMethod("lama_translate")
 }
 
@@ -98,8 +106,19 @@ lama_translate <- function(.data, dictionary, ..., keep_order = FALSE) {
 #'   )
 #'   str(df_new_overwritten)
 #'   
+#'   ## Example-4: Usage of 'lama_translate' for data frames labeling as character vectors
+#'   # (apply translation 'subject' to column 'subject' and
+#'   # save it as a character vector to column 'subject_new')
+#'   df_new_overwritten <- lama_translate(
+#'     df, 
+#'     dict,
+#'     subject_new = subject,
+#'     to_factor = TRUE
+#'   )
+#'   str(df_new_overwritten)
+#'   
 #' @export
-lama_translate.data.frame <- function(.data, dictionary, ..., keep_order = FALSE) {
+lama_translate.data.frame <- function(.data, dictionary, ..., keep_order = FALSE, to_factor = TRUE) {
   args <- rlang::quos(...)
   err_handler <- composerr("Error while calling 'lama_translate'")
   if (length(args) == 0)
@@ -107,9 +126,11 @@ lama_translate.data.frame <- function(.data, dictionary, ..., keep_order = FALSE
   new_cols <- names(args)
   if (is.null(new_cols))
     new_cols <- rep("", length(args))
-  check_translate_general(.data, dictionary, col_new = new_cols, keep_order, err_handler)
+  check_translate_general(.data, dictionary, col_new = new_cols, keep_order, to_factor, err_handler)
   if (length(keep_order) == 1)
     keep_order <- rep(keep_order, length(new_cols))
+  if (length(to_factor) == 1)
+    to_factor <- rep(to_factor, length(new_cols))
   translation_list <- lapply(
     seq_len(length(args)), 
     function(i) {
@@ -190,13 +211,14 @@ lama_translate.data.frame <- function(.data, dictionary, ..., keep_order = FALSE
     col = sapply(translation_list, function(x) x$col),
     col_new = col_new,
     keep_order = keep_order,
+    to_factor = to_factor,
     err_handler = err_handler
   )
 }
 
 #' @rdname lama_translate
 #' @examples
-#'   ## Example-3: Usage of 'lama_translate' for atomic vectors
+#'   ## Example-5: Usage of 'lama_translate' for atomic vectors
 #'   sub <- c("ma", "en", "ma")
 #'   sub_new <- df_new_overwritten <- lama_translate(
 #'     sub,
@@ -205,7 +227,7 @@ lama_translate.data.frame <- function(.data, dictionary, ..., keep_order = FALSE
 #'   )
 #'   str(sub_new)
 #' 
-#'   ## Example-5: Usage of 'lama_translate' for factors
+#'   ## Example-6: Usage of 'lama_translate' for factors
 #'   sub <- factor(c("ma", "en", "ma"), levels = c("ma", "en"))
 #'   sub_new <- df_new_overwritten <- lama_translate(
 #'     sub,
@@ -216,7 +238,7 @@ lama_translate.data.frame <- function(.data, dictionary, ..., keep_order = FALSE
 #'   str(sub_new)
 #'   
 #' @export
-lama_translate.default <- function(.data, dictionary, ..., keep_order = FALSE) {
+lama_translate.default <- function(.data, dictionary, ..., keep_order = FALSE, to_factor = TRUE) {
   err_handler <- composerr("Error while calling 'lama_translate'")
   if (!is.atomic(.data))
     err_handler(paste(
@@ -234,13 +256,17 @@ lama_translate.default <- function(.data, dictionary, ..., keep_order = FALSE) {
     err_handler(paste(
       "The argument 'keep_order' must be a logical."
     ))
+  if (!is.logical(to_factor) || length(to_factor) != 1 || is.na(to_factor))
+    err_handler(paste(
+      "The argument 'to_factor' must be a logical."
+    ))
   if (length(args) > 1) {
       warning(paste(
         "Warning while calling `lama_translate`:",
         "If the first element is a factor or an atomic vector,",
         "then only the arguments 'dictionary', a single argument for '...'",
         "(the unquoted translation name)",
-        "and the argument 'keep_order' are used and all extra arguments",
+        "and the arguments 'keep_order' and 'to_factor' are used and all extra arguments",
         "will be ignored."
       ))
   }
@@ -263,6 +289,7 @@ lama_translate.default <- function(.data, dictionary, ..., keep_order = FALSE) {
     val = .data,
     translation = dictionary[[translation]],
     keep_order = keep_order,
+    to_factor = to_factor,
     err_handler = err_handler
   )
 }
@@ -284,13 +311,13 @@ lama_translate.default <- function(.data, dictionary, ..., keep_order = FALSE) {
 #'   names are the same as the column names of the original variables.
 #' @rdname lama_translate
 #' @export
-lama_translate_ <- function(.data, dictionary, translation, col = translation, col_new = col, keep_order = FALSE, ...) {
+lama_translate_ <- function(.data, dictionary, translation, col = translation, col_new = col, keep_order = FALSE, to_factor = TRUE, ...) {
   UseMethod("lama_translate_")
 }
 
 #' @rdname lama_translate
 #' @examples
-#'   ## Example-6: Usage of 'lama_translate_' for data frames
+#'   ## Example-7: Usage of 'lama_translate_' for data frames
 #'   # (apply translation 'subject' to column 'subject' and save it to column 'subject_new')
 #'   # (apply translation 'result' to column 'res' and save it to column 'res_new')
 #'   df_new <- lama_translate_(
@@ -302,13 +329,28 @@ lama_translate_ <- function(.data, dictionary, translation, col = translation, c
 #'   )
 #'   str(df_new)
 #'   
+#'   ## Example-8: Usage of 'lama_translate_' for data frames and store as character vector
+#'   # (apply translation 'subject' to column 'subject' and save it to column 'subject_new')
+#'   # (apply translation 'result' to column 'res' and save it to column 'res_new')
+#'   df_new <- lama_translate_(
+#'     df, 
+#'     dict,
+#'     translation = c("subject", "result"),
+#'     col = c("subject", "res"),
+#'     col_new = c("subject_new", "res_new"),
+#'     to_factor = c(FALSE, FALSE)
+#'   )
+#'   str(df_new)
+#'   
 #' @export
-lama_translate_.data.frame <- function(.data, dictionary, translation, col = translation, col_new = col, keep_order = FALSE, ...) {
+lama_translate_.data.frame <- function(.data, dictionary, translation, col = translation, col_new = col, keep_order = FALSE, to_factor = TRUE, ...) {
   # --- Check arguments ---
   err_handler <- composerr("Error while calling 'lama_translate_'")
-  check_translate_general(.data, dictionary, col_new = col_new, keep_order, err_handler)
+  check_translate_general(.data, dictionary, col_new = col_new, keep_order, to_factor, err_handler)
   if (length(keep_order) == 1)
     keep_order <- rep(keep_order, length(col_new))
+  if (length(to_factor) == 1)
+    to_factor <- rep(to_factor, length(col_new))
   # specific checks for 'lama_translate_'
   if (!is.character(translation) || length(translation) == 0)
     err_handler("The argument 'translation' must be a character vector.")
@@ -359,12 +401,12 @@ lama_translate_.data.frame <- function(.data, dictionary, translation, col = tra
       stringify(col_new[invalid]),
       "."
     ))
-  translate_df(.data, dictionary, translation, col, col_new, keep_order, err_handler)
+  translate_df(.data, dictionary, translation, col, col_new, keep_order, to_factor, err_handler)
 }
 
 #' @rdname lama_translate
 #' @examples
-#'   ## Example-7: Usage of 'lama_translate_' for atomic vectors
+#'   ## Example-9: Usage of 'lama_translate_' for atomic vectors
 #'   res <- c(1, 2, 1, 3, 1, 2)
 #'   res_new <- df_new_overwritten <- lama_translate_(
 #'     res,
@@ -373,7 +415,7 @@ lama_translate_.data.frame <- function(.data, dictionary, translation, col = tra
 #'   )
 #'   str(res_new)
 #' 
-#'   ## Example-8: Usage of 'lama_translate_' for factors
+#'   ## Example-10: Usage of 'lama_translate_' for factors
 #'   sub <- factor(c("ma", "en", "ma"), levels = c("ma", "en"))
 #'   sub_new <- df_new_overwritten <- lama_translate_(
 #'     sub,
@@ -383,7 +425,7 @@ lama_translate_.data.frame <- function(.data, dictionary, translation, col = tra
 #'   )
 #'   str(sub_new)
 #' @export
-lama_translate_.default <- function(.data, dictionary, translation, ..., keep_order = FALSE) {
+lama_translate_.default <- function(.data, dictionary, translation, ..., keep_order = FALSE, to_factor = TRUE) {
   err_handler <- composerr("Error while calling 'lama_translate_'")
   if (!is.atomic(.data))
     err_handler(paste(
@@ -394,6 +436,10 @@ lama_translate_.default <- function(.data, dictionary, translation, ..., keep_or
   if (!is.logical(keep_order) || length(keep_order) != 1 || is.na(keep_order))
     err_handler(paste(
       "The argument 'keep_order' must be a logical."
+    ))
+  if (!is.logical(to_factor) || length(to_factor) != 1 || is.na(to_factor))
+    err_handler(paste(
+      "The argument 'to_factor' must be a logical."
     ))
   if (!is.character(translation) || length(translation) != 1 || is.na(translation))
     err_handler("The argument 'translation' must be a character string.")
@@ -406,8 +452,8 @@ lama_translate_.default <- function(.data, dictionary, translation, ..., keep_or
       warning(paste(
         "Warning while calling 'lama_translate_':",
         "If the first element is a factor or an atomic vector,",
-        "then only the arguments 'dictionary', 'translation'",
-        "and 'keep_order' are used and all extra arguments",
+        "then only the arguments 'dictionary', 'translation',",
+        "'keep_order' and 'to_factor' are used and all extra arguments",
         "will be ignored."
       ))
   }
@@ -415,6 +461,7 @@ lama_translate_.default <- function(.data, dictionary, translation, ..., keep_or
     val = .data,
     translation = dictionary[[translation]],
     keep_order = keep_order,
+    to_factor = to_factor,
     err_handler = err_handler
   )
 }
@@ -433,6 +480,7 @@ translate_df <- function(
   col,
   col_new,
   keep_order,
+  to_factor,
   err_handler
 ) {
   .data[col_new] <- lapply(
@@ -442,6 +490,7 @@ translate_df <- function(
         val = .data[[col[i]]],
         translation = dictionary[[translation[i]]],
         keep_order = keep_order[i],
+        to_factor = to_factor[i],
         err_handler = composerr_parent(
           paste0(
             "Translation '", translation[i], "' could not be applied to ",
@@ -462,9 +511,12 @@ translate_df <- function(
 #' @param keep_order A logical flag. If the vector in \code{val}
 #' is a factor variable and \code{keep_order} is set to \code{TRUE}, then
 #' the order of the original factor variable is preserved.
+#' @param to_factor A logical flag. If set to `TRUE`, the the resulting
+#'   labeled variable will be a factor and a plain character vector
+#'   otherwise.
 #' @param err_handler An error handling function
 #' @return A factor vector holding the assigned labels
-translate_variable <- function(val, translation, keep_order, err_handler) {
+translate_variable <- function(val, translation, keep_order, to_factor, err_handler) {
   old_labels <- names(translation)
   val_char <- as.character(val)
   flag_na_escape <- any(is.na(val_char)) && contains_na_escape(old_labels)
@@ -495,11 +547,16 @@ translate_variable <- function(val, translation, keep_order, err_handler) {
       match(c(col_levels, setdiff(old_labels, col_levels)), old_labels),
     ]
   }
-  # set new labels as factor
-  labeling_map$new = factor(
+  if (to_factor) {
+    # set new labels as factor
+    labeling_map$new <- factor(
       labeling_map$new,
       levels = unique(labeling_map$new)
     )
+  } else {
+    # set new labels as character vector
+    labeling_map$new <- labeling_map$new
+  }
   # Merge labels
   temp <- merge(
     data.frame(ord = seq_len(length(val_char)), old = val_char),
@@ -515,7 +572,7 @@ translate_variable <- function(val, translation, keep_order, err_handler) {
 #'
 #' @inheritParams lama_translate_
 #' @param err_handler An error handling function
-check_translate_general <- function(.data, dictionary, col_new, keep_order, err_handler) {
+check_translate_general <- function(.data, dictionary, col_new, keep_order, to_factor, err_handler) {
   if (!is.data.frame(.data))
     err_handler("The argument '.data' must be a data.frame.")
   if (!is.dictionary(dictionary))
@@ -523,6 +580,11 @@ check_translate_general <- function(.data, dictionary, col_new, keep_order, err_
   if (!is.logical(keep_order) || !length(keep_order) %in% c(1, length(col_new)))
     err_handler(paste(
       "The argument 'keep_order' must be a logical",
-      "vector of length or length equal to the number of applied translations."
+      "vector of length one or length equal to the number of applied translations."
+    ))
+  if (!is.logical(to_factor) || !length(to_factor) %in% c(1, length(to_factor)))
+    err_handler(paste(
+      "The argument 'to_factor' must be a logical",
+      "vector of length one or length equal to the number of applied translations."
     ))
 }

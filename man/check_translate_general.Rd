@@ -4,7 +4,7 @@
 \alias{check_translate_general}
 \title{Function that applies some general checks to the arguments of \code{\link[=lama_translate]{lama_translate()}} and \code{\link[=lama_translate_]{lama_translate_()}}}
 \usage{
-check_translate_general(.data, dictionary, col_new, keep_order,
+check_translate_general(.data, dictionary, col_new, keep_order, to_factor,
   err_handler)
 }
 \arguments{
@@ -27,6 +27,15 @@ to each variable translation there is a corresponding boolean configuration.
 If a translated variable in the data.frame is a factor variable,
 and the corresponding boolean configuration is set to \code{TRUE}, then the
 the order of the original factor variable will be preserved.}
+
+\item{to_factor}{A boolean vector of length one or the same length as the
+number of translations. If the vector has length one, then the same
+configuration is applied to all variable translations. If the vector has
+the same length as the number of arguments in \code{...}, then the
+to each variable translation there is a corresponding boolean configuration.
+If \code{to_factor} is \code{TRUE}, then the resulting labeled
+variable will be a factor. If \code{to_factor} is set to \code{FALSE}, then
+the resulting labeled variable will be a plain character vector.}
 
 \item{err_handler}{An error handling function}
 }

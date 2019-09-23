@@ -74,6 +74,27 @@ test_that("'lama_translate' works unquoted", {
   expect_identical(as.character(df_new_2$var_r), df_new_2$var_r_labeled)
   expect_identical(as.character(df_new_2$var_s), df_new_2$var_s_labeled)
 })
+test_that("'lama_translate' works unquoted with 'to_factor = FALSE'", {
+  df_new <- lama_translate(
+    df,
+    dict,
+    var_r_new = r._(var_r),
+    var_r_new_char = r._(var_r),
+    keep_order = TRUE,
+    to_factor = c(TRUE, FALSE)
+  )
+  expect_s3_class(df_new, "data.frame")
+  expect_column_names(
+    df_new, 
+    c(
+      "var_r", "var_r_labeled", "var_s", "var_s_labeled", "var_t",
+      "var_t_labeled", "var_t_false", "var_r_false",
+      "var_r_new", "var_r_new_char"
+    )
+  )
+  expect_factor_levels(df_new$var_r_new, c("F", "X", "D", "A", "B"))
+  expect_identical(as.character(df_new$var_r_new), as.character(df_new$var_r_labeled))
+})
 # lama_translate errors
 test_that("'lama_translate' throws the right errors", {
   expect_error(

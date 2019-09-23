@@ -6,10 +6,11 @@
 \title{Assign new labels to all variables of a data.frame}
 \usage{
 lama_translate_all(.data, dictionary, prefix = "", suffix = "",
-  fn_colname = function(x) x, keep_order = FALSE)
+  fn_colname = function(x) x, keep_order = FALSE, to_factor = TRUE)
 
 \method{lama_translate_all}{data.frame}(.data, dictionary, prefix = "",
-  suffix = "", fn_colname = function(x) x, keep_order = FALSE)
+  suffix = "", fn_colname = function(x) x, keep_order = FALSE,
+  to_factor = TRUE)
 }
 \arguments{
 \item{.data}{Either a data frame, a factor or a vector.}
@@ -31,6 +32,10 @@ be stored.}
 \item{keep_order}{A logical of length one, defining if the original order
 (factor order or alphanumerical order) of the data frame variables should
 be preserved.}
+
+\item{to_factor}{A logical of length one, defining if the resulting labeled
+varibles should be factor variables (\code{to_factor = TRUE}) or plain
+character vectors (\code{to_factor = FALSE}).}
 }
 \value{
 An extended data.frame, that has a factor variable holding the
@@ -75,4 +80,11 @@ same names as the corresponding columns in the data frame \code{.data}.
   # (apply translation 'result' to column 'result' and save it to column 'RESULT')
   df_new <- lama_translate_all(df, dict, fn_colname = toupper)
   str(df_new)
+
+  # Example-4: Use plain character vectors as labeled variables
+  # (apply translation 'subject' to column 'subject' and save it to column 'SUBJECT')
+  # (apply translation 'result' to column 'result' and save it to column 'RESULT')
+  df_new <- lama_translate_all(df, dict, suffix = "_new", to_factor = TRUE)
+  str(df_new)
+
 }
