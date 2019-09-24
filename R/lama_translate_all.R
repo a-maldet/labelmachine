@@ -17,7 +17,7 @@
 #'   and turn them into factor variables with the order given in the corresponding
 #'   translations (`keep_order = FALSE`) or in the same order as the original
 #'   variable (`keep_order = TRUE`).
-#' * [lama_to_factor_all()]: The variariables are character
+#' * [lama_to_factor_all()]: The variables are character
 #'   vectors or factors already holding the right label strings. The variables
 #'   are turned into a factor variables with the order given in the corresponding
 #'   translation (`keep_order = FALSE`) or in the same order as the original
@@ -37,7 +37,7 @@
 #'   (factor order or alphanumerical order) of the data frame variables should
 #'   be preserved.
 #' @param to_factor A logical of length one, defining if the resulting labeled
-#'   varibles should be factor variables (`to_factor = TRUE`) or plain
+#'   variables should be factor variables (`to_factor = TRUE`) or plain
 #'   character vectors (`to_factor = FALSE`).
 #' @return An extended data.frame, that has a factor variable holding the
 #'   assigned labels.

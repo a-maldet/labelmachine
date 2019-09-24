@@ -29,7 +29,7 @@ be stored.}
 be preserved.}
 
 \item{to_factor}{A logical of length one, defining if the resulting labeled
-varibles should be factor variables (\code{to_factor = TRUE}) or plain
+variables should be factor variables (\code{to_factor = TRUE}) or plain
 character vectors (\code{to_factor = FALSE}).}
 
 \item{is_translated}{A boolean vector of length one or the same length as the

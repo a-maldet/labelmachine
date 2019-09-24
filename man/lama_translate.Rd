@@ -132,7 +132,7 @@ with the order given in the translations:
 and turn it into a factor variable with the order given in the corresponding
 translation (\code{keep_order = FALSE}) or in the same order as the original
 variable (\code{keep_order = TRUE}).
-\item \code{\link[=lama_to_factor]{lama_to_factor()}} and \code{\link[=lama_to_factor_]{lama_to_factor_()}}: The variariable is a character
+\item \code{\link[=lama_to_factor]{lama_to_factor()}} and \code{\link[=lama_to_factor_]{lama_to_factor_()}}: The variable is a character
 vector or a factor already holding the right label strings. The variables
 are turned into a factor variable with the order given in the corresponding
 translation (\code{keep_order = FALSE}) or in the same order as the original

@@ -15,7 +15,7 @@
 #'   and turn it into a factor variable with the order given in the corresponding
 #'   translation (`keep_order = FALSE`) or in the same order as the original
 #'   variable (`keep_order = TRUE`).
-#' * [lama_to_factor()] and [lama_to_factor_()]: The variariable is a character
+#' * [lama_to_factor()] and [lama_to_factor_()]: The variable is a character
 #'   vector or a factor already holding the right label strings. The variables
 #'   are turned into a factor variable with the order given in the corresponding
 #'   translation (`keep_order = FALSE`) or in the same order as the original

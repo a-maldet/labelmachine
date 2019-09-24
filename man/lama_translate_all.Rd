@@ -42,7 +42,7 @@ be stored.}
 be preserved.}
 
 \item{to_factor}{A logical of length one, defining if the resulting labeled
-varibles should be factor variables (\code{to_factor = TRUE}) or plain
+variables should be factor variables (\code{to_factor = TRUE}) or plain
 character vectors (\code{to_factor = FALSE}).}
 }
 \value{
@@ -69,7 +69,7 @@ is the following:
 and turn them into factor variables with the order given in the corresponding
 translations (\code{keep_order = FALSE}) or in the same order as the original
 variable (\code{keep_order = TRUE}).
-\item \code{\link[=lama_to_factor_all]{lama_to_factor_all()}}: The variariables are character
+\item \code{\link[=lama_to_factor_all]{lama_to_factor_all()}}: The variables are character
 vectors or factors already holding the right label strings. The variables
 are turned into a factor variables with the order given in the corresponding
 translation (\code{keep_order = FALSE}) or in the same order as the original

@@ -19,6 +19,24 @@ knitr::opts_chunk$set(
 )
 ```
 
+In the following, we will explain how to use a lama-dictionary
+(See [Creating lama-dictionaries]) in order to translate data frame variables
+or atomic vectors (or factor objects).
+The main functions are:
+* `lama_translate()` and `lama_translate_()`: Assign new labels to variable
+  values and turn them into ordered factors (if `to_factor = TRUE`).
+* `lama_translate_all()`: Apply `lama_translate()` on all possible columns
+  of a data frame, if there are corresponding translations.
+* `lama_to_factor()` and `lama_to_factor_()`: Similar to
+  `lama_translate()` and `lama_translate_()`, but the variables already
+  have the right values (character or factor), but should be turned into
+  factor variables with the factor levels given in the corresponding
+  translations.
+* `lama_to_factor_all()`: Apply `lama_to_factor()` on all possible columns
+  of a data frame, if there are corresponding translations.
+
+## The example data frame and lama-dictionary
+
 Let `df` be a data frame with the following structure:
 ```{r}
 df <- data.frame(
@@ -72,7 +90,8 @@ df_new <- lama_translate(
   subject_new = sub(subject),
   level = lev(level),
   result = result(result),
-  keep_order = c(FALSE, TRUE, FALSE)
+  keep_order = c(FALSE, TRUE, FALSE),
+  to_factor = c(TRUE, TRUE, FALSE)
 )
 str(df_new)
 ```
@@ -82,7 +101,9 @@ translated and which lama-dictionary should be used for the translation.
 The argument `keep_order` defines for each given translation if the
 original ordering of the variable should be kept (ordering of the variable
 in the data frame `df`) or if the ordering given in the translation should be
-used.
+used. The argument `to_factor` defines for each translation, if the resulting
+labeled variable should be a factor variable (`to_factor = TRUE`) or a
+plain character variable (`to_factor = FALSE`).
 Besides the arguments `.data`, `dictionary` and `keep_order` all other
 arguments are label assignments. The names of the arguments
 (left hand side of the equations) define the column names under which the
@@ -96,14 +117,19 @@ Hence, the statement above does the following things:
   translated using the translation `sub` and the resulting factor is stored
   under the column name `subject_new`. Since the first entry in `keep_order` is
   `FALSE`, the ordering given in the translation `sub` is used for the labels.
+  Since the first entry in
+  `to_factor` is `TRUE` the resulting variable is a factor variable.
 * `level = lev(level)`: The column `level` in the data frame `df` is translated
   using the translation `lev` and then overwritten by the resulting factor.
   Since the second entry in `keep_order` is `TRUE`, the labeled variable
-  has the same ordering as the original column.
+  has the same ordering as the original column. Since the second entry in
+  `to_factor` is `TRUE` the resulting variable is a factor variable.
 * `result = result(result)`: The column `result` in the data frame `df` is
   translated using the translation `result` and then overwritten by the
   resulting factor. Since the third entry in `keep_order` is
   `FALSE`, the ordering given in the translation is used for the labels.
+  Since the third entry in
+  `to_factor` is `FALSE` the resulting variable is a plain character variable.
 
 There are several abbreviations, in order to spare some writing:
 
@@ -132,7 +158,8 @@ df_new <- lama_translate_(
   translation = c("sub", "lev", "result"),
   col = c("subject", "level", "result"),
   col_new = c("subject_new", "level", "result"),
-  keep_order = c(FALSE, TRUE, FALSE)
+  keep_order = c(FALSE, TRUE, FALSE),
+  to_factor = c(TRUE, TRUE, FALSE)
 )
 str(df_new)
 ```
@@ -178,6 +205,85 @@ Contrary to `lama_translate()`, the argument `keep_order` is just a single
 boolean flag. It defines whether the original order of all columns should
 be kept (`keep_order = TRUE`)
 or if the order in the translation vector should be used.
+Like in the case of `lama_translate()`, it is possible to pass an
+argument `to_factor = FALSE`
+`lama_translate_all` in order to define that all resulting labeled variables
+shall be stored as plain character vectors.
+
+## Translate vectors
+
+So far, we only translated variables in data frames, but it is also possible
+to use `lama_translate()` and `lama_translate_()` in 
+order to translate atomic vectors (character, logical, numeric) and factors.
+
+Using `lama_translate()`:
+```{r}
+vec <- c("eng", "eng", "gym", "mat")
+vec_labeled <- lama_translate(vec, dict, sub)
+```
+
+Using `lama_translate_()`:
+```{r}
+vec_labeled <- lama_translate_(vec, dict, "sub")
+```
+
+## Turn labeled variables into factors
+
+Sometimes, you already have labeled variables (character or factor variables,
+maybe produced by `lama_translate()` with argument `to_factor = FALSE`)
+and you want to turn them into factor variables with a desired ordering.
+In this case the functions `lama_to_factor()`, `lama_to_factor_()`
+`lama_to_factor_all()` are right choices.
+
+Let `df_non_factor` a data frame holding the right labels, but no factor
+variables (created with `lama_translate_all()` using `to_factor = FALSE`):
+```{r}
+dict_new <- lama_rename(dict, subject = sub, level = lev)
+df_non_factor <- lama_translate_all(df, dict_new, to_factor = FALSE)
+str(df_non_factor)
+```
+
+Turning variables into factors with `lama_to_factor()`:
+```{r}
+df_factor <- lama_to_factor(
+  .data = df_non_factor,
+  dictionary = dict,
+  subject_new = sub(subject),
+  level = lev(level),
+  result = result(result)
+)
+str(df_factor)
+```
+The function `lama_to_factor()` allows the same abbreviations as `lama_translate()`.
+It can also be used on factor variables and there is also a `keep_order`
+argument like in the case of `lama_translate()`. Furthermore,
+the functions `lama_to_factor()` and `lama_to_factor_()` can both be applied
+to atomic vectors or plain factors like in the case of `lama_translate()`.
+
+Turning variables in a data frame into factors with `lama_to_factor_()`:
+```{r}
+df_factor <- lama_to_factor_(
+  .data = df_non_factor,
+  dictionary = dict,
+  translation = c("sub", "lev", "result"),
+  col = c("subject", "level", "result")
+)
+str(df_factor)
+```
+Since the argument `col_new` was omitted, the variable names (`subject`,
+`level` and `result`) were overwritten.
+
+Turning all possible variables in a data frame into factors
+with `lama_to_factor_all()`:
+```{r}
+df_factor <- lama_to_factor_all(
+  .data = df_non_factor,
+  dictionary = dict
+)
+str(df_factor)
+```
+Since the arguments `prefix`, `suffix` and `fn_colname` were omitted, the
+variable names (`subject`, `level` and `result`) were overwritten.
 
 ## Further reading
 
