@@ -6,7 +6,7 @@ devtools::build()
 setwd("..")
 
 rhub::validate_email("maldet@posteo.at")
-chk <- rhub::check_for_cran(path = "../labelmachine_2.0.0.tar.gz")
+chk <- rhub::check_for_cran(path = "../labelmachine_1.0.0.tar.gz")
 chk$cran_summary()
 sink("various/cran-comments.md")
 chk$cran_summary()
