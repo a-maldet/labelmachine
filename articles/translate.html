@@ -102,7 +102,7 @@
       <h1>Translate variables</h1>
                         <h4 class="author">Adrian Maldet</h4>
             
-            <h4 class="date">2019-09-20</h4>
+            <h4 class="date">2019-09-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/a-maldet/labelmachine/blob/master/vignettes/translate.Rmd"><code>vignettes/translate.Rmd</code></a></small>
       <div class="hidden name"><code>translate.Rmd</code></div>
@@ -111,6 +111,10 @@
 
     
     
+<p>In the following, we will explain how to use a lama-dictionary (See <a href="https://a-maldet.github.io/labelmachine/articles/create_dictionaries.html">Creating lama-dictionaries</a>) in order to translate data frame variables or atomic vectors (or factor objects). The main functions are: * <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_translate()</a></code> and <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_translate_()</a></code>: Assign new labels to variable values and turn them into ordered factors (if <code>to_factor = TRUE</code>). * <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate_all.html">lama_translate_all()</a></code>: Apply <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_translate()</a></code> on all possible columns of a data frame, if there are corresponding translations. * <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_to_factor()</a></code> and <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_to_factor_()</a></code>: Similar to <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_translate()</a></code> and <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_translate_()</a></code>, but the variables already have the right values (character or factor), but should be turned into factor variables with the factor levels given in the corresponding translations. * <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate_all.html">lama_to_factor_all()</a></code>: Apply <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_to_factor()</a></code> on all possible columns of a data frame, if there are corresponding translations.</p>
+<div id="the-example-data-frame-and-lama-dictionary" class="section level2">
+<h2 class="hasAnchor">
+<a href="#the-example-data-frame-and-lama-dictionary" class="anchor"></a>The example data frame and lama-dictionary</h2>
 <p>Let <code>df</code> be a data frame with the following structure:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">  <span class="dt">pupil_id =</span> <span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dt">each =</span> <span class="dv">3</span>),</a>
@@ -167,6 +171,7 @@
 <a class="sourceLine" id="cb2-27" data-line-number="27"><span class="co">#&gt;       "Good"     "Passed" "Not passed" "Not passed"     "Missed" </span></a>
 <a class="sourceLine" id="cb2-28" data-line-number="28"><span class="co">#&gt;            0 </span></a>
 <a class="sourceLine" id="cb2-29" data-line-number="29"><span class="co">#&gt;           NA</span></a></code></pre></div>
+</div>
 <div id="translate-using-non-standard-evaluation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#translate-using-non-standard-evaluation" class="anchor"></a>Translate using non-standard evaluation</h2>
@@ -177,23 +182,24 @@
 <a class="sourceLine" id="cb3-4" data-line-number="4">  <span class="dt">subject_new =</span> <span class="kw"><a href="https://rdrr.io/r/base/grep.html">sub</a></span>(subject),</a>
 <a class="sourceLine" id="cb3-5" data-line-number="5">  <span class="dt">level =</span> <span class="kw">lev</span>(level),</a>
 <a class="sourceLine" id="cb3-6" data-line-number="6">  <span class="dt">result =</span> <span class="kw">result</span>(result),</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">  <span class="dt">keep_order =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">)</a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(df_new)</a>
-<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt; 'data.frame':    12 obs. of  5 variables:</span></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#&gt;  $ pupil_id   : int  1 1 1 2 2 2 3 3 3 4 ...</span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#&gt;  $ subject    : chr  "eng" "mat" "gym" "eng" ...</span></a>
-<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#&gt;  $ level      : Factor w/ 2 levels "Advanced","Basic": 1 1 1 2 2 2 2 2 2 1 ...</span></a>
-<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt;  $ result     : Factor w/ 4 levels "Good","Passed",..: 1 2 2 4 2 4 1 NA 1 2 ...</span></a>
-<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">#&gt;  $ subject_new: Factor w/ 3 levels "English","Mathematics",..: 1 2 3 1 2 3 1 2 3 1 ...</span></a></code></pre></div>
-<p>The arguments <code>.data</code> and <code>dictionary</code> define which data frame should be translated and which lama-dictionary should be used for the translation. The argument <code>keep_order</code> defines for each given translation if the original ordering of the variable should be kept (ordering of the variable in the data frame <code>df</code>) or if the ordering given in the translation should be used. Besides the arguments <code>.data</code>, <code>dictionary</code> and <code>keep_order</code> all other arguments are label assignments. The names of the arguments (left hand side of the equations) define the column names under which the labeled variable should be stored. The right hand side of the assignments define the column which should be labeled (parameter name in the brackets) and which translation should be used (function name the left of the brackets). Hence, the statement above does the following things:</p>
+<a class="sourceLine" id="cb3-7" data-line-number="7">  <span class="dt">keep_order =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>),</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">  <span class="dt">to_factor =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="ot">TRUE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">)</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(df_new)</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#&gt; 'data.frame':    12 obs. of  5 variables:</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#&gt;  $ pupil_id   : int  1 1 1 2 2 2 3 3 3 4 ...</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#&gt;  $ subject    : chr  "eng" "mat" "gym" "eng" ...</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt;  $ level      : Factor w/ 2 levels "Advanced","Basic": 1 1 1 2 2 2 2 2 2 1 ...</span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">#&gt;  $ result     : chr  "Good" "Passed" "Passed" "Missed" ...</span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt;  $ subject_new: Factor w/ 3 levels "English","Mathematics",..: 1 2 3 1 2 3 1 2 3 1 ...</span></a></code></pre></div>
+<p>The arguments <code>.data</code> and <code>dictionary</code> define which data frame should be translated and which lama-dictionary should be used for the translation. The argument <code>keep_order</code> defines for each given translation if the original ordering of the variable should be kept (ordering of the variable in the data frame <code>df</code>) or if the ordering given in the translation should be used. The argument <code>to_factor</code> defines for each translation, if the resulting labeled variable should be a factor variable (<code>to_factor = TRUE</code>) or a plain character variable (<code>to_factor = FALSE</code>). Besides the arguments <code>.data</code>, <code>dictionary</code> and <code>keep_order</code> all other arguments are label assignments. The names of the arguments (left hand side of the equations) define the column names under which the labeled variable should be stored. The right hand side of the assignments define the column which should be labeled (parameter name in the brackets) and which translation should be used (function name the left of the brackets). Hence, the statement above does the following things:</p>
 <ul>
 <li>
-<code>subject_new = sub(subject)</code>: The column <code>subject</code> in the data frame <code>df</code> is translated using the translation <code>sub</code> and the resulting factor is stored under the column name <code>subject_new</code>. Since the first entry in <code>keep_order</code> is <code>FALSE</code>, the ordering given in the translation <code>sub</code> is used for the labels.</li>
+<code>subject_new = sub(subject)</code>: The column <code>subject</code> in the data frame <code>df</code> is translated using the translation <code>sub</code> and the resulting factor is stored under the column name <code>subject_new</code>. Since the first entry in <code>keep_order</code> is <code>FALSE</code>, the ordering given in the translation <code>sub</code> is used for the labels. Since the first entry in <code>to_factor</code> is <code>TRUE</code> the resulting variable is a factor variable.</li>
 <li>
-<code>level = lev(level)</code>: The column <code>level</code> in the data frame <code>df</code> is translated using the translation <code>lev</code> and then overwritten by the resulting factor. Since the second entry in <code>keep_order</code> is <code>TRUE</code>, the labeled variable has the same ordering as the original column.</li>
+<code>level = lev(level)</code>: The column <code>level</code> in the data frame <code>df</code> is translated using the translation <code>lev</code> and then overwritten by the resulting factor. Since the second entry in <code>keep_order</code> is <code>TRUE</code>, the labeled variable has the same ordering as the original column. Since the second entry in <code>to_factor</code> is <code>TRUE</code> the resulting variable is a factor variable.</li>
 <li>
-<code>result = result(result)</code>: The column <code>result</code> in the data frame <code>df</code> is translated using the translation <code>result</code> and then overwritten by the resulting factor. Since the third entry in <code>keep_order</code> is <code>FALSE</code>, the ordering given in the translation is used for the labels.</li>
+<code>result = result(result)</code>: The column <code>result</code> in the data frame <code>df</code> is translated using the translation <code>result</code> and then overwritten by the resulting factor. Since the third entry in <code>keep_order</code> is <code>FALSE</code>, the ordering given in the translation is used for the labels. Since the third entry in <code>to_factor</code> is <code>FALSE</code> the resulting variable is a plain character variable.</li>
 </ul>
 <p>There are several abbreviations, in order to spare some writing:</p>
 <ul>
@@ -212,15 +218,16 @@
 <a class="sourceLine" id="cb4-4" data-line-number="4">  <span class="dt">translation =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"sub"</span>, <span class="st">"lev"</span>, <span class="st">"result"</span>),</a>
 <a class="sourceLine" id="cb4-5" data-line-number="5">  <span class="dt">col =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"subject"</span>, <span class="st">"level"</span>, <span class="st">"result"</span>),</a>
 <a class="sourceLine" id="cb4-6" data-line-number="6">  <span class="dt">col_new =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"subject_new"</span>, <span class="st">"level"</span>, <span class="st">"result"</span>),</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">  <span class="dt">keep_order =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">)</a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(df_new)</a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; 'data.frame':    12 obs. of  5 variables:</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt;  $ pupil_id   : int  1 1 1 2 2 2 3 3 3 4 ...</span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt;  $ subject    : chr  "eng" "mat" "gym" "eng" ...</span></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt;  $ level      : Factor w/ 2 levels "Advanced","Basic": 1 1 1 2 2 2 2 2 2 1 ...</span></a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt;  $ result     : Factor w/ 4 levels "Good","Passed",..: 1 2 2 4 2 4 1 NA 1 2 ...</span></a>
-<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt;  $ subject_new: Factor w/ 3 levels "English","Mathematics",..: 1 2 3 1 2 3 1 2 3 1 ...</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-7" data-line-number="7">  <span class="dt">keep_order =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>),</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">  <span class="dt">to_factor =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="ot">TRUE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">)</a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(df_new)</a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; 'data.frame':    12 obs. of  5 variables:</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt;  $ pupil_id   : int  1 1 1 2 2 2 3 3 3 4 ...</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt;  $ subject    : chr  "eng" "mat" "gym" "eng" ...</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt;  $ level      : Factor w/ 2 levels "Advanced","Basic": 1 1 1 2 2 2 2 2 2 1 ...</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt;  $ result     : chr  "Good" "Passed" "Passed" "Missed" ...</span></a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt;  $ subject_new: Factor w/ 3 levels "English","Mathematics",..: 1 2 3 1 2 3 1 2 3 1 ...</span></a></code></pre></div>
 <p>The arguments <code>.data</code> and <code>dictionary</code> define which data frame should be translated and which lama-dictionary should be used for the translation. The argument <code>keep_order</code> defines for each given translation if the original ordering of the variable should be kept (ordering of the variable in the data frame <code>df</code>) or if the ordering given in the translation should be used. The result is the same as before, when we used <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_translate()</a></code>.</p>
 </div>
 <div id="translate-all-possible-variables" class="section level2">
@@ -242,7 +249,73 @@
 <a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt;  $ level             : Factor w/ 2 levels "a","b": 1 1 1 2 2 2 2 2 2 1 ...</span></a>
 <a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">#&gt;  $ result            : num  1 2 2 NA 2 NA 1 0 1 2 ...</span></a>
 <a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">#&gt;  $ new_RESULT_labeled: Factor w/ 4 levels "Good","Passed",..: 1 2 2 4 2 4 1 NA 1 2 ...</span></a></code></pre></div>
-<p>In the above example, only the column name <code>result</code> matches the translation name and is therefore translated and stored under the column name <code>new_RESULT_labeled</code>. The name of the new columns is a transformation of the old column name (e.g. <code>result</code>), appending the strings given in the arguments <code>prefix</code> and <code>suffix</code> at the beginning and at the end of the column name. Before this string concatenation, the name of the original column can be transformed into a other string by using the string transformation function <code>fn_colname</code>. In our case <code>fn_colname</code> is given the function <code>toupper</code> which transforms all letters of the column name <code>result</code> to upper case <code>RESULT</code>. Contrary to <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_translate()</a></code>, the argument <code>keep_order</code> is just a single boolean flag. It defines whether the original order of all columns should be kept (<code>keep_order = TRUE</code>) or if the order in the translation vector should be used.</p>
+<p>In the above example, only the column name <code>result</code> matches the translation name and is therefore translated and stored under the column name <code>new_RESULT_labeled</code>. The name of the new columns is a transformation of the old column name (e.g. <code>result</code>), appending the strings given in the arguments <code>prefix</code> and <code>suffix</code> at the beginning and at the end of the column name. Before this string concatenation, the name of the original column can be transformed into a other string by using the string transformation function <code>fn_colname</code>. In our case <code>fn_colname</code> is given the function <code>toupper</code> which transforms all letters of the column name <code>result</code> to upper case <code>RESULT</code>. Contrary to <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_translate()</a></code>, the argument <code>keep_order</code> is just a single boolean flag. It defines whether the original order of all columns should be kept (<code>keep_order = TRUE</code>) or if the order in the translation vector should be used. Like in the case of <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_translate()</a></code>, it is possible to pass an argument <code>to_factor = FALSE</code> <code>lama_translate_all</code> in order to define that all resulting labeled variables shall be stored as plain character vectors.</p>
+</div>
+<div id="translate-vectors" class="section level2">
+<h2 class="hasAnchor">
+<a href="#translate-vectors" class="anchor"></a>Translate vectors</h2>
+<p>So far, we only translated variables in data frames, but it is also possible to use <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_translate()</a></code> and <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_translate_()</a></code> in order to translate atomic vectors (character, logical, numeric) and factors.</p>
+<p>Using <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_translate()</a></code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">vec &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"eng"</span>, <span class="st">"eng"</span>, <span class="st">"gym"</span>, <span class="st">"mat"</span>)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">vec_labeled &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_translate</a></span>(vec, dict, sub)</a></code></pre></div>
+<p>Using <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_translate_()</a></code>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">vec_labeled &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_translate_</a></span>(vec, dict, <span class="st">"sub"</span>)</a></code></pre></div>
+</div>
+<div id="turn-labeled-variables-into-factors" class="section level2">
+<h2 class="hasAnchor">
+<a href="#turn-labeled-variables-into-factors" class="anchor"></a>Turn labeled variables into factors</h2>
+<p>Sometimes, you already have labeled variables (character or factor variables, maybe produced by <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_translate()</a></code> with argument <code>to_factor = FALSE</code>) and you want to turn them into factor variables with a desired ordering. In this case the functions <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_to_factor()</a></code>, <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_to_factor_()</a></code> <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate_all.html">lama_to_factor_all()</a></code> are right choices.</p>
+<p>Let <code>df_non_factor</code> a data frame holding the right labels, but no factor variables (created with <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate_all.html">lama_translate_all()</a></code> using <code>to_factor = FALSE</code>):</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">dict_new &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/labelmachine/man/lama_rename.html">lama_rename</a></span>(dict, <span class="dt">subject =</span> sub, <span class="dt">level =</span> lev)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">df_non_factor &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate_all.html">lama_translate_all</a></span>(df, dict_new, <span class="dt">to_factor =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(df_non_factor)</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt; 'data.frame':    12 obs. of  4 variables:</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt;  $ pupil_id: int  1 1 1 2 2 2 3 3 3 4 ...</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">#&gt;  $ subject : chr  "English" "Mathematics" "Gymnastics" "English" ...</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt;  $ level   : chr  "Advanced" "Advanced" "Advanced" "Basic" ...</span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt;  $ result  : chr  "Good" "Passed" "Passed" "Missed" ...</span></a></code></pre></div>
+<p>Turning variables into factors with <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_to_factor()</a></code>:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">df_factor &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_to_factor</a></span>(</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">  <span class="dt">.data =</span> df_non_factor,</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">  <span class="dt">dictionary =</span> dict,</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">  <span class="dt">subject_new =</span> <span class="kw"><a href="https://rdrr.io/r/base/grep.html">sub</a></span>(subject),</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">  <span class="dt">level =</span> <span class="kw">lev</span>(level),</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">  <span class="dt">result =</span> <span class="kw">result</span>(result)</a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">)</a>
+<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(df_factor)</a>
+<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co">#&gt; 'data.frame':    12 obs. of  5 variables:</span></a>
+<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="co">#&gt;  $ pupil_id   : int  1 1 1 2 2 2 3 3 3 4 ...</span></a>
+<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">#&gt;  $ subject    : chr  "English" "Mathematics" "Gymnastics" "English" ...</span></a>
+<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="co">#&gt;  $ level      : Factor w/ 2 levels "Basic","Advanced": 2 2 2 1 1 1 1 1 1 2 ...</span></a>
+<a class="sourceLine" id="cb9-13" data-line-number="13"><span class="co">#&gt;  $ result     : Factor w/ 4 levels "Good","Passed",..: 1 2 2 4 2 4 1 NA 1 2 ...</span></a>
+<a class="sourceLine" id="cb9-14" data-line-number="14"><span class="co">#&gt;  $ subject_new: Factor w/ 3 levels "English","Mathematics",..: 1 2 3 1 2 3 1 2 3 1 ...</span></a></code></pre></div>
+<p>The function <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_to_factor()</a></code> allows the same abbreviations as <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_translate()</a></code>. It can also be used on factor variables and there is also a <code>keep_order</code> argument like in the case of <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_translate()</a></code>. Furthermore, the functions <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_to_factor()</a></code> and <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_to_factor_()</a></code> can both be applied to atomic vectors or plain factors like in the case of <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_translate()</a></code>.</p>
+<p>Turning variables in a data frame into factors with <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_to_factor_()</a></code>:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">df_factor &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate.html">lama_to_factor_</a></span>(</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">  <span class="dt">.data =</span> df_non_factor,</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">  <span class="dt">dictionary =</span> dict,</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">  <span class="dt">translation =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"sub"</span>, <span class="st">"lev"</span>, <span class="st">"result"</span>),</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">  <span class="dt">col =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"subject"</span>, <span class="st">"level"</span>, <span class="st">"result"</span>)</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">)</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(df_factor)</a>
+<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="co">#&gt; 'data.frame':    12 obs. of  4 variables:</span></a>
+<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="co">#&gt;  $ pupil_id: int  1 1 1 2 2 2 3 3 3 4 ...</span></a>
+<a class="sourceLine" id="cb10-10" data-line-number="10"><span class="co">#&gt;  $ subject : Factor w/ 3 levels "English","Mathematics",..: 1 2 3 1 2 3 1 2 3 1 ...</span></a>
+<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="co">#&gt;  $ level   : Factor w/ 2 levels "Basic","Advanced": 2 2 2 1 1 1 1 1 1 2 ...</span></a>
+<a class="sourceLine" id="cb10-12" data-line-number="12"><span class="co">#&gt;  $ result  : Factor w/ 4 levels "Good","Passed",..: 1 2 2 4 2 4 1 NA 1 2 ...</span></a></code></pre></div>
+<p>Since the argument <code>col_new</code> was omitted, the variable names (<code>subject</code>, <code>level</code> and <code>result</code>) were overwritten.</p>
+<p>Turning all possible variables in a data frame into factors with <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate_all.html">lama_to_factor_all()</a></code>:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">df_factor &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/labelmachine/man/lama_translate_all.html">lama_to_factor_all</a></span>(</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">  <span class="dt">.data =</span> df_non_factor,</a>
+<a class="sourceLine" id="cb11-3" data-line-number="3">  <span class="dt">dictionary =</span> dict</a>
+<a class="sourceLine" id="cb11-4" data-line-number="4">)</a>
+<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(df_factor)</a>
+<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="co">#&gt; 'data.frame':    12 obs. of  4 variables:</span></a>
+<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="co">#&gt;  $ pupil_id: int  1 1 1 2 2 2 3 3 3 4 ...</span></a>
+<a class="sourceLine" id="cb11-8" data-line-number="8"><span class="co">#&gt;  $ subject : chr  "English" "Mathematics" "Gymnastics" "English" ...</span></a>
+<a class="sourceLine" id="cb11-9" data-line-number="9"><span class="co">#&gt;  $ level   : chr  "Advanced" "Advanced" "Advanced" "Basic" ...</span></a>
+<a class="sourceLine" id="cb11-10" data-line-number="10"><span class="co">#&gt;  $ result  : Factor w/ 4 levels "Good","Passed",..: 1 2 2 4 2 4 1 NA 1 2 ...</span></a></code></pre></div>
+<p>Since the arguments <code>prefix</code>, <code>suffix</code> and <code>fn_colname</code> were omitted, the variable names (<code>subject</code>, <code>level</code> and <code>result</code>) were overwritten.</p>
 </div>
 <div id="further-reading" class="section level2">
 <h2 class="hasAnchor">
@@ -261,9 +334,12 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#translate-using-non-standard-evaluation">Translate using non-standard evaluation</a></li>
+<li><a href="#the-example-data-frame-and-lama-dictionary">The example data frame and lama-dictionary</a></li>
+      <li><a href="#translate-using-non-standard-evaluation">Translate using non-standard evaluation</a></li>
       <li><a href="#translate-using-standard-evaluation">Translate using standard evaluation</a></li>
       <li><a href="#translate-all-possible-variables">Translate all possible variables</a></li>
+      <li><a href="#translate-vectors">Translate vectors</a></li>
+      <li><a href="#turn-labeled-variables-into-factors">Turn labeled variables into factors</a></li>
       <li><a href="#further-reading">Further reading</a></li>
       </ul>
 </div>

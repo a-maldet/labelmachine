@@ -149,7 +149,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>translate_df</span>(<span class='no'>.data</span>, <span class='no'>dictionary</span>, <span class='no'>translation</span>, <span class='no'>col</span>, <span class='no'>col_new</span>, <span class='no'>keep_order</span>,
-  <span class='no'>err_handler</span>)</pre>
+  <span class='no'>to_factor</span>, <span class='no'>is_translated</span>, <span class='no'>err_handler</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -196,6 +196,27 @@ to each variable translation there is a corresponding boolean configuration.
 If a translated variable in the data.frame is a factor variable,
 and the corresponding boolean configuration is set to <code>TRUE</code>, then the
 the order of the original factor variable will be preserved.</p></td>
+    </tr>
+    <tr>
+      <th>to_factor</th>
+      <td><p>A boolean vector of length one or the same length as the
+number of translations. If the vector has length one, then the same
+configuration is applied to all variable translations. If the vector has
+the same length as the number of arguments in <code>...</code>, then the
+to each variable translation there is a corresponding boolean configuration.
+If <code>to_factor</code> is <code>TRUE</code>, then the resulting labeled
+variable will be a factor. If <code>to_factor</code> is set to <code>FALSE</code>, then
+the resulting labeled variable will be a plain character vector.</p></td>
+    </tr>
+    <tr>
+      <th>is_translated</th>
+      <td><p>A boolean vector of length one or the same length as the
+number of translations. If the vector has length one, then the same
+configuration is applied to all variable translations.
+If <code>is_translated = TRUE</code>, then the original variable is a character
+vector holding the right labels (character strings).
+In this case, the labels are left unchanged, but the variables are turned
+into factors with order given in the selected translations.</p></td>
     </tr>
     <tr>
       <th>err_handler</th>

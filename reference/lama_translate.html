@@ -51,11 +51,22 @@ and convert one or more of its categorical variables
 (not necessarily a factor variable) into factor variables with new labels.
 The function lama_translate() uses non-standard evaluation, whereas
 lama_translate_() is the standard evaluation alternative.
-The functions lama_translate() and lama_translate_() require different
-arguments, depending on the data type passed into argument .data.
-If .data is of type character, logical, numeric or factor, then
-the arguments col and col_new are omitted, since those are only
-necessary in the case of data frames." />
+The functions lama_to_factor() and lama_to_factor_() are very similar
+to the functions lama_translate() and lama_translate_(), but instead
+of assigning new label strings to values, it is assumed that the variables
+are character vectors or factors, but need to be turned into factors
+with the order given in the translations:
+lama_translate() and lama_translate_(): Assign new labels to a variable
+and turn it into a factor variable with the order given in the corresponding
+translation (keep_order = FALSE) or in the same order as the original
+variable (keep_order = TRUE).
+lama_to_factor() and lama_to_factor_(): The variable is a character
+vector or a factor already holding the right label strings. The variables
+are turned into a factor variable with the order given in the corresponding
+translation (keep_order = FALSE) or in the same order as the original
+variable (keep_order = TRUE).
+
+" />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -161,32 +172,66 @@ and convert one or more of its categorical variables
 (not necessarily a factor variable) into factor variables with new labels.
 The function <code>lama_translate()</code> uses non-standard evaluation, whereas
 <code>lama_translate_()</code> is the standard evaluation alternative.
-The functions <code>lama_translate()</code> and <code>lama_translate_()</code> require different
-arguments, depending on the data type passed into argument <code>.data</code>.
-If <code>.data</code> is of type character, logical, numeric or factor, then
-the arguments <code>col</code> and <code>col_new</code> are omitted, since those are only
-necessary in the case of data frames.</p>
+The functions <code>lama_to_factor()</code> and <code>lama_to_factor_()</code> are very similar
+to the functions <code>lama_translate()</code> and <code>lama_translate_()</code>, but instead
+of assigning new label strings to values, it is assumed that the variables
+are character vectors or factors, but need to be turned into factors
+with the order given in the translations:</p><ul>
+<li><p><code>lama_translate()</code> and <code>lama_translate_()</code>: Assign new labels to a variable
+and turn it into a factor variable with the order given in the corresponding
+translation (<code>keep_order = FALSE</code>) or in the same order as the original
+variable (<code>keep_order = TRUE</code>).</p></li>
+<li><p><code>lama_to_factor()</code> and <code>lama_to_factor_()</code>: The variable is a character
+vector or a factor already holding the right label strings. The variables
+are turned into a factor variable with the order given in the corresponding
+translation (<code>keep_order = FALSE</code>) or in the same order as the original
+variable (<code>keep_order = TRUE</code>).</p></li>
+</ul>
+
     </div>
 
-    <pre class="usage"><span class='fu'>lama_translate</span>(<span class='no'>.data</span>, <span class='no'>dictionary</span>, <span class='no'>...</span>, <span class='kw'>keep_order</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+    <pre class="usage"><span class='fu'>lama_translate</span>(<span class='no'>.data</span>, <span class='no'>dictionary</span>, <span class='no'>...</span>, <span class='kw'>keep_order</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>to_factor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># S3 method for data.frame</span>
 <span class='fu'>lama_translate</span>(<span class='no'>.data</span>, <span class='no'>dictionary</span>, <span class='no'>...</span>,
-  <span class='kw'>keep_order</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>keep_order</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>to_factor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>lama_translate</span>(<span class='no'>.data</span>, <span class='no'>dictionary</span>, <span class='no'>...</span>,
-  <span class='kw'>keep_order</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>keep_order</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>to_factor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>lama_translate_</span>(<span class='no'>.data</span>, <span class='no'>dictionary</span>, <span class='no'>translation</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='no'>translation</span>,
-  <span class='kw'>col_new</span> <span class='kw'>=</span> <span class='no'>col</span>, <span class='kw'>keep_order</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+  <span class='kw'>col_new</span> <span class='kw'>=</span> <span class='no'>col</span>, <span class='kw'>keep_order</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>to_factor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for data.frame</span>
 <span class='fu'>lama_translate_</span>(<span class='no'>.data</span>, <span class='no'>dictionary</span>, <span class='no'>translation</span>,
-  <span class='kw'>col</span> <span class='kw'>=</span> <span class='no'>translation</span>, <span class='kw'>col_new</span> <span class='kw'>=</span> <span class='no'>col</span>, <span class='kw'>keep_order</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+  <span class='kw'>col</span> <span class='kw'>=</span> <span class='no'>translation</span>, <span class='kw'>col_new</span> <span class='kw'>=</span> <span class='no'>col</span>, <span class='kw'>keep_order</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>to_factor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>lama_translate_</span>(<span class='no'>.data</span>, <span class='no'>dictionary</span>, <span class='no'>translation</span>, <span class='no'>...</span>,
+  <span class='kw'>keep_order</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>to_factor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='fu'>lama_to_factor</span>(<span class='no'>.data</span>, <span class='no'>dictionary</span>, <span class='no'>...</span>, <span class='kw'>keep_order</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='co'># S3 method for data.frame</span>
+<span class='fu'>lama_to_factor</span>(<span class='no'>.data</span>, <span class='no'>dictionary</span>, <span class='no'>...</span>,
+  <span class='kw'>keep_order</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='co'># S3 method for default</span>
+<span class='fu'>lama_to_factor</span>(<span class='no'>.data</span>, <span class='no'>dictionary</span>, <span class='no'>...</span>,
+  <span class='kw'>keep_order</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>lama_to_factor_</span>(<span class='no'>.data</span>, <span class='no'>dictionary</span>, <span class='no'>translation</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='no'>translation</span>,
+  <span class='kw'>col_new</span> <span class='kw'>=</span> <span class='no'>col</span>, <span class='kw'>keep_order</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for data.frame</span>
+<span class='fu'>lama_to_factor_</span>(<span class='no'>.data</span>, <span class='no'>dictionary</span>, <span class='no'>translation</span>,
+  <span class='kw'>col</span> <span class='kw'>=</span> <span class='no'>translation</span>, <span class='kw'>col_new</span> <span class='kw'>=</span> <span class='no'>col</span>, <span class='kw'>keep_order</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for default</span>
+<span class='fu'>lama_to_factor_</span>(<span class='no'>.data</span>, <span class='no'>dictionary</span>, <span class='no'>translation</span>, <span class='no'>...</span>,
   <span class='kw'>keep_order</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -203,12 +248,13 @@ variables.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Only used by <code>lama_translate()</code>.
+      <td><p>Only used by <code>lama_translate()</code> and <code>lama_to_factor()</code>.
 Each argument in <code>...</code> is an unquoted expression and defines a translation.
 Use unquoted
 arguments that tell which translation should be applied to which column and
 which column name the relabeled variable should be assigned to. E.g.
-<code>lama_translate(.data, dict, Y1 = TRANS1(X1), Y2 = TRANS2(Y2))</code>
+<code>lama_translate(.data, dict, Y1 = TRANS1(X1), Y2 = TRANS2(Y2))</code> and
+<code>lama_to_factor(.data, dict, Y1 = TRANS1(X1), Y2 = TRANS2(Y2))</code> and
 to apply the translations <code>TRANS1</code> and <code>TRANS2</code> to the data.frame
 columns <code>X1</code> and <code>X2</code> and save the new labeled variables under
 the column names <code>Y1</code> and <code>Y2</code>.
@@ -231,6 +277,17 @@ to each variable translation there is a corresponding boolean configuration.
 If a translated variable in the data.frame is a factor variable,
 and the corresponding boolean configuration is set to <code>TRUE</code>, then the
 the order of the original factor variable will be preserved.</p></td>
+    </tr>
+    <tr>
+      <th>to_factor</th>
+      <td><p>A boolean vector of length one or the same length as the
+number of translations. If the vector has length one, then the same
+configuration is applied to all variable translations. If the vector has
+the same length as the number of arguments in <code>...</code>, then the
+to each variable translation there is a corresponding boolean configuration.
+If <code>to_factor</code> is <code>TRUE</code>, then the resulting labeled
+variable will be a factor. If <code>to_factor</code> is set to <code>FALSE</code>, then
+the resulting labeled variable will be a plain character vector.</p></td>
     </tr>
     <tr>
       <th>translation</th>
@@ -261,6 +318,19 @@ names are the same as the column names of the original variables.</p></td>
 
     <p>An extended data.frame, that has a factor variable holding the
 assigned labels.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The functions <code>lama_translate()</code>, <code>lama_translate_()</code>, <code>lama_to_factor()</code>
+and <code>lama_to_factor_()</code> require different
+arguments, depending on the data type passed into argument <code>.data</code>.
+If <code>.data</code> is of type character, logical, numeric or factor, then
+the arguments <code>col</code> and <code>col_new</code> are omitted, since those are only
+necessary in the case of data frames.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code>lama_translate_all()</code>, <code>lama_to_factor_all()</code>, <code>new_lama_dictionary()</code>,
+<code>as.lama_dictionary()</code>, <code>lama_rename()</code>, <code>lama_select()</code>, <code>lama_mutate()</code>,
+<code>lama_merge()</code>, <code>lama_read()</code>, <code>lama_write()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>  <span class='co'># initialize lama_dictinoary</span>
@@ -321,7 +391,21 @@ assigned labels.</p>
 #&gt;  $ res        : num  1 2 3 2 2
 #&gt;  $ subject_new: Factor w/ 2 levels "English","Mathematics": 1 2 2 1 1
 #&gt;  $ res_new    : Factor w/ 3 levels "Very good","Good",..: 1 2 3 2 2</div><div class='input'>
-  <span class='co'>## Example-3: Usage of 'lama_translate' for atomic vectors</span>
+  <span class='co'>## Example-4: Usage of 'lama_translate' for data frames labeling as character vectors</span>
+  <span class='co'># (apply translation 'subject' to column 'subject' and</span>
+  <span class='co'># save it as a character vector to column 'subject_new')</span>
+  <span class='no'>df_new_overwritten</span> <span class='kw'>&lt;-</span> <span class='fu'>lama_translate</span>(
+    <span class='no'>df</span>,
+    <span class='no'>dict</span>,
+    <span class='kw'>subject_new</span> <span class='kw'>=</span> <span class='no'>subject</span>,
+    <span class='kw'>to_factor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  )
+  <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>df_new_overwritten</span>)</div><div class='output co'>#&gt; 'data.frame':	5 obs. of  4 variables:
+#&gt;  $ pupil      : num  1 1 2 2 3
+#&gt;  $ subject    : Factor w/ 2 levels "en","ma": 1 2 2 1 1
+#&gt;  $ res        : num  1 2 3 2 2
+#&gt;  $ subject_new: Factor w/ 2 levels "English","Mathematics": 1 2 2 1 1</div><div class='input'>
+  <span class='co'>## Example-5: Usage of 'lama_translate' for atomic vectors</span>
   <span class='no'>sub</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ma"</span>, <span class='st'>"en"</span>, <span class='st'>"ma"</span>)
   <span class='no'>sub_new</span> <span class='kw'>&lt;-</span> <span class='no'>df_new_overwritten</span> <span class='kw'>&lt;-</span> <span class='fu'>lama_translate</span>(
     <span class='no'>sub</span>,
@@ -329,7 +413,7 @@ assigned labels.</p>
     <span class='no'>subject</span>
   )
   <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>sub_new</span>)</div><div class='output co'>#&gt;  Factor w/ 2 levels "English","Mathematics": 2 1 2</div><div class='input'>
-  <span class='co'>## Example-5: Usage of 'lama_translate' for factors</span>
+  <span class='co'>## Example-6: Usage of 'lama_translate' for factors</span>
   <span class='no'>sub</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ma"</span>, <span class='st'>"en"</span>, <span class='st'>"ma"</span>), <span class='kw'>levels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ma"</span>, <span class='st'>"en"</span>))
   <span class='no'>sub_new</span> <span class='kw'>&lt;-</span> <span class='no'>df_new_overwritten</span> <span class='kw'>&lt;-</span> <span class='fu'>lama_translate</span>(
     <span class='no'>sub</span>,
@@ -338,7 +422,7 @@ assigned labels.</p>
     <span class='kw'>keep_order</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
   )
   <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>sub_new</span>)</div><div class='output co'>#&gt;  Factor w/ 2 levels "Mathematics",..: 1 2 1</div><div class='input'>
-  <span class='co'>## Example-6: Usage of 'lama_translate_' for data frames</span>
+  <span class='co'>## Example-7: Usage of 'lama_translate_' for data frames</span>
   <span class='co'># (apply translation 'subject' to column 'subject' and save it to column 'subject_new')</span>
   <span class='co'># (apply translation 'result' to column 'res' and save it to column 'res_new')</span>
   <span class='no'>df_new</span> <span class='kw'>&lt;-</span> <span class='fu'>lama_translate_</span>(
@@ -354,7 +438,24 @@ assigned labels.</p>
 #&gt;  $ res        : num  1 2 3 2 2
 #&gt;  $ subject_new: Factor w/ 2 levels "English","Mathematics": 1 2 2 1 1
 #&gt;  $ res_new    : Factor w/ 3 levels "Very good","Good",..: 1 2 3 2 2</div><div class='input'>
-  <span class='co'>## Example-7: Usage of 'lama_translate_' for atomic vectors</span>
+  <span class='co'>## Example-8: Usage of 'lama_translate_' for data frames and store as character vector</span>
+  <span class='co'># (apply translation 'subject' to column 'subject' and save it to column 'subject_new')</span>
+  <span class='co'># (apply translation 'result' to column 'res' and save it to column 'res_new')</span>
+  <span class='no'>df_new</span> <span class='kw'>&lt;-</span> <span class='fu'>lama_translate_</span>(
+    <span class='no'>df</span>,
+    <span class='no'>dict</span>,
+    <span class='kw'>translation</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"subject"</span>, <span class='st'>"result"</span>),
+    <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"subject"</span>, <span class='st'>"res"</span>),
+    <span class='kw'>col_new</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"subject_new"</span>, <span class='st'>"res_new"</span>),
+    <span class='kw'>to_factor</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>FALSE</span>, <span class='fl'>FALSE</span>)
+  )
+  <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>df_new</span>)</div><div class='output co'>#&gt; 'data.frame':	5 obs. of  5 variables:
+#&gt;  $ pupil      : num  1 1 2 2 3
+#&gt;  $ subject    : Factor w/ 2 levels "en","ma": 1 2 2 1 1
+#&gt;  $ res        : num  1 2 3 2 2
+#&gt;  $ subject_new: chr  "English" "Mathematics" "Mathematics" "English" ...
+#&gt;  $ res_new    : chr  "Very good" "Good" "Not so good" "Good" ...</div><div class='input'>
+  <span class='co'>## Example-9: Usage of 'lama_translate_' for atomic vectors</span>
   <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>2</span>)
   <span class='no'>res_new</span> <span class='kw'>&lt;-</span> <span class='no'>df_new_overwritten</span> <span class='kw'>&lt;-</span> <span class='fu'>lama_translate_</span>(
     <span class='no'>res</span>,
@@ -362,7 +463,7 @@ assigned labels.</p>
     <span class='st'>"result"</span>
   )
   <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>res_new</span>)</div><div class='output co'>#&gt;  Factor w/ 3 levels "Very good","Good",..: 1 2 1 3 1 2</div><div class='input'>
-  <span class='co'>## Example-8: Usage of 'lama_translate_' for factors</span>
+  <span class='co'>## Example-10: Usage of 'lama_translate_' for factors</span>
   <span class='no'>sub</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ma"</span>, <span class='st'>"en"</span>, <span class='st'>"ma"</span>), <span class='kw'>levels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ma"</span>, <span class='st'>"en"</span>))
   <span class='no'>sub_new</span> <span class='kw'>&lt;-</span> <span class='no'>df_new_overwritten</span> <span class='kw'>&lt;-</span> <span class='fu'>lama_translate_</span>(
     <span class='no'>sub</span>,
@@ -370,13 +471,99 @@ assigned labels.</p>
     <span class='st'>"subject"</span>,
     <span class='kw'>keep_order</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
   )
-  <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>sub_new</span>)</div><div class='output co'>#&gt;  Factor w/ 2 levels "Mathematics",..: 1 2 1</div></pre>
+  <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>sub_new</span>)</div><div class='output co'>#&gt;  Factor w/ 2 levels "Mathematics",..: 1 2 1</div><div class='input'>  <span class='co'># the data frame which holds the right labels, but no factors</span>
+  <span class='no'>df_translated</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
+    <span class='kw'>pupil</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='fl'>3</span>),
+    <span class='kw'>subject</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"English"</span>, <span class='st'>"Mathematics"</span>, <span class='st'>"Mathematics"</span>, <span class='st'>"English"</span>, <span class='st'>"English"</span>),
+    <span class='kw'>res</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Very good"</span>, <span class='st'>"Good"</span>, <span class='st'>"Not so good"</span>, <span class='st'>"Good"</span>, <span class='st'>"Good"</span>)
+  )
+
+  <span class='co'>## Example-11: Usage of 'lama_to_factor' for data frames</span>
+  <span class='co'>##            Full length assignment</span>
+  <span class='co'># (apply order of translation 'subject' to column 'subject' and save it to column 'subject_new')</span>
+  <span class='co'># (apply order of translation 'result' to column 'res' and save it to column 'res_new')</span>
+  <span class='no'>df_new</span> <span class='kw'>&lt;-</span> <span class='fu'>lama_to_factor</span>(
+    <span class='no'>df_translated</span>,
+    <span class='no'>dict</span>,
+    <span class='kw'>sub_new</span> <span class='kw'>=</span> <span class='fu'>subject</span>(<span class='no'>subject</span>),
+    <span class='kw'>res_new</span> <span class='kw'>=</span> <span class='fu'>result</span>(<span class='no'>res</span>)
+  )
+  <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>df_new</span>)</div><div class='output co'>#&gt; 'data.frame':	5 obs. of  5 variables:
+#&gt;  $ pupil  : num  1 1 2 2 3
+#&gt;  $ subject: Factor w/ 2 levels "English","Mathematics": 1 2 2 1 1
+#&gt;  $ res    : Factor w/ 3 levels "Good","Not so good",..: 3 1 2 1 1
+#&gt;  $ sub_new: Factor w/ 2 levels "English","Mathematics": 1 2 2 1 1
+#&gt;  $ res_new: Factor w/ 3 levels "Very good","Good",..: 1 2 3 2 2</div><div class='input'>
+  <span class='co'>## Example-12: Usage of 'lama_to_factor' for data frames</span>
+  <span class='co'>##            Abbreviation overwriting original columns</span>
+  <span class='co'># (apply order of translation 'subject' to column 'subject' and save it to column 'subject')</span>
+  <span class='co'># (apply order of translation 'result' to column 'res' and save it to column 'res')</span>
+  <span class='no'>df_new_overwritten</span> <span class='kw'>&lt;-</span> <span class='fu'>lama_to_factor</span>(
+    <span class='no'>df_translated</span>,
+    <span class='no'>dict</span>,
+    <span class='fu'>subject</span>(<span class='no'>subject</span>),
+    <span class='fu'>result</span>(<span class='no'>res</span>)
+  )
+  <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>df_new_overwritten</span>)</div><div class='output co'>#&gt; 'data.frame':	5 obs. of  3 variables:
+#&gt;  $ pupil  : num  1 1 2 2 3
+#&gt;  $ subject: Factor w/ 2 levels "English","Mathematics": 1 2 2 1 1
+#&gt;  $ res    : Factor w/ 3 levels "Very good","Good",..: 1 2 3 2 2</div><div class='input'>
+  <span class='co'>## Example-13: Usage of 'lama_to_factor' for data frames</span>
+  <span class='co'>##            Abbreviation if `translation_name == column_name`</span>
+  <span class='co'># (apply order of translation 'subject' to column 'subject' and save it to column 'subject_new')</span>
+  <span class='co'># (apply order of translation 'result' to column 'res' and save it to column 'res_new')</span>
+  <span class='no'>df_new_overwritten</span> <span class='kw'>&lt;-</span> <span class='fu'>lama_to_factor</span>(
+    <span class='no'>df_translated</span>,
+    <span class='no'>dict</span>,
+    <span class='kw'>subject_new</span> <span class='kw'>=</span> <span class='no'>subject</span>,
+    <span class='kw'>res_new</span> <span class='kw'>=</span> <span class='fu'>result</span>(<span class='no'>res</span>)
+  )
+  <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>df_new_overwritten</span>)</div><div class='output co'>#&gt; 'data.frame':	5 obs. of  5 variables:
+#&gt;  $ pupil      : num  1 1 2 2 3
+#&gt;  $ subject    : Factor w/ 2 levels "English","Mathematics": 1 2 2 1 1
+#&gt;  $ res        : Factor w/ 3 levels "Good","Not so good",..: 3 1 2 1 1
+#&gt;  $ subject_new: Factor w/ 2 levels "English","Mathematics": 1 2 2 1 1
+#&gt;  $ res_new    : Factor w/ 3 levels "Very good","Good",..: 1 2 3 2 2</div><div class='input'>
+  <span class='co'>## Example-14: Usage of 'lama_translate' for atomic vectors</span>
+  <span class='no'>var</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Mathematics"</span>, <span class='st'>"English"</span>, <span class='st'>"Mathematics"</span>)
+  <span class='no'>var_new</span> <span class='kw'>&lt;-</span> <span class='fu'>lama_to_factor</span>(
+    <span class='no'>var</span>,
+    <span class='no'>dict</span>,
+    <span class='no'>subject</span>
+  )
+  <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>var_new</span>)</div><div class='output co'>#&gt;  Factor w/ 2 levels "English","Mathematics": 2 1 2</div><div class='input'>
+  <span class='co'>## Example-15: Usage of 'lama_to_factor_' for data frames</span>
+  <span class='co'># (apply order of translation 'subject' to column 'subject' and save it to column 'subject_new')</span>
+  <span class='co'># (apply order of translation 'result' to column 'res' and save it to column 'res_new')</span>
+  <span class='no'>df_new</span> <span class='kw'>&lt;-</span> <span class='fu'>lama_to_factor_</span>(
+    <span class='no'>df_translated</span>,
+    <span class='no'>dict</span>,
+    <span class='kw'>translation</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"subject"</span>, <span class='st'>"result"</span>),
+    <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"subject"</span>, <span class='st'>"res"</span>),
+    <span class='kw'>col_new</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"subject_new"</span>, <span class='st'>"res_new"</span>)
+  )
+  <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>df_new</span>)</div><div class='output co'>#&gt; 'data.frame':	5 obs. of  5 variables:
+#&gt;  $ pupil      : num  1 1 2 2 3
+#&gt;  $ subject    : Factor w/ 2 levels "English","Mathematics": 1 2 2 1 1
+#&gt;  $ res        : Factor w/ 3 levels "Good","Not so good",..: 3 1 2 1 1
+#&gt;  $ subject_new: Factor w/ 2 levels "English","Mathematics": 1 2 2 1 1
+#&gt;  $ res_new    : Factor w/ 3 levels "Very good","Good",..: 1 2 3 2 2</div><div class='input'>
+  <span class='co'>## Example-16: Usage of 'lama_to_factor_' for atomic vectors</span>
+  <span class='no'>var</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Very good"</span>, <span class='st'>"Good"</span>, <span class='st'>"Good"</span>)
+  <span class='no'>var_new</span> <span class='kw'>&lt;-</span> <span class='fu'>lama_to_factor_</span>(
+    <span class='no'>var</span>,
+    <span class='no'>dict</span>,
+    <span class='st'>"result"</span>
+  )
+  <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>var_new</span>)</div><div class='output co'>#&gt;  Factor w/ 3 levels "Very good","Good",..: 1 2 2</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
+      <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

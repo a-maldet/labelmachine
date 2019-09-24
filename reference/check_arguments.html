@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Select multiple variable translations and create a new lama_dictionary object — lama_select • labelmachine</title>
+<title>Function that applies some general checks to the arguments of <code>lama_translate()</code> and <code>lama_translate_()</code> — check_arguments • labelmachine</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,12 +44,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Select multiple variable translations and create a new lama_dictionary object — lama_select" />
-<meta property="og:description" content="The functions lama_select() and lama_select_() pick one or more
-variable translations from a lama_dictionary class object
-and create a new lama_dictionary class object.
-The function lama_select() uses non-standard evaluation, whereas
-lama_select_() is the standard evaluation alternative." />
+<meta property="og:title" content="Function that applies some general checks to the arguments of <code>lama_translate()</code> and <code>lama_translate_()</code> — check_arguments" />
+<meta property="og:description" content="Function that applies some general checks to the arguments of lama_translate() and lama_translate_()" />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -143,101 +139,72 @@ lama_select_() is the standard evaluation alternative." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Select multiple variable translations and create a new lama_dictionary object</h1>
-    <small class="dont-index">Source: <a href='https://github.com/a-maldet/labelmachine/blob/master/R/lama_select.R'><code>R/lama_select.R</code></a></small>
-    <div class="hidden name"><code>lama_select.Rd</code></div>
+    <h1>Function that applies some general checks to the arguments of <code>lama_translate()</code> and <code>lama_translate_()</code></h1>
+    <small class="dont-index">Source: <a href='https://github.com/a-maldet/labelmachine/blob/master/R/lama_translate.R'><code>R/lama_translate.R</code></a></small>
+    <div class="hidden name"><code>check_arguments.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The functions <code>lama_select()</code> and <code>lama_select_()</code> pick one or more
-variable translations from a lama_dictionary class object
-and create a new lama_dictionary class object.
-The function <code>lama_select()</code> uses non-standard evaluation, whereas
-<code>lama_select_()</code> is the standard evaluation alternative.</p>
+    <p>Function that applies some general checks to the arguments of <code>lama_translate()</code> and <code>lama_translate_()</code></p>
     </div>
 
-    <pre class="usage"><span class='fu'>lama_select</span>(<span class='no'>.data</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for lama_dictionary</span>
-<span class='fu'>lama_select</span>(<span class='no'>.data</span>, <span class='no'>...</span>)
-
-<span class='fu'>lama_select_</span>(<span class='no'>.data</span>, <span class='no'>key</span>)
-
-<span class='co'># S3 method for lama_dictionary</span>
-<span class='fu'>lama_select_</span>(<span class='no'>.data</span>, <span class='no'>key</span>)</pre>
+    <pre class="usage"><span class='fu'>check_arguments</span>(<span class='no'>.data</span>, <span class='no'>dictionary</span>, <span class='no'>col_new</span>, <span class='no'>keep_order</span>, <span class='no'>to_factor</span>,
+  <span class='no'>err_handler</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>.data</th>
-      <td><p>A lama_dictionary object, holding the variable translations</p></td>
+      <td><p>Either a data frame, a factor or an atomic vector.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>One or more unquoted translation names separated by commas.</p></td>
+      <th>dictionary</th>
+      <td><p>A lama_dictionary object, holding the translations for various
+variables.</p></td>
     </tr>
     <tr>
-      <th>key</th>
-      <td><p>A character vector holding the names of the variable translations that
-should be picked.</p></td>
+      <th>col_new</th>
+      <td><p>Only used if <code>.data</code> is a data frame. The argument <code>col</code> must be
+a character vector of the same length as <code>translation</code> holding
+the names under which the relabeled variables should be stored in
+the data.frame. If omitted, then it will be assumed that the new column
+names are the same as the column names of the original variables.</p></td>
+    </tr>
+    <tr>
+      <th>keep_order</th>
+      <td><p>A boolean vector of length one or the same length as the
+number of translations. If the vector has length one, then the same
+configuration is applied to all variable translations. If the vector has
+the same length as the number of arguments in <code>...</code>, then the
+to each variable translation there is a corresponding boolean configuration.
+If a translated variable in the data.frame is a factor variable,
+and the corresponding boolean configuration is set to <code>TRUE</code>, then the
+the order of the original factor variable will be preserved.</p></td>
+    </tr>
+    <tr>
+      <th>to_factor</th>
+      <td><p>A boolean vector of length one or the same length as the
+number of translations. If the vector has length one, then the same
+configuration is applied to all variable translations. If the vector has
+the same length as the number of arguments in <code>...</code>, then the
+to each variable translation there is a corresponding boolean configuration.
+If <code>to_factor</code> is <code>TRUE</code>, then the resulting labeled
+variable will be a factor. If <code>to_factor</code> is set to <code>FALSE</code>, then
+the resulting labeled variable will be a plain character vector.</p></td>
+    </tr>
+    <tr>
+      <th>err_handler</th>
+      <td><p>An error handling function</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A new lama_dictionary class object, holding the picked variable translations.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code>lama_translate()</code>, <code>lama_to_factor()</code>, <code>lama_translate_all()</code>,
-<code>lama_to_factor_all()</code>, <code>new_lama_dictionary()</code>,
-<code>as.lama_dictionary()</code>, <code>lama_rename()</code>, <code>lama_mutate()</code>,
-<code>lama_merge()</code>, <code>lama_read()</code>, <code>lama_write()</code></p></div>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>  <span class='co'># initialize lama_dictinoary</span>
-  <span class='no'>dict</span> <span class='kw'>&lt;-</span> <span class='fu'>new_lama_dictionary</span>(
-    <span class='kw'>country</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>uk</span> <span class='kw'>=</span> <span class='st'>"United Kingdom"</span>, <span class='kw'>fr</span> <span class='kw'>=</span> <span class='st'>"France"</span>, <span class='kw'>NA_</span> <span class='kw'>=</span> <span class='st'>"other countries"</span>),
-    <span class='kw'>language</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>en</span> <span class='kw'>=</span> <span class='st'>"English"</span>, <span class='kw'>fr</span> <span class='kw'>=</span> <span class='st'>"French"</span>),
-    <span class='kw'>result</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"1"</span> <span class='kw'>=</span> <span class='st'>"Very good"</span>, <span class='st'>"2"</span> <span class='kw'>=</span> <span class='st'>"Good"</span>, <span class='st'>"3"</span> <span class='kw'>=</span> <span class='st'>"Not so good"</span>)
-  )
-
-  <span class='co'>## Example-1: Usage of 'lama_select'</span>
-  <span class='co'># pick the translations 'result' and 'language'</span>
-  <span class='co'># and add them to a new lama_dictionary</span>
-  <span class='no'>dict_sub</span> <span class='kw'>&lt;-</span> <span class='fu'>lama_select</span>(<span class='no'>dict</span>, <span class='no'>result</span>, <span class='no'>language</span>)
-  <span class='no'>dict_sub</span></div><div class='output co'>#&gt; 
-#&gt; --- lama_dictionary ---
-#&gt; Variable 'result':
-#&gt;             1             2             3 
-#&gt;   "Very good"        "Good" "Not so good" 
-#&gt; 
-#&gt; Variable 'language':
-#&gt;        en        fr 
-#&gt; "English"  "French" 
-#&gt; </div><div class='input'>
-  <span class='co'>## Example-2: Usage of 'lama_select_'</span>
-  <span class='co'># pick the translations 'result' and 'language'</span>
-  <span class='co'># and add them to a new lama_dictionary</span>
-  <span class='no'>dict_sub</span> <span class='kw'>&lt;-</span> <span class='fu'>lama_select_</span>(<span class='no'>dict</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"result"</span>, <span class='st'>"language"</span>))
-  <span class='no'>dict_sub</span></div><div class='output co'>#&gt; 
-#&gt; --- lama_dictionary ---
-#&gt; Variable 'result':
-#&gt;             1             2             3 
-#&gt;   "Very good"        "Good" "Not so good" 
-#&gt; 
-#&gt; Variable 'language':
-#&gt;        en        fr 
-#&gt; "English"  "French" 
-#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
