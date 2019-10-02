@@ -124,7 +124,6 @@ composerr_ <- function(
 }
 
 #' @rdname composerr
-#' @export
 #' @examples 
 #' \dontrun{
 #' # ------      composerr in flat situation      ----------
@@ -171,7 +170,6 @@ composerr <- function(
 }
 
 #' @rdname composerr
-#' @export
 #' @examples
 #' \dontrun{
 #' # ------  composerr_parent in nested situation   --------
