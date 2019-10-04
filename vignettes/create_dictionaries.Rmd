@@ -77,7 +77,10 @@ should be labeled with the string `"Missed"`.
 The last expression `"0" = NA` given in translation `res` tells that
 all zero values `0` should be mapped onto the missing value symbol `NA`.
 
-<img src = "createdictionary.png" style = "width: 100%; max-width: 450px"/>
+```{r}
+knitr::include_graphics("createdictionary.png")
+```
+
 
 ## From a list object holding translations
 
