@@ -102,7 +102,7 @@
       <h1>Creating lama-dictionaries</h1>
                         <h4 class="author">Adrian Maldet</h4>
             
-            <h4 class="date">2019-09-24</h4>
+            <h4 class="date">2019-10-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/a-maldet/labelmachine/blob/master/vignettes/create_dictionaries.Rmd"><code>vignettes/create_dictionaries.Rmd</code></a></small>
       <div class="hidden name"><code>create_dictionaries.Rmd</code></div>
@@ -144,7 +144,6 @@
 <a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co">#&gt;            0 </span></a>
 <a class="sourceLine" id="cb2-24" data-line-number="24"><span class="co">#&gt;           NA</span></a></code></pre></div>
 <p>Each named argument in <code><a href="https://rdrr.io/pkg/labelmachine/man/new_lama_dictionary.html">new_lama_dictionary()</a></code> defines a translation. The passed in argument names are used as translation names (e.g. <code>"sub"</code> and <code>"res"</code>). The first translation <code>sub</code> was given by a named character vector, holding the full length labels for the subjects of a data set holding encoded subject values (e.g. <code>"eng"</code> for <code>"English"</code>, <code>"mat"</code> for <code>"Mathematics"</code> and <code>"gym"</code> for <code>"gymnastics"</code>). The second translation <code>res</code> holds the full length labels for the encoded test results. In translation <code>res</code> multiple values were mapped onto a single label string (e.g. <code>3</code> and <code>4</code> were mapped onto <code>"Not passed"</code>). The expression <code>NA_</code> in translation <code>res</code> is used to escape the missing value symbol <code>NA</code> (only necessary in the name fields of the translation vectors). Hence, the last assignment <code>NA_ = "Missed"</code> defines that missing values should be labeled with the string <code>"Missed"</code>. The last expression <code>"0" = NA</code> given in translation <code>res</code> tells that all zero values <code>0</code> should be mapped onto the missing value symbol <code>NA</code>.</p>
-<p><img src="vignette_create_dictionary.png" style="width: 100%; max-width: 450px"></p>
 </div>
 <div id="from-a-list-object-holding-translations" class="section level2">
 <h2 class="hasAnchor">
@@ -229,10 +228,11 @@
 </li>
 </ul>
 <p>With the command <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_read.html">lama_read()</a></code> a lama-dictionary can be loaded:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">dict &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/labelmachine/man/lama_read.html">lama_read</a></span>(<span class="st">"dictionary.yaml"</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/pkg/labelmachine/man/lama_read.html">lama_read</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"dictionary_exams.yaml"</span>, <span class="dt">package =</span> <span class="st">"labelmachine"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">path_to_file &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"dictionary_exams.yaml"</span>, <span class="dt">package =</span> <span class="st">"labelmachine"</span>)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">dict &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/labelmachine/man/lama_read.html">lama_read</a></span>(path_to_file)</a></code></pre></div>
 <p>With the command <code><a href="https://rdrr.io/pkg/labelmachine/man/lama_write.html">lama_write()</a></code> the lama-dictionary <code>dict</code> can be saved as a <strong>yaml</strong> file:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/pkg/labelmachine/man/lama_write.html">lama_write</a></span>(dict, <span class="st">"dictionary.yaml"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">path_to_file &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span>(), <span class="st">"my_dictionary.yaml"</span>)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/pkg/labelmachine/man/lama_write.html">lama_write</a></span>(dict, path_to_file)</a></code></pre></div>
 </div>
 <div id="from-already-existing-label-assignment-rules" class="section level2">
 <h2 class="hasAnchor">
