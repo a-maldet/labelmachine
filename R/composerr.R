@@ -48,7 +48,7 @@
 #' @return A new error handling function that has an extended error message.
 #' @rdname composerr
 #' @examples 
-#' \donttest{
+#' \dontrun{
 #' # ------     composerr_ in flat situation      ----------
 #' # -- create a modified error handler in the same scope --
 #' # check if variable 'obj' exists and holds value TRUE
@@ -126,7 +126,7 @@ composerr_ <- function(
 #' @rdname composerr
 #' @export
 #' @examples 
-#' \donttest{
+#' \dontrun{
 #' # ------      composerr in flat situation      ----------
 #' # -- create a modified error handler in the same scope --
 #' # check if variable 'obj' exists and holds value TRUE
@@ -173,7 +173,7 @@ composerr <- function(
 #' @rdname composerr
 #' @export
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # ------  composerr_parent in nested situation   --------
 #' # -- overwrite error handler in the deeper level scope --
 #' # check if all entries of the list object 'obj' are TRUE
