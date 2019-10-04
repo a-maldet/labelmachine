@@ -83,7 +83,7 @@ should be labeled with the string `"Missed"`.
 The last expression `"0" = NA` given in translation `res` tells that
 all zero values `0` should be mapped onto the missing value symbol `NA`.
 
-```{r, out.maxwidth = "450px"}
+```{r, out.maxwidth = "450px", out.width = "100%"}
 knitr::include_graphics("createdictionary.png")
 ```
 
