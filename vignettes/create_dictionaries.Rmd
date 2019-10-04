@@ -17,6 +17,12 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+knitr::opts_hooks$set(out.maxwidth = function(options) {
+  if (!knitr:::is_html_output())
+    return(options)
+  options$out.extra <- sprintf('style="max-width: %s;"', options$out.maxwidth)
+  options
+})
 ```
 
 As already described in [Get started] we need **translations**, which tell
@@ -77,7 +83,7 @@ should be labeled with the string `"Missed"`.
 The last expression `"0" = NA` given in translation `res` tells that
 all zero values `0` should be mapped onto the missing value symbol `NA`.
 
-```{r}
+```{r, out.maxwidth = "450px"}
 knitr::include_graphics("createdictionary.png")
 ```
 
