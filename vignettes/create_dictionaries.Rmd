@@ -4,7 +4,7 @@ date: "`r Sys.Date()`"
 author: "Adrian Maldet"
 output: rmarkdown::html_vignette
 resource_files:
-  vignettes/vignette_create_dictionary.png
+  - vignettes/vignette_create_dictionary.png
 vignette: >
   %\VignetteIndexEntry{Creating lama-dictionaries}
   %\VignetteEngine{knitr::rmarkdown}
