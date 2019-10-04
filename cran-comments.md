@@ -14,15 +14,8 @@ Remark:
 Output of `rhub::check_for_cran()`:
 ❯ On windows-x86_64-devel (r-devel), ubuntu-gcc-release (r-release)
   checking CRAN incoming feasibility ... NOTE
-  Maintainer: 'Adrian Maldet <maldet@posteo.at>'
-  
   New submission
-  
-❯ On fedora-clang-devel (r-devel)
-  checking CRAN incoming feasibility ...NB: need Internet access to use CRAN incoming checks
-   NOTE
-  Maintainer: ‘Adrian Maldet <maldet@posteo.at>’
-  
+  Maintainer: 'Adrian Maldet <maldet@posteo.at>'
 
 0 errors ✔ | 0 warnings ✔ | 2 notes ✖
 
