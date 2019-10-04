@@ -251,49 +251,7 @@ the function <code>composerr_parent()</code> can be used instead.</p></td>
     <p>A new error handling function that has an extended error message.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='co'># ------     composerr_ in flat situation      ----------</span>
-<span class='co'># -- create a modified error handler in the same scope --</span>
-<span class='co'># check if variable 'obj' exists and holds value TRUE</span>
-<span class='no'>obj</span> <span class='kw'>&lt;-</span> <span class='fl'>FALSE</span>
-<span class='co'># original error handler</span>
-<span class='no'>err_h</span> <span class='kw'>&lt;-</span> <span class='fu'>composerr_</span>(<span class='st'>"Something is wrong with obj"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in composerr_("Something is wrong with obj"): could not find function "composerr_"</span></div><div class='input'><span class='kw'>if</span> (!<span class='fu'><a href='https://rdrr.io/r/base/exists.html'>exists</a></span>(<span class='st'>"obj"</span>))
-  <span class='fu'>err_h</span>(<span class='st'>"obj does not exist"</span>)
-<span class='co'># create more precise error handler (same scope)</span>
-<span class='no'>err_h2</span> <span class='kw'>&lt;-</span> <span class='fu'>composerr_</span>(<span class='st'>"obj has wrong value"</span>, <span class='st'>"err_h"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in composerr_("obj has wrong value", "err_h"): could not find function "composerr_"</span></div><div class='input'><span class='kw'>if</span> (!<span class='no'>obj</span>)
-  <span class='fu'>err_h2</span>(<span class='st'>"Value is FALSE"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in err_h2("Value is FALSE"): could not find function "err_h2"</span></div><div class='input'><span class='co'>#--- resulting error ---</span>
-<span class='co'># "Something is wrong with obj: obj has wrong value: Value is FALSE"# }</span>
-<span class='co'># \donttest{</span>
-<span class='co'># ------      composerr in flat situation      ----------</span>
-<span class='co'># -- create a modified error handler in the same scope --</span>
-<span class='co'># check if variable 'obj' exists and holds value TRUE</span>
-<span class='no'>obj</span> <span class='kw'>&lt;-</span> <span class='fl'>FALSE</span>
-<span class='co'># original error handler</span>
-<span class='no'>err_h</span> <span class='kw'>&lt;-</span> <span class='fu'>composerr</span>(<span class='st'>"Something is wrong with obj"</span>)
-<span class='kw'>if</span> (!<span class='fu'><a href='https://rdrr.io/r/base/exists.html'>exists</a></span>(<span class='st'>"obj"</span>))
-  <span class='fu'>err_h</span>(<span class='st'>"obj does not exist"</span>)
-<span class='co'># create more precise error handler (same scope)</span>
-<span class='no'>err_h2</span> <span class='kw'>&lt;-</span> <span class='fu'>composerr</span>(<span class='st'>"obj has wrong value"</span>, <span class='no'>err_h</span>)
-<span class='kw'>if</span> (!<span class='no'>obj</span>)
-  <span class='fu'>err_h2</span>(<span class='st'>"Value is FALSE"</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Something is wrong with obj: obj has wrong value: Value is FALSE</span></div><div class='input'><span class='co'>#--- resulting error ---</span>
-<span class='co'># "Something is wrong with obj: obj has wrong value: Value is FALSE"# }</span>
-<span class='co'># \donttest{</span>
-<span class='co'># ------  composerr_parent in nested situation   --------</span>
-<span class='co'># -- overwrite error handler in the deeper level scope --</span>
-<span class='co'># check if all entries of the list object 'obj' are TRUE</span>
-<span class='no'>obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='co'># original error handler</span>
-<span class='no'>err_h</span> <span class='kw'>&lt;-</span> <span class='fu'>composerr</span>(<span class='st'>"obj is invalid"</span>)
-<span class='co'># check each list element </span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>obj</span>), <span class='kw'>function</span>(<span class='no'>name</span>) {
-  <span class='co'># modify error handler to nested sitation</span>
-  <span class='no'>err_h</span> <span class='kw'>&lt;-</span> <span class='fu'>composerr_parent</span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='st'>"Error in"</span>, <span class='no'>name</span>), <span class='no'>err_h</span>)
-  <span class='co'># check element and throw error FALSE</span>
-  <span class='kw'>if</span> (!<span class='no'>obj</span><span class='kw'>[[</span><span class='no'>name</span>]])
-    <span class='fu'>err_h</span>(<span class='st'>"Value is FALSE"</span>)
-})</div><div class='output co'>#&gt; <span class='error'>Error: obj is invalid: Error in z: Value is FALSE</span></div><div class='input'>#--- resulting error ---
-# "obj is invalid: Error in z: Value is FALSE"# }
-</div></pre>
+    <pre class="examples"></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
