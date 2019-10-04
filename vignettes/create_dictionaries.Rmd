@@ -40,7 +40,6 @@ when calling `lama_translate()` the original variables of different types
 into **character** variables. Hence, `labelmachine` can handle any type of
 variables.
 
-
 ## From scratch
 
 With the command `new_lama_dictionary()` a lama-dictionary can be created
@@ -80,8 +79,6 @@ should be labeled with the string `"Missed"`.
 The last expression `"0" = NA` given in translation `res` tells that
 all zero values `0` should be mapped onto the missing value symbol `NA`.
 
-<img src = "vignette_create_dictionary.png" style = "width: 100%; max-width: 450px">
-</img>
 
 ## From a list object holding translations
 
