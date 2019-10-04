@@ -124,6 +124,7 @@ composerr_ <- function(
 }
 
 #' @rdname composerr
+#' @export
 #' @examples 
 #' \donttest{
 #' # ------      composerr in flat situation      ----------
@@ -170,6 +171,7 @@ composerr <- function(
 }
 
 #' @rdname composerr
+#' @export
 #' @examples
 #' \donttest{
 #' # ------  composerr_parent in nested situation   --------
