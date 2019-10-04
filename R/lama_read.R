@@ -5,8 +5,9 @@
 #' the yaml file
 #' @export
 #' @examples
-#'   \dontrun{
-#'     dict <- lama_read("my_dictionary.yaml")
+#'   \donttest{
+#'     path_to_file <- system.file("extdata", "dictionary_exams.yaml", package = "labelmachine")
+#'     dict <- lama_read(path_to_file) 
 #'   }
 #' @include utilities.R lama_dictionary.R
 lama_read <- function(yaml_path) {

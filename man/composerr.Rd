@@ -76,7 +76,7 @@ If you don't have a nested environment situation, better use
 }
 }
 \examples{
-\dontrun{
+\donttest{
 # ------     composerr_ in flat situation      ----------
 # -- create a modified error handler in the same scope --
 # check if variable 'obj' exists and holds value TRUE
@@ -91,7 +91,7 @@ if (!obj)
   err_h2("Value is FALSE")
 #--- resulting error ---
 # "Something is wrong with obj: obj has wrong value: Value is FALSE"}
-\dontrun{
+\donttest{
 # ------      composerr in flat situation      ----------
 # -- create a modified error handler in the same scope --
 # check if variable 'obj' exists and holds value TRUE
@@ -106,7 +106,7 @@ if (!obj)
   err_h2("Value is FALSE")
 #--- resulting error ---
 # "Something is wrong with obj: obj has wrong value: Value is FALSE"}
-\dontrun{
+\donttest{
 # ------  composerr_parent in nested situation   --------
 # -- overwrite error handler in the deeper level scope --
 # check if all entries of the list object 'obj' are TRUE

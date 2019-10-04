@@ -17,7 +17,8 @@ the yaml file
 Read in a \code{yaml} file holding translations for one or multiple variables
 }
 \examples{
-  \dontrun{
-    dict <- lama_read("my_dictionary.yaml")
+  \donttest{
+    path_to_file <- system.file("extdata", "dictionary_exams.yaml", package = "labelmachine")
+    dict <- lama_read(path_to_file) 
   }
 }

@@ -4,7 +4,7 @@ Version: 1.0.0
 Authors@R: person(given = "Adrian", family = "Maldet", role = c("aut", "cre"), email = "maldet@posteo.at")
 Description: Assign meaningful labels to data frame columns.
     'labelmachine' manages your label assignment rules in 'yaml' files
-    and makes it easy to share the use labels in multiple projects.
+    and makes it easy to use the same labels in multiple projects.
 Depends:
     R (>= 3.5.0)
 Imports:

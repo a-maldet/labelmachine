@@ -15,8 +15,9 @@ lama_write(x, yaml_path)
 Write a \code{yaml} file holding translations for one or multiple variables
 }
 \examples{
-  \dontrun{
+  \donttest{
     dict <- new_lama_dictionary(results = c(p = "Passed", f = "Failed"))
-    lama_write(dict, "my_dictionary.yaml")
+    path_to_file <- file.path(tempdir(), "my_dictionary.yaml")
+    lama_write(dict, path_to_file)
   }
 }

@@ -126,7 +126,8 @@ more detail in [Translating variables].
 With the command `lama_write` it is possible to save the lama-dictionary object
 to a **yaml** file:
 ```{r, eval = FALSE}
-lama_write(dict, "dictionary.yaml")
+path_to_file <- file.path(tempdir(), "my_dictionary.yaml")
+lama_write(dict, path_to_file)
 ```
 
 The resulting **yaml** file is a plain text file with a special text structure,
@@ -137,7 +138,8 @@ other projects holding similar data structures. With the command `lama_read`
 a lama-dictionary file can be read:
 
 ```{r, eval = FALSE}
-dict <- lama_read("dictionary.yaml")
+path_to_file <- system.file("extdata", "dictionary_exams.yaml", package = "labelmachine")
+dict <- lama_read(path_to_file)
 ```
 
 ## Further reading

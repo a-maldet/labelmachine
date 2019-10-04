@@ -4,9 +4,10 @@
 #' @param yaml_path File path, where the yaml file should be saved
 #' @export
 #' @examples
-#'   \dontrun{
+#'   \donttest{
 #'     dict <- new_lama_dictionary(results = c(p = "Passed", f = "Failed"))
-#'     lama_write(dict, "my_dictionary.yaml")
+#'     path_to_file <- file.path(tempdir(), "my_dictionary.yaml")
+#'     lama_write(dict, path_to_file)
 #'   }
 #' @include utilities.R lama_dictionary.R
 lama_write <- function(x, yaml_path) {
