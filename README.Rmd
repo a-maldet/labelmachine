@@ -37,11 +37,11 @@ devtools::install_github('a-maldet/labelmachine', build_vignettes = TRUE)
 The label assignments are given in so called **translations** (named character vectors),
 which are like a recipes, telling which original value will be mapped onto which new label.
 The **translations** are collected in so called **lama_dictionary** objects.
-This **lama_dictionary** objects will be used to translate your data.frame variables.
+This **lama_dictionary** objects will be used to translate your data frame variables.
 
 ## Usage
 
-Let `df` be a data.frame with marks and subjects, which should be translated
+Let `df` be a data frame with marks and subjects, which should be translated
 ```{r}
 df <- data.frame(
   pupil_id = c(1, 1, 2, 2, 3),
@@ -62,7 +62,7 @@ dict <- new_lama_dictionary(
 dict
 ```
 
-Translate the data.frame variables:
+Translate the data frame variables:
 ```{r}
 df_new <- lama_translate(
   df,
@@ -82,7 +82,7 @@ str(df_new)
 * Assigning meaningful labels to missing values (**NA**) is no problem.
 * Assigning **NA** to existing values is no problem.
 * Merging two values into a single label is no problem.
-* Transforming **data.frame** holding label assignment lists into a **lama_dictionary** is no problem.
+* Transforming a **data frame** holding label assignment lists into a **lama_dictionary** is no problem.
 * Manage your translations in **yaml** files in order to use the same translations
   in different projects sharing similar data.
 

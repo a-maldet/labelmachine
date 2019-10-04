@@ -52,7 +52,7 @@ devtools::install_github('a-maldet/labelmachine', build_vignettes = TRUE)
 
 ## The example data frame
 
-Let us assume, you want to label the following data.frame `df`:
+Let us assume, you want to label the following data frame `df`:
 
 ```{r}
 df <- data.frame(
