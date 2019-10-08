@@ -49,33 +49,3 @@ then \code{lapplI} and  \code{sapplI} are exactly the same as
 Besides this extra feature, there is no difference to \code{\link[base:lapply]{base::lapply()}} and
 \code{\link[base:sapply]{base::sapply()}}.
 }
-\examples{
-# 'lapply' with index
-lapplI(
-  list("x1", "x2"),
-  function(x, y, .I) list(x = x, y = y, i = .I),
-  y = "extra argument"
-)
-
-# 'lapply' without index
-lapplI(
-  list("x1", "x2"),
-  function(x, y) list(x = x, y = y),
-  y = "extra argument"
-)
-# 'sapply' with index
-sapplI(
-  c("x1", "x2"),
-  function(x, y, .I) paste(x, y, .I),
-  y = "extra argument",
-  USE.NAMES = FALSE
-)
-
-# 'sapply' without index
-sapplI(
-  c("x1", "x2"),
-  function(x, y) paste(x, y),
-  y = "extra argument",
-  USE.NAMES = FALSE
-)
-}

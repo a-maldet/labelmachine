@@ -17,20 +17,6 @@
 #'   Besides this extra feature, there is no difference to [base::lapply()] and
 #'   [base::sapply()].
 #' @inheritParams base::lapply
-#' @examples
-#' # 'lapply' with index
-#' lapplI(
-#'   list("x1", "x2"),
-#'   function(x, y, .I) list(x = x, y = y, i = .I),
-#'   y = "extra argument"
-#' )
-#'
-#' # 'lapply' without index
-#' lapplI(
-#'   list("x1", "x2"),
-#'   function(x, y) list(x = x, y = y),
-#'   y = "extra argument"
-#' )
 #' @rdname lapplI
 #' @export
 lapplI <- function(X, FUN, ...) {
@@ -59,22 +45,6 @@ lapplI <- function(X, FUN, ...) {
 }
 
 #' @inheritParams base::sapply
-#' @examples
-#' # 'sapply' with index
-#' sapplI(
-#'   c("x1", "x2"),
-#'   function(x, y, .I) paste(x, y, .I),
-#'   y = "extra argument",
-#'   USE.NAMES = FALSE
-#' )
-#'
-#' # 'sapply' without index
-#' sapplI(
-#'   c("x1", "x2"),
-#'   function(x, y) paste(x, y),
-#'   y = "extra argument",
-#'   USE.NAMES = FALSE
-#' )
 #' @rdname lapplI
 #' @export
 sapplI <- function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE) {

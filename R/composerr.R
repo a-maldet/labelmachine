@@ -47,22 +47,6 @@
 #'   concatenation of `text_2` at the end of the error message.
 #' @return A new error handling function that has an extended error message.
 #' @rdname composerr
-#' @examples 
-#' \dontrun{
-#' # ------     composerr_ in flat situation      ----------
-#' # -- create a modified error handler in the same scope --
-#' # check if variable 'obj' exists and holds value TRUE
-#' obj <- FALSE
-#' # original error handler
-#' err_h <- composerr_("Something is wrong with obj")
-#' if (!exists("obj"))
-#'   err_h("obj does not exist")
-#' # create more precise error handler (same scope)
-#' err_h2 <- composerr_("obj has wrong value", "err_h")
-#' if (!obj)
-#'   err_h2("Value is FALSE")
-#' #--- resulting error ---
-#' # "Something is wrong with obj: obj has wrong value: Value is FALSE"}
 composerr_ <- function(
   text_1 = NULL,
   err_prior = NULL,
@@ -124,22 +108,6 @@ composerr_ <- function(
 }
 
 #' @rdname composerr
-#' @examples 
-#' \dontrun{
-#' # ------      composerr in flat situation      ----------
-#' # -- create a modified error handler in the same scope --
-#' # check if variable 'obj' exists and holds value TRUE
-#' obj <- FALSE
-#' # original error handler
-#' err_h <- composerr("Something is wrong with obj")
-#' if (!exists("obj"))
-#'   err_h("obj does not exist")
-#' # create more precise error handler (same scope)
-#' err_h2 <- composerr("obj has wrong value", err_h)
-#' if (!obj)
-#'   err_h2("Value is FALSE")
-#' #--- resulting error ---
-#' # "Something is wrong with obj: obj has wrong value: Value is FALSE"}
 composerr <- function(
   text_1 = NULL,
   err_prior = NULL,
@@ -170,24 +138,6 @@ composerr <- function(
 }
 
 #' @rdname composerr
-#' @examples
-#' \dontrun{
-#' # ------  composerr_parent in nested situation   --------
-#' # -- overwrite error handler in the deeper level scope --
-#' # check if all entries of the list object 'obj' are TRUE
-#' obj <- list(x = TRUE, y = TRUE, z = FALSE)
-#' # original error handler
-#' err_h <- composerr("obj is invalid")
-#' # check each list element 
-#' sapply(names(obj), function(name) {
-#'   # modify error handler to nested sitation
-#'   err_h <- composerr_parent(paste("Error in", name), err_h)
-#'   # check element and throw error FALSE
-#'   if (!obj[[name]])
-#'     err_h("Value is FALSE")
-#' })
-#' #--- resulting error ---
-#' # "obj is invalid: Error in z: Value is FALSE"}
 composerr_parent <- function(
   text_1 = NULL,
   err_prior = NULL,
