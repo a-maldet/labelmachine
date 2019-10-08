@@ -212,74 +212,11 @@ Besides this extra feature, there is no difference to <code><a href='https://rdr
     </table>
 
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># 'lapply' with index</span>
-<span class='fu'>lapplI</span>(
-  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"x1"</span>, <span class='st'>"x2"</span>),
-  <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>.I</span>) <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>x</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>y</span>, <span class='kw'>i</span> <span class='kw'>=</span> <span class='no'>.I</span>),
-  <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"extra argument"</span>
-)</div><div class='output co'>#&gt; [[1]]
-#&gt; [[1]]$x
-#&gt; [1] "x1"
-#&gt; 
-#&gt; [[1]]$y
-#&gt; [1] "extra argument"
-#&gt; 
-#&gt; [[1]]$i
-#&gt; [1] 1
-#&gt; 
-#&gt; 
-#&gt; [[2]]
-#&gt; [[2]]$x
-#&gt; [1] "x2"
-#&gt; 
-#&gt; [[2]]$y
-#&gt; [1] "extra argument"
-#&gt; 
-#&gt; [[2]]$i
-#&gt; [1] 2
-#&gt; 
-#&gt; </div><div class='input'>
-<span class='co'># 'lapply' without index</span>
-<span class='fu'>lapplI</span>(
-  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"x1"</span>, <span class='st'>"x2"</span>),
-  <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>y</span>) <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>x</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>y</span>),
-  <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"extra argument"</span>
-)</div><div class='output co'>#&gt; [[1]]
-#&gt; [[1]]$x
-#&gt; [1] "x1"
-#&gt; 
-#&gt; [[1]]$y
-#&gt; [1] "extra argument"
-#&gt; 
-#&gt; 
-#&gt; [[2]]
-#&gt; [[2]]$x
-#&gt; [1] "x2"
-#&gt; 
-#&gt; [[2]]$y
-#&gt; [1] "extra argument"
-#&gt; 
-#&gt; </div><div class='input'><span class='co'># 'sapply' with index</span>
-<span class='fu'>sapplI</span>(
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"x1"</span>, <span class='st'>"x2"</span>),
-  <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>.I</span>) <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>.I</span>),
-  <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"extra argument"</span>,
-  <span class='kw'>USE.NAMES</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</div><div class='output co'>#&gt; [1] "x1 extra argument 1" "x2 extra argument 2"</div><div class='input'>
-<span class='co'># 'sapply' without index</span>
-<span class='fu'>sapplI</span>(
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"x1"</span>, <span class='st'>"x2"</span>),
-  <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>y</span>) <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>x</span>, <span class='no'>y</span>),
-  <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>"extra argument"</span>,
-  <span class='kw'>USE.NAMES</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</div><div class='output co'>#&gt; [1] "x1 extra argument" "x2 extra argument"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
